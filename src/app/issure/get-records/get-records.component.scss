@@ -1,0 +1,24 @@
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  td{
+    border: 0 solid #dddddd;
+    text-align: left;
+    padding: 16px;
+    line-height: 32px;
+  }
+
+  th {
+    padding: 1.2rem;
+  }
+  
+  tr:nth-child(odd) td {
+    background-color: #F6F8FC;
+  }
+
+  .line-height32{
+    line-height: 32px;
+  }
