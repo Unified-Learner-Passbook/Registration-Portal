@@ -1,0 +1,32 @@
+header {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
+  margin: 1rem;
+
+  .title {
+    color: var(--primaryColor);
+    font-weight: 600;
+    font-size: 2rem;
+    .highlight-title {
+      color: #ff740f;
+    }
+  }
+
+  .logo {
+    height: 3rem;
+    display: inline-block;
+  }
+
+  .header-btns {
+    img {
+      margin-left: 8px;
+      height: 1.2rem;
+      width: 1.2rem;
+    }
+  }
+
+  
+}

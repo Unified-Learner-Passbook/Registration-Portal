@@ -1,0 +1,63 @@
+.flex-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap-reverse;
+  justify-content: flex-start;
+  align-items: flex-start;
+  align-content: flex-start;
+
+  div {
+    padding: 8px;
+    text-align: center;
+  }
+}
+
+.header-btn {
+  background: #fff !important;
+  color: #484545 !important;
+  box-shadow: 0px 4px 11px rgba(0, 0, 0, 0.16) !important;
+  border: 0;
+  border-radius: 6px !important;
+  cursor: pointer;
+  padding: 8px !important;
+  font-size: 1rem !important;
+}
+.student-list {
+  margin: 4px, 4px;
+  padding: 4px;
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+}
+
+table {
+  color: #303972 !important;
+  th,
+  td {
+    text-align: center;
+  }
+  th {
+    font-weight: 600;
+  }
+}
+.img-btn {
+  cursor: pointer;
+}
+
+.title {
+  color: #414141;
+}
+
+::ng-deep {
+  .page-item.active .page-link {
+    background-color: var(--primaryColor);
+    border-color: var(--primaryColor);
+  }
+/*   .page-item .page-link {
+    border-radius: 50%;
+  }
+  .page-item.disabled .page-link {
+    border-style: none;
+  } */
+}

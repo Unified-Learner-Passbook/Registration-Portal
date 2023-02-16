@@ -136,7 +136,11 @@ import { FormioModule } from 'angular-formio';
 import { NgxTextEditorModule } from 'ngx-text-editor';
 
 import * as configData from '../assets/config/config.json';
-import { AdvanceEditorComponent } from './issure/advance-editor/advance-editor.component'; 
+import { AdvanceEditorComponent } from './issure/advance-editor/advance-editor.component';
+import { MainDashboardComponent } from './main-dashboard/main-dashboard.component'; 
+import { GlobalHeaderComponent } from './global-header/global-header.component';
+import { SidebarComponent } from './sidebar/sidebar.component';
+import { RegisterEntityComponent } from './register-entity/register-entity.component';
 console.log(configData['default']);
 
 @NgModule({
@@ -177,7 +181,11 @@ console.log(configData['default']);
     AddRecordsComponent,
     PreviewHtmlComponent,
     VerifyComponent,
-    AdvanceEditorComponent
+    AdvanceEditorComponent,
+    MainDashboardComponent,
+    SidebarComponent,
+    GlobalHeaderComponent,
+    RegisterEntityComponent
   ],
   imports: [
     BrowserModule,
