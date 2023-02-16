@@ -58,6 +58,8 @@ import { ScanDocumentComponent } from './documents/scan-document/scan-document.c
 import { ScanQrCodeComponent } from './documents/scan-qr-code/scan-qr-code.component';
 import { QuarModule} from '@altack/quar';
 import { BrowseDocumentsComponent } from './documents/browse-documents/browse-documents.component';
+import { RegistrationComponent } from './registration/registration.component';
+import { LoginComponent } from './login/login.component';
 
 import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
@@ -185,7 +187,10 @@ console.log(configData['default']);
     MainDashboardComponent,
     SidebarComponent,
     GlobalHeaderComponent,
-    RegisterEntityComponent
+    RegisterEntityComponent,
+    LoginComponent,
+    RegistrationComponent
+
   ],
   imports: [
     BrowserModule,

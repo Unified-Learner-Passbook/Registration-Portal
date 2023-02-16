@@ -1,4 +1,4 @@
-# Sunbird-RC UI
+# ULP UI
 
 Configurable Angular front end with generic forms and layouts for Sunbird RC
 
