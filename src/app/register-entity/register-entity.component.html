@@ -18,12 +18,6 @@
           <option selected>Select Year</option>
           <option *ngFor="let year of academicYearRange" [value]="year">{{year}}</option>
         </select>
-        <!-- <div class="input-group p-0">
-        <input type="date" class="form-control" id="academicYear" placeholder="Enter Academic Year">
-        <div class="input-group-append input-group-sm p-0">
-          <button class="btn btn-outline-secondary fa fa-calendar rounded-0" type="button"></button>
-        </div>
-      </div> -->
       </div>
       <div>
         <button class="btn btn-outline-secondary header-btn" (click)="downloadTemplate()">Download CSV
