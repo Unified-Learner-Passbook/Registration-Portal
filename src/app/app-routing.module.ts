@@ -30,6 +30,8 @@ import { PreviewHtmlComponent } from './issure/preview-html/preview-html.compone
 import { VerifyComponent } from './issure/verify/verify.component';
 import { AdvanceEditorComponent } from './issure/advance-editor/advance-editor.component';
 import { PdfViewComponent } from './issure/pdf-view/pdf-view.component';
+import { MainDashboardComponent } from './main-dashboard/main-dashboard.component';
+import { RegisterEntityComponent } from './register-entity/register-entity.component';
 // import { CreateCertificateComponent } from './create-certificate/create-certificate.component';
 // import { FaqComponent } from './custom-components/faq/faq.component';
 const routes: Routes = [
@@ -103,7 +105,7 @@ const routes: Routes = [
  { path: 'doc-types', component: DocTypesComponent },
  { path: 'template', component: CreateCertificateComponent },
  
- { path: 'dashboard', component: DashboardComponent , canActivate: [AuthGuard] },
+//  { path: 'dashboard', component: DashboardComponent , canActivate: [AuthGuard] },
  { path: 'records', component: GetRecordsComponent , canActivate: [AuthGuard] },
  { path: 'records/:document', component: GetRecordsComponent , canActivate: [AuthGuard] },
  { path: 'add-records/:document', component: AddRecordsComponent , canActivate: [AuthGuard] },
@@ -125,6 +127,18 @@ const routes: Routes = [
 
 // Custom
 // { path: 'faq', component: FaqComponent },
+
+
+{ 
+  path: 'dashboard',
+  component: MainDashboardComponent,
+  children: [
+    {
+      path: 'register-entity',
+      component: RegisterEntityComponent
+    }
+  ]
+ }
 ];
 
 @NgModule({
