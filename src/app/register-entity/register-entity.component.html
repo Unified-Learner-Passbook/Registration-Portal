@@ -33,10 +33,11 @@
   </div>
 
   <div class="student-list">
+    <ngb-alert type="danger" *ngIf="errorMessage">{{ errorMessage }}</ngb-alert>
     <table class="table">
       <thead>
         <tr>
-          <th scope="col" *ngFor="let columnValue of tableColumns">{{columnValue}}</th>
+          <th scope="col" *ngFor="let columnValue of tableColumns">{{columnValue  | titlecase}}</th>
         </tr>
       </thead>
       <tbody>

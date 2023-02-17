@@ -10,7 +10,7 @@ export class SidebarComponent implements OnInit {
   menuList = [
     {
       label: 'Register Students',
-      link: '',
+      link: 'register-entity',
       image: 'assets/icons/home.svg',
       isActive: true
     }, 

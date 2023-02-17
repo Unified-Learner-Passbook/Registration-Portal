@@ -32,16 +32,21 @@ import { AdvanceEditorComponent } from './issure/advance-editor/advance-editor.c
 import { PdfViewComponent } from './issure/pdf-view/pdf-view.component';
 import { MainDashboardComponent } from './main-dashboard/main-dashboard.component';
 import { RegisterEntityComponent } from './register-entity/register-entity.component';
+import { LoginComponent } from './login/login.component';
+import { RegistrationComponent } from './registration/registration.component';
 // import { CreateCertificateComponent } from './create-certificate/create-certificate.component';
 // import { FaqComponent } from './custom-components/faq/faq.component';
 const routes: Routes = [
 // Home
 // { path: '', component: HomeComponent },
+
+{ path: '', component: RegistrationComponent },
+{ path: 'login', component: LoginComponent },
 { path: '', component: KeycloakloginComponent,  canActivate: [AuthGuard]},
 
 //{ path: '', component: FormsComponent },
 // Auth
-{ path: 'login', component: KeycloakloginComponent ,  canActivate: [AuthGuard]},
+// { path: 'login', component: KeycloakloginComponent ,  canActivate: [AuthGuard]},
 { path: 'logout', component: LogoutComponent},
 
 // Forms

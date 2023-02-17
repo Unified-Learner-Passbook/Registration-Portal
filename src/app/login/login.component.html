@@ -1,5 +1,5 @@
 <div>
-  <img src="assets/images/ULPlogo.png" class="reg-img" alt="cinque terre" />
+  <img src="assets/images/logo.svg" class="reg-img" alt="logo" />
 
   <h1 class="text-center page-title">
     <span class="text-yellow">ULP </span>
@@ -11,14 +11,8 @@
     <label class="lable-property">Phone</label>
     <div class="d-flex">
       <div class="dropdown mr-3">
-        <button
-          class="btn dropdown-toggle black-border"
-          type="button"
-          id="dropdownMenuButton"
-          data-toggle="dropdown"
-          aria-haspopup="true"
-          aria-expanded="false"
-        >
+        <button class="btn dropdown-toggle black-border" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
           +91
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -27,36 +21,22 @@
           <a class="dropdown-item" href="#">+101</a>
         </div>
       </div>
-      <div class="form-group">
-        <input
-          type="text"
-          class="form-control black-border mobile_input_height"
-          id="mobile_no"
-          placeholder="9120271302"
-        />
-      </div>
+      <input type="text" class="form-control black-border mobile_input_height" id="mobile_no"
+        placeholder="9120271302" />
     </div>
+    <button *ngIf="!showMe" type="button" class="btn btn-primary btn-block sendotp-button" (click)="toggleTag()">
+      Send OTP
+    </button>
   </div>
-  <button type="button" class="sendotp-button" (click)="toggleTag()">
-    Send OTP
-  </button>
   <div *ngIf="showMe" class="vertically-center">
     <label class="lable-property">OTP</label>
     <div class="d-flex">
-      <div class="mr-3">
-        <input
-          type="text"
-          class="form-control black-border verify-otp-ht"
-          id="OTP"
-          placeholder="12345"
-        />
-      </div>
-      <div class="form-group">
-        <button type="button" class="btn verify-btn">Verify</button>
-      </div>
+      <input type="text" class="form-control black-border verify-otp-ht mr-3" id="OTP" placeholder="12345" />
+      <button type="button" class="btn btn-primary btn-block font-weight-bold">Verify</button>
     </div>
+    <p class="msg-property">Didn't receive OTP? Resend</p>
+    <button type="button" class="btn btn-primary btn-block sendotp-button" (click)="toggleTag()" routerLink="/dashboard">
+      Login
+    </button>
   </div>
-  <p *ngIf="showMe" class="msg-property">Didn’t receive OTP? Resend</p>
 </div>
-
-
