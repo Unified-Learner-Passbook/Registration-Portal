@@ -1,6 +1,6 @@
 <div id="sect1" class="container">
   <div class="text-center">
-    <img src="assets/images/ULPlogo.png" class="reg-img" alt="cinque terre" />
+    <img src="assets/images/logo.svg" class="reg-img" alt="logo" />
 
     <h1 class="text-center page-title">
       <span class="text-yellow">ULP </span>
@@ -9,25 +9,12 @@
     <hr class="horizontal-line" />
 
     <ul class="bullet-point">
-      <li>
+      <li *ngFor="let item of featureList">
         <span class="check-icon">
-          <img src="assets/images/checkmark.svg" alt="cinque terre" /> </span
-        >Certificate verification now simplified
-      </li>
-      <li>
-        <span class="check-icon">
-          <img src="assets/images/checkmark.svg" alt="cinque terre" />
-        </span>
-        View dozens of scholarships
-      </li>
-      <li>
-        <span class="check-icon">
-          <img src="assets/images/checkmark.svg" alt="cinque terre" />
-        </span>
-        One click apply
+          <img src="assets/icons/checkmark.svg" [alt]="item" /> </span>{{item}}
       </li>
     </ul>
 
-    <button type="button" class="register-button">Register</button>
+    <button type="button" class="btn btn-primary btn-lg register-button" routerLink="login">Register</button>
   </div>
 </div>

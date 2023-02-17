@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import Papa from "papaparse";
 
 @Component({
   selector: 'app-register-entity',
@@ -32,8 +33,9 @@ export class RegisterEntityComponent implements OnInit {
   academicYearRange: string[] = [];
 
   page = 1;
-	pageSize = 4;
+  pageSize = 30;
 
+  errorMessage: string;
   constructor() { }
 
   ngOnInit(): void {
@@ -57,15 +59,54 @@ export class RegisterEntityComponent implements OnInit {
   }
 
   public async importDataFromCSV(event: any) {
-    let csvText: string = await this.getTextFromFile(event);
-    this.tableColumns = csvText.slice(0, csvText.indexOf('\n')).split(',');
-    const rows = csvText.slice(csvText.indexOf('\n') + 1).split('\n');
-    this.allDataRows = rows.map((row: string) => row.split(','));
+    try {
+      this.errorMessage = '';
+      let csvText: string = await this.getTextFromFile(event);
+      const parsedData = Papa.parse(csvText, { header: true, skipEmptyLines: true });
 
-    this.pageChange();
+      console.log("parsedData", parsedData);
+      
+      if (parsedData.errors.length) {
+        console.warn("Error while parsing CSV file", parsedData.errors);
+        this.errorMessage = parsedData.errors[0]?.message;
+        return;
+      }
 
-    console.log("tableRows", this.allDataRows);
-    console.log("tableColumns", this.tableColumns);
+      const columns = csvText.slice(0, csvText.indexOf('\n')).split(',');
+      this.tableColumns = columns.map((item) => item.replace(/_/g, " ").trim());
+
+      const rows = csvText.slice(csvText.indexOf('\n') + 1).split('\n');
+      this.allDataRows = rows.map((row: string) => row.split(','));
+
+      this.pageChange();
+      console.log("tableRows", this.allDataRows);
+      console.log("tableColumns", this.tableColumns);
+    } catch (error) {
+      this.errorMessage = "Error while parsing CSV file";
+      console.warn("Error while parsing csv file", error);
+    }
+  }
+
+  parseCSVFile(inputValue) {
+    return new Promise((resolve, reject) => {
+      Papa.parse(inputValue.target.files[0], {
+        header: true,
+        skipEmptyLines: true,
+        error: (err) => {
+          console.warn("Error while parsing CSV file", err);
+          reject(err);
+        },
+        complete: (results) => {
+          console.log("results", results);
+
+          if (results.errors.length) {
+            reject(results.errors[0]);
+          } else {
+            resolve(results);
+          }
+        }
+      });
+    });
   }
 
   private getTextFromFile(inputValue: any): Promise<string> {
@@ -75,7 +116,7 @@ export class RegisterEntityComponent implements OnInit {
       myReader.readAsText(file);
 
       myReader.onloadend = (e) => {
-        console.log(myReader.result);
+        // console.log(myReader.result);
         let fileString: string = myReader.result as string;
         resolve(fileString)
       };
@@ -92,10 +133,9 @@ export class RegisterEntityComponent implements OnInit {
 
   pageChange() {
     this.tableRows = this.allDataRows.map((row, i) => row).slice(
-			(this.page - 1) * this.pageSize,
-			(this.page - 1) * this.pageSize + this.pageSize,
-		);
-    console.log("rows", this.tableRows);
+      (this.page - 1) * this.pageSize,
+      (this.page - 1) * this.pageSize + this.pageSize,
+    );
   }
 }
 

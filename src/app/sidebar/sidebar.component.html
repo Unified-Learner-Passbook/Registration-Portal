@@ -1,6 +1,7 @@
 <div class="sidebar">
   <section class='sidebarContainer'>
-    <div *ngFor="let item of menuList" class="menu" [ngClass]="{active: item.isActive}">
+    <div *ngFor="let item of menuList" class="menu" [routerLink]="[item.link]" routerLinkActive="active"
+      [routerLinkActiveOptions]="{exact:true}">
       <div class="scroller"></div>
       <img [src]="item.image" [alt]="item.label">
       {{item.label}}

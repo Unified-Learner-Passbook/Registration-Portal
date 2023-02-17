@@ -1,95 +1,49 @@
 .text-yellow {
   color: #ff740f;
 }
-
 .text-blue {
   color: #050c44;
 }
-
 .page-title {
-  font-family: Poppins;
-  font-size: 38px;
-  font-weight: 700;
-  line-height: 57px;
-  letter-spacing: 0em;
+  font-size: 2.4rem;
+  font-weight: 600;
   margin-top: 50px;
 }
 .horizontal-line {
-  height: 0px;
-  width: 447.0000000000017px;
-  left: 800 px;
-  top: 300px;
-  border-radius: nullpx;
-  margin-left: 380px;
-  margin-top: 15px;
+  height: 0;
+  width: 50%;
+  margin: 0 auto;
 }
-.circleBase {
-  border-radius: 50%;
-}
-
-.circle1 {
-  width: 41.14px;
-  height: 41.14px;
-  background: #050c44;
-  margin-top: 8.07px;
-  margin-left: 330px;
-}
-
 .bullet-point {
   width: 40%;
-  font-family: Poppins;
-  font-size: 24px;
+  font-size: 1.2rem;
   font-weight: 400;
-  /* line-height: 25px; */
-  letter-spacing: 0em;
   text-align: center;
   color: #050c44;
-  margin: 0px auto;
+  margin: 2rem auto 0;
   list-style-type: none;
 }
 .register-button {
-  height: 52px;
-  width: 350px;
-  left: 0px;
-  top: 0px;
+  height: 3rem;
+  width: 16em;
   border-radius: 5px;
-  padding: 14px 140px 14px 140px;
-  background-color: #050c44;
-  margin-top: 40px;
-
-  font-family: Poppins;
-  font-size: 16px;
+  margin-top: 4rem;
   font-weight: 600;
-  line-height: 24px;
-  letter-spacing: 0em;
-  text-align: left;
-  color: #dcdcdc;
 }
-
 .check-icon {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 30px;
-  width: 30px;
-  color: #fff;
-  background: #050c44;
-  border-radius: 50%;
-  margin-right: 10px;
-}
-
-svg {
-  height: 15px;
-  width: 15px;
-}
-.shift {
-  margin-left: 20px;
+  img {
+    width: 2rem;
+    height: 2rem;
+  }
+  margin-right: 1rem;
 }
 .bullet-point li {
   display: flex;
   line-height: 1;
-  padding: 15px 0;
+  justify-content: flex-start;
+  align-items: baseline;
+  padding: 1rem 0;
 }
 .reg-img {
-  margin-top: 15px;
+  margin-top: 1rem;
 }

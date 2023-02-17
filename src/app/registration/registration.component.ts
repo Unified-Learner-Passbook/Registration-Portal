@@ -7,6 +7,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RegistrationComponent implements OnInit {
 
+  featureList = [
+    'Certificate verification now simplified',
+    'View dozens of scholarships',
+    'One click apply'
+  ]
   constructor() { }
 
   ngOnInit(): void {
