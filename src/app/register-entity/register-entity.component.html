@@ -5,39 +5,52 @@
 
   <div>
     <div class="flex-container">
-      <div>
-        <label>Select Grade</label> <br />
-        <select class="header-btn" aria-label="Default select example">
-          <option selected>Select grade</option>
+      <div class="d-flex flex-column align-items-start">
+        <label>Select Grade</label>
+        <select class="header-btn" aria-label="Default select example" [(ngModel)]="model.grade" #grade="ngModel">
+          <option [ngValue]="undefined" [disabled]="true">Select grade</option>
           <option *ngFor="let grade of grades" [value]="grade.value">{{grade.label}}</option>
         </select>
       </div>
-      <div>
-        <label for="academicYear">Select Academic year</label><br />
-        <select class="header-btn" id="academicYear">
-          <option selected>Select Year</option>
+      <div class="d-flex flex-column align-items-start">
+        <label for="academicYear">Select Academic year</label>
+        <select class="header-btn" id="academicYear" [(ngModel)]="model.academicYear" #academicYear="ngModel">
+          <option [ngValue]="undefined" [disabled]="true">Select Year</option>
           <option *ngFor="let year of academicYearRange" [value]="year">{{year}}</option>
         </select>
       </div>
-      <div>
+      <div class="d-flex flex-column align-items-start">
+        <label for="certificateType">Select Type</label>
+        <select class="header-btn" id="certificateType" [(ngModel)]="model.certificateType" #certificateType="ngModel">
+          <option [ngValue]="undefined" [disabled]="true">Select Type</option>
+          <option *ngFor="let type of certificateTypes" [value]="type.value">{{type.label}}</option>
+        </select>
+      </div>
+      <div class="d-flex flex-column align-items-start">
         <button class="btn btn-outline-secondary header-btn" (click)="downloadTemplate()">Download CSV
           Template&nbsp;&nbsp;<i class="fa fa-solid fa-download"></i></button>
       </div>
-      <div>
-        <input #fileUploadSimple [accept]="'.csv'" type="file" class="file-input" (change)="importDataFromCSV($event)"
-          hidden="true" />
-        <button class="btn btn-outline-secondary header-btn" (click)="fileUploadSimple.click()">Upload CSV
-          Template&nbsp;&nbsp;<i class="fa fa-solid fa-upload"></i></button>
+      <div class="d-flex flex-column align-items-start">
+        <input #fileUploadSimple [accept]="'.csv'" type="file" class="file-input" (click)="$event.target.value=null"
+          (change)="importDataFromCSV($event)" hidden="true" />
+        <button class="btn btn-outline-secondary header-btn" (click)="fileUploadSimple.click()"
+          [disabled]="!(model.grade && model.academicYear && model.certificateType)">Upload CSV Template&nbsp;<i
+            class="fa fa-solid fa-upload"></i></button>
       </div>
     </div>
   </div>
 
   <div class="student-list">
+    <div class="d-flex justify-content-center" *ngIf="isLoading">
+      <div class="spinner-border" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
     <ngb-alert type="danger" *ngIf="errorMessage">{{ errorMessage }}</ngb-alert>
     <table class="table">
       <thead>
         <tr>
-          <th scope="col" *ngFor="let columnValue of tableColumns">{{columnValue  | titlecase}}</th>
+          <th scope="col" *ngFor="let columnValue of tableColumns">{{columnValue | titlecase}}</th>
         </tr>
       </thead>
       <tbody>
@@ -50,7 +63,7 @@
     </table>
   </div>
   <div class="d-flex justify-content-end align-items-start p-2" *ngIf="allDataRows?.length">
-    <button type="button" class="btn btn-primary">Save and Verify Student</button>
+    <button type="button" class="btn btn-primary" (click)="saveAndVerify()">Save and Verify Student</button>
     <ngb-pagination class="ml-2" [collectionSize]="allDataRows?.length" [(page)]="page" [pageSize]="pageSize"
       (pageChange)="pageChange()">
     </ngb-pagination>
