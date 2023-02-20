@@ -40,16 +40,24 @@ this.getRecords();
   }
 
   getRecords(){
-    let payout = {
-      "filters": {}
+  //   let payout = {
+  //     "filters": {}
+  // }
+  //   this.generalService.postData('/' + this.documentName + '/search', payout).subscribe((res) => {
+  //   console.log(res);
+  //   this.recordItems = res;
+  //   }, err=>{
+  //     this.recordItems = [];
+  //     console.log(err);
+  //   });
+
+  const payload = {
+      "issuer": "did:ulp:f08f7782-0d09-4c47-aacb-9092113bc33e"
   }
-    this.generalService.postData('/' + this.documentName + '/search', payout).subscribe((res) => {
-    console.log(res);
+  this.generalService.postData('http://64.227.185.154:3002/credentials', payload).subscribe((res) => {
+    console.log("res", res);
     this.recordItems = res;
-    }, err=>{
-      this.recordItems = [];
-      console.log(err);
-    });
+  });
   }
 
   addRecord()

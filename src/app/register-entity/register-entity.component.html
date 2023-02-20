@@ -34,7 +34,7 @@
         <input #fileUploadSimple [accept]="'.csv'" type="file" class="file-input" (click)="$event.target.value=null"
           (change)="importDataFromCSV($event)" hidden="true" />
         <button class="btn btn-outline-secondary header-btn" (click)="fileUploadSimple.click()"
-          [disabled]="!(model.grade && model.academicYear && model.certificateType)">Upload CSV Template&nbsp;<i
+          [disabled]="!(model.grade && model.academicYear && model.certificateType && showProgress)">Upload CSV Template&nbsp;<i
             class="fa fa-solid fa-upload"></i></button>
       </div>
     </div>
