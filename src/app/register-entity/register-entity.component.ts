@@ -3,6 +3,8 @@ import Papa from "papaparse";
 import { DataService } from '../services/data/data-request.service';
 import { ToastMessageService } from '../services/toast-message/toast-message.service';
 import * as _ from 'lodash-es'
+import { concatMap, tap, toArray } from 'rxjs/operators';
+import { from } from 'rxjs';
 @Component({
   selector: 'app-register-entity',
   templateUrl: './register-entity.component.html',
@@ -74,6 +76,10 @@ export class RegisterEntityComponent implements OnInit {
   academicYearRange: string[] = [];
   model: any = {};
   isLoading = false;
+  showProgress = false;
+  progress = 0;
+  currentBatch = 0;
+  totalBatches: number;
 
   page = 1;
   pageSize = 30;
@@ -88,7 +94,7 @@ export class RegisterEntityComponent implements OnInit {
   setAcademicYear() {
     for (let fromYear = this.startYear; fromYear < this.currentYear; fromYear++) {
       // const toYear = (fromYear + 1).toString().substring(2);
-      this.academicYearRange.push(`${fromYear}-${fromYear+1}`);
+      this.academicYearRange.push(`${fromYear}-${fromYear + 1}`);
     }
   }
 
@@ -175,10 +181,38 @@ export class RegisterEntityComponent implements OnInit {
     console.log("parsedCSV", this.parsedCSV);
     console.log("model", this.model);
 
-    const dataBatches = _.chunk(this.parsedCSV, 10);
+    const dataBatches = _.chunk(this.parsedCSV, 20);
     console.log("dataBatches", dataBatches);
-    this.importData(dataBatches[0]);
     this.isLoading = true;
+    this.showProgress = true;
+    this.progress = 0;
+    this.totalBatches = dataBatches.length;
+
+    from(dataBatches)
+      .pipe(
+        concatMap((data: any[]) => {
+          return this.importData(data)
+        }),
+        tap((response) => {
+          console.log(response);
+          this.currentBatch++;
+          this.progress = Math.ceil((this.currentBatch / this.totalBatches) * 100);
+        }),
+        toArray()
+      ).subscribe((res) => {
+        console.log("final", res);
+        this.toastMsg.success('', 'Students data imported successfully!');
+        this.resetTableData();
+        this.isLoading = false;
+        setTimeout(() => {
+          this.progress = 0;
+          this.showProgress = false;
+        }, 2000);
+      }, (error) => {
+        console.log("error", error);
+        this.toastMsg.error('', 'Error while importing data');
+        this.isLoading = false;
+      });
   }
 
   importData(list: any[]) {
@@ -192,17 +226,7 @@ export class RegisterEntityComponent implements OnInit {
         studentData: list
       }
     }
-    this.dataService.post(request).subscribe((res) => {
-      console.log("res", res);
-      if (res.success) {
-        this.toastMsg.success('', 'Students data imported successfully!');
-        this.resetTableData();
-        this.isLoading = false;
-      }
-    },(error) => {
-      this.toastMsg.error('', 'Error while importing data');
-      this.isLoading = false;
-    } );
+    return this.dataService.post(request);
   }
 }
 
