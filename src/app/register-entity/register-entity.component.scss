@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap-reverse;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: flex-start;
   align-content: flex-start;
 
@@ -12,16 +12,18 @@
   }
 }
 
-.header-btn {
+.filter-btn {
   background: #fff !important;
   color: #484545 !important;
   box-shadow: 0px 4px 11px rgba(0, 0, 0, 0.16) !important;
   border: 0;
   border-radius: 6px !important;
   cursor: pointer;
-  padding: 8px !important;
-  font-size: 1rem !important;
+  padding: 15px 26px 15px 12px !important;
   width: 100%;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 18px;
 }
 .student-list {
   margin: 4px, 4px;
@@ -48,6 +50,7 @@ table {
 
 .title {
   color: #414141;
+  font-size: 16px;
 }
 
 .table-footer {
@@ -62,4 +65,17 @@ table {
     background-color: var(--primaryColor);
     border-color: var(--primaryColor);
   }
+}
+
+.filter-bx{
+  label{
+    font-size: 14px;
+    line-height: 21px;
+    color: #434343;
+  }
+}
+
+.fa-solid{
+  font-size: 16px;
+  padding-left: 15px;
 }

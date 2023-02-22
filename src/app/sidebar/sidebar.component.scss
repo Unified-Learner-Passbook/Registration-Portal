@@ -47,12 +47,13 @@
   border-radius: 8px;
 
   .title {
-    margin-bottom: 1rem;
+    font-weight: 600;
+    font-size: 14px;
   }
 
   .info {
-    height: 1.2rem;
-    width: 1.2rem;
+    height: 1rem;
+    width: 1rem;
     margin-right: 0.5rem;
   }
   ul {
@@ -60,14 +61,15 @@
     padding-inline-start: 0;
 
     li {
-      font-size: 0.9rem;
+      font-size: 12.8193px;
       font-weight: 500;
       margin-top: 0.5rem;
       color: var(--primaryColor);
 
       .step {
-        font-size: 0.8rem;
-        color: #450e0e;
+        font-size: 10px;
+        color: #414141;
+        line-height: 15px;
       }
     }
   }

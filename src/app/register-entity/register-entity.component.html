@@ -1,41 +1,41 @@
-<div>
-  <h5 class="text-center my-4 title">
+<div class="container bg-gray-100">
+  <h5 class="text-center my-4 title pt-4">
     To register students download excel template, populate student details and upload
   </h5>
 
   <div>
-    <div class="flex-container">
+    <div class="flex-container filter-bx">
       <div class="d-flex flex-column align-items-start">
         <label>Select Grade</label>
-        <select class="header-btn" aria-label="Default select example" [(ngModel)]="model.grade" #grade="ngModel">
+        <select class="filter-btn" aria-label="Default select example" [(ngModel)]="model.grade" #grade="ngModel">
           <option [ngValue]="undefined" [disabled]="true">Select grade</option>
           <option *ngFor="let grade of grades" [value]="grade.value">{{grade.label}}</option>
         </select>
       </div>
       <div class="d-flex flex-column align-items-start">
         <label for="academicYear">Select Academic year</label>
-        <select class="header-btn" id="academicYear" [(ngModel)]="model.academicYear" #academicYear="ngModel">
+        <select class="filter-btn" id="academicYear" [(ngModel)]="model.academicYear" #academicYear="ngModel">
           <option [ngValue]="undefined" [disabled]="true">Select Year</option>
           <option *ngFor="let year of academicYearRange" [value]="year">{{year}}</option>
         </select>
       </div>
       <div class="d-flex flex-column align-items-start">
         <label for="certificateType">Select Type</label>
-        <select class="header-btn" id="certificateType" [(ngModel)]="model.certificateType" #certificateType="ngModel">
+        <select class="filter-btn" id="certificateType" [(ngModel)]="model.certificateType" #certificateType="ngModel">
           <option [ngValue]="undefined" [disabled]="true">Select Type</option>
           <option *ngFor="let type of certificateTypes" [value]="type.value">{{type.label}}</option>
         </select>
       </div>
       <div class="d-flex flex-column align-items-start">
-        <button class="btn btn-outline-secondary header-btn" (click)="downloadTemplate()">Download CSV
-          Template&nbsp;&nbsp;<i class="fa fa-solid fa-download"></i></button>
+        <button class="btn btn-outline-secondary filter-btn" (click)="downloadTemplate()">Download CSV
+          Template&nbsp;&nbsp;<i class="fa fa-solid fa-file-download"></i></button>
       </div>
       <div class="d-flex flex-column align-items-start">
         <input #fileUploadSimple [accept]="'.csv'" type="file" class="file-input" (click)="$event.target.value=null"
           (change)="importDataFromCSV($event)" hidden="true" />
-        <button class="btn btn-outline-secondary header-btn" (click)="fileUploadSimple.click()"
+        <button class="btn btn-outline-secondary filter-btn" (click)="fileUploadSimple.click()"
           [disabled]="!(model.grade && model.academicYear && model.certificateType)">Upload CSV Template&nbsp;<i
-            class="fa fa-solid fa-upload"></i></button>
+            class="fa fa-solid fa-file-upload"></i></button>
       </div>
     </div>
   </div>
