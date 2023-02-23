@@ -1,10 +1,10 @@
-<app-header [headerFor]='headerName'></app-header>
+<!-- <app-header [headerFor]='headerName'></app-header> -->
 <br />
 
 
 
-
 <div class="container">
+    <h3>Issue Credentials</h3>
     <!-- <div class="d-flex flex-row flex-nowrap overflow-auto">
         <div class="card card-block small-card mx-2 p-2" *ngFor="let card of cards">
             <p class="p16 mb-1">{{card?.title}}</p>
@@ -27,8 +27,9 @@
         <span class="heading-2" *ngIf="recordItems?.length > 1">{{recordItems?.length}} Records</span>
         
 
-        <a> <button type="button" routerLink="/add-records/{{documentName}}"
-            class="btn btn-primary btn-primary-sm text-capitalize float-end p0">Add </button></a>
+        <!-- <a> 
+            <button type="button" routerLink="/add-records/{{documentName}}"
+            class="btn btn-primary btn-primary-sm text-capitalize float-end p0">Add </button></a> -->
     </div>
 
     <div class="card" *ngIf="!recordItems?.length">
@@ -41,15 +42,16 @@
     <div class="card" *ngIf="recordItems?.length">
     <table class="card-body">
         <tr>
-          <th class="heading-4 sb-gray-color">Name</th>
-          <th class="heading-4 sb-gray-color">Mobile Number </th>
-          <th class="heading-4 sb-gray-color">Date</th>
+          <th class="heading-4 sb-gray-color">Id</th>
+          <th class="heading-4 sb-gray-color">Grade</th>
           <th></th>
         </tr>
         <tr *ngFor="let item of recordItems" class="p-3">
-          <td class="heading-3 sb-text-primary">{{item?.name}}</td>
+          <!-- <td class="heading-3 sb-text-primary">{{item?.name}}</td>
           <td class="heading-3">{{item?.contact}}</td>
-          <td class="heading-3">{{item?.date}}</td>
+          <td class="heading-3">{{item?.date}}</td> -->
+          <td class="heading-3">{{item?.signed?.credentialSubject?.id}}</td>
+          <td class="heading-3">{{item?.signed?.credentialSubject?.grade}}</td>
           <td class="d-flex justify-content-end">
                <!--   <div (click)="downloadVc(item)">
                 <i class="fa fa-download sb-text-primary cursor-pointer" aria-hidden="true" title="Download"></i>

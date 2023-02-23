@@ -1,10 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import Papa from "papaparse";
+import * as Papa from "papaparse";
 import { DataService } from '../services/data/data-request.service';
 import { ToastMessageService } from '../services/toast-message/toast-message.service';
 import * as _ from 'lodash-es'
 import { concatMap, tap, toArray } from 'rxjs/operators';
-import { from } from 'rxjs';
+import { from, throwError } from 'rxjs';
+import { CsvService } from '../services/csv/csv.service';
+import { RequestParam } from '../interfaces/httpOptions.interface';
+import { HttpParams } from '@angular/common/http';
+
 @Component({
   selector: 'app-register-entity',
   templateUrl: './register-entity.component.html',
@@ -60,15 +64,18 @@ export class RegisterEntityComponent implements OnInit {
   certificateTypes = [
     {
       label: 'Proof of Enrollment',
-      value: 'ProofOfEnrollment'
+      value: 'proofOfEnrollment',
+      isEnabled: true 
     },
     {
       label: 'Proof of Assessment',
-      value: 'ProofOfAssessment'
+      value: 'proofOfAssessment',
+      isEnabled: false
     },
     {
       label: 'Proof of Benefits',
-      value: 'ProofOfBenefits'
+      value: 'proofOfBenefits',
+      isEnabled: false
     }
   ]
   startYear = 2000;
@@ -85,7 +92,7 @@ export class RegisterEntityComponent implements OnInit {
   pageSize = 30;
 
   errorMessage: string;
-  constructor(private dataService: DataService, private toastMsg: ToastMessageService) { }
+  constructor(private dataService: DataService, private toastMsg: ToastMessageService, private csvService: CsvService) { }
 
   ngOnInit(): void {
     this.setAcademicYear();
@@ -99,12 +106,30 @@ export class RegisterEntityComponent implements OnInit {
   }
 
   downloadTemplate() {
-    let link = document.createElement("a");
-    link.setAttribute('type', 'hidden');
-    link.download = "registration-template";
-    link.href = "assets/template/registration-template.csv";
-    link.click();
-    link.remove();
+    // let link = document.createElement("a");
+    // link.setAttribute('type', 'hidden');
+    // link.download = "registration-template";
+    // link.href = "assets/template/registration-template.csv";
+    // link.click();
+    // link.remove();
+
+    if (this.model?.certificateType) {
+      this.csvService.getTemplateSchema('did:ulpschema:8b8eda70-6dfb-43e6-8a8a-6084188ce516')
+        .pipe(
+          tap((result: any) => {
+            if (result?.schema?.properties) {
+              const columnFields = Object.keys(result.schema.properties);
+              const csvContent = this.csvService.generateCSV(columnFields);
+              this.csvService.downloadCSVTemplate(csvContent, `${this.model.certificateType}-template`);
+            } else {
+              throwError(() => new Error('properties unavailable in the schema'));
+            }
+          })).subscribe(() => { }, (error) => {
+            const errorMessage = error?.message ? error.message : 'Unable to download Template'
+            this.toastMsg.error('', errorMessage);
+            console.error(errorMessage);
+          });
+    }
   }
 
   resetTableData() {
@@ -146,6 +171,10 @@ export class RegisterEntityComponent implements OnInit {
         }
       });
     });
+  }
+
+  onSelectChange(event: MouseEvent | KeyboardEvent) {
+
   }
 
   private getTextFromFile(inputValue: any): Promise<string> {
@@ -212,18 +241,19 @@ export class RegisterEntityComponent implements OnInit {
         console.log("error", error);
         this.toastMsg.error('', 'Error while importing data');
         this.isLoading = false;
+        this.showProgress = false;
       });
   }
 
   importData(list: any[]) {
-    const request = {
-      url: 'https://ulp.uniteframework.io/middleware/v1/credentials/data-import',
+    const request: RequestParam = {
+      url: `https://ulp.uniteframework.io/middleware/v1/credentials/upload`,
+      param: new HttpParams().append('type', this.model.certificateType),
       data: {
-        schoolId: "09270809901",
+        schoolDid: "09270809901",
         grade: this.model.grade,
         academic_year: this.model.academicYear,
-        type: this.model.certificateType,
-        studentData: list
+        credentialSubject: list
       }
     }
     return this.dataService.post(request);

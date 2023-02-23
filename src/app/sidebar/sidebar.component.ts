@@ -22,7 +22,7 @@ export class SidebarComponent implements OnInit {
     }, 
     {
       label: 'Issue Credentials',
-      link: '',
+      link: 'issue-credentials',
       image: 'assets/icons/calendar.svg',
       isActive: false
     }, 
