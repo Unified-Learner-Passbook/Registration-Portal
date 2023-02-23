@@ -3,27 +3,27 @@ import { HttpParams, HttpHeaders } from '@angular/common/http';
  * http method options
  */
 export interface HttpOptions {
-/**
- * http header
- */
-  headers?: HttpHeaders | {[header: string]: string | any};
-/**
- * http params
- */
+  /**
+   * http header
+   */
+  headers?: HttpHeaders | { [header: string]: string | any };
+  /**
+   * http params
+   */
   params?: HttpParams | {
-      [param: string]: string | string[];
+    [param: string]: string | string[];
   };
-/**
- * report Progress
- */
+  /**
+   * report Progress
+   */
   reportProgress?: boolean;
-/**
- * response Type
- */
+  /**
+   * response Type
+   */
   responseType?: 'json';
-/**
- * body for delete
- */
+  /**
+   * body for delete
+   */
   body?: any;
 
   /**
@@ -31,4 +31,14 @@ export interface HttpOptions {
    */
   observe?: any;
 
+}
+
+
+export interface RequestParam {
+  url: string;
+  param?: HttpParams | {
+    [param: string]: string | string[];
+  }
+  header?: HttpHeaders | { [header: string]: string | any };
+  data?: any;
 }

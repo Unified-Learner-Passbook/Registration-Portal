@@ -20,6 +20,11 @@
       "changeOrigin": true,
       "logLevel": "debug",
       "secure": false
-
+    },
+    "/schema/jsonld": {
+      "target": "http://64.227.185.154:3001",
+      "changeOrigin": true,
+      "logLevel": "debug",
+      "secure": false
     }
   }
