@@ -1,15 +1,9 @@
 header {
-  display: flex;
-  justify-content: space-between;
-  flex-direction: row;
-  align-items: center;
-  gap: 1rem;
   margin: 1rem;
-
   .title {
     color: var(--primaryColor);
     font-weight: 600;
-    font-size: 2rem;
+    font-size: 28px;
     .highlight-title {
       color: #ff740f;
     }
@@ -21,12 +15,13 @@ header {
   }
 
   .header-btns {
+    position: absolute;
+    right: 36px;
+    top: 30px;
     img {
       margin-left: 8px;
       height: 1.2rem;
       width: 1.2rem;
     }
   }
-
-  
 }
