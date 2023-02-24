@@ -1,11 +1,5 @@
 header {
-  // display: flex;
-  // justify-content: space-between;
-  // flex-direction: row;
-  // align-items: center;
-  // gap: 1rem;
   margin: 1rem;
-
   .title {
     color: var(--primaryColor);
     font-weight: 600;
@@ -30,6 +24,4 @@ header {
       width: 1.2rem;
     }
   }
-
-  
 }
