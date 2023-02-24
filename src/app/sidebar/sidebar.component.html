@@ -2,22 +2,21 @@
   <section class='sidebarContainer'>
     <div *ngFor="let item of menuList" class="menu" [routerLink]="[item.link]" routerLinkActive="active"
       [routerLinkActiveOptions]="{exact:true}">
-      <div class="scroller"></div>
-      <img [src]="item.image" [alt]="item.label">
-      {{item.label}}
+      <i [class]="item.class" ></i>
+      <div class="title">{{item.label}}</div>
     </div>
   </section>
 
   <section>
     <div class="instructions">
-      <h6 class="font-weight-bold text-primary-color title">
+      <h6 class="text-primary-color title">
         <img src="assets/icons/info.svg" class="info" alt="info">
         Instructions
       </h6>
       <ul>
-        <li><span class="step">Step1:</span>&nbsp;Download CSV Template</li>
-        <li><span class="step">Step2:</span>&nbsp;Select Grade and AY</li>
-        <li><span class="step">Step3:</span>&nbsp;Upload filled up CSV and review / edit/ delete entries</li>
+        <li><span class="step">Step 1:</span>&nbsp;Download CSV Template</li>
+        <li><span class="step">Step 2:</span>&nbsp;Select Grade and AY</li>
+        <li><span class="step">Step 3:</span>&nbsp;Upload filled up CSV and review / edit/ delete entries</li>
       </ul>
     </div>
   </section>

@@ -11,25 +11,25 @@ export class SidebarComponent implements OnInit {
     {
       label: 'Register Students',
       link: 'register-entity',
-      image: 'assets/icons/home.svg',
+      class: 'fa fa-home',
       isActive: true
     }, 
     {
       label: 'Add Issuer Staff',
       link: '',
-      image: 'assets/icons/degree.svg',
+      class: 'fa fa-graduation-cap',
       isActive: false
     }, 
     {
       label: 'Issue Credentials',
       link: 'issue-credentials',
-      image: 'assets/icons/calendar.svg',
+      class: 'fa fa-calendar-check',
       isActive: false
     }, 
     {
       label: 'Settings',
       link: '',
-      image: 'assets/icons/gear.svg',
+      class: 'fa fa-cog',
       isActive: false
     }, 
   ];

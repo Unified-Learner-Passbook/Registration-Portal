@@ -4,8 +4,8 @@
   margin-left: 1rem;
 }
 .page-title {
-  font-size: 2.4rem;
-  font-weight: 600;
+  font-size: 34px;
+  font-weight: 700;
   margin-top: 50px;
 }
 .text-blue {
@@ -14,37 +14,28 @@
 .text-yellow {
   color: #ff740f;
 }
-.horizontal-line {
-  height: 0;
-  width: 50%;
-  margin: 0 auto;
-}
 .headline2 {
   color: #555454;
-  font-size: 1.3rem;
+  font-size: 18px;
   font-weight: 400;
   line-height: 36px;
   text-align: center;
 }
-.btn {
-  height: 45px;
-}
+
 .vertically-center {
-  width: 30%;
+  width: 50%;
   margin: 0 auto;
-  margin-top: 2rem;
+  text-align: center;
 }
-.black-border {
+.input-phone {
   border: 1px solid #4f4f4f;
+  height: 45px;
+  background: #fff;
 }
 .mobile_input_height {
   height: calc(1.5em + 0.75rem + 12px);
 }
-.sendotp-button {
-  height: 52px;
-  margin-top: 20px;
-  font-weight: 600;
-}
+
 .verify-btn {
   margin-left: 100px;
 }
@@ -61,4 +52,22 @@
   text-align: center;
   color: #ff4545;
   margin-top: 0.8rem;
+}
+.w-30{
+  width: 30%;
+}
+.w-40{
+  width: 39%;
+}
+.w-283{
+  width: 283px;
+}
+.p-43{
+  padding: 9px 43px;
+}
+.p-166{
+  padding: 12px 166px;
+}
+.jc-center{
+  justify-content: center;
 }
