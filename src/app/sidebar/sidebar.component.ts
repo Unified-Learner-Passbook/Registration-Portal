@@ -22,7 +22,7 @@ export class SidebarComponent implements OnInit {
     }, 
     {
       label: 'Issue Credentials',
-      link: '',
+      link: 'issue-credentials',
       class: 'fa fa-calendar-check',
       isActive: false
     }, 

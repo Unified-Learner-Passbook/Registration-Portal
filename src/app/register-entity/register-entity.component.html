@@ -21,20 +21,20 @@
       </div>
       <div class="d-flex flex-column align-items-start">
         <label for="certificateType">Select Type</label>
-        <select class="filter-btn" id="certificateType" [(ngModel)]="model.certificateType" #certificateType="ngModel">
+        <select class="filter-btn" id="certificateType" (change)="onSelectChange($event)" [(ngModel)]="model.certificateType" #certificateType="ngModel">
           <option [ngValue]="undefined" [disabled]="true">Select Type</option>
-          <option *ngFor="let type of certificateTypes" [value]="type.value">{{type.label}}</option>
+          <option *ngFor="let type of certificateTypes" [value]="type.value" [disabled]="!type.isEnabled">{{type.label}}</option>
         </select>
       </div>
       <div class="d-flex flex-column align-items-start">
-        <button class="btn btn-outline-secondary filter-btn" (click)="downloadTemplate()">Download CSV
+        <button class="btn btn-outline-secondary filter-btn" [disabled]="!model?.certificateType" (click)="downloadTemplate()">Download CSV
           Template&nbsp;&nbsp;<i class="fa fa-solid fa-file-download"></i></button>
       </div>
       <div class="d-flex flex-column align-items-start">
         <input #fileUploadSimple [accept]="'.csv'" type="file" class="file-input" (click)="$event.target.value=null"
           (change)="importDataFromCSV($event)" hidden="true" />
         <button class="btn btn-outline-secondary filter-btn" (click)="fileUploadSimple.click()"
-          [disabled]="!(model.grade && model.academicYear && model.certificateType)">Upload CSV Template&nbsp;<i
+          [disabled]="!(model.grade && model.academicYear && model.certificateType && !showProgress)">Upload CSV Template&nbsp;<i
             class="fa fa-solid fa-file-upload"></i></button>
       </div>
     </div>

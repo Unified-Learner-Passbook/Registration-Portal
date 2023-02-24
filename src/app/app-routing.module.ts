@@ -111,7 +111,8 @@ const routes: Routes = [
  { path: 'template', component: CreateCertificateComponent },
  
 //  { path: 'dashboard', component: DashboardComponent , canActivate: [AuthGuard] },
- { path: 'records', component: GetRecordsComponent , canActivate: [AuthGuard] },
+//  { path: 'records', component: GetRecordsComponent , canActivate: [AuthGuard] },
+// { path: 'records', component: GetRecordsComponent },
  { path: 'records/:document', component: GetRecordsComponent , canActivate: [AuthGuard] },
  { path: 'add-records/:document', component: AddRecordsComponent , canActivate: [AuthGuard] },
 //  { path: 'certificate/:form', component: AddCertificateComponent , canActivate: [AuthGuard] },
@@ -120,9 +121,10 @@ const routes: Routes = [
  { path: 'preview-html', component: PreviewHtmlComponent  , canActivate: [AuthGuard] },
  { path: 'verify', component: VerifyComponent  },
  { path: 'advance-editor', component: AdvanceEditorComponent  },
- { path: 'pdf-view', component: PdfViewComponent  , canActivate: [AuthGuard] },
- { path: 'pdf-view/:document/:id', component: PdfViewComponent  , canActivate: [AuthGuard] },
- 
+//  { path: 'pdf-view', component: PdfViewComponent  , canActivate: [AuthGuard] },
+//  { path: 'pdf-view/:document/:id', component: PdfViewComponent  , canActivate: [AuthGuard] },
+{ path: 'pdf-view', component: PdfViewComponent },
+{ path: 'pdf-view/:document/:id', component: PdfViewComponent},
 
 
 
@@ -141,6 +143,10 @@ const routes: Routes = [
     {
       path: 'register-entity',
       component: RegisterEntityComponent
+    },
+    {
+      path: 'issue-credentials',
+      component: GetRecordsComponent
     }
   ]
  }
