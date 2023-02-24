@@ -1,6 +1,6 @@
 <div class="container bg-gray-100">
-  <h5 class="text-center my-4 title pt-4">
-    To register students download excel template, populate student details and upload
+  <h5 class="text-center mb-5 title pt-4">
+    To register students download excel template, populate student details and upload - <a href="#" class="text-gray-100">Demo (Video)</a>
   </h5>
 
   <div>
@@ -39,6 +39,30 @@
       </div>
     </div>
   </div>
+  <!-- Static registration steps design -->
+  <!-- <div class="card-bx text-center">
+    <h1 class="heading1 p-5">Student Registration</h1>
+      <div class="vertical-card">
+        <div class="d-flex align-item-center">
+          <div>
+            Register, Issue and Manage enrolled certificates
+          </div> 
+          <div>
+            <i class="fa fa-arrow-alt-circle-right fs-28"></i>
+          </div>
+        </div>
+    </div>
+    <div class="vertical-card mt-5">
+      <div class="d-flex align-item-center">
+        <div>
+          Student registration claim management
+        </div> 
+        <div>
+          <i class="fa fa-arrow-alt-circle-right fs-28"></i>
+        </div>
+      </div>
+  </div>  
+  </div> -->
 
   <div class="student-list">
     <ngb-progressbar *ngIf="showProgress" type="info" [value]="progress" [striped]="true" [animated]="true">{{progress}}%</ngb-progressbar>
@@ -48,7 +72,7 @@
       </div>
     </div>
     <ngb-alert type="danger" *ngIf="errorMessage">{{ errorMessage }}</ngb-alert>
-    <table class="table">
+    <table class="table" cellpadding="0" cellspacing="0">
       <thead>
         <tr>
           <th scope="col" *ngFor="let columnValue of tableColumns">{{columnValue | titlecase}}</th>
@@ -63,8 +87,8 @@
       </tbody>
     </table>
   </div>
-  <div class="d-flex justify-content-end align-items-start p-2 table-footer" *ngIf="allDataRows?.length">
-    <button type="button" class="btn btn-primary" (click)="saveAndVerify()">Save and Verify Student</button>
+  <div class="d-flex justify-content-end align-items-start p-2 pb-3 pt-5 table-footer" *ngIf="allDataRows?.length">
+    <button type="button" class="custom-button blue-button mt-10 p-65" (click)="saveAndVerify()">Save and Verify Student</button>
     <ngb-pagination class="ml-2" [collectionSize]="allDataRows?.length" [(page)]="page" [pageSize]="pageSize"
       (pageChange)="pageChange()">
     </ngb-pagination>

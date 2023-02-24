@@ -1133,3 +1133,8 @@ margin-right :15px !important;
   .font-600{
     font-weight: 600;
   }
+  .pagination li:last-child a,.pagination li:first-child a{
+    border: none !important;
+      background: none !important;
+      font-size: 26px;
+  }
