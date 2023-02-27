@@ -4,7 +4,31 @@
     <app-sidebar></app-sidebar>
   </aside>
   <main>
-    <h1 *ngIf="!isChildRoute"></h1>
+    <div *ngIf="!isChildRoute">
+      <div class="card-bx text-center">
+        <h1 class="heading1 pb-5">Student Registration</h1>
+          <div class="vertical-card">
+            <div class="d-flex align-item-center" routerLink="register-entity">
+              <div>
+                Register, Issue and Manage enrolled certificates
+              </div> 
+              <div>
+                <i class="fa fa-arrow-alt-circle-right fs-28"></i>
+              </div>
+            </div>
+        </div>
+        <div class="vertical-card mt-5">
+          <div class="d-flex align-item-center">
+            <div>
+              Student registration claim management
+            </div> 
+            <div>
+              <i class="fa fa-arrow-alt-circle-right fs-28"></i>
+            </div>
+          </div>
+      </div>  
+      </div>
+    </div>
     <router-outlet></router-outlet>
   </main>
 </section>
