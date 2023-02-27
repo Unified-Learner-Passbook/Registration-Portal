@@ -9,7 +9,6 @@
   div {
     color: #9c9c9c;
     margin: 0.5rem 0.5rem 0.5rem 0;
-    padding: 0.5rem 0.5rem 0.5rem 0;
     font-weight: 400;
   }
 
@@ -73,4 +72,9 @@
       }
     }
   }
+}
+.logout-icon{
+  position: absolute;
+  left: 28px;
+  bottom: 92px;
 }

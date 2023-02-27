@@ -90,7 +90,7 @@ table {
 
 .filter-bx{
   label{
-    font-size: 14px;
+    font-size: 12px;
     line-height: 21px;
     color: #434343;
   }
@@ -136,4 +136,20 @@ table {
 }
 .p-65{
   padding: 12px 65px;
+}
+.verify{
+  border-left: solid 3px #04bc00;
+}
+.warning{
+  border-left: solid 3px #D64040;
+}
+.btn-warn{
+    background: none;
+    border: solid 1px #D64040;
+    color: #D64040;
+    padding: 6px 31px;
+    border-radius: 3px;
+}
+.pr-22{
+  padding-right: 22px;
 }
