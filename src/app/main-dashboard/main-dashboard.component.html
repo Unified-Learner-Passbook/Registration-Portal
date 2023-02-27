@@ -4,7 +4,7 @@
     <app-sidebar></app-sidebar>
   </aside>
   <main>
-    <!-- <app-register-entity></app-register-entity> -->
+    <h1 *ngIf="!isChildRoute"></h1>
     <router-outlet></router-outlet>
   </main>
 </section>
