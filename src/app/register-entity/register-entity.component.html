@@ -4,36 +4,38 @@
   </h5>
 
   <div>
-    <div class="flex-container filter-bx">
-      <div class="d-flex flex-column align-items-start">
+    <div class="row filter-bx">
+      <div class="col-md-2">
         <label>Select Grade</label>
         <select class="filter-btn" aria-label="Default select example" [(ngModel)]="model.grade" #grade="ngModel">
           <option [ngValue]="undefined" [disabled]="true">Select grade</option>
           <option *ngFor="let grade of grades" [value]="grade.value">{{grade.label}}</option>
         </select>
       </div>
-      <div class="d-flex flex-column align-items-start">
+      <div class="col-md-2">
         <label for="academicYear">Select Academic year</label>
         <select class="filter-btn" id="academicYear" [(ngModel)]="model.academicYear" #academicYear="ngModel">
           <option [ngValue]="undefined" [disabled]="true">Select Year</option>
           <option *ngFor="let year of academicYearRange" [value]="year">{{year}}</option>
         </select>
       </div>
-      <div class="d-flex flex-column align-items-start">
+      <div class="col-md-2">
         <label for="certificateType">Select Type</label>
         <select class="filter-btn" id="certificateType" (change)="onSelectChange($event)" [(ngModel)]="model.certificateType" #certificateType="ngModel">
           <option [ngValue]="undefined" [disabled]="true">Select Type</option>
           <option *ngFor="let type of certificateTypes" [value]="type.value" [disabled]="!type.isEnabled">{{type.label}}</option>
         </select>
       </div>
-      <div class="d-flex flex-column align-items-start">
-        <button class="btn btn-outline-secondary filter-btn" [disabled]="!model?.certificateType" (click)="downloadTemplate()">Download CSV
+      <div class="col-md-3">
+        <label>&nbsp;</label>
+        <button class="filter-btn" [disabled]="!model?.certificateType" (click)="downloadTemplate()">Download CSV
           Template&nbsp;&nbsp;<i class="fa fa-solid fa-file-download"></i></button>
       </div>
-      <div class="d-flex flex-column align-items-start">
+      <div class="col-md-3">
+        <label>&nbsp;</label>
         <input #fileUploadSimple [accept]="'.csv'" type="file" class="file-input" (click)="$event.target.value=null"
           (change)="importDataFromCSV($event)" hidden="true" />
-        <button class="btn btn-outline-secondary filter-btn" (click)="fileUploadSimple.click()"
+        <button class="filter-btn" (click)="fileUploadSimple.click()"
           [disabled]="!(model.grade && model.academicYear && model.certificateType && !showProgress)">Upload CSV Template&nbsp;<i
             class="fa fa-solid fa-file-upload"></i></button>
       </div>
@@ -86,6 +88,46 @@
         </tr>
       </tbody>
     </table>
+    <!-- UI static table below -->
+    <!-- <table class="table" cellpadding="0" cellspacing="0">
+      <thead>
+        <tr>
+          <th>Verified</th>
+          <th>Name</th>
+          <th>ID</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+        <td class="verify"><img src="assets/images/verifyicon.png" alt=""></td>
+        <td>wewe</td>
+        <td>wewe</td>
+        <td></td>
+        </tr>
+        <tr>
+          <td class="verify"><img src="assets/images/verifyicon.png" alt=""></td>
+          <td>wewe</td>
+          <td>wewe</td>
+          <td></td>
+          </tr> <tr>
+            <td class="verify"><img src="assets/images/verifyicon.png" alt=""></td>
+            <td>wewe</td>
+            <td>wewe</td>
+            <td></td>
+            </tr> <tr>
+              <td class="warning"><img src="assets/images/warningicon.png" alt=""></td>
+              <td>wewe</td>
+              <td>wewe</td>
+              <td><button type="button" class="btn-warn">Verify !</button></td>
+              </tr> <tr>
+                <td class="verify"><img src="assets/images/verifyicon.png" alt=""></td>
+                <td>wewe</td>
+                <td>wewe</td>
+                <td><img src="assets/images/checkicon.png" alt="" class="pr-22"><img src="assets/images/closecheck.png" alt=""></td>
+              </tr>
+      </tbody>
+    </table> -->
   </div>
   <div class="d-flex justify-content-end align-items-start p-2 pb-3 pt-5 table-footer" *ngIf="allDataRows?.length">
     <button type="button" class="custom-button blue-button mt-10 p-65" (click)="saveAndVerify()">Save and Verify Student</button>
