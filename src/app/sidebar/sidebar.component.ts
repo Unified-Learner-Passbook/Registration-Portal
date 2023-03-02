@@ -21,8 +21,8 @@ export class SidebarComponent implements OnInit {
       isActive: false
     }, 
     {
-      label: 'Issue Credentials',
-      link: 'issue-credentials',
+      label: 'Issued Credential',
+      link: 'issue-credential',
       class: 'fa fa-calendar-check',
       isActive: false
     }, 

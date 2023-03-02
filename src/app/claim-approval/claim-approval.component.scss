@@ -1,0 +1,37 @@
+.title {
+    color: #414141;
+    font-size: 16px;
+    text-align: center;
+  }
+  .pr-22{
+    padding-right: 22px;
+  }
+  img{
+    width: 25px;
+    padding-right: 3px;
+  }
+  tr td:last-child{
+    text-align: center;
+  }
+  table {
+    color: #303972 !important;
+    background: #fff;
+    border-radius: 12px;
+    border: none;
+    tr{
+      padding: 10px;
+      border-bottom: solid 1px #f5f2f2 !important;
+    }
+    th,
+    td {
+      text-align: center;
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 21px;  
+      color: #303972
+    }
+    th {
+      font-weight: 600;
+      color: #414141;
+    }
+  }

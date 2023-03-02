@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { GeneralService } from 'src/app/services/general/general.service';
+
 
 @Component({
   selector: 'app-global-header',
