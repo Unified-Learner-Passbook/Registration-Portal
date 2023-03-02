@@ -34,6 +34,8 @@ import { MainDashboardComponent } from './main-dashboard/main-dashboard.componen
 import { RegisterEntityComponent } from './register-entity/register-entity.component';
 import { LoginComponent } from './login/login.component';
 import { RegistrationComponent } from './registration/registration.component';
+import { IssuedCredentialComponent } from './issued-credential/issued-credential.component';
+import { ClaimApprovalComponent } from './claim-approval/claim-approval.component';
 // import { CreateCertificateComponent } from './create-certificate/create-certificate.component';
 // import { FaqComponent } from './custom-components/faq/faq.component';
 const routes: Routes = [
@@ -126,9 +128,6 @@ const routes: Routes = [
 { path: 'pdf-view', component: PdfViewComponent },
 { path: 'pdf-view/:document/:id', component: PdfViewComponent},
 
-
-
-
 // Installation
 { path: 'install', component: InstallComponent },
 
@@ -147,7 +146,12 @@ const routes: Routes = [
     {
       path: 'issue-credentials',
       component: GetRecordsComponent
-    }
+    },
+    { path: 'issue-credential', 
+    component: IssuedCredentialComponent },
+
+    { path: 'claim-approval', 
+    component: ClaimApprovalComponent },
   ]
  }
 ];
