@@ -54,7 +54,7 @@ this.getRecords();
   const payload = {
       "issuer": "did:ulp:f08f7782-0d09-4c47-aacb-9092113bc33e"
   }
-  this.generalService.postData('http://64.227.185.154:3002/credentials', payload).subscribe((res) => {
+  this.generalService.postData('https://ulp.uniteframework.io/cred-base/credentials', payload).subscribe((res) => {
     console.log("res", res);
     this.recordItems = res;
   });
