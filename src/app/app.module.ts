@@ -143,6 +143,8 @@ import { MainDashboardComponent } from './main-dashboard/main-dashboard.componen
 import { GlobalHeaderComponent } from './global-header/global-header.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { RegisterEntityComponent } from './register-entity/register-entity.component';
+import { ClaimApprovalComponent } from './claim-approval/claim-approval.component';
+import { IssuedCredentialComponent } from './issued-credential/issued-credential.component';
 console.log(configData['default']);
 
 @NgModule({
@@ -189,7 +191,9 @@ console.log(configData['default']);
     GlobalHeaderComponent,
     RegisterEntityComponent,
     LoginComponent,
-    RegistrationComponent
+    RegistrationComponent,
+    ClaimApprovalComponent,
+    IssuedCredentialComponent
 
   ],
   imports: [

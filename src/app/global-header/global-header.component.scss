@@ -25,3 +25,34 @@ header {
     }
   }
 }
+.btn{
+  background: none;
+  border: none;
+}
+.dropdown-menu{
+  min-width: 144px;
+  transform: translate3d(-109px, 28px, 0px);
+  padding: 0;
+  a:hover, a:active{
+    background: none;
+  }
+}
+.dropdown-item{
+    white-space: normal;
+    font-size: 12px;
+    padding: 12px;
+}
+.notify-icon{
+    background: red;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+}
+.notify-bx{
+  position: absolute;
+  top: 6px;
+  right: 11px;
+}
+.fa{
+  color: var(--primaryColor);
+}
