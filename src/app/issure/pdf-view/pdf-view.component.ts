@@ -232,7 +232,7 @@ export class PdfViewComponent implements OnInit {
       "output": "PDF"
     }
     // post or get depending on your requirement
-    this.http.post('http://64.227.185.154:3002/credentials/render', request, requestOptions).pipe(map((data: any) => {
+    this.http.post('https://ulp.uniteframework.io/cred-base/credentials/render', request, requestOptions).pipe(map((data: any) => {
 
       let blob = new Blob([data], {
         type: 'application/pdf' // must match the Accept type

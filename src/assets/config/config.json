@@ -39,9 +39,10 @@
   },
   "baseUrl": "https://sunbird-certificate-demo.xiv.in/registry/api/v1",
   "schemaUrl": "https://sunbird-certificate-demo.xiv.in/registry/api/docs/swagger.json",
-  "title": "Issuance Portal",
-  "footerText": "Issuance Portal",
+  "title": "Registration Portal",
+  "footerText": "Registration Portal",
   "languages": [
-      "en"
+      "en",
+      "hi"
   ]
 }
