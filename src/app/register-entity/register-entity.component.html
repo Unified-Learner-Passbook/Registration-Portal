@@ -1,42 +1,41 @@
 <div class="container bg-gray-100">
   <h5 class="text-center mb-5 title pt-4">
-    To register students download excel template, populate student details and upload - <a href="#" class="text-gray-100">Demo (Video)</a>
+    {{'REGISTER_STUD_EXCEL_TEMPLATE' | translate}}<a href="#" class="text-gray-100">{{'DEMO_VIDEO' | translate }}</a>
   </h5>
 
   <div>
     <div class="row filter-bx">
       <div class="col-md-2">
-        <label>Select Grade</label>
+        <label>{{'SELECT_GRADE' | translate}}</label>
         <select class="filter-btn" aria-label="Default select example" [(ngModel)]="model.grade" #grade="ngModel">
-          <option [ngValue]="undefined" [disabled]="true">Select grade</option>
+          <option [ngValue]="undefined" [disabled]="true">{{'SELECT_GRADE' | translate}}</option>
           <option *ngFor="let grade of grades" [value]="grade.value">{{grade.label}}</option>
         </select>
       </div>
       <div class="col-md-2">
-        <label for="academicYear">Select Academic year</label>
+        <label for="academicYear">{{'SELECT_ACADEMIC_YEAR' | translate }}</label>
         <select class="filter-btn" id="academicYear" [(ngModel)]="model.academicYear" #academicYear="ngModel">
-          <option [ngValue]="undefined" [disabled]="true">Select Year</option>
+          <option [ngValue]="undefined" [disabled]="true">{{'SELECT_YEAR' | translate }}</option>
           <option *ngFor="let year of academicYearRange" [value]="year">{{year}}</option>
         </select>
       </div>
       <div class="col-md-2">
-        <label for="certificateType">Select Type</label>
+        <label for="certificateType">{{'SELECT_TYPE' | translate }}</label>
         <select class="filter-btn" id="certificateType" (change)="onSelectChange($event)" [(ngModel)]="model.certificateType" #certificateType="ngModel">
-          <option [ngValue]="undefined" [disabled]="true">Select Type</option>
+          <option [ngValue]="undefined" [disabled]="true">{{'SELECT_TYPE' | translate }}</option>
           <option *ngFor="let type of certificateTypes" [value]="type.value" [disabled]="!type.isEnabled">{{type.label}}</option>
         </select>
       </div>
       <div class="col-md-3">
         <label>&nbsp;</label>
-        <button class="filter-btn" [disabled]="!model?.certificateType" (click)="downloadTemplate()">Download CSV
-          Template&nbsp;&nbsp;<i class="fa fa-solid fa-file-download"></i></button>
+        <button class="filter-btn" [disabled]="!model?.certificateType" (click)="downloadTemplate()">{{'DOWNLOAD_CSV' | translate}}&nbsp;&nbsp;<i class="fa fa-solid fa-file-download"></i></button>
       </div>
       <div class="col-md-3">
         <label>&nbsp;</label>
         <input #fileUploadSimple [accept]="'.csv'" type="file" class="file-input" (click)="$event.target.value=null"
           (change)="importDataFromCSV($event)" hidden="true" />
         <button class="filter-btn" (click)="fileUploadSimple.click()"
-          [disabled]="!(model.grade && model.academicYear && model.certificateType && !showProgress)">Upload CSV Template&nbsp;<i
+          [disabled]="!(model.grade && model.academicYear && model.certificateType && !showProgress)">{{'UPLOAD_CSV' | translate }}&nbsp;<i
             class="fa fa-solid fa-file-upload"></i></button>
       </div>
     </div>
