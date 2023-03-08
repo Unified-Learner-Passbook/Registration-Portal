@@ -4,45 +4,36 @@ import { GeneralService } from '../services/general/general.service';
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
-  styleUrls: ['./sidebar.component.scss']
+  styleUrls: ['./sidebar.component.scss'],
 })
 export class SidebarComponent implements OnInit {
-
   menuList = [
     {
-      // label: 'Register Students',
       label: this.generalService.translateString('REGISTER_STUDENT'),
       link: 'register-entity',
       class: 'fa fa-home',
-      isActive: true
-    }, 
+      isActive: true,
+    },
     {
-      //  label: 'Add Issuer Staff',
       label: this.generalService.translateString('ADD_ISSUER_STAFF'),
       link: '',
       class: 'fa fa-graduation-cap',
-      isActive: false
-    }, 
+      isActive: false,
+    },
     {
-     // label: 'Issued Credential',
-     label:this.generalService.translateString('ISSUED_CREDENTIAL'),
+      label: this.generalService.translateString('ISSUED_CREDENTIAL'),
       link: 'issue-credential',
       class: 'fa fa-calendar-check',
-      isActive: false
-    }, 
+      isActive: false,
+    },
     {
-      //label: 'Settings',
-      label:this.generalService.translateString('SETTINGS'),
+      label: this.generalService.translateString('SETTINGS'),
       link: '',
       class: 'fa fa-cog',
-      isActive: false
-    }, 
+      isActive: false,
+    },
   ];
-  constructor(private generalService:GeneralService) {
+  constructor(private generalService: GeneralService) {}
 
-   }
-
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }
