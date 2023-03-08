@@ -232,7 +232,25 @@
   "REGISTER_ISSUE_MANAGE_CERT":"नामांकित प्रमाण पत्र पंजीकृत करें, जारी करें और प्रबंधित करें",
   "STUD_REGISTRATION_CLAIM":"छात्र पंजीकरण दावा प्रबंधन",
   "SELECT_TYPE_ISSUE_CRED":"इश्यू क्रेडेंशियल्स का प्रकार चुनें :",
-  "NEW_STUD_REGISTRATION_CLAIM":"नए छात्र पंजीकरण का दावा"
+  "NEW_STUD_REGISTRATION_CLAIM":"नए छात्र पंजीकरण का दावा",
+  
+
+
+  "REGISTER_STUDENT":"छात्रों को पंजीकृत करें",
+  "ADD_ISSUER_STAFF":"जारीकर्ता कर्मचारी जोड़ें",
+  "ISSUED_CREDENTIAL":"जारी किया गया क्रेडेंशियल",
+  "SETTINGS":"समायोजन",
+
+  "INSTRUCTIONS":"निर्देश",
+  "STEP_ONE":"स्टेप 1:",
+  "STEP_TWO":"स्टेप 2:",
+  "STEP_THREE":"स्टेप 3:",
+  "DOWNLOAD_CSV_TEMPLATE":"CSV टेम्पलेट डाउनलोड करें",
+  "SELECT_GRADE_AY":"ग्रेड और आयु का चयन करें",
+  "UPLOAD_FILLED_UP_CSV":"भरी हुई सीएसवी अपलोड करें और प्रविष्टियों की समीक्षा/संपादित/हटाएं"
+
+
+
 
 
 

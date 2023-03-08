@@ -18,7 +18,7 @@ export function initLang(http: HttpClient, translate: TranslateService) {
     const global = '-global';
 
     const storageLocale = localStorage.getItem('setLanguage');
-     const setLanguage = storageLocale || defaultSetLanguage;
+     const setLanguage = 'hi' || storageLocale || defaultSetLanguage;
    
     forkJoin([
       http.get(`${localUrl}/${setLanguage}${local}${sufix}`).pipe(

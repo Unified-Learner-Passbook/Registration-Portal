@@ -230,7 +230,24 @@
     "REGISTER_ISSUE_MANAGE_CERT":"Register, Issue and Manage enrolled certificates",
     "STUD_REGISTRATION_CLAIM":"Student registration claim management",
     "SELECT_TYPE_ISSUE_CRED":"Select type of Issue Credentials :",
-    "NEW_STUD_REGISTRATION_CLAIM":"New student registration claim"
+    "NEW_STUD_REGISTRATION_CLAIM":"New student registration claim",
+    
 
+
+    "REGISTER_STUDENT":"Register Students",
+    "ADD_ISSUER_STAFF":"Add Issuer Staff",
+    "ISSUED_CREDENTIAL":"Issued Credential",
+    "SETTINGS":"Settings",
+
+    "INSTRUCTIONS":"Instructions",
+    "STEP_ONE":"Step 1:",
+    "STEP_TWO":"Step 2:",
+    "STEP_THREE":"step 3:",
+    "DOWNLOAD_CSV_TEMPLATE":"Download CSV Template",
+    "SELECT_GRADE_AY":"Select Grade and AY",
+    "UPLOAD_FILLED_UP_CSV":"Upload filled up CSV and review / edit/ delete entries"
+
+
+   
     
 }

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { GeneralService } from '../services/general/general.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -9,31 +10,37 @@ export class SidebarComponent implements OnInit {
 
   menuList = [
     {
-      label: 'Register Students',
+      // label: 'Register Students',
+      label: this.generalService.translateString('REGISTER_STUDENT'),
       link: 'register-entity',
       class: 'fa fa-home',
       isActive: true
     }, 
     {
-      label: 'Add Issuer Staff',
+      //  label: 'Add Issuer Staff',
+      label: this.generalService.translateString('ADD_ISSUER_STAFF'),
       link: '',
       class: 'fa fa-graduation-cap',
       isActive: false
     }, 
     {
-      label: 'Issued Credential',
+     // label: 'Issued Credential',
+     label:this.generalService.translateString('ISSUED_CREDENTIAL'),
       link: 'issue-credential',
       class: 'fa fa-calendar-check',
       isActive: false
     }, 
     {
-      label: 'Settings',
+      //label: 'Settings',
+      label:this.generalService.translateString('SETTINGS'),
       link: '',
       class: 'fa fa-cog',
       isActive: false
     }, 
   ];
-  constructor() { }
+  constructor(private generalService:GeneralService) {
+
+   }
 
   ngOnInit(): void {
   }
