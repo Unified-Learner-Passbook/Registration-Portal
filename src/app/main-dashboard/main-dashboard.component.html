@@ -6,11 +6,11 @@
   <main>
     <div *ngIf="!isChildRoute">
       <div class="card-bx text-center">
-        <h1 class="heading1 pb-5">Student Registration</h1>
+        <h1 class="heading1 pb-5">{{'STUDENT_REGISTRATION' | translate}}</h1>
           <div class="vertical-card">
             <div class="d-flex align-item-center" routerLink="register-entity">
               <div>
-                Register, Issue and Manage enrolled certificates
+                {{'REGISTER_ISSUE_MANAGE_CERT' | translate }}
               </div> 
               <div>
                 <i class="fa fa-arrow-alt-circle-right fs-28"></i>
@@ -20,7 +20,7 @@
         <div class="vertical-card mt-5">
           <div class="d-flex align-item-center">
             <div>
-              Student registration claim management
+              {{'STUD_REGISTRATION_CLAIM' | translate }}
             </div> 
             <div>
               <i class="fa fa-arrow-alt-circle-right fs-28"></i>

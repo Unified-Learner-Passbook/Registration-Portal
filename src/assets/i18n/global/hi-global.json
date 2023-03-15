@@ -207,7 +207,50 @@
   "DESCRIPTION":"विवरण",
   "DOWNLOAD_DOCUMENT":"दस्तावेज़ डाउनलोड करें",
   "DOWNLOAD":"डाउनलोड",
-  "DEMO":"यह निर्गम पोर्टल का डेमो है। दस्तावेज़ीकरण की जाँच करें"
+  "DEMO":"यह निर्गम पोर्टल का डेमो है। दस्तावेज़ीकरण की जाँच करें",
+
+
+
+  "SEND_OTP":"OTP भेजें",
+  "VERIFY":"सत्यापित करना",
+  "ULP":"यूएलपी",
+  "REGISTRATION_PORTAL":"पंजीकरण पोर्टल",
+  "ISSUEC_ACADEMIC_CERTIFICATES":"शैक्षणिक प्रमाण पत्र जारी करें",
+  "LOGIN_USING_UDISE":"UDISE प्रतिवादी फोन नंबर और OTP का उपयोग करके लॉगिन करें",
+  "PHONE":"फ़ोन",
+  "OTP":"ओटीपी",
+  "DIDNT_RECEIVE_OTP":"OTP प्राप्त नहीं हुआ? फिर से भेजें",
+  "REGISTER_STUD_EXCEL_TEMPLATE": "छात्रों को पंजीकृत करने के लिए एक्सेल टेम्प्लेट डाउनलोड करें, छात्र विवरण भरें और अपलोड करें -",
+  "DEMO_VIDEO":"डेमो (वीडियो)",
+  "SELECT_GRADE":"ग्रेड का चयन करें",
+  "SELECT_ACADEMIC_YEAR":"शैक्षणिक वर्ष का चयन करें",
+  "SELECT_YEAR":"वर्ष का चयन करें",
+  "SELECT_TYPE":"प्रकार चुनें",
+  "DOWNLOAD_CSV":"CSV टेम्पलेट डाउनलोड करें",
+  "UPLOAD_CSV":"CSV टेम्पलेट अपलोड करें",
+  "STUDENT_REGISTRATION":"छात्र पंजीकरण",
+  "REGISTER_ISSUE_MANAGE_CERT":"नामांकित प्रमाण पत्र पंजीकृत करें, जारी करें और प्रबंधित करें",
+  "STUD_REGISTRATION_CLAIM":"छात्र पंजीकरण दावा प्रबंधन",
+  "SELECT_TYPE_ISSUE_CRED":"इश्यू क्रेडेंशियल्स का प्रकार चुनें :",
+  "NEW_STUD_REGISTRATION_CLAIM":"नए छात्र पंजीकरण का दावा",
+  
+
+
+  "REGISTER_STUDENT":"छात्रों को पंजीकृत करें",
+  "ADD_ISSUER_STAFF":"जारीकर्ता कर्मचारी जोड़ें",
+  "ISSUED_CREDENTIAL":"जारी किया गया क्रेडेंशियल",
+  "SETTINGS":"समायोजन",
+
+  "INSTRUCTIONS":"निर्देश",
+  "STEP_ONE":"स्टेप 1:",
+  "STEP_TWO":"स्टेप 2:",
+  "STEP_THREE":"स्टेप 3:",
+  "DOWNLOAD_CSV_TEMPLATE":"CSV टेम्पलेट डाउनलोड करें",
+  "SELECT_GRADE_AY":"ग्रेड और आयु का चयन करें",
+  "UPLOAD_FILLED_UP_CSV":"भरी हुई सीएसवी अपलोड करें और प्रविष्टियों की समीक्षा/संपादित/हटाएं"
+
+
+
 
 
 

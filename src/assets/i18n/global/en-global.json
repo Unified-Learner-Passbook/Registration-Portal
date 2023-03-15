@@ -208,9 +208,46 @@
     "DESCRIPTION":"Description",
     "DOWNLOAD_DOCUMENT":"Download Document",
     "DOWNLOAD":"Download",
-    "DEMO":"This is a demo of the Issuance Portal. Check documentation"
+    "DEMO":"This is a demo of the Issuance Portal. Check documentation",
 
 
+    "SEND_OTP":"Send OTP",
+    "VERIFY":"Verify",
+    "ISSUEC_ACADEMIC_CERTIFICATES":"Issue academic certificates",
+    "LOGIN_USING_UDISE":"Login using UDISE Respondent phone number and OTP",
+    "PHONE":"phone",
+    "OTP":"OTP",
+    "DIDN'T_RECEIVE_OTP":"Didn't receive OTP? Resend",
+    "REGISTER_STUD_EXCEL_TEMPLATE":"To register students download excel template, populate student details and upload -",
+    "DEMO_VIDEO":"Demo (Video)",
+    "SELECT_GRADE":"Select Grade",
+    "SELECT_ACADEMIC_YEAR":"Select Academic year",
+    "SELECT_YEAR":"Select Year",
+    "SELECT_TYPE":"Select Type",
+    "DOWNLOAD_CSV":"Download CSV Template",
+    "UPLOAD_CSV":"Upload CSV Template",
+    "STUDENT_REGISTRATION":"Student Registration",
+    "REGISTER_ISSUE_MANAGE_CERT":"Register, Issue and Manage enrolled certificates",
+    "STUD_REGISTRATION_CLAIM":"Student registration claim management",
+    "SELECT_TYPE_ISSUE_CRED":"Select type of Issue Credentials :",
+    "NEW_STUD_REGISTRATION_CLAIM":"New student registration claim",
+    
 
+
+    "REGISTER_STUDENT":"Register Students",
+    "ADD_ISSUER_STAFF":"Add Issuer Staff",
+    "ISSUED_CREDENTIAL":"Issued Credential",
+    "SETTINGS":"Settings",
+
+    "INSTRUCTIONS":"Instructions",
+    "STEP_ONE":"Step 1:",
+    "STEP_TWO":"Step 2:",
+    "STEP_THREE":"step 3:",
+    "DOWNLOAD_CSV_TEMPLATE":"Download CSV Template",
+    "SELECT_GRADE_AY":"Select Grade and AY",
+    "UPLOAD_FILLED_UP_CSV":"Upload filled up CSV and review / edit/ delete entries"
+
+
+   
     
 }
