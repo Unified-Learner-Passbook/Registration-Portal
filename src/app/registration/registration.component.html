@@ -17,7 +17,7 @@
       <span class="text-blue">Registration Portal</span>
     </h1>
     <hr class="horizontal-line" />
-
+ 
     <ul class="bullet-point">
       <li *ngFor="let item of featureList">
         <span class="check-icon">
@@ -25,7 +25,29 @@
       </li>
     </ul>
     <div class="text-center mt-5">
-      <button type="button" class="custom-button blue-button mt-20" routerLink="login">{{'REGISTER' | translate}}</button>
+      <button type="button" class="custom-button blue-button mt-20 pr-80 mr-5" routerLink="login">{{'REGISTER_PRINCIPAL' | translate}}</button>
+      <button type="button" class="custom-button blue-button mt-20 pr-90"   data-toggle="modal" data-target="#verifyModal">{{'REGISTER_BEO' | translate}}</button>
     </div>
   </div>
 </div>
+<div class="modal right fade" id="verifyModal1" tabindex="-1" role="dialog" aria-labelledby="verifyModal">
+  <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <div class="modal-body text-center">
+            <a href="">Link your UDSE </a>
+          </div>
+      </div>
+  </div>
+</div>
+
+<div class="modal right fade" id="verifyModal" tabindex="-1" role="dialog" aria-labelledby="verifyModal">
+  <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <div class="modal-body">
+            <input type="checkbox" class="pr-3">
+            I declare that the information provided by me is true to the best of my information
+          </div>
+      </div>
+  </div>
+</div>
+x
