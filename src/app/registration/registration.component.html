@@ -25,8 +25,8 @@
       </li>
     </ul>
     <div class="text-center mt-5">
-      <button type="button" class="custom-button blue-button mt-20 pr-80 mr-5" routerLink="login">{{'REGISTER_PRINCIPAL' | translate}}</button>
-      <button type="button" class="custom-button blue-button mt-20 pr-90"   data-toggle="modal" data-target="#verifyModal">{{'REGISTER_BEO' | translate}}</button>
+      <button type="button" class="custom-button blue-button mt-20 pr-80 mr-5" routerLink="login" >{{'REGISTER' | translate}}</button>
+      <button type="button" class="custom-button blue-button mt-20 pr-90" (click)="openSSO()">Login with SSO</button>
     </div>
   </div>
 </div>
