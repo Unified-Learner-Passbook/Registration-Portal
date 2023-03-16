@@ -22,11 +22,13 @@ export class OauthCallbackComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    
+    const redirectUrl = this.activatedRoute.snapshot.queryParamMap.get('code');
+    console.log("redirectUrl", redirectUrl);
   }
 
   getUserData(code: string) {
     const request = {
+      digiacc:"portal",
       auth_code: code
     }
     this.generalService.postData('https://ulp.uniteframework.io/ulp-bff/v1/sso/digilocker/token', request).subscribe((res) => {

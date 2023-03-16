@@ -19,7 +19,7 @@ export class RegistrationComponent implements OnInit {
   }
 
   openSSO() {
-    this.generalService.getData('https://ulp.uniteframework.io/ulp-bff/v1/sso/digilocker/authorize', true).subscribe((res) => {
+    this.generalService.getData('https://ulp.uniteframework.io/ulp-bff/v1/sso/digilocker/authorize/portal', true).subscribe((res) => {
       console.log("res", res);
       window.open(res.digiauthurl, "_self");
     });
