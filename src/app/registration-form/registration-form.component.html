@@ -1,51 +1,55 @@
 <div class="container">
     <h5 class="fs-16 py-4 text-center title pr-5">Registration form</h5>
-    <form class="col-md-9 offset-md-2 pl-5">
+    <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()" class="col-md-9 offset-md-2 pl-5">
         <div class="form-group row">
-            <label for="" class="col-sm-3 col-form-label fs-14">School Name</label>
+            <label for="schoolName" class="col-sm-3 col-form-label fs-14">School Name</label>
             <div class="col-sm-6">
-                <select class="form-control" id="exampleFormControlSelect1">
-                    <option>Enter School Name</option>
-                    <option>SNVM</option>
-                    <option>CCEM</option>
-                    <option>DPS</option>
-                    <option>KPS</option>
-                  </select>
+                <input type="text" formControlName="schoolName" class="form-control" id="schoolName"
+                    placeholder="Enter School Name">
             </div>
         </div>
         <div class="form-group row">
-            <label for="" class="col-sm-3 col-form-label fs-14">UDISE ID</label>
+            <label for="udiseId" class="col-sm-3 col-form-label fs-14">UDISE ID</label>
             <div class="col-sm-6">
-                <input type="text" class="form-control" id="" placeholder="Enter ID">
+                <input type="text" formControlName="udiseId" class="form-control" id="udiseId"
+                    placeholder="Enter UDISE ID">
             </div>
         </div>
         <div class="form-group row">
-            <label for="" class="col-sm-3 col-form-label fs-14">Principal Name</label>
+            <label for="name" class="col-sm-3 col-form-label fs-14">Principal Name</label>
             <div class="col-sm-6">
-                <input type="text" class="form-control" id="" placeholder="Enter Name">
+                <input type="text" formControlName="name" class="form-control" id="name"
+                    placeholder="Enter Principal Name">
             </div>
         </div>
         <div class="form-group row">
-            <label for="" class="col-sm-3 col-form-label fs-14">Phone Number</label>
+            <label for="phone" class="col-sm-3 col-form-label fs-14">Phone Number</label>
             <div class="col-sm-6">
-                <input type="text" class="form-control" id="" placeholder="Enter No.">
+                <input type="text" formControlName="phone" class="form-control" id="phone"
+                    placeholder="Enter Phone No.">
             </div>
         </div>
         <div class="form-group row">
-            <label for="" class="col-sm-3 col-form-label fs-14">Aadhar Number</label>
+            <label for="aadharId" class="col-sm-3 col-form-label fs-14">Aadhar Number</label>
             <div class="col-sm-6">
-                <input type="text" class="form-control" id="" placeholder="Enter No.">
+                <input type="text" formControlName="aadharId" class="form-control" id="aadharId"
+                    placeholder="Enter Aadhar No.">
             </div>
         </div>
         <div class="form-group row">
-            <label for="" class="col-sm-3 col-form-label fs-14">Principal Since</label>
+            <label for="joiningdate" class="col-sm-3 col-form-label fs-14">Principal Since</label>
             <div class="col-sm-6">
-                <input type="text" class="form-control" id="" placeholder="Enter No.">
+                <input type="date" formControlName="joiningdate" class="form-control" id="joiningdate"
+                    placeholder="Enter Date of joining">
             </div>
         </div>
-        <button  type="button" class="custom-button blue-button mt-20 ml-5" data-toggle="modal" data-target="#verifyModal">
-            Next
-          </button>
+        <div class="form-check">
+            <input type="checkbox" formControlName="consent" class="form-check-input" id="consent" value="true">
+            <label class="form-check-label" for="consent">I declare that the information provided by me is true to the
+                best of my knowledge.</label>
+        </div>
+        <button type="submit" [disabled]="registrationForm.invalid"
+            class="custom-button blue-button mt-20 ml-5">Register</button>
     </form>
 </div>
 
@@ -53,18 +57,25 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-body fs-14">
-              <input type="checkbox" class="pr-3">
-              I declare that the information provided by me is true to the best of my information
-              <div class="d-flex justify-content-center">
-                <button  type="button" class="custom-button default-button mt-20 mr-5 p-32 fs-14">
-                    No, Cancel
-                </button>
-                <button  type="button" class="custom-button blue-button mt-20 p-32 fs-14">
-                    Yes, Confirm
-                </button>
+                <input type="checkbox" class="pr-3">
+                I declare that the information provided by me is true to the best of my information
+                <div class="d-flex justify-content-center">
+                    <button type="button" class="custom-button default-button mt-20 mr-5 p-32 fs-14">
+                        No, Cancel
+                    </button>
+                    <button type="button" class="custom-button blue-button mt-20 p-32 fs-14">
+                        Yes, Confirm
+                    </button>
                 </div>
             </div>
         </div>
     </div>
-  </div>
-  
+</div>
+
+
+<ng-template #udiseLinkModal>
+    <div class="text-center">
+        <a href="">Link your UDISE </a>
+        <button class="btn btn-primary" type="submit" (click)="linkUDISE()">Link Now</button>
+    </div>
+</ng-template>

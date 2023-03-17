@@ -1,14 +1,14 @@
 <div id="sect1" class="container">
   <div>
-      <div class="d-flex justify-content-center mt-3">
-        <div>
-          <img src="assets/images/headerlogo.png" class="img-fluid" alt="...">
-        </div>
+    <div class="d-flex justify-content-center mt-3">
+      <div>
+        <img src="assets/images/headerlogo.png" class="img-fluid" alt="...">
+      </div>
       <div>
         <h5 class="card-title fs-14 font-600">
-        <span class="text-gray-0 fs-12">DEPARTMENT OF</span> <br> 
-        <span class="fs-16"> Basic Education</span><br>
-        <span class="text-orange fs-10">GOVERNMENT OF UTTAR PRADESH</span> 
+          <span class="text-gray-0 fs-12">DEPARTMENT OF</span> <br>
+          <span class="fs-16"> Basic Education</span><br>
+          <span class="text-orange fs-10">GOVERNMENT OF UTTAR PRADESH</span>
         </h5>
       </div>
     </div>
@@ -17,29 +17,36 @@
       <span class="text-blue">Registration Portal</span>
     </h1>
     <hr class="horizontal-line" />
- 
+
     <!-- <ul class="bullet-point">
       <li *ngFor="let item of featureList">
         <span class="check-icon">
           <img src="assets/icons/checkmark.svg" [alt]="item" /> </span>{{item}}
       </li>
     </ul> -->
-    <div class="pt-5 text-center"> Select the user type  </div>
+    <div class="pt-5 text-center"> Select the user type </div>
     <div class="text-center mt-5 d-flex jc-content-center">
-      <div class="square pt-4 mr-5" routerLink="login"><img src="assets/images/profile.png" alt="" class="cursor-pointer"><div class="py-2 fs-13 font-600"> Principal</div></div>
-      <div class="square pt-4" (click)="openSSO()"><img src="assets/images/beo.png" alt="" class="cursor-pointer"><div class="py-2 fs-13 font-600">Block Educational Officer</div></div>
+      <div class="square pt-4 mr-5" (click)="openSSO()"><img src="assets/images/profile.png" alt=""
+          class="cursor-pointer">
+        <div class="py-2 fs-13 font-600"> Principal</div>
+      </div>
+      <div class="square pt-4" (click)="openSSO()"><img src="assets/images/beo.png" alt="" class="cursor-pointer">
+        <div class="py-2 fs-13 font-600">Block Educational Officer</div>
+      </div>
       <!-- <button type="button" class="custom-button blue-button mt-20 pr-80 mr-5"  >{{'REGISTER' | translate}}</button>
       <button type="button" class="custom-button blue-button mt-20 pr-90" >Login with SSO</button> -->
     </div>
   </div>
 </div>
+
+
 <div class="modal right fade" id="verifyModal1" tabindex="-1" role="dialog" aria-labelledby="verifyModal">
   <div class="modal-dialog" role="document">
-      <div class="modal-content">
-          <div class="modal-body text-center">
-            <a href="">Link your UDSE </a>
-          </div>
+    <div class="modal-content">
+      <div class="modal-body text-center">
+        <a href="">Link your UDISE </a>
       </div>
+    </div>
   </div>
 </div>
 
