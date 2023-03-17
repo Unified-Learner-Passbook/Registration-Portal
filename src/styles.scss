@@ -625,6 +625,10 @@ formly-autocomplete-type .ng-select {
     font-size: 12px;
 }
 
+.fs-13 {
+    font-size: 13px !important;
+}
+
 .fs-14 {
     font-size: 14px !important;
 }
@@ -1100,6 +1104,14 @@ margin-right :15px !important;
     background: #050C44;
     color: #fff;
   }
+  .p-32{
+    padding: 7px 32px !important;
+  }
+  .default-button{
+    background: none;
+    color: #050C44;
+    border: solid 1px #050C44;
+  }
   .mt-20{
     margin-top: 20px;
   }
@@ -1133,4 +1145,9 @@ margin-right :15px !important;
     border: none !important;
       background: none !important;
       font-size: 26px;
+  }
+  .title {
+    color: #414141;
+    font-size: 16px;
+    text-align: center;
   }
