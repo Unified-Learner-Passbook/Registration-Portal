@@ -146,6 +146,7 @@ import { RegisterEntityComponent } from './register-entity/register-entity.compo
 import { ClaimApprovalComponent } from './claim-approval/claim-approval.component';
 import { IssuedCredentialComponent } from './issued-credential/issued-credential.component';
 import { OauthCallbackComponent } from './oauth-callback/oauth-callback.component';
+import { RegistrationFormComponent } from './registration-form/registration-form.component';
 console.log(configData['default']);
 
 @NgModule({
@@ -195,7 +196,8 @@ console.log(configData['default']);
     RegistrationComponent,
     ClaimApprovalComponent,
     IssuedCredentialComponent,
-    OauthCallbackComponent
+    OauthCallbackComponent,
+    RegistrationFormComponent
 
   ],
   imports: [
