@@ -39,9 +39,7 @@ export class RegistrationFormComponent implements OnInit {
     this.registrationDetails = navigation.extras.state;
   }
 
-  ngOnInit(): void {
-
-  }
+  ngOnInit(): void { }
 
   ngAfterViewInit() {
     if (this.registrationDetails) {
@@ -75,22 +73,22 @@ export class RegistrationFormComponent implements OnInit {
     if (this.registrationForm.valid) {
 
       const payload = {
-        "digiacc": "portal",
-        "userdata": {
-          "teacher": {
-            "name": this.registrationForm.value.name,
-            "joiningdate": this.registrationForm.value.joiningdate,
-            "aadharId": this.registrationForm.value.aadharId,
-            "schoolUdise": this.schoolDetails.udiseCode,
-            "meripehchanLoginId": this.registrationDetails.meripehchanid,
-            "username": this.registrationDetails.meripehchanid,
-            "consent": "yes",
-            "consentDate": Date.now(),
-            "did": ""
+        digiacc: "portal",
+        userdata: {
+          teacher: {
+            name: this.registrationForm.value.name,
+            joiningdate: this.registrationForm.value.joiningdate,
+            aadharId: this.registrationForm.value.aadharId,
+            schoolUdise: this.schoolDetails.udiseCode,
+            meripehchanLoginId: this.registrationDetails.meripehchanid,
+            username: this.registrationDetails.meripehchanid,
+            consent: "yes",
+            consentDate: Date.now(),
+            did: ""
           },
-          "school": { ...this.schoolDetails, did: "" }
+          school: { ...this.schoolDetails, did: "" }
         },
-        "digimpid": this.registrationDetails.meripehchanid
+        digimpid: this.registrationDetails.meripehchanid
       }
 
       this.authService.ssoSignUp(payload).subscribe((res: any) => {
@@ -105,7 +103,6 @@ export class RegistrationFormComponent implements OnInit {
             localStorage.setItem('currentUser', JSON.stringify(res.userData.student));
           }
           this.router.navigate(['/dashboard']);
-
           this.toastMessage.success("", "User Registered successfully!");
 
         } else {
@@ -114,7 +111,6 @@ export class RegistrationFormComponent implements OnInit {
       }, (error) => {
         this.toastMessage.error("", error.message);
       });
-
     }
   }
 
