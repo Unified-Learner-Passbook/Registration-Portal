@@ -6,13 +6,16 @@
             <div class="col-sm-6">
                 <input type="text" formControlName="schoolName" class="form-control" id="schoolName"
                     placeholder="Enter School Name">
+                <p class="text-red pt-2 mb-0" *ngIf="schoolName.invalid && schoolName.touched">School Name is Required
+                </p>
             </div>
         </div>
         <div class="form-group row">
             <label for="udiseId" class="col-sm-3 col-form-label fs-14">UDISE ID</label>
             <div class="col-sm-6">
                 <input type="text" formControlName="udiseId" class="form-control" id="udiseId"
-                    placeholder="Enter UDISE ID">
+                    placeholder="Enter UDISE ID" disabled="true">
+                <p class="text-red pt-2 mb-0" *ngIf="udiseId.invalid && udiseId.touched">UDISE ID is Required</p>
             </div>
         </div>
         <div class="form-group row">
@@ -20,6 +23,7 @@
             <div class="col-sm-6">
                 <input type="text" formControlName="name" class="form-control" id="name"
                     placeholder="Enter Principal Name">
+                <p class="text-red pt-2 mb-0" *ngIf="name.invalid && name.touched">Principal Name is Required</p>
             </div>
         </div>
         <div class="form-group row">
@@ -27,6 +31,7 @@
             <div class="col-sm-6">
                 <input type="text" formControlName="phone" class="form-control" id="phone"
                     placeholder="Enter Phone No.">
+                <p class="text-red pt-2 mb-0" *ngIf="phone.invalid && phone.touched">Enter valid phone number</p>
             </div>
         </div>
         <div class="form-group row">
@@ -34,48 +39,54 @@
             <div class="col-sm-6">
                 <input type="text" formControlName="aadharId" class="form-control" id="aadharId"
                     placeholder="Enter Aadhar No.">
+                <p class="text-red pt-2 mb-0" *ngIf="aadharId.invalid && aadharId.touched">Enter valid Aadhar Number</p>
             </div>
         </div>
         <div class="form-group row">
             <label for="joiningdate" class="col-sm-3 col-form-label fs-14">Principal Since</label>
             <div class="col-sm-6">
-                <input type="date" formControlName="joiningdate" class="form-control" id="joiningdate"
+                <input type="date" formControlName="joiningdate" [max]="maxDate" class="form-control" id="joiningdate"
                     placeholder="Enter Date of joining">
+                <p class="text-red pt-2 mb-0" *ngIf="joiningdate.invalid && joiningdate.touched">Enter Valid Date</p>
             </div>
         </div>
-        <div class="form-check">
+        <!-- <div class="form-check">
             <input type="checkbox" formControlName="consent" class="form-check-input" id="consent" value="true">
             <label class="form-check-label" for="consent">I declare that the information provided by me is true to the
                 best of my knowledge.</label>
-        </div>
+        </div> -->
         <button type="submit" [disabled]="registrationForm.invalid"
             class="custom-button blue-button mt-20 ml-5">Register</button>
     </form>
 </div>
 
-<div class="modal right fade" id="verifyModal" tabindex="-1" role="dialog" aria-labelledby="verifyModal">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-body fs-14">
-                <input type="checkbox" class="pr-3">
-                I declare that the information provided by me is true to the best of my information
-                <div class="d-flex justify-content-center">
-                    <button type="button" class="custom-button default-button mt-20 mr-5 p-32 fs-14">
-                        No, Cancel
-                    </button>
-                    <button type="button" class="custom-button blue-button mt-20 p-32 fs-14">
-                        Yes, Confirm
-                    </button>
-                </div>
+<ng-template #declarationModal tabindex="-1" role="dialog" aria-labelledby="verifyModal">
+    <div class="modal-content">
+        <div class="modal-body fs-14">
+            <input type="checkbox" class="pr-3" [(ngModel)]="userConsent">
+            I declare that the information provided by me is true to the best of my information
+            <div class="d-flex justify-content-center">
+                <button type="button" (click)="submitDeclarationForm(false)"
+                    class="custom-button default-button mt-20 mr-5 p-32 fs-14">
+                    No, Cancel
+                </button>
+                <button type="button" [disabled]="!userConsent" (click)="submitDeclarationForm(true)"
+                    class="custom-button blue-button mt-20 p-32 fs-14">
+                    Yes, Confirm
+                </button>
             </div>
         </div>
     </div>
-</div>
+</ng-template>
 
 
 <ng-template #udiseLinkModal>
-    <div class="text-center">
-        <a href="">Link your UDISE </a>
-        <button class="btn btn-primary" type="submit" (click)="linkUDISE()">Link Now</button>
+    <div class="modal-content">
+        <div class="modal-body fs-14">
+            <div class="text-center">
+                <h6>Link your UDISE</h6>
+                <button class="btn btn-primary" type="submit" (click)="linkUDISE()">Link Now</button>
+            </div>
+        </div>
     </div>
 </ng-template>
