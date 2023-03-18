@@ -61,7 +61,7 @@ export class AuthService {
   doLogout() {
     localStorage.removeItem('accessToken');
     localStorage.removeItem('currentUser');
-    this.router.navigate(['/login']);
+    this.router.navigate(['']);
   }
 
   // User profile
