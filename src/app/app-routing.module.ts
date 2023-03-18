@@ -43,7 +43,6 @@ import { AuthenticationGuard } from './utility/authentication.guard';
 // import { FaqComponent } from './custom-components/faq/faq.component';
 const routes: Routes = [
   { path: '', component: RegistrationComponent },
-  { path: 'login', component: LoginComponent },
   {
     path: 'digilocker-callback',
     component: OauthCallbackComponent
@@ -69,7 +68,6 @@ const routes: Routes = [
         path: 'issue-credential',
         component: IssuedCredentialComponent
       },
-
       {
         path: 'claim-approval',
         component: ClaimApprovalComponent
@@ -79,8 +77,13 @@ const routes: Routes = [
         component: RegistrationFormComponent
       },
     ]
+  },
+  {
+    path: '**',
+    redirectTo: ''
   }
 ];
+// { path: 'login', component: LoginComponent },
 
 // Home
 // { path: '', component: HomeComponent },
