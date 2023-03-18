@@ -83,21 +83,14 @@ export class RegistrationFormComponent implements OnInit {
 
   ngAfterViewInit() {
     if (this.registrationDetails) {
-      if (this.registrationDetails?.name) {
+      if (this.registrationDetails.name) {
         this.registrationForm.get('name').setValue(this.registrationDetails.name);
       }
 
-      if (this.registrationDetails?.mobile) {
+      if (this.registrationDetails.mobile) {
         this.registrationForm.get('phone').setValue(this.registrationDetails.mobile);
       }
 
-      if (this.schoolDetails.udiseCode) {
-        this.registrationForm.get('udiseId').setValue(this.schoolDetails.udiseCode);
-      }
-
-      if (this.schoolDetails.schoolName) {
-        this.registrationForm.get('schoolName').setValue(this.schoolDetails.schoolName);
-      }
     }
     const options: NgbModalOptions = {
       backdrop: 'static',
@@ -112,6 +105,13 @@ export class RegistrationFormComponent implements OnInit {
     this.generalService.getData('https://ulp.uniteframework.io/ulp-bff/v1/sso/udise/verify/myschool1234', true).subscribe((res: any) => {
       this.schoolDetails = res;
       this.toastMessage.success('', 'Successfully Linked!');
+      if (this.schoolDetails?.udiseCode) {
+        this.registrationForm.get('udiseId').setValue(this.schoolDetails.udiseCode);
+      }
+
+      if (this.schoolDetails?.schoolName) {
+        this.registrationForm.get('schoolName').setValue(this.schoolDetails.schoolName);
+      }
       this.udiseLinkModalRef.close();
     });
   }
