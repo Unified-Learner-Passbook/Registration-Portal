@@ -25,7 +25,7 @@ export class RegistrationFormComponent implements OnInit {
   @ViewChild('declarationModal') declarationModal: TemplateRef<any>;
 
   registrationForm = new FormGroup({
-    schoolName: new FormControl(null, [Validators.required, Validators.pattern('[a-zA-Z]+$')]),
+    schoolName: new FormControl(null, [Validators.required]),
     udiseId: new FormControl(null, [Validators.required]),
     name: new FormControl(null, [Validators.required, Validators.minLength(2)]),
     phone: new FormControl(null, [Validators.required, Validators.minLength(10), Validators.maxLength(10), Validators.pattern('^[0-9]{10}$')]),
