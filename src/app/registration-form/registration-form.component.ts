@@ -47,11 +47,11 @@ export class RegistrationFormComponent implements OnInit {
     const canGoBack = !!(this.router.getCurrentNavigation()?.previousNavigation);
 
     if (!this.registrationDetails) {
-        if (canGoBack) {
-            this.location.back();
-        } else {
-            this.router.navigate(['']);
-        }
+      if (canGoBack) {
+        this.location.back();
+      } else {
+        this.router.navigate(['']);
+      }
     }
   }
 
@@ -132,6 +132,8 @@ export class RegistrationFormComponent implements OnInit {
       this.consentModalRef = this.modalService.open(this.declarationModal, { animation: true, centered: true });
       return;
     }
+
+    const newMeriPehchaanId = this.registrationDetails.meripehchanid +  Math.floor(Math.random()*10000);
     if (this.registrationForm.valid) {
       const payload = {
         digiacc: "portal",
@@ -140,16 +142,16 @@ export class RegistrationFormComponent implements OnInit {
             name: this.registrationForm.value.name,
             joiningdate: this.registrationForm.value.joiningdate,
             aadharId: this.registrationForm.value.aadharId,
-            schoolUdise: this.schoolDetails.udiseCode,
-            meripehchanLoginId: this.registrationDetails.meripehchanid,
-            username: this.registrationDetails.meripehchanid,
+            schoolUdise: this.schoolDetails.udiseCode + Math.floor(Math.random()*10000),
+            meripehchanLoginId: newMeriPehchaanId, //this.registrationDetails.meripehchanid,
+            username: newMeriPehchaanId, //this.registrationDetails.meripehchanid,
             consent: "yes",
             consentDate: new Date().toISOString().substring(0, 10),
             did: ""
           },
-          school: { ...this.schoolDetails, did: "" }
+          school: { ...this.objectValuesToString(this.schoolDetails), did: "" }
         },
-        digimpid: this.registrationDetails.meripehchanid
+        digimpid: newMeriPehchaanId, //this.registrationDetails.meripehchanid,
       }
 
       this.authService.ssoSignUp(payload).subscribe((res: any) => {
@@ -173,6 +175,17 @@ export class RegistrationFormComponent implements OnInit {
         this.toastMessage.error("", error.message);
       });
     }
+  }
+
+
+  objectValuesToString(obj: any) {
+    Object.keys(obj).forEach((key: any) => {
+      if (typeof obj[key] === 'object') {
+        return this.objectValuesToString(obj[key]);
+      }
+      obj[key] = '' + obj[key];
+    });
+    return obj;
   }
 
 }
