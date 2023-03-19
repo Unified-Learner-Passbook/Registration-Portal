@@ -133,7 +133,8 @@ export class RegistrationFormComponent implements OnInit {
       return;
     }
 
-    const newMeriPehchaanId = this.registrationDetails.meripehchanid +  Math.floor(Math.random()*10000);
+    const newMeriPehchaanId = this.registrationDetails.meripehchanid + Math.floor(Math.random() * 10000);
+    const newUDISE = this.schoolDetails.udiseCode + Math.floor(Math.random() * 10000);
     if (this.registrationForm.valid) {
       const payload = {
         digiacc: "portal",
@@ -142,14 +143,14 @@ export class RegistrationFormComponent implements OnInit {
             name: this.registrationForm.value.name,
             joiningdate: this.registrationForm.value.joiningdate,
             aadharId: this.registrationForm.value.aadharId,
-            schoolUdise: this.schoolDetails.udiseCode + Math.floor(Math.random()*10000),
+            schoolUdise: newUDISE, //this.schoolDetails.udiseCode,
             meripehchanLoginId: this.registrationDetails.meripehchanid,
             username: this.registrationDetails.meripehchanid,
             consent: "yes",
             consentDate: new Date().toISOString().substring(0, 10),
             did: ""
           },
-          school: { ...this.objectValuesToString(this.schoolDetails), did: "" }
+          school: { ...this.objectValuesToString(this.schoolDetails), did: "", schoolUdise: newUDISE }
         },
         digimpid: this.registrationDetails.meripehchanid,
       }
