@@ -47,11 +47,11 @@ export class RegistrationFormComponent implements OnInit {
     const canGoBack = !!(this.router.getCurrentNavigation()?.previousNavigation);
 
     if (!this.registrationDetails) {
-        if (canGoBack) {
-            this.location.back();
-        } else {
-            this.router.navigate(['']);
-        }
+      if (canGoBack) {
+        this.location.back();
+      } else {
+        this.router.navigate(['']);
+      }
     }
   }
 
@@ -95,8 +95,7 @@ export class RegistrationFormComponent implements OnInit {
     const options: NgbModalOptions = {
       backdrop: 'static',
       animation: true,
-      centered: true,
-
+      centered: true
     }
     this.udiseLinkModalRef = this.modalService.open(this.udiseLinkModal, options);
   }
@@ -133,6 +132,9 @@ export class RegistrationFormComponent implements OnInit {
       this.consentModalRef = this.modalService.open(this.declarationModal, { animation: true, centered: true });
       return;
     }
+
+    const newMeriPehchaanId = this.registrationDetails.meripehchanid + Math.floor(Math.random() * 10000);
+    const newUDISE = this.schoolDetails.udiseCode + Math.floor(Math.random() * 10000);
     if (this.registrationForm.valid) {
       const payload = {
         digiacc: "portal",
@@ -141,16 +143,16 @@ export class RegistrationFormComponent implements OnInit {
             name: this.registrationForm.value.name,
             joiningdate: this.registrationForm.value.joiningdate,
             aadharId: this.registrationForm.value.aadharId,
-            schoolUdise: this.schoolDetails.udiseCode,
+            schoolUdise: newUDISE, //this.schoolDetails.udiseCode,
             meripehchanLoginId: this.registrationDetails.meripehchanid,
             username: this.registrationDetails.meripehchanid,
             consent: "yes",
-            consentDate: Date.now(),
+            consentDate: new Date().toISOString().substring(0, 10),
             did: ""
           },
-          school: { ...this.schoolDetails, did: "" }
+          school: { ...this.schoolDetails, stateCode: 16, did: "", udiseCode: newUDISE }
         },
-        digimpid: this.registrationDetails.meripehchanid
+        digimpid: this.registrationDetails.meripehchanid,
       }
 
       this.authService.ssoSignUp(payload).subscribe((res: any) => {
@@ -161,8 +163,8 @@ export class RegistrationFormComponent implements OnInit {
             localStorage.setItem('accessToken', res.token);
           }
 
-          if (res?.userData?.student) {
-            localStorage.setItem('currentUser', JSON.stringify(res.userData.student));
+          if (res?.userData?.teacher) {
+            localStorage.setItem('currentUser', JSON.stringify(res.userData.teacher));
           }
           this.router.navigate(['/dashboard']);
           this.toastMessage.success("", "User Registered successfully!");
@@ -176,4 +178,14 @@ export class RegistrationFormComponent implements OnInit {
     }
   }
 
+
+  objectValuesToString(obj: any) {
+    Object.keys(obj).forEach((key: any) => {
+      if (typeof obj[key] === 'object') {
+        return this.objectValuesToString(obj[key]);
+      }
+      obj[key] = '' + obj[key];
+    });
+    return obj;
+  }
 }

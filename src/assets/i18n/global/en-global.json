@@ -232,9 +232,6 @@
     "STUD_REGISTRATION_CLAIM":"Student registration claim management",
     "SELECT_TYPE_ISSUE_CRED":"Select type of Issue Credentials :",
     "NEW_STUD_REGISTRATION_CLAIM":"New student registration claim",
-    
-
-
     "REGISTER_STUDENT":"Register Students",
     "ADD_ISSUER_STAFF":"Add Issuer Staff",
     "ISSUED_CREDENTIAL":"Issued Credential",
@@ -246,9 +243,24 @@
     "STEP_THREE":"step 3:",
     "DOWNLOAD_CSV_TEMPLATE":"Download CSV Template",
     "SELECT_GRADE_AY":"Select Grade and AY",
-    "UPLOAD_FILLED_UP_CSV":"Upload filled up CSV and review / edit/ delete entries"
-
-
-   
-    
+    "UPLOAD_FILLED_UP_CSV":"Upload filled up CSV and review / edit/ delete entries",
+    "REGISTRATION_FORM": "Registration form",
+    "SCHOOL_NAME": "School Name",
+    "SCHOOL_NAME_REQUIRED": "School Name is Required",
+    "UDISE_ID": "UDISE ID",
+    "UDISE_ID_REQUIRED": "UDISE ID is Required",
+    "PRINCIPAL_NAME": "Principal Name",
+    "PRINCIPAL_NAME_REQUIRED": "Principal Name is Required",
+    "PHONE_NUMBER": "Phone Number",
+    "ENTER_VALID_PHONE_NUMBER": "Enter valid phone number",
+    "AADHAR_NUMBER": "Aadhar Number",
+    "ENTER_VALID_AADHAR_NUMBER": "Enter valid Aadhar Number",
+    "PRINCIPAL_SINCE": "Principal Since",
+    "ENTER_VALID_DATE": "Enter Valid Date",
+    "REGISTER": "Register",
+    "USER_CONSENT": "I declare that the information provided by me is true to the best of my information",
+    "NO_CANCEL": "No, Cancel",
+    "YES_CONFIRM": "Yes, Confirm",
+    "LINK_YOUR_UDISE": "Link your UDISE",
+    "LINK_NOW": "Link Now"
 }

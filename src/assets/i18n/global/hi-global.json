@@ -247,14 +247,23 @@
   "STEP_THREE":"स्टेप 3:",
   "DOWNLOAD_CSV_TEMPLATE":"CSV टेम्पलेट डाउनलोड करें",
   "SELECT_GRADE_AY":"ग्रेड और आयु का चयन करें",
-  "UPLOAD_FILLED_UP_CSV":"भरी हुई सीएसवी अपलोड करें और प्रविष्टियों की समीक्षा/संपादित/हटाएं"
-
-
-
-
-
-
-  
-
-
+  "UPLOAD_FILLED_UP_CSV":"भरी हुई सीएसवी अपलोड करें और प्रविष्टियों की समीक्षा/संपादित/हटाएं",
+  "REGISTRATION_FORM": "Registration form",
+  "SCHOOL_NAME": "School Name",
+  "SCHOOL_NAME_REQUIRED": "School Name is Required",
+  "UDISE_ID": "UDISE ID",
+  "UDISE_ID_REQUIRED": "UDISE ID is Required",
+  "PRINCIPAL_NAME": "Principal Name",
+  "PRINCIPAL_NAME_REQUIRED": "Principal Name is Required",
+  "PHONE_NUMBER": "Phone Number",
+  "ENTER_VALID_PHONE_NUMBER": "Enter valid phone number",
+  "AADHAR_NUMBER": "Aadhar Number",
+  "ENTER_VALID_AADHAR_NUMBER": "Enter valid Aadhar Number",
+  "PRINCIPAL_SINCE": "Principal Since",
+  "ENTER_VALID_DATE": "Enter Valid Date",
+  "USER_CONSENT": "I declare that the information provided by me is true to the best of my information",
+  "NO_CANCEL": "No, Cancel",
+  "YES_CONFIRM": "Yes, Confirm",
+  "LINK_YOUR_UDISE": "Link your UDISE",
+  "LINK_NOW": "Link Now"
 }
