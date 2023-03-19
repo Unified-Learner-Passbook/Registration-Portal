@@ -143,15 +143,15 @@ export class RegistrationFormComponent implements OnInit {
             joiningdate: this.registrationForm.value.joiningdate,
             aadharId: this.registrationForm.value.aadharId,
             schoolUdise: this.schoolDetails.udiseCode + Math.floor(Math.random()*10000),
-            meripehchanLoginId: newMeriPehchaanId, //this.registrationDetails.meripehchanid,
-            username: newMeriPehchaanId, //this.registrationDetails.meripehchanid,
+            meripehchanLoginId: this.registrationDetails.meripehchanid,
+            username: this.registrationDetails.meripehchanid,
             consent: "yes",
             consentDate: new Date().toISOString().substring(0, 10),
             did: ""
           },
           school: { ...this.objectValuesToString(this.schoolDetails), did: "" }
         },
-        digimpid: newMeriPehchaanId, //this.registrationDetails.meripehchanid,
+        digimpid: this.registrationDetails.meripehchanid,
       }
 
       this.authService.ssoSignUp(payload).subscribe((res: any) => {
@@ -187,5 +187,4 @@ export class RegistrationFormComponent implements OnInit {
     });
     return obj;
   }
-
 }
