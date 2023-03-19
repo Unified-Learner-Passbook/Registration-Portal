@@ -95,8 +95,7 @@ export class RegistrationFormComponent implements OnInit {
     const options: NgbModalOptions = {
       backdrop: 'static',
       animation: true,
-      centered: true,
-
+      centered: true
     }
     this.udiseLinkModalRef = this.modalService.open(this.udiseLinkModal, options);
   }
@@ -145,7 +144,7 @@ export class RegistrationFormComponent implements OnInit {
             meripehchanLoginId: this.registrationDetails.meripehchanid,
             username: this.registrationDetails.meripehchanid,
             consent: "yes",
-            consentDate: Date.now(),
+            consentDate: new Date().toISOString().substring(0, 10),
             did: ""
           },
           school: { ...this.schoolDetails, did: "" }
