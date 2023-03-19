@@ -150,7 +150,7 @@ export class RegistrationFormComponent implements OnInit {
             consentDate: new Date().toISOString().substring(0, 10),
             did: ""
           },
-          school: { ...this.schoolDetails, did: "", schoolUdise: newUDISE }
+          school: { ...this.schoolDetails, stateCode: 16, did: "", schoolUdise: newUDISE }
         },
         digimpid: this.registrationDetails.meripehchanid,
       }
