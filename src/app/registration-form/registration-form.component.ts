@@ -163,8 +163,8 @@ export class RegistrationFormComponent implements OnInit {
             localStorage.setItem('accessToken', res.token);
           }
 
-          if (res?.userData?.student) {
-            localStorage.setItem('currentUser', JSON.stringify(res.userData.student));
+          if (res?.userData?.teacher) {
+            localStorage.setItem('currentUser', JSON.stringify(res.userData.teacher));
           }
           this.router.navigate(['/dashboard']);
           this.toastMessage.success("", "User Registered successfully!");
