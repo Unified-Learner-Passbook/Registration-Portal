@@ -1,53 +1,59 @@
 <div class="container">
-    <h5 class="fs-16 py-4 text-center title pr-5">Registration form</h5>
+    <h5 class="fs-16 py-4 text-center title pr-5">{{'REGISTRATION_FORM' | translate}}</h5>
     <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()" class="col-md-9 offset-md-2 pl-5">
         <div class="form-group row">
-            <label for="schoolName" class="col-sm-3 col-form-label fs-14">School Name</label>
+            <label for="schoolName" class="col-sm-3 col-form-label fs-14">{{'SCHOOL_NAME' | translate}}</label>
             <div class="col-sm-6">
                 <input type="text" formControlName="schoolName" class="form-control" id="schoolName"
-                    placeholder="Enter School Name">
-                <p class="text-red pt-2 mb-0" *ngIf="schoolName.invalid && schoolName.touched">School Name is Required
+                    placeholder="{{'ENTER_SCHOOL_NAME' | translate}}">
+                <p class="text-red pt-2 mb-0" *ngIf="schoolName.invalid && schoolName.touched">{{'SCHOOL_NAME_REQUIRED'
+                    | translate}}
                 </p>
             </div>
         </div>
         <div class="form-group row">
-            <label for="udiseId" class="col-sm-3 col-form-label fs-14">UDISE ID</label>
+            <label for="udiseId" class="col-sm-3 col-form-label fs-14">{{'UDISE_ID' | translate}}</label>
             <div class="col-sm-6">
                 <input type="text" formControlName="udiseId" class="form-control" id="udiseId"
-                    placeholder="Enter UDISE ID" disabled="true">
-                <p class="text-red pt-2 mb-0" *ngIf="udiseId.invalid && udiseId.touched">UDISE ID is Required</p>
+                    placeholder="{{'ENTER_UDISE_ID' | translate}}" disabled="true">
+                <p class="text-red pt-2 mb-0" *ngIf="udiseId.invalid && udiseId.touched">{{'UDISE_ID_REQUIRED' |
+                    translate}}</p>
             </div>
         </div>
         <div class="form-group row">
-            <label for="name" class="col-sm-3 col-form-label fs-14">Principal Name</label>
+            <label for="name" class="col-sm-3 col-form-label fs-14">{{'PRINCIPAL_NAME' | translate}}</label>
             <div class="col-sm-6">
                 <input type="text" formControlName="name" class="form-control" id="name"
-                    placeholder="Enter Principal Name">
-                <p class="text-red pt-2 mb-0" *ngIf="name.invalid && name.touched">Principal Name is Required</p>
+                    placeholder="{{'ENTER_PRINCIPAL_NAME' | translate}}">
+                <p class="text-red pt-2 mb-0" *ngIf="name.invalid && name.touched">{{'PRINCIPAL_NAME_REQUIRED' |
+                    translate}}</p>
             </div>
         </div>
         <div class="form-group row">
-            <label for="phone" class="col-sm-3 col-form-label fs-14">Phone Number</label>
+            <label for="phone" class="col-sm-3 col-form-label fs-14">{{'PHONE_NUMBER' | translate}}</label>
             <div class="col-sm-6">
                 <input type="text" formControlName="phone" class="form-control" id="phone"
-                    placeholder="Enter Phone No.">
-                <p class="text-red pt-2 mb-0" *ngIf="phone.invalid && phone.touched">Enter valid phone number</p>
+                    placeholder="{{'ENTER_PHONE_NO' | translate}}">
+                <p class="text-red pt-2 mb-0" *ngIf="phone.invalid && phone.touched">{{'ENTER_VALID_PHONE_NUMBER' |
+                    translate}}</p>
             </div>
         </div>
         <div class="form-group row">
-            <label for="aadharId" class="col-sm-3 col-form-label fs-14">Aadhar Number</label>
+            <label for="aadharId" class="col-sm-3 col-form-label fs-14">{{'AADHAR_NUMBER' | translate}}</label>
             <div class="col-sm-6">
                 <input type="text" formControlName="aadharId" class="form-control" id="aadharId"
-                    placeholder="Enter Aadhar No.">
-                <p class="text-red pt-2 mb-0" *ngIf="aadharId.invalid && aadharId.touched">Enter valid Aadhar Number</p>
+                    placeholder="{{'ENTER_AADHAR_NUMBER' | translate}}">
+                <p class="text-red pt-2 mb-0" *ngIf="aadharId.invalid && aadharId.touched">{{'ENTER_VALID_AADHAR_NUMBER'
+                    | translate}}</p>
             </div>
         </div>
         <div class="form-group row">
-            <label for="joiningdate" class="col-sm-3 col-form-label fs-14">Principal Since</label>
+            <label for="joiningdate" class="col-sm-3 col-form-label fs-14">{{'PRINCIPAL_SINCE' | translate}}</label>
             <div class="col-sm-6">
                 <input type="date" formControlName="joiningdate" [max]="maxDate" class="form-control" id="joiningdate"
-                    placeholder="Enter Date of joining">
-                <p class="text-red pt-2 mb-0" *ngIf="joiningdate.invalid && joiningdate.touched">Enter Valid Date</p>
+                    placeholder="{{'ENTER_DATE_OF_JOINING' | translate}}">
+                <p class="text-red pt-2 mb-0" *ngIf="joiningdate.invalid && joiningdate.touched">{{'ENTER_VALID_DATE' |
+                    translate}}</p>
             </div>
         </div>
         <!-- <div class="form-check">
@@ -56,7 +62,7 @@
                 best of my knowledge.</label>
         </div> -->
         <button type="submit" [disabled]="registrationForm.invalid"
-            class="custom-button blue-button mt-20 ml-5">Register</button>
+            class="custom-button blue-button mt-20 ml-5">{{'REGISTER' | translate}}</button>
     </form>
 </div>
 
@@ -64,15 +70,15 @@
     <div class="modal-content">
         <div class="modal-body fs-14">
             <input type="checkbox" class="pr-3" [(ngModel)]="userConsent">
-            I declare that the information provided by me is true to the best of my information
+            {{'USER_CONSENT' | translate}}
             <div class="d-flex justify-content-center">
                 <button type="button" (click)="submitDeclarationForm(false)"
                     class="custom-button default-button mt-20 mr-5 p-32 fs-14">
-                    No, Cancel
+                    {{'NO_CANCEL' | translate}}
                 </button>
                 <button type="button" [disabled]="!userConsent" (click)="submitDeclarationForm(true)"
                     class="custom-button blue-button mt-20 p-32 fs-14">
-                    Yes, Confirm
+                    {{'YES_CONFIRM' | translate}}
                 </button>
             </div>
         </div>
@@ -84,8 +90,8 @@
     <div class="modal-content">
         <div class="modal-body fs-14">
             <div class="text-center">
-                <h6>Link your UDISE</h6>
-                <button class="btn btn-primary" type="submit" (click)="linkUDISE()">Link Now</button>
+                <h6>{{'LINK_YOUR_UDISE' | translate}}</h6>
+                <button class="btn btn-primary" type="submit" (click)="linkUDISE()">{{'LINK_NOW' | translate}}</button>
             </div>
         </div>
     </div>
