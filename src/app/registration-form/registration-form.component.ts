@@ -151,7 +151,7 @@ export class RegistrationFormComponent implements OnInit {
             consentDate: new Date().toISOString().substring(0, 10),
             did: ""
           },
-          school: { ...this.schoolDetails, stateCode: 16, did: "", udiseCode: newUDISE }
+          school: { ...this.schoolDetails, stateCode: 16, did: "", udiseCode: newUDISE } //ToDO remove hardcoded stateCode
         },
         digimpid: this.registrationDetails.meripehchanid,
       }

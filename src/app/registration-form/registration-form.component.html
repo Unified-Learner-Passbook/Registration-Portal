@@ -29,7 +29,7 @@
             <label for="name" class="col-sm-3 col-form-label fs-14">{{'PRINCIPAL_NAME' | translate}}</label>
             <div class="col-sm-6">
                 <input type="text" formControlName="name" class="form-control" id="name"
-                    placeholder="{{'ENTER_PRINCIPAL_NAME' | translate}}">
+                    placeholder="{{'ENTER_PRINCIPAL_NAME' | translate}}" disabled="true">
                 <p class="text-red pt-2 mb-0" *ngIf="name.invalid && name.touched">{{'PRINCIPAL_NAME_REQUIRED' |
                     translate}}</p>
             </div>
@@ -38,7 +38,7 @@
             <label for="phone" class="col-sm-3 col-form-label fs-14">{{'PHONE_NUMBER' | translate}}</label>
             <div class="col-sm-6">
                 <input type="text" formControlName="phone" class="form-control" id="phone"
-                    placeholder="{{'ENTER_PHONE_NO' | translate}}">
+                    placeholder="{{'ENTER_PHONE_NO' | translate}}" disabled="true">
                 <p class="text-red pt-2 mb-0" *ngIf="phone.invalid && phone.touched">{{'ENTER_VALID_PHONE_NUMBER' |
                     translate}}</p>
             </div>

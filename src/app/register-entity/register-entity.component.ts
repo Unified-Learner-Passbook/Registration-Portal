@@ -74,7 +74,7 @@ export class RegisterEntityComponent implements OnInit {
     },
     {
       label: 'Proof of Benefits',
-      value: 'proofOfBenefits',
+      value: 'proofOfBenifits',
       isEnabled: false
     }
   ]
@@ -234,7 +234,7 @@ export class RegisterEntityComponent implements OnInit {
         this.resetTableData();
         this.isLoading = false;
         setTimeout(() => {
-          this.progress = 0;
+          this.progress = 1;
           this.showProgress = false;
         }, 2000);
       }, (error) => {
@@ -250,9 +250,10 @@ export class RegisterEntityComponent implements OnInit {
       url: `https://ulp.uniteframework.io/middleware/v1/credentials/upload`,
       param: new HttpParams().append('type', this.model.certificateType),
       data: {
-        schoolDid: "09270809901",
         grade: this.model.grade,
-        academic_year: this.model.academicYear,
+        academicYear: this.model.academicYear,
+        issuer: 'schoolDid',
+        schoolName: '',
         credentialSubject: list
       }
     }
