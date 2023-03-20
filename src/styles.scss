@@ -622,7 +622,7 @@ formly-autocomplete-type .ng-select {
 }
 
 .fs-12 {
-    font-size: 12px;
+    font-size: 12px !important;
 }
 
 .fs-13 {
@@ -1150,4 +1150,10 @@ margin-right :15px !important;
     color: #414141;
     font-size: 16px;
     text-align: center;
+  }
+  .center-loading{
+    transform: translate(-50%, -50%);
+    position: absolute;
+    left: 50%;
+    top: 50%;
   }
