@@ -49,4 +49,6 @@ export class ClaimApprovalComponent implements OnInit {
     });
   }
 
+  
+
 }
