@@ -22,7 +22,7 @@ export class RegistrationFormComponent implements OnInit {
   isDeclarationSubmitted = false;
   userConsent = false;
   isVerified = null;
-  schoolNameInput: string = '';
+  schoolUdiseInput: string = '';
   @ViewChild('udiseLinkModal') udiseLinkModal: TemplateRef<any>;
   @ViewChild('declarationModal') declarationModal: TemplateRef<any>;
 
@@ -100,6 +100,7 @@ export class RegistrationFormComponent implements OnInit {
       centered: true,
       size: 'sm'
     }
+    console.log("schoolUdiseInput", this.schoolUdiseInput);
     this.udiseLinkModalRef = this.modalService.open(this.udiseLinkModal, options);
   }
 
@@ -140,8 +141,8 @@ export class RegistrationFormComponent implements OnInit {
     }
   }
 
-  verifyUDISE(udiseId: string) {
-    this.generalService.getData(`https://ulp.uniteframework.io/ulp-bff/v1/sso/udise/school/list/${this.schoolNameInput}`, true).subscribe((res: any) => {
+  verifyUDISE() {
+    this.generalService.getData(`https://ulp.uniteframework.io/ulp-bff/v1/sso/udise/school/list/${this.schoolUdiseInput}`, true).subscribe((res: any) => {
       if (res?.success && res?.status === 'found') {
         this.isVerified = "yes";
         this.schoolDetails = res.data;
