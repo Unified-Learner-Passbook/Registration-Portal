@@ -22,7 +22,7 @@ export class RegistrationFormComponent implements OnInit {
   isDeclarationSubmitted = false;
   userConsent = false;
   isVerified = null;
-  schoolNameInput: string;
+  schoolNameInput: string = '';
   @ViewChild('udiseLinkModal') udiseLinkModal: TemplateRef<any>;
   @ViewChild('declarationModal') declarationModal: TemplateRef<any>;
 
