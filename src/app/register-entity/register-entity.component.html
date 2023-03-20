@@ -23,7 +23,7 @@
         <label for="certificateType">{{'SELECT_TYPE' | translate }}</label>
         <select class="filter-btn" id="certificateType" (change)="onSelectChange($event)" [(ngModel)]="model.certificateType" #certificateType="ngModel">
           <option [ngValue]="undefined" [disabled]="true">{{'SELECT_TYPE' | translate }}</option>
-          <option *ngFor="let type of certificateTypes" [value]="type" [disabled]="!type.isEnabled">{{type.label}}</option>
+          <option *ngFor="let type of certificateTypes" [value]="type.value" [disabled]="!type.isEnabled">{{type.label}}</option>
         </select>
       </div>
       <div class="col-md-3">

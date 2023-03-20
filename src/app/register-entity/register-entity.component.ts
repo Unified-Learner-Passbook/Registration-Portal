@@ -125,9 +125,11 @@ export class RegisterEntityComponent implements OnInit {
 
     console.log('model', this.model);
 
-    if (this.model?.certificateType?.schemaId) {
+    if (this.model?.certificateType) {
+      const schemaId = this.certificateTypes.find(item => item.value === this.model.certificateType)?.schemaId;
+
       // this.csvService.getTemplateSchema('did:ulpschema:8b8eda70-6dfb-43e6-8a8a-6084188ce516')
-      this.csvService.getTemplateSchema(this.model.certificateType.schemaId)
+      this.csvService.getTemplateSchema(schemaId)
         .pipe(
           tap((res: any) => {
             if (res?.result?.schema?.properties) {
@@ -262,7 +264,7 @@ export class RegisterEntityComponent implements OnInit {
   importData(list: any[]) {
     const request: RequestParam = {
       url: `https://ulp.uniteframework.io/ulp-bff/v1/credentials/upload`,
-      param: new HttpParams().append('type', this.model.certificateType.value),
+      param: new HttpParams().append('type', this.model.certificateType),
       data: {
         grade: this.model.grade,
         academicYear: this.model.academicYear,
