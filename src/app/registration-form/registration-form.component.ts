@@ -95,7 +95,8 @@ export class RegistrationFormComponent implements OnInit {
     const options: NgbModalOptions = {
       backdrop: 'static',
       animation: true,
-      centered: true
+      centered: true,
+      size : 'sm'
     }
     this.udiseLinkModalRef = this.modalService.open(this.udiseLinkModal, options);
   }
