@@ -66,17 +66,20 @@ export class RegisterEntityComponent implements OnInit {
     {
       label: 'Proof of Enrollment',
       value: 'proofOfEnrollment',
-      isEnabled: true
+      isEnabled: true,
+      schemaId: 'clf0rjgov0002tj15ml0fdest'
     },
     {
       label: 'Proof of Assessment',
       value: 'proofOfAssessment',
-      isEnabled: false
+      isEnabled: true,
+      schemaId: 'clf0qfvna0000tj154706406y'
     },
     {
       label: 'Proof of Benefits',
       value: 'proofOfBenifits',
-      isEnabled: false
+      isEnabled: true,
+      schemaId: 'clf0wvyjs0008tj154rc071i1'
     }
   ]
   startYear = 2000;
@@ -120,12 +123,13 @@ export class RegisterEntityComponent implements OnInit {
     // link.click();
     // link.remove();
 
-    if (this.model?.certificateType) {
-      this.csvService.getTemplateSchema('did:ulpschema:8b8eda70-6dfb-43e6-8a8a-6084188ce516')
+    if (this.model?.certificateType?.schemaId) {
+      // this.csvService.getTemplateSchema('did:ulpschema:8b8eda70-6dfb-43e6-8a8a-6084188ce516')
+      this.csvService.getTemplateSchema(this.model.certificateType.schemaId)
         .pipe(
-          tap((result: any) => {
-            if (result?.schema?.properties) {
-              const columnFields = Object.keys(result.schema.properties);
+          tap((res: any) => {
+            if (res?.result?.schema?.properties) {
+              const columnFields = Object.keys(res.result.schema.properties);
               const csvContent = this.csvService.generateCSV(columnFields);
               this.csvService.downloadCSVTemplate(csvContent, `${this.model.certificateType}-template`);
             } else {
@@ -256,7 +260,7 @@ export class RegisterEntityComponent implements OnInit {
   importData(list: any[]) {
     const request: RequestParam = {
       url: `https://ulp.uniteframework.io/ulp-bff/v1/credentials/upload`,
-      param: new HttpParams().append('type', this.model.certificateType),
+      param: new HttpParams().append('type', this.model.certificateType.value),
       data: {
         grade: this.model.grade,
         academicYear: this.model.academicYear,
