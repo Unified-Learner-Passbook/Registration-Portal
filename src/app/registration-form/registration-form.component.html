@@ -1,6 +1,11 @@
 <div class="container">
-    <h5 class="fs-16 py-4 text-center title pr-5">{{'REGISTRATION_FORM' | translate}}</h5>
     <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()" class="col-md-9 offset-md-2 pl-5">
+        <div class="row">
+            <label class="col-sm-3">&nbsp;</label>
+            <div class="col-sm-6">
+                <h5 class="py-4 text-left title">{{'REGISTRATION_FORM' | translate}}</h5>
+            </div>
+        </div>
         <div class="form-group row">
             <label for="schoolName" class="col-sm-3 col-form-label fs-14">{{'SCHOOL_NAME' | translate}}</label>
             <div class="col-sm-6">
@@ -61,8 +66,13 @@
             <label class="form-check-label" for="consent">I declare that the information provided by me is true to the
                 best of my knowledge.</label>
         </div> -->
-        <button type="submit" [disabled]="registrationForm.invalid"
-            class="custom-button blue-button mt-20 ml-5">{{'REGISTER' | translate}}</button>
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label">&nbsp;</label>
+            <div class="col-sm-6">
+                <button type="submit" [disabled]="registrationForm.invalid"
+                class="custom-button blue-button mt-20">{{'REGISTER' | translate}}</button>
+            </div>
+        </div>
     </form>
 </div>
 
@@ -90,8 +100,8 @@
     <div class="modal-content">
         <div class="modal-body fs-14">
             <div class="text-center">
-                <h6>{{'LINK_YOUR_UDISE' | translate}}</h6>
-                <button class="btn btn-primary" type="submit" (click)="linkUDISE()">{{'LINK_NOW' | translate}}</button>
+                <h6 class="py-3">{{'LINK_YOUR_UDISE' | translate}}</h6>
+                <button class="btn btn-primary fs-12" type="submit" (click)="linkUDISE()">{{'LINK_NOW' | translate}}</button>
             </div>
         </div>
     </div>
