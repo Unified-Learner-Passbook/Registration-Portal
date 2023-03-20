@@ -123,6 +123,8 @@ export class RegisterEntityComponent implements OnInit {
     // link.click();
     // link.remove();
 
+    console.log('model', this.model);
+
     if (this.model?.certificateType?.schemaId) {
       // this.csvService.getTemplateSchema('did:ulpschema:8b8eda70-6dfb-43e6-8a8a-6084188ce516')
       this.csvService.getTemplateSchema(this.model.certificateType.schemaId)
