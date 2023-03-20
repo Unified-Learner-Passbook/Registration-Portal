@@ -9,8 +9,11 @@
           <tr>
             <th>S.no.</th>
             <th>Student Name</th>
+            <th>Guardian Name</th>
             <th>Student ID</th>
             <th>Date of Birth</th>
+            <th>Grade</th>
+            <th>Academic Year</th>
             <th>Phone Number</th>
             <th>Pending since</th>
             <th></th>
@@ -20,8 +23,11 @@
           <tr *ngFor="let user of studentDetails; let index = index">
             <td>{{index+1}}</td>
             <td>{{user.studentName}}</td>
+            <td>{{user.gaurdianName}}</td>
             <td>{{user.studentSchoolID}}</td>
             <td>{{user.dob}}</td>
+            <td>{{user.grade}}</td>
+            <td>{{user.academicYear}}</td>
             <td>{{user.phoneNo}}</td>
             <td>{{user.osCreatedAt}}</td>
             <td>

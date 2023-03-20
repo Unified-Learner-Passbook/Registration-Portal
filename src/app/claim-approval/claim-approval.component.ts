@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { GeneralService } from '../services/general/general.service';
+import { ToastMessageService } from '../services/toast-message/toast-message.service';
 
 @Component({
   selector: 'app-claim-approval',
@@ -9,7 +10,7 @@ import { GeneralService } from '../services/general/general.service';
 export class ClaimApprovalComponent implements OnInit {
   public studentDetails = [];
 
-  constructor(public generalService: GeneralService) { }
+  constructor(public generalService: GeneralService, private toastService: ToastMessageService) { }
 
   ngOnInit(): void {
     var search = {
@@ -19,6 +20,7 @@ export class ClaimApprovalComponent implements OnInit {
       console.log('studentDetail', res);
       this.studentDetails = res.result;
       console.log("this.studentDetails", this.studentDetails)
+      this.toastService.success("", "Appproved Successfully!")
     }, (err) => {
       // this.toastMsg.error('error', err.error.params.errmsg)
       console.log('error', err)
