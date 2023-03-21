@@ -9,8 +9,11 @@
           <tr>
             <th>S.no.</th>
             <th>Student Name</th>
+            <th>Guardian Name</th>
             <th>Student ID</th>
             <th>Date of Birth</th>
+            <th>Grade</th>
+            <th>Academic Year</th>
             <th>Phone Number</th>
             <th>Pending since</th>
             <th></th>
@@ -20,12 +23,15 @@
           <tr *ngFor="let user of studentDetails; let index = index">
             <td>{{index+1}}</td>
             <td>{{user.studentName}}</td>
+            <td>{{user.gaurdianName}}</td>
             <td>{{user.studentSchoolID}}</td>
             <td>{{user.dob}}</td>
+            <td>{{user.grade}}</td>
+            <td>{{user.academicYear}}</td>
             <td>{{user.phoneNo}}</td>
             <td>{{user.osCreatedAt}}</td>
             <td>
-                <img style="cursor: pointer;" src="assets/images/checkicon.png" (click) = "approveStudent(user)" alt="" class=" ">
+                <img style="cursor: pointer;" src="assets/images/checkicon.png" (click) = "openPopup(user)" alt="" class=" ">
                 <img style="cursor: pointer;" src="assets/images/closecheck.png" alt="">
             </td>
           </tr>
@@ -38,3 +44,22 @@
         (pageChange)="pageChange()">
       </ngb-pagination> -->
   </div>
+
+
+  <ng-template #approveModal tabindex="-1" role="dialog" aria-labelledby="approveModal">
+    <div class="modal-content">
+        <div class="modal-body fs-14">
+          Are you sure want to approve
+            <div class="d-flex justify-content-center">
+                <button type="button" (click)="approveConfirm(false)"
+                    class="custom-button default-button mt-20 mr-5 p-32 fs-14">
+                    {{'NO_CANCEL' | translate}}
+                </button>
+                <button type="button" (click)="approveConfirm(true)"
+                    class="custom-button blue-button mt-20 p-32 fs-14">
+                    {{'YES_CONFIRM' | translate}}
+                </button>
+            </div>
+        </div>
+    </div>
+</ng-template>
