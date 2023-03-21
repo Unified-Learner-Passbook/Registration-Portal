@@ -263,8 +263,8 @@ export class RegisterEntityComponent implements OnInit {
 
   importData(list: any[]) {
     const request: RequestParam = {
-      url: `https://ulp.uniteframework.io/ulp-bff/v1/credentials/upload`,
-      param: new HttpParams().append('type', this.model.certificateType),
+      url: `https://ulp.uniteframework.io/ulp-bff/v1/credentials/upload/${this.model.certificateType}`,
+      // param: new HttpParams().append('type', this.model.certificateType),
       data: {
         grade: this.model.grade,
         academicYear: this.model.academicYear,
