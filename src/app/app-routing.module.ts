@@ -42,11 +42,7 @@ import { AuthenticationGuard } from './utility/authentication.guard';
 // import { CreateCertificateComponent } from './create-certificate/create-certificate.component';
 // import { FaqComponent } from './custom-components/faq/faq.component';
 const routes: Routes = [
-  {
-    path: '',
-    component: ClaimApprovalComponent
-  },
-  //{ path: '', component: RegistrationComponent },
+  { path: '', component: RegistrationComponent },
   {
     path: 'digilocker-callback',
     component: OauthCallbackComponent

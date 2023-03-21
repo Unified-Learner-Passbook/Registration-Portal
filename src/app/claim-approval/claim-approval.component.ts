@@ -28,12 +28,12 @@ export class ClaimApprovalComponent implements OnInit {
     this.generalService.postStudentData('/studentDetail', search).subscribe((res) => {
       console.log('studentDetail', res);
       console.log('studentDetail length', res.result.length);
-      this.studentDetails = res.result
-      // for (const iterator of res.result) {
-      //   if(!iterator.did) {
-      //     this.studentDetails.push(iterator)
-      //   }
-      // }
+      //this.studentDetails = res.result
+      for (const iterator of res.result) {
+        if(!iterator.did) {
+          this.studentDetails.push(iterator)
+        }
+      }
       console.log("this.studentDetails", this.studentDetails.length)
     }, (err) => {
       // this.toastMsg.error('error', err.error.params.errmsg)
