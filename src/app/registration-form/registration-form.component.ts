@@ -200,7 +200,11 @@ export class RegistrationFormComponent implements OnInit {
           this.toastMessage.error("", res.message);
         }
       }, (error) => {
-        this.toastMessage.error("", error.message);
+        if (error?.message) {
+          this.toastMessage.error("", error.message);
+        } else {
+          this.toastMessage.error("", 'Error while Registration, please try again!');
+        }
       });
     }
   }
