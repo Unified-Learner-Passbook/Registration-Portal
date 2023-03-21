@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../services/auth/auth.service';
 import { GeneralService } from '../services/general/general.service';
 
 @Component({
@@ -33,7 +34,14 @@ export class SidebarComponent implements OnInit {
       isActive: false,
     },
   ];
-  constructor(private generalService: GeneralService) {}
+  constructor(
+    private readonly generalService: GeneralService,
+    private readonly authService: AuthService
+  ) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
+
+  logout() {
+    this.authService.doLogout();
+  }
 }

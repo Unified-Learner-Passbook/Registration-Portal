@@ -1,4 +1,4 @@
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -53,10 +53,10 @@ import { SearchComponent } from '../app/discovery/search/search.component';
 import { AuthConfigService } from './authentication/auth-config.service';
 import { DocumentsComponent } from './documents/documents.component';
 import { AddDocumentComponent } from './documents/add-document/add-document.component';
-import { WebcamModule} from 'ngx-webcam';
+import { WebcamModule } from 'ngx-webcam';
 import { ScanDocumentComponent } from './documents/scan-document/scan-document.component';
 import { ScanQrCodeComponent } from './documents/scan-qr-code/scan-qr-code.component';
-import { QuarModule} from '@altack/quar';
+import { QuarModule } from '@altack/quar';
 import { BrowseDocumentsComponent } from './documents/browse-documents/browse-documents.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { LoginComponent } from './login/login.component';
@@ -67,7 +67,7 @@ import { HttpClient } from '@angular/common/http';
 import { config } from 'process';
 import { ColorPickerModule } from 'ngx-color-picker';
 
-import { VerifyModule} from 'vc-verification'
+import { VerifyModule } from 'vc-verification'
 
 //form validations
 export function minItemsValidationMessage(err, field: FormlyFieldConfig) {
@@ -119,7 +119,7 @@ import { PagesComponent } from './pages/pages.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 
-import {AuthImagePipe} from '../app/layouts/doc-view/doc-view.component';
+import { AuthImagePipe } from '../app/layouts/doc-view/doc-view.component';
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 import { DocDetailViewComponent } from './documents/doc-detail-view/doc-detail-view.component';
 // import { FaqComponent } from './custom-components/faq/faq.component';
@@ -133,19 +133,21 @@ import { AddRecordsComponent } from './issure/add-records/add-records.component'
 import { PreviewHtmlComponent } from './issure/preview-html/preview-html.component';
 // import { CreateCertificateComponent } from './create-certificate/create-certificate.component';
 import { NgJsonEditorModule } from 'ang-jsoneditor';
-import { VerifyComponent } from './issure/verify/verify.component' 
+import { VerifyComponent } from './issure/verify/verify.component'
 import { FormioModule } from 'angular-formio';
 import { NgxTextEditorModule } from 'ngx-text-editor';
 
 import * as configData from '../assets/config/config.json';
 import { AdvanceEditorComponent } from './issure/advance-editor/advance-editor.component';
-import { MainDashboardComponent } from './main-dashboard/main-dashboard.component'; 
+import { MainDashboardComponent } from './main-dashboard/main-dashboard.component';
 import { GlobalHeaderComponent } from './global-header/global-header.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { RegisterEntityComponent } from './register-entity/register-entity.component';
 import { ClaimApprovalComponent } from './claim-approval/claim-approval.component';
 import { IssuedCredentialComponent } from './issued-credential/issued-credential.component';
 import { OauthCallbackComponent } from './oauth-callback/oauth-callback.component';
+import { RegistrationFormComponent } from './registration-form/registration-form.component';
+import { AuthInterceptor } from './authentication/auth.interceptor';
 console.log(configData['default']);
 
 @NgModule({
@@ -195,7 +197,8 @@ console.log(configData['default']);
     RegistrationComponent,
     ClaimApprovalComponent,
     IssuedCredentialComponent,
-    OauthCallbackComponent
+    OauthCallbackComponent,
+    RegistrationFormComponent
 
   ],
   imports: [
@@ -300,9 +303,10 @@ console.log(configData['default']);
       useFactory: initTheme,
       deps: [HttpClient, TranslateService],
       multi: true
-    }]
+    },
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+  ]
 })
-
 
 export class AppModule {
   languages;

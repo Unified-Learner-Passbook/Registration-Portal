@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
+import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
+import { AuthService } from '../services/auth/auth.service';
 import { GeneralService } from '../services/general/general.service';
 
 @Component({
@@ -8,14 +11,23 @@ import { GeneralService } from '../services/general/general.service';
 })
 export class RegistrationComponent implements OnInit {
 
+
   featureList = [
     'Issue academic certificates ',
     'Empower students to connect to opportunities',
     'Have a wholesome view of student performance'
   ]
-  constructor(private generalService: GeneralService) { }
+  constructor(
+    private readonly generalService: GeneralService,
+    private readonly authService: AuthService,
+    private readonly router: Router
+    ) { }
 
   ngOnInit(): void {
+    if (this.authService.isLoggedIn) {
+      this.router.navigate(['/dashboard']);
+    }
+
   }
 
   openSSO() {

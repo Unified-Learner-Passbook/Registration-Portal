@@ -247,14 +247,29 @@
   "STEP_THREE":"स्टेप 3:",
   "DOWNLOAD_CSV_TEMPLATE":"CSV टेम्पलेट डाउनलोड करें",
   "SELECT_GRADE_AY":"ग्रेड और आयु का चयन करें",
-  "UPLOAD_FILLED_UP_CSV":"भरी हुई सीएसवी अपलोड करें और प्रविष्टियों की समीक्षा/संपादित/हटाएं"
-
-
-
-
-
-
-  
-
-
+  "UPLOAD_FILLED_UP_CSV":"भरी हुई सीएसवी अपलोड करें और प्रविष्टियों की समीक्षा/संपादित/हटाएं",
+  "REGISTRATION_FORM": "पंजीकरण फॉर्म",
+  "SCHOOL_NAME": "स्कूल का नाम",
+  "ENTER_SCHOOL_NAME": "स्कूल का नाम दर्ज करें",
+  "SCHOOL_NAME_REQUIRED": "स्कूल का नाम आवश्यक है",
+  "UDISE_ID": "यूडीआईएसई आईडी",
+  "ENTER_UDISE_ID": "यूडीआईएसई आईडी दर्ज करें",
+  "UDISE_ID_REQUIRED": "यूडीआईएसई आईडी आवश्यक है",
+  "PRINCIPAL_NAME": "प्राचार्य का नाम",
+  "ENTER_PRINCIPAL_NAME": "प्रिंसिपल का नाम दर्ज करें",
+  "PRINCIPAL_NAME_REQUIRED": "प्रिंसिपल का नाम आवश्यक है",
+  "PHONE_NUMBER": "फ़ोन नंबर",
+  "ENTER_PHONE_NO": "फोन नंबर दर्ज करें।",
+  "ENTER_VALID_PHONE_NUMBER": "मान्य फ़ोन नंबर दर्ज करें",
+  "AADHAR_NUMBER": "आधार संख्या",
+  "ENTER_AADHAR_NUMBER": "आधार संख्या दर्ज करें",
+  "ENTER_VALID_AADHAR_NUMBER": "मान्य आधार संख्या दर्ज करें",
+  "PRINCIPAL_SINCE": "प्राचार्य चूंकि",
+  "ENTER_DATE_OF_JOINING": "शामिल होने की तिथि दर्ज करें",
+  "ENTER_VALID_DATE": "मान्य तिथि दर्ज करें",
+  "USER_CONSENT": "मैं घोषणा करता हूं कि मेरे द्वारा प्रदान की गई जानकारी मेरी सर्वोत्तम जानकारी के अनुसार सत्य है",
+  "NO_CANCEL": "नहीं, रद्द करें",
+  "YES_CONFIRM": "हां, कन्फर्म करें",
+  "LINK_YOUR_UDISE": "अपना यूडीआईएसई लिंक करें",
+  "LINK_NOW": "अभी लिंक करें"
 }
