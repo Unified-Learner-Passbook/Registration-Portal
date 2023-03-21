@@ -1,6 +1,8 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { element } from 'protractor';
+import { AuthService } from '../services/auth/auth.service';
+import { DataService } from '../services/data/data-request.service';
 import { GeneralService } from '../services/general/general.service';
 import { ToastMessageService } from '../services/toast-message/toast-message.service';
 
@@ -16,10 +18,11 @@ export class ClaimApprovalComponent implements OnInit {
   consentModalRef: NgbModalRef;
   public selectedUser: any;
   modelRef: any;
+  schoolDetails: any;
 
   @ViewChild('approveModal') approveModal: TemplateRef<any>
 
-  constructor(public generalService: GeneralService, private toastService: ToastMessageService, private modalService: NgbModal) { }
+  constructor(public generalService: GeneralService, private toastService: ToastMessageService, private modalService: NgbModal, private authService: AuthService, private dataService: DataService,) { }
 
   ngOnInit(): void {
     var search = {
@@ -39,10 +42,21 @@ export class ClaimApprovalComponent implements OnInit {
       // this.toastMsg.error('error', err.error.params.errmsg)
       console.log('error', err)
     });
+    this.getSchoolDetails();
+  }
+
+  getSchoolDetails() {
+    const udiseId = this.authService.currentUser.schoolUdise;
+    console.log("udiseId", udiseId)
+    this.dataService.get({ url: `https://ulp.uniteframework.io/ulp-bff/v1/sso/school/${udiseId}` }).subscribe((res: any) => {
+      this.schoolDetails = res.result;
+      console.log('schoolDetails', this.schoolDetails);
+    });
   }
 
   approveStudent(user) {
     var payload = {
+      "issuer": this.schoolDetails.did,
       "credentialSubject": {
         "studentId": user.studentSchoolID,
         "studentName": user.studentName,
@@ -55,8 +69,7 @@ export class ClaimApprovalComponent implements OnInit {
         "gaurdianName": user.gaurdianName,
         "grade": user.grade,
         "academicYear": user.academicYear,
-
-
+        "schoolName": user.schoolName
       }
 
     }
