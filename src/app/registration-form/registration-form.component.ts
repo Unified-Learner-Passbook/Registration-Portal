@@ -21,6 +21,8 @@ export class RegistrationFormComponent implements OnInit {
   maxDate = new Date().toISOString().split("T")[0];
   isDeclarationSubmitted = false;
   userConsent = false;
+  isVerified = null;
+  schoolUdiseInput: string = '';
   @ViewChild('udiseLinkModal') udiseLinkModal: TemplateRef<any>;
   @ViewChild('declarationModal') declarationModal: TemplateRef<any>;
 
@@ -96,14 +98,27 @@ export class RegistrationFormComponent implements OnInit {
       backdrop: 'static',
       animation: true,
       centered: true,
-      size : 'sm'
+      size: 'sm'
     }
+    console.log("schoolUdiseInput", this.schoolUdiseInput);
     this.udiseLinkModalRef = this.modalService.open(this.udiseLinkModal, options);
   }
 
   linkUDISE() {
-    this.generalService.getData('https://ulp.uniteframework.io/ulp-bff/v1/sso/udise/verify/myschool1234', true).subscribe((res: any) => {
-      this.schoolDetails = res;
+    // this.generalService.getData('https://ulp.uniteframework.io/ulp-bff/v1/sso/udise/verify/myschool1234', true).subscribe((res: any) => {
+    //   this.schoolDetails = res;
+    //   this.toastMessage.success('', 'Successfully Linked!');
+    //   if (this.schoolDetails?.udiseCode) {
+    //     this.registrationForm.get('udiseId').setValue(this.schoolDetails.udiseCode);
+    //   }
+
+    //   if (this.schoolDetails?.schoolName) {
+    //     this.registrationForm.get('schoolName').setValue(this.schoolDetails.schoolName);
+    //   }
+    //   this.udiseLinkModalRef.close();
+    // });
+
+    if (this.registrationDetails) {
       this.toastMessage.success('', 'Successfully Linked!');
       if (this.schoolDetails?.udiseCode) {
         this.registrationForm.get('udiseId').setValue(this.schoolDetails.udiseCode);
@@ -113,7 +128,7 @@ export class RegistrationFormComponent implements OnInit {
         this.registrationForm.get('schoolName').setValue(this.schoolDetails.schoolName);
       }
       this.udiseLinkModalRef.close();
-    });
+    }
   }
 
   submitDeclarationForm(isConfirmed: boolean) {
@@ -124,6 +139,17 @@ export class RegistrationFormComponent implements OnInit {
     if (isConfirmed) {
       this.onSubmit();
     }
+  }
+
+  verifyUDISE() {
+    this.generalService.getData(`https://ulp.uniteframework.io/ulp-bff/v1/sso/udise/school/list/${this.schoolUdiseInput}`, true).subscribe((res: any) => {
+      if (res?.success && res?.status === 'found') {
+        this.isVerified = "yes";
+        this.schoolDetails = res.data;
+      } else {
+        this.isVerified = "no";
+      }
+    })
   }
 
   onSubmit() {
@@ -144,14 +170,14 @@ export class RegistrationFormComponent implements OnInit {
             name: this.registrationForm.value.name,
             joiningdate: this.registrationForm.value.joiningdate,
             aadharId: this.registrationForm.value.aadharId,
-            schoolUdise: newUDISE, //this.schoolDetails.udiseCode,
+            schoolUdise: this.registrationForm.value.udiseId,//newUDISE, //this.schoolDetails.udiseCode,
             meripehchanLoginId: this.registrationDetails.meripehchanid,
             username: this.registrationDetails.meripehchanid,
             consent: "yes",
             consentDate: new Date().toISOString().substring(0, 10),
             did: ""
           },
-          school: { ...this.schoolDetails, stateCode: 16, did: "", udiseCode: newUDISE } //ToDO remove hardcoded stateCode
+          school: { ...this.schoolDetails, stateCode: 16, did: "" } //ToDO remove hardcoded stateCode
         },
         digimpid: this.registrationDetails.meripehchanid,
       }

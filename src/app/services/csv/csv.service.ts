@@ -18,7 +18,8 @@ export class CsvService {
       throwError(() => new Error('Id is missing'));
     }
 
-    return this.generalService.getData(`https://ulp.uniteframework.io/cred-schema/schema/jsonld?id=${id}`, true);
+    return this.generalService.getData(`https://ulp.uniteframework.io/ulp-bff/v1/sso/student/credentials/schema/json/${id}`, true);
+    // return this.generalService.getData(`https://ulp.uniteframework.io/cred-schema/schema/jsonld?id=${id}`, true);
   }
 
   downloadCSVTemplate(csvContent: string, fileName: string = 'template.csv') {

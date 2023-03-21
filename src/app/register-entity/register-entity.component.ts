@@ -8,6 +8,7 @@ import { from, throwError } from 'rxjs';
 import { CsvService } from '../services/csv/csv.service';
 import { RequestParam } from '../interfaces/httpOptions.interface';
 import { HttpParams } from '@angular/common/http';
+import { AuthService } from '../services/auth/auth.service';
 
 @Component({
   selector: 'app-register-entity',
@@ -65,17 +66,20 @@ export class RegisterEntityComponent implements OnInit {
     {
       label: 'Proof of Enrollment',
       value: 'proofOfEnrollment',
-      isEnabled: true 
+      isEnabled: true,
+      schemaId: 'clf0rjgov0002tj15ml0fdest'
     },
     {
       label: 'Proof of Assessment',
       value: 'proofOfAssessment',
-      isEnabled: false
+      isEnabled: true,
+      schemaId: 'clf0qfvna0000tj154706406y'
     },
     {
       label: 'Proof of Benefits',
       value: 'proofOfBenifits',
-      isEnabled: false
+      isEnabled: true,
+      schemaId: 'clf0wvyjs0008tj154rc071i1'
     }
   ]
   startYear = 2000;
@@ -87,12 +91,18 @@ export class RegisterEntityComponent implements OnInit {
   progress = 0;
   currentBatch = 0;
   totalBatches: number;
+  schoolDetails: any;
 
   page = 1;
   pageSize = 30;
 
   errorMessage: string;
-  constructor(private dataService: DataService, private toastMsg: ToastMessageService, private csvService: CsvService) { }
+  constructor(
+    private dataService: DataService,
+    private toastMsg: ToastMessageService,
+    private csvService: CsvService,
+    private authService: AuthService
+  ) { }
 
   ngOnInit(): void {
     this.setAcademicYear();
@@ -113,12 +123,17 @@ export class RegisterEntityComponent implements OnInit {
     // link.click();
     // link.remove();
 
+    console.log('model', this.model);
+
     if (this.model?.certificateType) {
-      this.csvService.getTemplateSchema('did:ulpschema:8b8eda70-6dfb-43e6-8a8a-6084188ce516')
+      const schemaId = this.certificateTypes.find(item => item.value === this.model.certificateType)?.schemaId;
+
+      // this.csvService.getTemplateSchema('did:ulpschema:8b8eda70-6dfb-43e6-8a8a-6084188ce516')
+      this.csvService.getTemplateSchema(schemaId)
         .pipe(
-          tap((result: any) => {
-            if (result?.schema?.properties) {
-              const columnFields = Object.keys(result.schema.properties);
+          tap((res: any) => {
+            if (res?.result?.schema?.properties) {
+              const columnFields = Object.keys(res.result.schema.properties);
               const csvContent = this.csvService.generateCSV(columnFields);
               this.csvService.downloadCSVTemplate(csvContent, `${this.model.certificateType}-template`);
             } else {
@@ -142,6 +157,7 @@ export class RegisterEntityComponent implements OnInit {
   public async importDataFromCSV(event: any) {
     try {
       this.resetTableData();
+      this.getSchoolDetails();
       this.parsedCSV = await this.parseCSVFile(event);
       const columns = Object.keys(this.parsedCSV[0]);
       this.tableColumns = columns.map((header: string) => header.replace(/_/g, " ").trim());
@@ -247,17 +263,25 @@ export class RegisterEntityComponent implements OnInit {
 
   importData(list: any[]) {
     const request: RequestParam = {
-      url: `https://ulp.uniteframework.io/middleware/v1/credentials/upload`,
+      url: `https://ulp.uniteframework.io/ulp-bff/v1/credentials/upload`,
       param: new HttpParams().append('type', this.model.certificateType),
       data: {
         grade: this.model.grade,
         academicYear: this.model.academicYear,
-        issuer: 'schoolDid',
-        schoolName: '',
+        issuer: this.schoolDetails.did,
+        schoolName: this.schoolDetails.schoolName,
         credentialSubject: list
       }
     }
     return this.dataService.post(request);
+  }
+
+  getSchoolDetails() {
+    const udiseId = this.authService.currentUser.schoolUdise;
+    this.dataService.get({ url: `https://ulp.uniteframework.io/ulp-bff/v1/sso/school/${udiseId}` }).subscribe((res: any) => {
+      this.schoolDetails = res.result;
+      console.log('schoolDetails', this.schoolDetails);
+    });
   }
 }
 
