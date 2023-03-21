@@ -43,6 +43,7 @@ export class ClaimApprovalComponent implements OnInit {
 
   approveStudent(user) {
     var payload = {
+      "issuer": "",
       "credentialSubject": {
         "studentId": user.studentSchoolID,
         "studentName": user.studentName,
@@ -55,8 +56,7 @@ export class ClaimApprovalComponent implements OnInit {
         "gaurdianName": user.gaurdianName,
         "grade": user.grade,
         "academicYear": user.academicYear,
-
-
+        "schoolName": user.schoolName
       }
 
     }
