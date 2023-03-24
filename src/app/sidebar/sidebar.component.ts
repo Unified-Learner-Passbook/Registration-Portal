@@ -10,9 +10,15 @@ import { GeneralService } from '../services/general/general.service';
 export class SidebarComponent implements OnInit {
   menuList = [
     {
+      label: this.generalService.translateString('HOME'),
+      link: 'dashboard',
+      class: 'fa fa-home',
+      isActive: true,
+    },
+    {
       label: this.generalService.translateString('REGISTER_STUDENT'),
       link: 'register-entity',
-      class: 'fa fa-home',
+      class: 'fa fa-user-check',
       isActive: true,
     },
     {
