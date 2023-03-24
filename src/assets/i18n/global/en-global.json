@@ -268,5 +268,12 @@
     "NO_CANCEL": "No, Cancel",
     "YES_CONFIRM": "Yes, Confirm",
     "LINK_YOUR_UDISE": "Link your UDISE",
-    "LINK_NOW": "Link Now"
+    "LINK_NOW": "Link Now",
+
+
+
+    "SELECT_USER_TYPE": "Select the user type",
+    "PRINCIPAL":"Principal",
+    "BLOCK_EDUCATIONAL_OFFICER":"Block Educational Officer"
+    
 }
