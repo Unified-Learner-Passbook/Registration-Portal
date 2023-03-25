@@ -6,6 +6,8 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ToastMessageService } from '../services/toast-message/toast-message.service';
 import { AuthService } from '../services/auth/auth.service';
 import { Location } from '@angular/common';
+import { CredentialService } from '../services/credential/credential.service';
+import { mergeMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-registration-form',
@@ -41,7 +43,8 @@ export class RegistrationFormComponent implements OnInit {
     private readonly generalService: GeneralService,
     private readonly toastMessage: ToastMessageService,
     private readonly authService: AuthService,
-    private readonly location: Location
+    private readonly location: Location,
+    private readonly credentialService: CredentialService
   ) {
     const navigation = this.router.getCurrentNavigation();
     this.registrationDetails = navigation.extras.state;
@@ -166,31 +169,47 @@ export class RegistrationFormComponent implements OnInit {
         digimpid: this.registrationDetails.meripehchanid,
       }
 
-      this.authService.ssoSignUp(payload).subscribe((res: any) => {
-        console.log("result register", res);
-        this.isLoading = false;
-        if (res.success && res.user === 'FOUND') {
+      // this.authService.ssoSignUp(payload).subscribe((res: any) => {
+      //   console.log("result register", res);
+      //   this.isLoading = false;
+      //   if (res.success && res.user === 'FOUND') {
 
-          if (res.token) {
-            localStorage.setItem('accessToken', res.token);
-          }
+      //     if (res.token) {
+      //       localStorage.setItem('accessToken', res.token);
+      //     }
 
-          if (res?.userData?.teacher) {
-            localStorage.setItem('currentUser', JSON.stringify(res.userData.teacher));
-          }
-          this.router.navigate(['/dashboard']);
-          this.toastMessage.success("", "User Registered successfully!");
+      //     if (res?.userData?.teacher) {
+      //       localStorage.setItem('currentUser', JSON.stringify(res.userData.teacher));
+      //     }
 
-        } else {
-          this.toastMessage.error("", res.message);
-        }
-      }, (error) => {
-        this.isLoading = false;
-        if (error?.message) {
-          this.toastMessage.error("", error.message);
-        } else {
-          this.toastMessage.error("", 'Error while Registration, please try again!');
-        }
+      //     this.authService.getSchoolDetails().subscribe((res: any) => {
+      //       this.credentialService.issueCredential();
+      //       this.toastMessage.success("", "User Registered successfully!");
+      //       this.router.navigate(['/dashboard']);
+      //     });
+
+      //   } else {
+      //     this.toastMessage.error("", res.message);
+      //   }
+      // }, (error) => {
+      //   this.isLoading = false;
+      //   if (error?.message) {
+      //     this.toastMessage.error("", error.message);
+      //   } else {
+      //     this.toastMessage.error("", 'Error while Registration, please try again!');
+      //   }
+      // });
+
+
+      this.authService.ssoSignUp(payload).pipe(
+        mergeMap(_ => this.authService.getSchoolDetails()),
+        mergeMap(_ => this.credentialService.issueCredential())
+      ).subscribe((res: any) => {
+        this.toastMessage.success("", "User Registered successfully!");
+        this.router.navigate(['/dashboard']);
+      }, (error: any) => {
+        const message = error.message ? error.message : 'Error while register user'
+        this.toastMessage.error("", message);
       });
     }
   }

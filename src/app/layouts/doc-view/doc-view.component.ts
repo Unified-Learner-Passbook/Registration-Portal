@@ -1,134 +1,104 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { environment } from 'src/environments/environment';
-
-import {
-    Pipe,
-    PipeTransform,
-    OnDestroy,
-    WrappedValue,
-    ChangeDetectorRef
-} from '@angular/core';
-
-import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
-import { GeneralService } from 'src/app/services/general/general.service';
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
-import { KeycloakService } from 'keycloak-angular';
-import { AppConfig } from 'src/app/app.config';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Location } from '@angular/common';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { distinctUntilChanged, filter, switchMap } from 'rxjs/operators';
-
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { AuthService } from 'src/app/services/auth/auth.service';
+import { GeneralService } from 'src/app/services/general/general.service';
 
 @Component({
     selector: 'app-doc-view',
     templateUrl: './doc-view.component.html',
-    styleUrls: ['./doc-view.component.css']
+    styleUrls: ['./doc-view.component.scss']
 })
 export class DocViewComponent implements OnInit {
     docUrl: string;
-    baseUrl = this.config.getEnv('baseUrl');
     extension;
-    token
-    public bearerToken: string | undefined = undefined;
-    id: any;
-    excludedFields: any = ['osid','id', 'type','fileUrl'];
     document = [];
-    constructor(private route: ActivatedRoute, public generalService: GeneralService,
-        private keycloakService: KeycloakService, private config: AppConfig) {
-        this.token = this.keycloakService.getToken();
+    loader: boolean = true;
+    docName: any;
+    docDetails: any;
+    credential: any;
+    schemaId: string;
+    templateId: string;
+    private readonly canGoBack: boolean;
+    constructor(
+        public generalService: GeneralService,
+        private router: Router,
+        private http: HttpClient,
+        private location: Location,
+    ) {
+        const navigation = this.router.getCurrentNavigation();
+        this.credential = navigation?.extras?.state;
+        this.canGoBack = !!(this.router.getCurrentNavigation()?.previousNavigation);
 
+        if (!this.credential) {
+            if (this.canGoBack) {
+                this.location.back();
+            } else {
+                this.router.navigate(['/dashboard']);
+            }
+        }
     }
 
     ngOnInit(): void {
-        this.route.params.subscribe(async params => {
-            if(params.id && params.type){
-                this.id = params.id;
-                this.generalService.getData(params.type+'/'+params.id).subscribe((res) => {
-                    console.log('pub res', res);
-                    if(res.name !== 'attestation-DIVOC'){
-                        for (const [key, value] of Object.entries(res['additionalInput'])) {
-                            var tempObject = {}
-                            if(key === 'fileUrl'){
-                                this.docUrl = this.baseUrl + '/' + value;
-                                this.extension = this.docUrl.split('.').slice(-1)[0];
-                            }
-                            if (typeof value != 'object') {
-                              if (!this.excludedFields.includes(key)) {
-                                tempObject['key'] = key;
-                                tempObject['value'] = value;
-                                tempObject['type'] = res['name'];
-                                tempObject['osid'] = res['osid'];
-                                if(res['logoUrl']){
-                                  tempObject['logoUrl'] = res['logoUrl']
-                                }
-                                this.document.push(tempObject);
-                              }
-                            } else {
-                              if (!this.excludedFields.includes(key)) {
-                                tempObject['key'] = key;
-                                tempObject['value'] = value[0];
-                                tempObject['type'] = res['name'];
-                                tempObject['osid'] = res['osid'];
-                                if(res['logoUrl']){
-                                  tempObject['logoUrl'] = res['logoUrl']
-                                }
-                                this.document.push(tempObject);
-                              }
-                            }
-    
-                            
-                          }
-                    }
-                    
-                      console.log('this.document',this.document)
-                  }, (err) => {
-                    // this.toastMsg.error('error', err.error.params.errmsg)
-                    console.log('error', err)
-                  });
-                  
-            }
-           
-        })
-    }
-}
-
-
-// Using similarity from AsyncPipe to avoid having to pipe |secure|async in HTML.
-
-@Pipe({
-    name: 'authImage'
-})
-export class AuthImagePipe implements PipeTransform {
-    extension;
-    constructor(
-        private http: HttpClient, private route: ActivatedRoute,
-        private keycloakService: KeycloakService, // our service that provides us with the authorization token
-    ) {
-
-        // this.route.queryParams.subscribe(async params => {
-        //     this.extension = params.u.split('.').slice(-1)[0];
-        // })
-    }
-
-    async transform(src: string,extension:string): Promise<any> {
-        this.extension = extension;
-        const token = this.keycloakService.getToken();
-        const headers = new HttpHeaders({ 'Authorization': `Bearer ${token}` });
-        let imageBlob = await this.http.get(src, { headers, responseType: 'blob' }).toPromise();
-
-        if (this.extension == 'pdf') {
-            imageBlob = new Blob([imageBlob], { type: 'application/' + this.extension })
+        if (this.credential?.credential_schema) {
+            this.schemaId = this.credential.schemaId;
+            this.getTemplate(this.schemaId).subscribe((res) => {
+                this.templateId = res?.result?.[0]?.id;
+                this.getPDF(res?.result?.[0]?.template);
+            });
         } else {
-            imageBlob = new Blob([imageBlob], { type: 'image/' + this.extension })
+            console.error("Something went wrong!");
         }
+    }
 
-        const reader = new FileReader();
-        return new Promise((resolve, reject) => {
-            reader.onloadend = () => resolve(reader.result as string);
-            reader.readAsDataURL(imageBlob);
+    getSchema(id): Observable<any> {
+        return this.generalService.getData(`https://ulp.uniteframework.io/cred-schema/schema/jsonld?id=${id}`, true);
+    }
+
+    getTemplate(id: string): Observable<any> {
+        return this.generalService.getData(`https://ulp.uniteframework.io/ulp-bff/v1/sso/student/credentials/rendertemplateschema/${id}`, true)
+    }
+
+    getPDF(template) {
+        let headerOptions = new HttpHeaders({
+            'Accept': 'application/pdf'
+        });
+        let requestOptions = { headers: headerOptions, responseType: 'blob' as 'json' };
+        const credential_schema = this.credential.credential_schema;
+        delete this.credential.credential_schema;
+        delete this.credential.schemaId;
+        const request = {
+            credential: this.credential,
+            schema: credential_schema,
+            template: template,
+            output: "HTML"
+        }
+        // delete request.credential.credentialSubject;
+        this.http.post('https://ulp.uniteframework.io/ulp-bff/v1/sso/student/credentials/render', request, requestOptions).pipe(map((data: any) => {
+            let blob = new Blob([data], {
+                type: 'application/pdf' // must match the Accept type
+            });
+            this.docUrl = window.URL.createObjectURL(blob);
+        })).subscribe((result: any) => {
+            this.loader = false;
+            this.extension = 'pdf';
         });
     }
 
+    goBack() {
+        window.history.go(-1);
+    }
+
+    downloadCertificate(url) {
+        let link = document.createElement("a");
+        link.href = url;
+        link.download = 'certificate.pdf';
+        link.style.visibility = 'hidden';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
 }
-
-
