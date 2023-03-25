@@ -7,7 +7,7 @@ import { ToastMessageService } from '../services/toast-message/toast-message.ser
 import { AuthService } from '../services/auth/auth.service';
 import { Location } from '@angular/common';
 import { CredentialService } from '../services/credential/credential.service';
-import { mergeMap } from 'rxjs/operators';
+import { concatMap, mergeMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-registration-form',
@@ -202,8 +202,8 @@ export class RegistrationFormComponent implements OnInit {
 
 
       this.authService.ssoSignUp(payload).pipe(
-        mergeMap(_ => this.authService.getSchoolDetails()),
-        mergeMap(_ => this.credentialService.issueCredential())
+        concatMap(_ => this.authService.getSchoolDetails()),
+        concatMap(_ => this.credentialService.issueCredential())
       ).subscribe((res: any) => {
         this.toastMessage.success("", "User Registered successfully!");
         this.router.navigate(['/dashboard']);
