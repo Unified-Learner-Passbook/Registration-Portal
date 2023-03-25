@@ -10,6 +10,7 @@ import { RequestParam } from '../interfaces/httpOptions.interface';
 import { HttpParams } from '@angular/common/http';
 import { AuthService } from '../services/auth/auth.service';
 
+const BATCH_LIMIT = 20;
 @Component({
   selector: 'app-register-entity',
   templateUrl: './register-entity.component.html',
@@ -81,7 +82,7 @@ export class RegisterEntityComponent implements OnInit {
       isEnabled: true,
       schemaId: 'clf0wvyjs0008tj154rc071i1'
     }
-  ]
+  ];
   startYear = 2000;
   currentYear = new Date().getFullYear();
   academicYearRange: string[] = [];
@@ -200,7 +201,6 @@ export class RegisterEntityComponent implements OnInit {
       myReader.readAsText(file);
 
       myReader.onloadend = (e) => {
-        // console.log(myReader.result);
         let fileString: string = myReader.result as string;
         resolve(fileString);
       };
@@ -226,7 +226,7 @@ export class RegisterEntityComponent implements OnInit {
     console.log("parsedCSV", this.parsedCSV);
     console.log("model", this.model);
 
-    const dataBatches = _.chunk(this.parsedCSV, 20);
+    const dataBatches = _.chunk(this.parsedCSV, BATCH_LIMIT);
     console.log("dataBatches", dataBatches);
     this.isLoading = true;
     this.showProgress = true;

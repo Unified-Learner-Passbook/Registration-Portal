@@ -29,7 +29,7 @@ export class SidebarComponent implements OnInit {
     },
     {
       label: this.generalService.translateString('ISSUED_CREDENTIAL'),
-      link: 'issue-credential',
+      link: 'issued-credential',
       class: 'fa fa-calendar-check',
       isActive: false,
     },

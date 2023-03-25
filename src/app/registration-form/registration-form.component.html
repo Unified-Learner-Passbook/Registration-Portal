@@ -61,11 +61,6 @@
                     translate}}</p>
             </div>
         </div>
-        <!-- <div class="form-check">
-            <input type="checkbox" formControlName="consent" class="form-check-input" id="consent" value="true">
-            <label class="form-check-label" for="consent">I declare that the information provided by me is true to the
-                best of my knowledge.</label>
-        </div> -->
         <div class="form-group row">
             <label class="col-sm-3 col-form-label">&nbsp;</label>
             <div class="col-sm-6">
@@ -79,14 +74,13 @@
 <ng-template #declarationModal tabindex="-1" role="dialog" aria-labelledby="declarationModal">
     <div class="modal-content">
         <div class="modal-body fs-14">
-            <input type="checkbox" class="pr-3" [(ngModel)]="userConsent">
             {{'USER_CONSENT' | translate}}
             <div class="d-flex justify-content-center">
                 <button type="button" (click)="submitDeclarationForm(false)"
                     class="custom-button default-button mt-20 mr-5 p-32 fs-14">
                     {{'NO_CANCEL' | translate}}
                 </button>
-                <button type="button" [disabled]="!userConsent" (click)="submitDeclarationForm(true)"
+                <button type="button" (click)="submitDeclarationForm(true)"
                     class="custom-button blue-button mt-20 p-32 fs-14">
                     {{'YES_CONFIRM' | translate}}
                 </button>
@@ -94,7 +88,6 @@
         </div>
     </div>
 </ng-template>
-
 
 <ng-template #udiseLinkModal>
     <div class="modal-content">
@@ -110,3 +103,10 @@
         </div>
     </div>
 </ng-template>
+
+<div class="text-center" *ngIf="isLoading">
+    <div class="center-loading">
+        <div class="spinner-border">
+        </div>
+    </div>
+</div>

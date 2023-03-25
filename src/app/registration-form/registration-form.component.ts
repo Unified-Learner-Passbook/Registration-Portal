@@ -20,9 +20,9 @@ export class RegistrationFormComponent implements OnInit {
   consentModalRef: NgbModalRef;
   maxDate = new Date().toISOString().split("T")[0];
   isDeclarationSubmitted = false;
-  userConsent = false;
   isVerified = null;
   schoolUdiseInput: string = '';
+  isLoading = false;
   @ViewChild('udiseLinkModal') udiseLinkModal: TemplateRef<any>;
   @ViewChild('declarationModal') declarationModal: TemplateRef<any>;
 
@@ -33,7 +33,6 @@ export class RegistrationFormComponent implements OnInit {
     phone: new FormControl(null, [Validators.required, Validators.minLength(10), Validators.maxLength(10), Validators.pattern('^[0-9]{10}$')]),
     aadharId: new FormControl(null, [Validators.required, Validators.minLength(12), Validators.maxLength(12), Validators.pattern('^[0-9]*$')]),
     joiningdate: new FormControl(null, [Validators.required, Validators.max(Date.now())]),
-    // consent: new FormControl(false, [Validators.required, Validators.requiredTrue])
   });
 
   constructor(
@@ -105,19 +104,6 @@ export class RegistrationFormComponent implements OnInit {
   }
 
   linkUDISE() {
-    // this.generalService.getData('https://ulp.uniteframework.io/ulp-bff/v1/sso/udise/verify/myschool1234', true).subscribe((res: any) => {
-    //   this.schoolDetails = res;
-    //   this.toastMessage.success('', 'Successfully Linked!');
-    //   if (this.schoolDetails?.udiseCode) {
-    //     this.registrationForm.get('udiseId').setValue(this.schoolDetails.udiseCode);
-    //   }
-
-    //   if (this.schoolDetails?.schoolName) {
-    //     this.registrationForm.get('schoolName').setValue(this.schoolDetails.schoolName);
-    //   }
-    //   this.udiseLinkModalRef.close();
-    // });
-
     if (this.registrationDetails) {
       this.toastMessage.success('', 'Successfully Linked!');
       if (this.schoolDetails?.udiseCode) {
@@ -133,7 +119,6 @@ export class RegistrationFormComponent implements OnInit {
 
   submitDeclarationForm(isConfirmed: boolean) {
     this.isDeclarationSubmitted = isConfirmed;
-    this.userConsent = isConfirmed;
     this.consentModalRef.close()
 
     if (isConfirmed) {
@@ -160,9 +145,8 @@ export class RegistrationFormComponent implements OnInit {
       return;
     }
 
-    const newMeriPehchaanId = this.registrationDetails.meripehchanid + Math.floor(Math.random() * 10000);
-    const newUDISE = this.schoolDetails.udiseCode + Math.floor(Math.random() * 10000);
     if (this.registrationForm.valid) {
+      this.isLoading = true;
       const payload = {
         digiacc: "portal",
         userdata: {
@@ -170,7 +154,7 @@ export class RegistrationFormComponent implements OnInit {
             name: this.registrationForm.value.name,
             joiningdate: this.registrationForm.value.joiningdate,
             aadharId: this.registrationForm.value.aadharId,
-            schoolUdise: this.registrationForm.value.udiseId,//newUDISE, //this.schoolDetails.udiseCode,
+            schoolUdise: this.registrationForm.value.udiseId,
             meripehchanLoginId: this.registrationDetails.meripehchanid,
             username: this.registrationDetails.meripehchanid,
             consent: "yes",
@@ -184,6 +168,7 @@ export class RegistrationFormComponent implements OnInit {
 
       this.authService.ssoSignUp(payload).subscribe((res: any) => {
         console.log("result register", res);
+        this.isLoading = false;
         if (res.success && res.user === 'FOUND') {
 
           if (res.token) {
@@ -200,6 +185,7 @@ export class RegistrationFormComponent implements OnInit {
           this.toastMessage.error("", res.message);
         }
       }, (error) => {
+        this.isLoading = false;
         if (error?.message) {
           this.toastMessage.error("", error.message);
         } else {
