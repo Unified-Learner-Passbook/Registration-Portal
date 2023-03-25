@@ -1164,3 +1164,34 @@ margin-right :15px !important;
   .text-red{
     color: #D64040;
   }
+  .card {
+    padding: 15px 0;
+    margin-bottom: 20px;
+
+    .card-body {
+        display: flex;
+    }
+    .card-image {
+        border: 1px solid #ddd;
+        height: 50px;
+        border-radius: 50%;
+        width: 50px;
+        text-align: center;
+        overflow: hidden;
+        margin-right: 10px;
+        background-color: lightgray;
+        img {
+            object-fit: cover;
+            // padding: 8px;
+            height: 45px;
+            border-radius: 100%;
+        }
+    }
+    .card-intro-info {
+        width: calc(100% - 45px);
+        padding-right: 5px;
+    }
+}
+.card{
+    border-radius: 22px !important;
+}

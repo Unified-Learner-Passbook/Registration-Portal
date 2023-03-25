@@ -39,6 +39,7 @@ import { ClaimApprovalComponent } from './claim-approval/claim-approval.componen
 import { OauthCallbackComponent } from './oauth-callback/oauth-callback.component';
 import { RegistrationFormComponent } from './registration-form/registration-form.component';
 import { AuthenticationGuard } from './utility/authentication.guard';
+import { MyAccountComponent } from './my-account/my-account.component';
 // import { CreateCertificateComponent } from './create-certificate/create-certificate.component';
 // import { FaqComponent } from './custom-components/faq/faq.component';
 const routes: Routes = [
@@ -71,6 +72,14 @@ const routes: Routes = [
       {
         path: 'registration-form',
         component: RegistrationFormComponent
+      },
+      {
+        path: 'my-account',
+        component: MyAccountComponent
+      },
+      {
+        path: 'doc-view',
+        component: DocViewComponent
       },
     ]
   },

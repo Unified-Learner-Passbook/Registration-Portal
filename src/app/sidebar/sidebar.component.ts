@@ -34,6 +34,12 @@ export class SidebarComponent implements OnInit {
       isActive: false,
     },
     {
+      label: this.generalService.translateString('ACCOUNT'),
+      link: 'my-account',
+      class: 'fa fa-user',
+      isActive: false,
+    },
+    {
       label: this.generalService.translateString('SETTINGS'),
       link: '',
       class: 'fa fa-cog',

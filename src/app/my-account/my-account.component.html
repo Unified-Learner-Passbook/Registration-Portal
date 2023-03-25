@@ -1,0 +1,42 @@
+<section>
+  <h5 class="text-center">My Account</h5>
+  <div>
+    <p>Name: {{currentUser?.name}}</p>
+    <p>User Name: {{currentUser?.username}}</p>
+    <p>Principal Since: {{currentUser?.joiningdate}}</p>
+
+    <div>
+      <h4>Credentials</h4>
+      <div class="row">
+        <div class="mb-3 col-sm-12 col-md-6 col-lg-6 col-xs-2"
+          *ngIf="credentials$ | async as credentialList; else loading">
+          <ng-container *ngIf="credentialList; else: noItems">
+            <div class="card" *ngFor="let item of credentialList" (click)="renderCertificate(item)">
+              <div class="card-body">
+                <div class="card-image">
+                  <img [src]="item?.logoUrl ? item.logoUrl : 'assets/images/headerlogo.png'" />
+                </div>
+                <div class="card-intro-info">
+                  <div class="mb-2 fs-14">
+                    {{ item?.credential_schema?.name }}
+                  </div>
+                  <div class="text-grey fs-12">
+                    {{ item?.credential_schema?.schema?.description }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+          <ng-template #noItems class="text-center">{{'NO_RECORDS_FOUND' | translate}}</ng-template>
+        </div>
+        <ng-template #loading class="text-center">
+          <div class="d-flex justify-content-center">
+            <div class="spinner-border" style="width: 5rem; height: 5rem" role="status">
+              <span class="sr-only">{{ "LOADING" | translate }}</span>
+            </div>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</section>

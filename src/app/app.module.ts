@@ -119,7 +119,6 @@ import { PagesComponent } from './pages/pages.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 
-import { AuthImagePipe } from '../app/layouts/doc-view/doc-view.component';
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 import { DocDetailViewComponent } from './documents/doc-detail-view/doc-detail-view.component';
 // import { FaqComponent } from './custom-components/faq/faq.component';
@@ -148,6 +147,7 @@ import { IssuedCredentialComponent } from './issued-credential/issued-credential
 import { OauthCallbackComponent } from './oauth-callback/oauth-callback.component';
 import { RegistrationFormComponent } from './registration-form/registration-form.component';
 import { AuthInterceptor } from './authentication/auth.interceptor';
+import { MyAccountComponent } from './my-account/my-account.component';
 console.log(configData['default']);
 
 @NgModule({
@@ -179,7 +179,6 @@ console.log(configData['default']);
     ScanDocumentComponent,
     ScanQrCodeComponent,
     BrowseDocumentsComponent,
-    AuthImagePipe,
     DocTypesComponent,
     SafeHtmlPipe,
     DashboardComponent,
@@ -198,7 +197,8 @@ console.log(configData['default']);
     ClaimApprovalComponent,
     IssuedCredentialComponent,
     OauthCallbackComponent,
-    RegistrationFormComponent
+    RegistrationFormComponent,
+    MyAccountComponent
 
   ],
   imports: [
@@ -283,7 +283,6 @@ console.log(configData['default']);
   bootstrap: [AppComponent],
   providers: [
     AppConfig,
-    AuthImagePipe,
     { provide: APP_INITIALIZER, useFactory: initConfig, deps: [AppConfig], multi: true },
     {
       provide: APP_INITIALIZER,
