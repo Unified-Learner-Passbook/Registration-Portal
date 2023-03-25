@@ -61,11 +61,7 @@ const routes: Routes = [
         component: RegisterEntityComponent
       },
       {
-        path: 'issue-credentials',
-        component: GetRecordsComponent
-      },
-      {
-        path: 'issue-credential',
+        path: 'issued-credential',
         component: IssuedCredentialComponent
       },
       {
@@ -84,7 +80,10 @@ const routes: Routes = [
   }
 ];
 // { path: 'login', component: LoginComponent },
-
+// {
+//   path: 'issue-credentials',
+//   component: GetRecordsComponent
+// },
 // Home
 // { path: '', component: HomeComponent },
 
