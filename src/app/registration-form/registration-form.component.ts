@@ -202,9 +202,15 @@ export class RegistrationFormComponent implements OnInit {
 
 
       this.authService.ssoSignUp(payload).pipe(
-        concatMap(_ => this.authService.getSchoolDetails()),
-        concatMap(_ => this.credentialService.issueCredential())
+        concatMap(_ => {
+          console.log("res1", _)
+          return this.authService.getSchoolDetails()
+        }),
+        concatMap(_ => {
+          console.log("res2", _);
+          return this.credentialService.issueCredential()})
       ).subscribe((res: any) => {
+        console.log("final", res);
         this.toastMessage.success("", "User Registered successfully!");
         this.router.navigate(['/dashboard']);
       }, (error: any) => {
