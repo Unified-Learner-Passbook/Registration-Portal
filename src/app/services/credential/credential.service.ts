@@ -120,12 +120,12 @@ export class CredentialService {
       }
     };
 
-    return this.dataService.post(payload).pipe((res: any) => {
+    return this.dataService.post(payload).pipe(map((res: any) => {
       if (res.success && res.result) {
         return res.result;
       } else {
         throwError(new Error('Error while issuing certificate for principal'));
       }
-    })
+    }))
   }
 }
