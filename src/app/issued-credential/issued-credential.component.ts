@@ -74,14 +74,16 @@ export class IssuedCredentialComponent implements OnInit {
     this.dataService.post(payload).subscribe((res: any) => {
       console.log("res", res);
       this.isLoading = false;
-      this.issuedCredentials = res.map((item: any) => {
-        return {
-          studentName: item.credentialSubject.studentName,
-          studentId: item.credentialSubject?.studentId || '',
-          phoneNumber: item.credentialSubject.mobile,
-          credentialId: item.id
-        }
-      });
+      if (res.success && res.result?.length) {
+        this.issuedCredentials = res.result.map((item: any) => {
+          return {
+            studentName: item.credentialSubject.studentName,
+            studentId: item.credentialSubject?.studentId || '',
+            phoneNumber: item.credentialSubject.mobile,
+            credentialId: item.id
+          }
+        });
+      }
     }, (error: any) => {
       this.isLoading = false;
       this.toastMessage.error("", "Error while fetching issued Credentials");
