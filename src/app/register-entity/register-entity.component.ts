@@ -72,13 +72,13 @@ export class RegisterEntityComponent implements OnInit {
     {
       label: 'Proof of Assessment',
       value: 'proofOfAssessment',
-      isEnabled: true,
+      isEnabled: false,
       schemaId: 'clf0qfvna0000tj154706406y'
     },
     {
       label: 'Proof of Benefits',
       value: 'proofOfBenifits',
-      isEnabled: true,
+      isEnabled: false,
       schemaId: 'clf0wvyjs0008tj154rc071i1'
     }
   ];
