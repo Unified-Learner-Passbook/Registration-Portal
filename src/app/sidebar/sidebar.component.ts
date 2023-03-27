@@ -44,7 +44,7 @@ export class SidebarComponent implements OnInit {
     {
       label: this.generalService.translateString('ADD_ISSUER_STAFF'),
       link: '',
-      class: 'fa fa-graduation-cap',
+      class: 'fa fa-graduation-cap disable',
       isActive: false,
     },
   ];
