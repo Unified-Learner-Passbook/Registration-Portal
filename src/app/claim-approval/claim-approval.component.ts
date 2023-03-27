@@ -36,7 +36,10 @@ export class ClaimApprovalComponent implements OnInit {
 
       console.log('studentDetail length', res.result.length);
       console.log('studentDetail list', res.result);
-      this.studentDetails = res.result
+      this.studentDetails = res.result.map((item: any) => {
+        return { ...item, osCreatedAt: this.generalService.getDaysDifference(item.osCreatedAt) }
+      });
+
       // for (const iterator of res.result) {
       //   if(!iterator.did) {
       //     this.studentDetails.push(iterator)
@@ -93,7 +96,10 @@ export class ClaimApprovalComponent implements OnInit {
       //this.studentDetails = this.studentDetails.filter(())
       if (res.success == true) {
         this.toastService.success('', res.message)
-        this.studentDetails = this.studentDetails.filter(item => item.osid !== user.osid)
+        this.studentDetails = this.studentDetails.filter(item => item.osid !== user.osid);
+        this.studentDetails = this.studentDetails.map((item: any) => {
+          return { ...item, osCreatedAt: this.generalService.getDaysDifference(item.osCreatedAt) }
+        });
         console.log("61", this.studentDetails.length)
       } else {
         this.toastService.error('', res.message)
