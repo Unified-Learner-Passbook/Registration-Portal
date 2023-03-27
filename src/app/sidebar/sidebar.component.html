@@ -8,7 +8,7 @@
       <div class="pl-5 pt-3" (click)="logout()"><a href="#"><i class="fa fa-sign-out-alt fs-22 text-primary-color"></i><span class="fs-16 pl-3 text-primary-color">{{'LOGOUT' | translate }}</span></a></div>
   </section>
 
-  <section>
+  <section *ngIf="showInstructions">
     <div class="instructions pt-5">
       <h6 class="title">
         <i class="fa fa-info-circle"></i>

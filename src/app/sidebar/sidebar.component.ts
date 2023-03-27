@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
+import { filter } from 'rxjs/operators';
 import { AuthService } from '../services/auth/auth.service';
 import { GeneralService } from '../services/general/general.service';
 
@@ -46,14 +48,27 @@ export class SidebarComponent implements OnInit {
       isActive: false,
     },
   ];
+
+  showInstructions = false;
   constructor(
     private readonly generalService: GeneralService,
-    private readonly authService: AuthService
+    private readonly authService: AuthService,
+    private readonly router: Router
   ) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.getRouteData();
+  }
 
   logout() {
     this.authService.doLogout();
+  }
+
+  getRouteData() {
+    this.router.events.pipe(
+      filter(e => e instanceof NavigationEnd))
+      .subscribe((event: NavigationEnd) => {
+        this.showInstructions  = event.url === '/register-entity';
+      });
   }
 }
