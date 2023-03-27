@@ -149,6 +149,7 @@ import { RegistrationFormComponent } from './registration-form/registration-form
 import { AuthInterceptor } from './authentication/auth.interceptor';
 import { MyAccountComponent } from './my-account/my-account.component';
 import { CommonModule } from '@angular/common';
+import { LandingPageComponent } from './landing-page/landing-page.component';
 console.log(configData['default']);
 
 @NgModule({
@@ -199,7 +200,8 @@ console.log(configData['default']);
     IssuedCredentialComponent,
     OauthCallbackComponent,
     RegistrationFormComponent,
-    MyAccountComponent
+    MyAccountComponent,
+    LandingPageComponent
 
   ],
   imports: [
