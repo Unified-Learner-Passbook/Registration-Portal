@@ -51,7 +51,7 @@ const routes: Routes = [
     component: OauthCallbackComponent
   },
   {
-    path: 'register',
+    path: 'sign-in',
     component: RegistrationComponent
   },
   {
