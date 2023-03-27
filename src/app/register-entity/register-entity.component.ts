@@ -322,6 +322,8 @@ export class RegisterEntityComponent implements OnInit {
   }
 
   getStudentList() {
+    this.studentList = [];
+    this.isLoading = true;
     const request = {
       url: `https://ulp.uniteframework.io/ulp-bff/v1/sso/student/list`,
       data: {
@@ -330,17 +332,66 @@ export class RegisterEntityComponent implements OnInit {
       }
     }
     this.dataService.get(request).subscribe((res: any) => {
+      this.isLoading = false;
       if (res?.result?.length) {
         this.studentList = res.result.map((item: any) => {
           return {
+            did: item.student.DID,
             studentId: item.student.student_id,
             name: item.student.student_name,
             dob: item.student.dob,
-            mobile: item.studentdetail.mobile
+            mobile: item.studentdetail.mobile,
+            guardian: item.studentdetail.gaurdian_name
           }
         })
       }
+    }, (error: any) => {
+      this.isLoading = false;
+      this.toastMsg.error("", "Error while fetching student list");
     });
+  }
+
+  issueBulkCredentials() {
+    this.isLoading = true;
+    const date = new Date();
+    const nextYear = new Date(new Date().setFullYear(new Date().getFullYear() + 1))
+    const request = {
+      url: `https://ulp.uniteframework.io/ulp-bff/v1/sso/student/bulk/credentials`,
+      data: {
+        "credentialSubjectCommon": {
+          "grade": this.model.grade,
+          "academicYear": this.model.academicYear
+        },
+        "credentialSubject": this.studentList.map((item: any) => {
+          return {
+            "id": item.did,
+            "enrolledOn": date.toISOString(),
+            "studentName": item.name,
+            "guardianName": item.guardian,
+            "issuanceDate": date.toISOString(),
+            "expirationDate": nextYear.toISOString()
+          }
+        }),
+        "issuerDetail": {
+          "did": this.authService.schoolDetails.did,
+          "schoolName": this.authService.schoolDetails.schoolName,
+          "schemaId": "clf0rjgov0002tj15ml0fdest"
+        }
+      }
+    }
+
+    this.dataService.post(request).subscribe((res: any) => {
+      this.isLoading = false;
+      if(res.success) {
+        this.getStudentList();
+        this.toastMsg.success("", "Credential issued Successfully!");
+      } else  {
+        this.toastMsg.error("", "Error while issuing credentials!");
+      }
+    }, (error: any) => {
+      this.isLoading = false;
+      this.toastMsg.error("", "Error while issuing credentials!");
+    })
   }
 }
 
