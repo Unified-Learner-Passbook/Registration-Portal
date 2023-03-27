@@ -278,8 +278,7 @@
   "PRINCIPAL":"प्रधान अध्यापक",
   "BLOCK_EDUCATIONAL_OFFICER":"प्रखंड शिक्षा पदाधिकारी",
 
-  "YOUR_SESSION_EXPIRE":"आपका सत्र समाप्त हो गया है! कृपया फिर भाग लें",
-  "TAKING_MORE_TIME_SOMETHING_WENT_WRONG_TRY_AGAIN":"जारीकर्ता से दस्तावेज़ प्राप्त करने में सामान्य से अधिक समय लग रहा है, कुछ गलत हो गया है, कृपया पुनः प्रयास करें",
+  "YOUR_SESSION_EXPIRE":"आपका सत्र समाप्त हो गया है! फिर से लॉगिन करने का प्रयास करें",
   "ERROR_WHILE_LOGIN":"लॉग इन करते समय त्रुटि",
   "SUCCESSFULLY_LINKED":"सफलतापूर्वक लिंक किया गया!",
   "USER_REGISTERED_SUCCESSFULLY":"उपयोगकर्ता सफलतापूर्वक पंजीकृत!"
