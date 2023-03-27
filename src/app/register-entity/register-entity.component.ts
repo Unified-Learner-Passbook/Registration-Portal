@@ -163,6 +163,8 @@ export class RegisterEntityComponent implements OnInit {
       // this.tableColumns = columns.map((header: string) => header.replace(/_/g, " ").trim());
       this.tableColumns = Object.keys(this.parsedCSV[0]);
       this.allDataRows = this.parsedCSV.map(item => Object.values(item));
+
+      this.saveAndVerify();
       this.pageChange();
     } catch (error) {
       this.errorMessage = error?.message ? error.message : "Error while parsing CSV file";
