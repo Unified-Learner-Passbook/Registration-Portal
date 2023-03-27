@@ -7,7 +7,6 @@ import { concatMap, tap, toArray } from 'rxjs/operators';
 import { from, throwError } from 'rxjs';
 import { CsvService } from '../services/csv/csv.service';
 import { RequestParam } from '../interfaces/httpOptions.interface';
-import { HttpParams } from '@angular/common/http';
 import { AuthService } from '../services/auth/auth.service';
 
 const BATCH_LIMIT = 20;
@@ -160,8 +159,9 @@ export class RegisterEntityComponent implements OnInit {
       this.resetTableData();
       this.getSchoolDetails();
       this.parsedCSV = await this.parseCSVFile(event);
-      const columns = Object.keys(this.parsedCSV[0]);
-      this.tableColumns = columns.map((header: string) => header.replace(/_/g, " ").trim());
+      // const columns = Object.keys(this.parsedCSV[0]);
+      // this.tableColumns = columns.map((header: string) => header.replace(/_/g, " ").trim());
+      this.tableColumns = Object.keys(this.parsedCSV[0]);
       this.allDataRows = this.parsedCSV.map(item => Object.values(item));
       this.pageChange();
     } catch (error) {
@@ -236,7 +236,8 @@ export class RegisterEntityComponent implements OnInit {
     from(dataBatches)
       .pipe(
         concatMap((data: any[]) => {
-          return this.importData(data)
+          // return this.importData(data)
+          return this.bulkRegister(data)
         }),
         tap((response) => {
           console.log(response);
@@ -273,6 +274,37 @@ export class RegisterEntityComponent implements OnInit {
         credentialSubject: list
       }
     }
+    return this.dataService.post(request);
+  }
+
+
+  bulkRegister(list: any[]) {
+    // const studentList = list.map((item: any) => {
+    //   return {
+    //     "studentName": item.studentName,
+    //     "student_id": item.studentId,
+    //     "mobile": ,
+    //     "gaurdian_name": "",
+    //     "aadhar_token": "",
+    //     "dob": ""
+    //   }
+    // });
+
+    const request: RequestParam = {
+      url: `https://ulp.uniteframework.io/ulp-bff/v1/sso/student/bulk/register`, //TODO change endpoint
+      data: {
+        "schoolDetails":
+        {
+          "grade": this.model.grade,
+          "schoolUdise": this.authService.schoolDetails.udiseCode,
+          "schoolName": this.authService.schoolDetails.schoolName,
+          "academic-year": "2022-2023",
+          "school_type": "private"
+        },
+        "studentDetails": list
+      }
+    }
+
     return this.dataService.post(request);
   }
 
