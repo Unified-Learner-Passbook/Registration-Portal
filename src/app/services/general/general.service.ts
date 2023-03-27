@@ -134,8 +134,8 @@ export class GeneralService {
     }
 
     const req = {
-      url: 'https://ulp.uniteframework.io/ulp-bff/v1/sso/studentDetail',
-      //url: 'http://localhost:3000/v1/sso/studentDetail',
+      url: 'https://ulp.uniteframework.io/ulp-bff/v1/sso/studentDetailV2',
+      //url: 'http://localhost:3000/v1/sso/studentDetailV2',
       data: data
     };
 
@@ -156,8 +156,8 @@ export class GeneralService {
     }
 
     const req = {
-      url: 'https://ulp.uniteframework.io/ulp-bff/v1/credentials/approveStudent',
-      //url: 'http://localhost:3000/v1/credentials/approveStudent',
+      //url: 'https://ulp.uniteframework.io/ulp-bff/v1/credentials/approveStudentV2',
+      url: 'http://localhost:3000/v1/credentials/approveStudentV2',
       data: data
     };
 

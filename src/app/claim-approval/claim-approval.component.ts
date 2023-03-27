@@ -26,17 +26,22 @@ export class ClaimApprovalComponent implements OnInit {
 
   ngOnInit(): void {
     var search = {
-      "filters": {}
-    }
-    this.generalService.postStudentData('/studentDetail', search).subscribe((res) => {
-      console.log('studentDetail', res);
-      console.log('studentDetail length', res.result.length);
-      //this.studentDetails = res.result
-      for (const iterator of res.result) {
-        if(!iterator.did) {
-          this.studentDetails.push(iterator)
+      "filters": {
+        "claim_status": {
+          "eq": "pending"
         }
       }
+    }
+    this.generalService.postStudentData('/studentDetail', search).subscribe((res) => {
+
+      console.log('studentDetail length', res.result.length);
+      console.log('studentDetail list', res.result);
+      this.studentDetails = res.result
+      // for (const iterator of res.result) {
+      //   if(!iterator.did) {
+      //     this.studentDetails.push(iterator)
+      //   }
+      // }
       console.log("this.studentDetails", this.studentDetails.length)
     }, (err) => {
       // this.toastMsg.error('error', err.error.params.errmsg)
@@ -48,7 +53,7 @@ export class ClaimApprovalComponent implements OnInit {
   getSchoolDetails() {
     const udiseId = this.authService.currentUser.schoolUdise;
     console.log("udiseId", udiseId)
-    this.dataService.get({ url: `https://ulp.uniteframework.io/ulp-bff/v1/sso/school/${udiseId}` }).subscribe((res: any) => {
+    this.dataService.get({ url: `https://ulp.uniteframework.io/ulp-bff/v1/sso/school/09580413510` }).subscribe((res: any) => {
       this.schoolDetails = res.result;
       console.log('schoolDetails', this.schoolDetails);
     });
@@ -58,27 +63,37 @@ export class ClaimApprovalComponent implements OnInit {
     var payload = {
       "issuer": this.schoolDetails.did,
       "credentialSubject": {
-        "studentId": user.studentSchoolID,
-        "studentName": user.studentName,
-        "mobile": user.phoneNo,
-        "email": "",
-        "aadhaarId": user.aadhaarID,
-        "schoolId": user.schoolID,
-        "status": "",
-        "osid": user.osid,
-        "gaurdianName": user.gaurdianName,
+        //studentDetail:
+        //"student_detail_id": user.student_detail_id,
+        "studentId": user.student_id,
+        "mobile": user.mobile,
+        "guardianName": user.gaurdian_name,
+        //"school_udise": user.school_udise,
+        "schoolName": user.school_name,
         "grade": user.grade,
-        "academicYear": user.academicYear,
-        "schoolName": user.schoolName
+        "academicYear": user.acdemic_year,
+        //"start_date": user.start_date,
+        //"end_date": user.end_date,
+        //"claim_status": user.claim_status,
+        "osid": user.osid,
+        //student
+        //"DID": user.student.DID,
+        //"reference_id": user.student.reference_id,
+        //"aadhar_token": user.student.aadhar_token,
+        "studentName": user.student.student_name,
+        "age": user.student.dob,
+        //"school_type": user.student.school_type,
+        //"meripehchan_id": user.student.meripehchan_id,
+        //"username": user.student.username,
       }
 
     }
-    this.generalService.approveStudentData('/studentDetail', payload).subscribe((res) => {
+    this.generalService.approveStudentData('/studentDetailV2', payload).subscribe((res) => {
       console.log('approveStudent', res);
       //this.studentDetails = this.studentDetails.filter(())
-      if(res.success == true) {
+      if (res.success == true) {
         this.toastService.success('', res.message)
-        this.studentDetails = this.studentDetails.filter(item => item.did !== user.did)
+        this.studentDetails = this.studentDetails.filter(item => item.osid !== user.osid)
         console.log("61", this.studentDetails.length)
       } else {
         this.toastService.error('', res.message)
@@ -106,6 +121,6 @@ export class ClaimApprovalComponent implements OnInit {
     }
   }
 
-  
+
 
 }
