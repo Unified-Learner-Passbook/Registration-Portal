@@ -53,7 +53,7 @@ export class ClaimApprovalComponent implements OnInit {
   getSchoolDetails() {
     const udiseId = this.authService.currentUser.schoolUdise;
     console.log("udiseId", udiseId)
-    this.dataService.get({ url: `https://ulp.uniteframework.io/ulp-bff/v1/sso/school/09580413510` }).subscribe((res: any) => {
+    this.dataService.get({ url: `https://ulp.uniteframework.io/ulp-bff/v1/sso/school/${udiseId}` }).subscribe((res: any) => {
       this.schoolDetails = res.result;
       console.log('schoolDetails', this.schoolDetails);
     });
@@ -81,7 +81,7 @@ export class ClaimApprovalComponent implements OnInit {
         //"reference_id": user.student.reference_id,
         //"aadhar_token": user.student.aadhar_token,
         "studentName": user.student.student_name,
-        "age": user.student.dob,
+        "dob": user.student.dob,
         //"school_type": user.student.school_type,
         //"meripehchan_id": user.student.meripehchan_id,
         //"username": user.student.username,
