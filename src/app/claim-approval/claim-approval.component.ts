@@ -97,9 +97,6 @@ export class ClaimApprovalComponent implements OnInit {
       if (res.success == true) {
         this.toastService.success('', res.message)
         this.studentDetails = this.studentDetails.filter(item => item.osid !== user.osid);
-        this.studentDetails = this.studentDetails.map((item: any) => {
-          return { ...item, osCreatedAt: this.generalService.getDaysDifference(item.osCreatedAt) }
-        });
         console.log("61", this.studentDetails.length)
       } else {
         this.toastService.error('', res.message)
