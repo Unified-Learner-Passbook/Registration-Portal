@@ -164,5 +164,11 @@ export class GeneralService {
     return this.dataService.post(req);
   }
 
+  setLanguage(langKey: string) {
+    this.translate.use(langKey);
+    localStorage.setItem('setLanguage', langKey);
+    location.reload();
+  }
+
 }
 

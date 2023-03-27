@@ -1,0 +1,38 @@
+.page-title {
+    font-size: 38px;
+    font-weight: 700;
+    margin-top: 50px;
+  }
+  .text-blue {
+    color: #050c44;
+  }
+  .text-yellow {
+    color: #ff740f;
+  }
+  .card-cover{
+    flex-wrap: wrap;
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+  }
+  .card-bx{
+    background: #FCFCFC;
+    box-shadow: 0px 2.87542px 21.5657px rgba(0, 0, 0, 0.15);
+    border-radius: 10.064px;
+    width: 28%;
+    margin-bottom: 20px;
+    width: 394px;
+    height: 120px;
+  }
+  .img1{
+    width: 260px;
+    padding: 30px 0;
+  }
+  .img2{
+    width: 144px;
+    padding: 10px 0 !important;
+  }
+  .img3{
+    width: 270px;
+    padding: 10px 0 !important;
+  }

@@ -38,6 +38,7 @@
 
 .instructions {
      margin: 1rem;
+     margin-bottom: 75px;
   .title {
     font-weight: 600;
     font-size: 14px;
@@ -79,4 +80,13 @@
 
 .w-25px{
   width: 25px;
+}
+
+.pl-39{
+  padding-left: 39px;
+}
+.disable , .disable ~ .title{
+  color: #ccc;
+  opacity: 0.7;
+  cursor: default;
 }

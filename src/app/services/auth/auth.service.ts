@@ -7,25 +7,43 @@ import {
   HttpErrorResponse,
 } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { DataService } from '../data/data-request.service';
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   endpoint: string = 'https://ulp.uniteframework.io';
   headers = new HttpHeaders().set('Content-Type', 'application/json');
-  _currentUser;
-  constructor(private http: HttpClient, public router: Router) { }
+  constructor(
+    private readonly http: HttpClient,
+    private readonly router: Router,
+    private readonly dataService: DataService
+  ) { }
 
   // Sign-up
   signUp(user): Observable<any> {
     const api = `${this.endpoint}/ulp-bff/v1/sso/student/register`;
-    return this.http.post(api, user).pipe(catchError(this.handleError));
+    return this.http.post(api, user);
   }
 
 
   ssoSignUp(user: any) {
     const api = `${this.endpoint}/ulp-bff/v1/sso/digilocker/register`;
-    return this.http.post(api, user).pipe(catchError(this.handleError));
+    return this.http.post(api, user).pipe(
+      map((res: any) => {
+        if (res.success && res.user === 'FOUND') {
+          if (res.token) {
+            localStorage.setItem('accessToken', res.token);
+          }
+
+          if (res?.userData?.teacher) {
+            localStorage.setItem('currentUser', JSON.stringify(res.userData.teacher));
+          }
+          return res;
+        } else {
+          throwError(new Error('Error while register'));
+        }
+      }))
   }
 
   // Sign-in
@@ -58,6 +76,14 @@ export class AuthService {
     return user;
   }
 
+  get schoolDetails(): any {
+    let details = localStorage.getItem('schoolDetails');
+    if (details) {
+      details = JSON.parse(details);
+    }
+    return details;
+  }
+
   doLogout() {
     localStorage.removeItem('accessToken');
     localStorage.removeItem('currentUser');
@@ -70,9 +96,7 @@ export class AuthService {
     return this.http.get(api, { headers: this.headers }).pipe(
       map((res) => {
         return res || {};
-      }),
-      catchError(this.handleError)
-    );
+      }));
   }
 
   // Error
@@ -86,5 +110,17 @@ export class AuthService {
       msg = `Error Code: ${error.status}\nMessage: ${error.message}`;
     }
     return throwError(msg);
+  }
+
+  getSchoolDetails(): Observable<any> {
+    return this.dataService.get({ url: `https://ulp.uniteframework.io/ulp-bff/v1/sso/school/${this.currentUser.schoolUdise}` }).pipe(map((res: any) => {
+      if (res.success && res.result) {
+        localStorage.setItem('schoolDetails', JSON.stringify(res.result));
+        console.log('schoolDetails', this.schoolDetails);
+        return res.result;
+      } else {
+        throwError(new Error('Error while fetching school details'));
+      }
+    }));
   }
 }

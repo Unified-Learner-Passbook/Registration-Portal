@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { GeneralService } from 'src/app/services/general/general.service';
-
+import { GeneralService } from '../services/general/general.service';
 
 @Component({
   selector: 'app-global-header',
@@ -9,9 +8,29 @@ import { GeneralService } from 'src/app/services/general/general.service';
 })
 export class GlobalHeaderComponent implements OnInit {
 
-  constructor() { }
+  languages = [];
+  selectedLanguage = ''
+  constructor(
+    private readonly generalService: GeneralService
+  ) { }
 
   ngOnInit(): void {
+    this.getAllLanguages();
   }
 
+  getAllLanguages() {
+    const languages = localStorage.getItem('languages');
+    const selectedLang = localStorage.getItem('setLanguage');
+    if (languages) {
+      this.languages = JSON.parse(languages);
+    }
+
+    if (selectedLang) {
+      this.selectedLanguage = selectedLang;
+    }
+  }
+
+  changeLanguage() {
+    this.generalService.setLanguage(this.selectedLanguage);
+  }
 }

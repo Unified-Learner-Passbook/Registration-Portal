@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
+import { AuthService } from '../services/auth/auth.service';
 import { GeneralService } from '../services/general/general.service';
 import { ToastMessageService } from '../services/toast-message/toast-message.service';
 
@@ -11,10 +12,11 @@ import { ToastMessageService } from '../services/toast-message/toast-message.ser
 export class OauthCallbackComponent implements OnInit {
 
   constructor(
-    private activatedRoute: ActivatedRoute,
-    private generalService: GeneralService,
-    private toastMessage: ToastMessageService,
-    private router: Router,
+    private readonly activatedRoute: ActivatedRoute,
+    private readonly generalService: GeneralService,
+    private readonly toastMessage: ToastMessageService,
+    private readonly router: Router,
+    private readonly authService: AuthService
   ) {
     this.activatedRoute.queryParams.subscribe((params: any) => {
       console.log("params", params);
@@ -46,6 +48,8 @@ export class OauthCallbackComponent implements OnInit {
           if (res?.userData?.length) {
             localStorage.setItem('currentUser', JSON.stringify(res.userData[0]));
           }
+
+          this.authService.getSchoolDetails().subscribe();
           this.router.navigate(['/dashboard']);
         }
 

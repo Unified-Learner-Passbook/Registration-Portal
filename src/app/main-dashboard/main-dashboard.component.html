@@ -1,34 +1,51 @@
 <app-global-header></app-global-header>
 <section>
-      <aside class="col-sm-3">
+      <aside class="col-sm-3 pl-0">
         <app-sidebar></app-sidebar>
       </aside>
       <main class="col-sm-9">
+        <p *ngIf="isFirstTimeLogin && currentUser?.name">{{'WELCOME_NOTE' | translate: {name: currentUser?.name} }}</p>
         <div *ngIf="!isChildRoute">
-          <div class="card-bx text-center">
-            <h1 class="heading1 pb-5">{{'STUDENT_REGISTRATION' | translate}}</h1>
-              <div class="vertical-card">
-                <div class="d-flex align-item-center" routerLink="register-entity">
-                  <div>
-                    {{'REGISTER_ISSUE_MANAGE_CERT' | translate }}
-                  </div> 
-                  <div>
-                    <i class="fa fa-arrow-alt-circle-right fs-28"></i>
-                  </div>
-                </div>
+          <div class="d-flex gap-20 pb-55 pt-3">
+            <div class="box">
+              <div class="fs-20">Registered /Total students</div>
+              <div class="fs-45">40</div>
             </div>
-            <div class="vertical-card mt-5">
-              <div class="d-flex align-item-center" routerLink="claim-approval">
-                <div>
-                  {{'STUD_REGISTRATION_CLAIM' | translate }}
-                </div> 
-                <div>
-                  <i class="fa fa-arrow-alt-circle-right fs-28"></i>
-                </div>
-              </div>
-          </div>  
+            <div class="box">
+              <div class="fs-20">Enrolment credential</div>
+              <div class="fs-45">25</div>
+            </div>
+            <div class="box">
+              <div class="fs-20">Pending Claim approval</div>
+              <div class="fs-45">10</div>
+            </div>
+      </div>
+      <h1 class="heading1 py-3 text-center">{{'STUDENT_REGISTRATION' | translate}}</h1>
+
+      <div class="d-flex gap-20 text-center">
+
+        <div class="vertical-card">
+          <div class="d-flex align-item-center" routerLink="register-entity">
+            <div>
+              {{'REGISTER_ISSUE_MANAGE_CERT' | translate }}
+            </div>
+            <div>
+              <i class="fa fa-arrow-alt-circle-right fs-28"></i>
+            </div>
           </div>
         </div>
-        <router-outlet></router-outlet>
-      </main>
+        <div class="vertical-card">
+          <div class="d-flex align-item-center" routerLink="claim-approval">
+            <div>
+              {{'STUD_REGISTRATION_CLAIM' | translate }}
+            </div>
+            <div>
+              <i class="fa fa-arrow-alt-circle-right fs-28"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <router-outlet></router-outlet>
+  </main>
 </section>
