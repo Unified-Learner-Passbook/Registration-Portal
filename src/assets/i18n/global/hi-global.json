@@ -276,6 +276,8 @@
 
   "SELECT_USER_TYPE": "उपयोगकर्ता प्रकार का चयन करें",
   "PRINCIPAL":"प्रधान अध्यापक",
-  "BLOCK_EDUCATIONAL_OFFICER":"प्रखंड शिक्षा पदाधिकारी"
+  "BLOCK_EDUCATIONAL_OFFICER":"प्रखंड शिक्षा पदाधिकारी",
+  "ACCOUNT": "खाता",
+  "WELCOME_NOTE": "स्वागत है {{name}}, आपने अपनी पहचान सफलतापूर्वक सत्यापित कर ली है"
   
 }

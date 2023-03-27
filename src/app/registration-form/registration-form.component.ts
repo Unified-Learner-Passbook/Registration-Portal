@@ -208,11 +208,12 @@ export class RegistrationFormComponent implements OnInit {
         }),
         concatMap(_ => {
           console.log("res2", _);
-          return this.credentialService.issueCredential()})
+          return this.credentialService.issueCredential()
+        })
       ).subscribe((res: any) => {
         console.log("final", res);
         this.toastMessage.success("", "User Registered successfully!");
-        this.router.navigate(['/dashboard']);
+        this.router.navigate(['/dashboard'], { state: { isFirstTimeLogin: true } });
       }, (error: any) => {
         const message = error.message ? error.message : 'Error while register user'
         this.toastMessage.error("", message);

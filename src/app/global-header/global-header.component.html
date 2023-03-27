@@ -1,42 +1,44 @@
 <header>
   <div routerLink="/">
-      <div class="row">
-        <div class="col-md-3">
-          <div class="d-flex">
+    <div class="row">
+      <div class="col-md-3">
+        <div class="d-flex">
           <div>
             <img src="assets/images/headerlogo.png" class="img-fluid" alt="...">
-        </div>
-        <div>
-          <h5 class="card-title fs-14 font-600">
-          <span class="text-gray-0 fs-12">DEPARTMENT OF</span> <br> 
-          <span class="fs-16"> Basic Education</span><br>
-          <span class="text-orange fs-10">GOVERNMENT OF UTTAR PRADESH</span> 
-          </h5>
-        </div>
-        </div>
-      </div>
-        <div class="col-md-7">
+          </div>
           <div>
-            <span class="title">
-              <span class="highlight-title">AVSAR</span>
-              Registration Portal
-            </span>
+            <h5 class="card-title fs-14 font-600">
+              <span class="text-gray-0 fs-12">DEPARTMENT OF</span> <br>
+              <span class="fs-16"> Basic Education</span><br>
+              <span class="text-orange fs-10">GOVERNMENT OF UTTAR PRADESH</span>
+            </h5>
           </div>
         </div>
       </div>
+      <div class="col-md-7">
+        <div>
+          <span class="title">
+            <span class="highlight-title">AVSAR</span>
+            Registration Portal
+          </span>
+        </div>
+      </div>
     </div>
+  </div>
   <div class="d-flex header-btns">
     <div>
-      <select class="selectpicker pr-3 mr-3" data-width="fit">
-        <option value="English"><a href="">🇺🇸 English</a></option>
-        <option value="Hindi"><a href="">🇮🇳 Hindi</a></option>
+      <select class="selectpicker pr-3 mr-3" *ngIf="languages?.length" data-width="fit" [(ngModel)]="selectedLanguage"
+        (ngModelChange)="changeLanguage()">
+        <option *ngFor="let language of languages" [value]="language.code">{{language.name}}</option>
       </select>
     </div>
     <div>
       <div class="dropdown">
         <button class="btn" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <i class="fa fa-bell fs-22"></i>
-          <div class="notify-bx"><div class="notify-icon"></div></div>
+          <div class="notify-bx">
+            <div class="notify-icon"></div>
+          </div>
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
           <a class="dropdown-item" [routerLink]="['claim-approval']">{{'NEW_STUD_REGISTRATION_CLAIM' | translate}}</a>
