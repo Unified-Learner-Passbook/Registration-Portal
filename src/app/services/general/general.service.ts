@@ -113,9 +113,9 @@ export class GeneralService {
     return this.dataService.put(req);
   }
 
-  translateString(constantStr){
-    this.translate.get(constantStr).subscribe((val)=>{
-       this.translatedString = val;
+  translateString(constantStr) {
+    this.translate.get(constantStr).subscribe((val) => {
+      this.translatedString = val;
     });
     return this.translatedString;
   }
@@ -170,5 +170,19 @@ export class GeneralService {
     location.reload();
   }
 
+  getDaysDifference(fromDate: string, toDate?) {
+    let date1 = new Date(fromDate);
+    let date2 = new Date();
+    if (toDate) {
+      date2 = new Date(toDate);
+    }
+    const diffTime = Math.abs(date2.getTime() - date1.getTime());
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+    if (diffDays === 1) {
+      return '1 Day';
+    }
+    return `${diffDays} Days`
+  }
 }
 

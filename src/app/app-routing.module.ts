@@ -81,7 +81,7 @@ const routes: Routes = [
       },
       {
         path: 'my-account',
-        component: MyAccountComponent
+        component: DocViewComponent
       },
       {
         path: 'doc-view',

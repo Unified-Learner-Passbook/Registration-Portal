@@ -1,18 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, Subject } from 'rxjs';
+import { map, takeUntil } from 'rxjs/operators';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { GeneralService } from 'src/app/services/general/general.service';
+import { CredentialService } from 'src/app/services/credential/credential.service';
 
 @Component({
     selector: 'app-doc-view',
     templateUrl: './doc-view.component.html',
     styleUrls: ['./doc-view.component.scss']
 })
-export class DocViewComponent implements OnInit {
+export class DocViewComponent implements OnInit, OnDestroy {
     docUrl: string;
     extension;
     document = [];
@@ -22,36 +23,43 @@ export class DocViewComponent implements OnInit {
     credential: any;
     schemaId: string;
     templateId: string;
+    public unsubscribe$ = new Subject<void>();
     private readonly canGoBack: boolean;
     constructor(
-        public generalService: GeneralService,
-        private router: Router,
-        private http: HttpClient,
-        private location: Location,
+        public readonly generalService: GeneralService,
+        private readonly router: Router,
+        private readonly http: HttpClient,
+        private readonly location: Location,
+        private readonly credentialService: CredentialService
     ) {
-        const navigation = this.router.getCurrentNavigation();
-        this.credential = navigation?.extras?.state;
-        this.canGoBack = !!(this.router.getCurrentNavigation()?.previousNavigation);
+        // const navigation = this.router.getCurrentNavigation();
+        // this.credential = navigation?.extras?.state;
+        // this.canGoBack = !!(this.router.getCurrentNavigation()?.previousNavigation);
 
-        if (!this.credential) {
-            if (this.canGoBack) {
-                this.location.back();
-            } else {
-                this.router.navigate(['/dashboard']);
-            }
-        }
+        // if (!this.credential) {
+        //     if (this.canGoBack) {
+        //         this.location.back();
+        //     } else {
+        //         this.router.navigate(['/dashboard']);
+        //     }
+        // }
     }
 
     ngOnInit(): void {
-        if (this.credential?.credential_schema) {
-            this.schemaId = this.credential.schemaId;
-            this.getTemplate(this.schemaId).subscribe((res) => {
-                this.templateId = res?.result?.[0]?.id;
-                this.getPDF(res?.result?.[0]?.template);
+        this.credentialService.getAllCredentials().pipe(takeUntil(this.unsubscribe$))
+            .subscribe((res) => {
+                this.credential = res[0];
+                if (this.credential?.credential_schema) {
+                    this.schemaId = this.credential.schemaId;
+                    this.getTemplate(this.schemaId).pipe(takeUntil(this.unsubscribe$))
+                        .subscribe((res) => {
+                            this.templateId = res?.result?.[0]?.id;
+                            this.getPDF(res?.result?.[0]?.template);
+                        });
+                } else {
+                    console.error("Something went wrong!");
+                }
             });
-        } else {
-            console.error("Something went wrong!");
-        }
     }
 
     getSchema(id): Observable<any> {
@@ -82,7 +90,7 @@ export class DocViewComponent implements OnInit {
                 type: 'application/pdf' // must match the Accept type
             });
             this.docUrl = window.URL.createObjectURL(blob);
-        })).subscribe((result: any) => {
+        }), takeUntil(this.unsubscribe$)).subscribe((result: any) => {
             this.loader = false;
             this.extension = 'pdf';
         });
@@ -100,5 +108,10 @@ export class DocViewComponent implements OnInit {
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
+    }
+
+    ngOnDestroy(): void {
+        this.unsubscribe$.next();
+        this.unsubscribe$.complete();
     }
 }

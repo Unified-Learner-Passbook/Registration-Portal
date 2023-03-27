@@ -7,48 +7,53 @@
     <div class="row filter-bx">
       <div class="col-md-2">
         <label>{{'SELECT_GRADE' | translate}}</label>
-        <select class="filter-btn" aria-label="Default select example" [(ngModel)]="model.grade" #grade="ngModel">
+        <select class="filter-btn" aria-label="Default select example" [(ngModel)]="model.grade"
+          (ngModelChange)="onModelChange()" #grade="ngModel">
           <option [ngValue]="undefined" [disabled]="true">{{'SELECT_GRADE' | translate}}</option>
           <option *ngFor="let grade of grades" [value]="grade.value">{{grade.label}}</option>
         </select>
       </div>
       <div class="col-md-2">
         <label for="academicYear">{{'SELECT_ACADEMIC_YEAR' | translate }}</label>
-        <select class="filter-btn" id="academicYear" [(ngModel)]="model.academicYear" #academicYear="ngModel">
+        <select class="filter-btn" id="academicYear" [(ngModel)]="model.academicYear" #academicYear="ngModel"
+          (ngModelChange)="onModelChange()">
           <option [ngValue]="undefined" [disabled]="true">{{'SELECT_YEAR' | translate }}</option>
           <option *ngFor="let year of academicYearRange" [value]="year">{{year}}</option>
         </select>
       </div>
       <div class="col-md-2">
         <label for="certificateType">{{'SELECT_TYPE' | translate }}</label>
-        <select class="filter-btn" id="certificateType" (change)="onSelectChange($event)" [(ngModel)]="model.certificateType" #certificateType="ngModel">
+        <select class="filter-btn" id="certificateType" [(ngModel)]="model.certificateType" #certificateType="ngModel">
           <option [ngValue]="undefined" [disabled]="true">{{'SELECT_TYPE' | translate }}</option>
-          <option *ngFor="let type of certificateTypes" [value]="type.value" [disabled]="!type.isEnabled">{{type.label}}</option>
+          <option *ngFor="let type of certificateTypes" [value]="type.value" [disabled]="!type.isEnabled">{{type.label}}
+          </option>
         </select>
       </div>
       <div class="col-md-3">
         <label>&nbsp;</label>
-        <button class="filter-btn" [disabled]="!model?.certificateType" (click)="downloadTemplate()">{{'DOWNLOAD_CSV' | translate}}&nbsp;&nbsp;<i class="fa fa-solid fa-file-download"></i></button>
+        <button class="filter-btn" [disabled]="!model?.certificateType" (click)="downloadTemplate()">{{'DOWNLOAD_CSV' |
+          translate}}&nbsp;&nbsp;<i class="fa fa-solid fa-file-download"></i></button>
       </div>
       <div class="col-md-3">
         <label>&nbsp;</label>
         <input #fileUploadSimple [accept]="'.csv'" type="file" class="file-input" (click)="$event.target.value=null"
           (change)="importDataFromCSV($event)" hidden="true" />
         <button class="filter-btn" (click)="fileUploadSimple.click()"
-          [disabled]="!(model.grade && model.academicYear && model.certificateType && !showProgress)">{{'UPLOAD_CSV' | translate }}&nbsp;<i
-            class="fa fa-solid fa-file-upload"></i></button>
+          [disabled]="!(model.grade && model.academicYear && model.certificateType && !showProgress)">{{'UPLOAD_CSV' |
+          translate }}&nbsp;<i class="fa fa-solid fa-file-upload"></i></button>
       </div>
     </div>
-  </div> 
+  </div>
   <div class="student-list">
-    <ngb-progressbar *ngIf="showProgress" type="info" [value]="progress" [striped]="true" [animated]="true">{{progress}}%</ngb-progressbar>
+    <ngb-progressbar *ngIf="showProgress" type="info" [value]="progress" [striped]="true"
+      [animated]="true">{{progress}}%</ngb-progressbar>
     <div class="d-flex justify-content-center" *ngIf="isLoading">
       <div class="spinner-border" role="status">
         <span class="sr-only">Loading...</span>
       </div>
     </div>
     <ngb-alert type="danger" *ngIf="errorMessage">{{ errorMessage }}</ngb-alert>
-    <table class="table" cellpadding="0" cellspacing="0">
+    <table class="table" cellpadding="0" cellspacing="0" *ngIf="false">
       <thead>
         <tr>
           <th scope="col" *ngFor="let columnValue of tableColumns">{{columnValue | titlecase}}</th>
@@ -62,6 +67,29 @@
         </tr>
       </tbody>
     </table>
+
+    <table class="table" cellpadding="0" cellspacing="0" *ngIf="studentList?.length">
+      <thead>
+        <tr>
+          <th scope="col">Sr.No</th>
+          <th scope="col">Student ID</th>
+          <th scope="col">Name</th>
+          <th scope="col">Date of Birth</th>
+          <th scope="col">Mobile</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of studentList; index as i">
+          <td>{{i+1}}</td>
+          <td>{{item?.studentId}}</td>
+          <td>{{item?.name}}</td>
+          <td>{{item?.dob}}</td>
+          <td>{{item?.mobile}}</td>
+        </tr>
+      </tbody>
+    </table>
+
+
     <!-- UI static table below -->
     <!-- <table class="table" cellpadding="0" cellspacing="0">
       <thead>
@@ -103,9 +131,17 @@
       </tbody>
     </table> -->
   </div>
-  <div class="d-flex justify-content-end align-items-start p-2 pb-3 pt-5 table-footer" *ngIf="allDataRows?.length">
+  <!-- <div class="d-flex justify-content-end align-items-start p-2 pb-3 pt-5 table-footer" *ngIf="allDataRows?.length">
     <button type="button" class="custom-button blue-button mt-10 p-65" (click)="saveAndVerify()">Save and Verify Student</button>
     <ngb-pagination class="ml-2" [collectionSize]="allDataRows?.length" [(page)]="page" [pageSize]="pageSize"
+      (pageChange)="pageChange()">
+    </ngb-pagination>
+  </div> -->
+
+  <div class="d-flex justify-content-end align-items-start p-2 pb-3 pt-5 table-footer" *ngIf="studentList?.length">
+    <button type="button" class="custom-button blue-button mt-10 p-65" (click)="issueBulkCredentials()">Issue Credentials
+    </button>
+    <ngb-pagination class="ml-2" [collectionSize]="studentList?.length" [(page)]="page" [pageSize]="pageSize"
       (pageChange)="pageChange()">
     </ngb-pagination>
   </div>
