@@ -637,12 +637,20 @@ formly-autocomplete-type .ng-select {
     font-size: 16px !important;
 }
 
+.fs-20 {
+    font-size: 20px;
+}
+
 .fs-22 {
     font-size: 22px;
 }
 
 .fs-25 {
     font-size: 25px;
+}
+
+.fs-45 {
+    font-size: 45px;
 }
 
 
@@ -1194,4 +1202,19 @@ margin-right :15px !important;
 }
 .card{
     border-radius: 22px !important;
+}
+.pb-55{
+    padding-bottom: 55px !important;
+}
+.box{
+    width: 33%;
+    border: solid 1px #303972;
+    border-radius: 7px;
+    text-align: center;
+    padding: 20px;
+    background: #303972;
+    color: #fff;
+}
+.gap-20{
+    gap: 20px;
 }

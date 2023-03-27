@@ -25,14 +25,22 @@
         </div>
       </div>
     </div>
-  <div class="header-btns">
-    <div class="dropdown">
-      <button class="btn" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <i class="fa fa-bell fs-22"></i>
-        <div class="notify-bx"><div class="notify-icon"></div></div>
-      </button>
-      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <a class="dropdown-item" [routerLink]="['claim-approval']">{{'NEW_STUD_REGISTRATION_CLAIM' | translate}}</a>
+  <div class="d-flex header-btns">
+    <div>
+      <select class="selectpicker pr-3 mr-3" data-width="fit">
+        <option value="English"><a href="">🇺🇸 English</a></option>
+        <option value="Hindi"><a href="">🇮🇳 Hindi</a></option>
+      </select>
+    </div>
+    <div>
+      <div class="dropdown">
+        <button class="btn" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <i class="fa fa-bell fs-22"></i>
+          <div class="notify-bx"><div class="notify-icon"></div></div>
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <a class="dropdown-item" [routerLink]="['claim-approval']">{{'NEW_STUD_REGISTRATION_CLAIM' | translate}}</a>
+        </div>
       </div>
     </div>
   </div>
