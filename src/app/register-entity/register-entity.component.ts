@@ -19,7 +19,7 @@ export class RegisterEntityComponent implements OnInit {
   tableColumns: string[] = [];
   tableRows: any[] = [];
   allDataRows: any[] = [];
-  parsedCSV: any[] = []
+  parsedCSV: any[] = [];
   grades = [
     {
       label: '1st',
@@ -92,6 +92,7 @@ export class RegisterEntityComponent implements OnInit {
   currentBatch = 0;
   totalBatches: number;
   schoolDetails: any;
+  studentList: any[];
 
   page = 1;
   pageSize = 30;
@@ -192,8 +193,10 @@ export class RegisterEntityComponent implements OnInit {
     });
   }
 
-  onSelectChange(event: MouseEvent | KeyboardEvent) {
-
+  onModelChange() {
+    if (this.model.grade && this.model.academicYear) {
+      this.getStudentList();
+    }
   }
 
   private getTextFromFile(inputValue: any): Promise<string> {
@@ -293,14 +296,14 @@ export class RegisterEntityComponent implements OnInit {
     // });
 
     const request: RequestParam = {
-      url: `https://ulp.uniteframework.io/ulp-bff/v1/sso/student/bulk/register`, //TODO change endpoint
+      url: `https://ulp.uniteframework.io/ulp-bff/v1/sso/student/bulk/register`,
       data: {
         "schoolDetails":
         {
           "grade": this.model.grade,
           "schoolUdise": this.authService.schoolDetails.udiseCode,
           "schoolName": this.authService.schoolDetails.schoolName,
-          "academic-year": "2022-2023",
+          "academic-year": this.model.academicYear,
           "school_type": "private"
         },
         "studentDetails": list
@@ -315,6 +318,28 @@ export class RegisterEntityComponent implements OnInit {
     this.dataService.get({ url: `https://ulp.uniteframework.io/ulp-bff/v1/sso/school/${udiseId}` }).subscribe((res: any) => {
       this.schoolDetails = res.result;
       console.log('schoolDetails', this.schoolDetails);
+    });
+  }
+
+  getStudentList() {
+    const request = {
+      url: `https://ulp.uniteframework.io/ulp-bff/v1/sso/student/list`,
+      data: {
+        "grade": this.model.grade,
+        "acdemic_year": this.model.academicYear
+      }
+    }
+    this.dataService.get(request).subscribe((res: any) => {
+      if (res?.result?.length) {
+        this.studentList = res.result.map((item: any) => {
+          return {
+            studentId: item.student.student_id,
+            name: item.student.student_name,
+            dob: item.student.dob,
+            mobile: item.studentdetail.mobile
+          }
+        })
+      }
     });
   }
 }
