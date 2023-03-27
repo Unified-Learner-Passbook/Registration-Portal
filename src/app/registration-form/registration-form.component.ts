@@ -119,7 +119,7 @@ export class RegistrationFormComponent implements OnInit {
     // });
 
     if (this.registrationDetails) {
-      this.toastMessage.success('', 'Successfully Linked!');
+      this.toastMessage.success('', this.generalService.translateString('SUCCESSFULLY_LINKED'));
       if (this.schoolDetails?.udiseCode) {
         this.registrationForm.get('udiseId').setValue(this.schoolDetails.udiseCode);
       }
@@ -194,7 +194,7 @@ export class RegistrationFormComponent implements OnInit {
             localStorage.setItem('currentUser', JSON.stringify(res.userData.teacher));
           }
           this.router.navigate(['/dashboard']);
-          this.toastMessage.success("", "User Registered successfully!");
+          this.toastMessage.success("", this.generalService.translateString('USER_REGISTERED_SUCCESSFULLY'));
 
         } else {
           this.toastMessage.error("", res.message);

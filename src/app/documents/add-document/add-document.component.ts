@@ -331,7 +331,7 @@ export class AddDocumentComponent implements OnInit {
         console.log("xxx",x)
         if(x==12){
           this.router.navigate([this.entity, 'documents'])
-          this.toastMsg.error('error', "Taking more time than usual to fetch document from issuer, something went wrong, please try again")
+          this.toastMsg.error('error', this.generalService.translateString('TAKING_MORE_TIME_SOMETHING_WENT_WRONG_TRY_AGAIN'))
           this.mySubscription.unsubscribe()
         }
         this.getPublishedData()

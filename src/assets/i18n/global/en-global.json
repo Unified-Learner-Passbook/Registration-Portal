@@ -274,6 +274,12 @@
 
     "SELECT_USER_TYPE": "Select the user type",
     "PRINCIPAL":"Principal",
-    "BLOCK_EDUCATIONAL_OFFICER":"Block Educational Officer"
+    "BLOCK_EDUCATIONAL_OFFICER":"Block Educational Officer",
+
+    "YOUR_SESSION_EXPIRE":"Your session has expired! Please login again",
+    "TAKING_MORE_TIME_SOMETHING_WENT_WRONG_TRY_AGAIN":"Taking more time than usual to fetch document from issuer, something went wrong, please try again",
+    "ERROR_WHILE_LOGIN":"Error while login",
+    "SUCCESSFULLY_LINKED":"Successfully Linked!",
+    "USER_REGISTERED_SUCCESSFULLY":"User Registered successfully!"
     
 }

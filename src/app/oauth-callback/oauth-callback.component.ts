@@ -56,7 +56,7 @@ export class OauthCallbackComponent implements OnInit {
           this.router.navigate(['/register'], navigationExtras)
         }
       } else {
-        this.toastMessage.error('', 'Error while login');
+        this.toastMessage.error('', this.generalService.translateString('ERROR_WHILE_LOGIN'));
       }
     });
   }
