@@ -331,7 +331,7 @@ export class RegisterEntityComponent implements OnInit {
         "acdemic_year": this.model.academicYear
       }
     }
-    this.dataService.get(request).subscribe((res: any) => {
+    this.dataService.post(request).subscribe((res: any) => {
       this.isLoading = false;
       if (res?.result?.length) {
         this.studentList = res.result.map((item: any) => {
