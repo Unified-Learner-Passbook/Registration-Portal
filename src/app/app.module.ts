@@ -148,6 +148,7 @@ import { OauthCallbackComponent } from './oauth-callback/oauth-callback.componen
 import { RegistrationFormComponent } from './registration-form/registration-form.component';
 import { AuthInterceptor } from './authentication/auth.interceptor';
 import { MyAccountComponent } from './my-account/my-account.component';
+import { LandingPageComponent } from './landing-page/landing-page.component';
 console.log(configData['default']);
 
 @NgModule({
@@ -198,7 +199,8 @@ console.log(configData['default']);
     IssuedCredentialComponent,
     OauthCallbackComponent,
     RegistrationFormComponent,
-    MyAccountComponent
+    MyAccountComponent,
+    LandingPageComponent
 
   ],
   imports: [
