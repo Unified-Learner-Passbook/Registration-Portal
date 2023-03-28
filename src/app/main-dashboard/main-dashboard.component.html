@@ -1,24 +1,24 @@
 <app-global-header></app-global-header>
 <section>
-      <aside class="col-sm-3 pl-0">
-        <app-sidebar></app-sidebar>
-      </aside>
-      <main class="col-sm-9">
-        <p *ngIf="isFirstTimeLogin && currentUser?.name">{{'WELCOME_NOTE' | translate: {name: currentUser?.name} }}</p>
-        <div *ngIf="!isChildRoute">
-          <div class="d-flex gap-20 pb-55 pt-3">
-            <div class="box">
-              <div class="fs-20">Registered /Total students</div>
-              <div class="fs-45">40</div>
-            </div>
-            <div class="box">
-              <div class="fs-20">Enrolment credential</div>
-              <div class="fs-45">25</div>
-            </div>
-            <div class="box">
-              <div class="fs-20">Pending Claim approval</div>
-              <div class="fs-45">10</div>
-            </div>
+  <aside class="col-sm-3 pl-0">
+    <app-sidebar></app-sidebar>
+  </aside>
+  <main class="col-sm-9">
+    <p *ngIf="isFirstTimeLogin && currentUser?.name">{{'WELCOME_NOTE' | translate: {name: currentUser?.name} }}</p>
+    <div *ngIf="!isChildRoute">
+      <div class="d-flex gap-20 pb-55 pt-3">
+        <div class="box">
+          <div class="fs-20">{{'REGISTERED_TOTAL_STUDENTS' | translate}}</div>
+          <div class="fs-45">40</div>
+        </div>
+        <div class="box">
+          <div class="fs-20">{{'ENROLMENT_CREDENTIAL' | translate}}</div>
+          <div class="fs-45">25</div>
+        </div>
+        <div class="box">
+          <div class="fs-20">{{'PENDING_CLAIM_APPROVAL' | translate}}</div>
+          <div class="fs-45">10</div>
+        </div>
       </div>
       <h1 class="heading1 py-3 text-center">{{'STUDENT_REGISTRATION' | translate}}</h1>
 

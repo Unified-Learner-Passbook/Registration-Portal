@@ -30,13 +30,13 @@ export class SidebarComponent implements OnInit {
       isActive: false,
     },
     {
-      label: this.generalService.translateString('My Profile'),
+      label: this.generalService.translateString('MY_PROFILE'),
       link: 'my-account',
       class: 'fa fa-user',
       isActive: false,
     },
     {
-      label: this.generalService.translateString('Claim Approval'),
+      label: this.generalService.translateString('CLAIM_APPROVAL'),
       link: 'claim-approval',
       class: 'fa fa-user-check',
       isActive: false,
