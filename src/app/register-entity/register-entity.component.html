@@ -21,17 +21,17 @@
           <option *ngFor="let year of academicYearRange" [value]="year">{{year}}</option>
         </select>
       </div>
-      <div class="col-md-2">
+      <!-- <div class="col-md-2">
         <label for="certificateType">{{'SELECT_TYPE' | translate }}</label>
         <select class="filter-btn" id="certificateType" [(ngModel)]="model.certificateType" #certificateType="ngModel">
           <option [ngValue]="undefined" [disabled]="true">{{'SELECT_TYPE' | translate }}</option>
           <option *ngFor="let type of certificateTypes" [value]="type.value" [disabled]="!type.isEnabled">{{type.label}}
           </option>
         </select>
-      </div>
+      </div> -->
       <div class="col-md-3">
         <label>&nbsp;</label>
-        <button class="filter-btn" [disabled]="!model?.certificateType" (click)="downloadTemplate()">{{'DOWNLOAD_CSV' |
+        <button class="filter-btn" (click)="downloadTemplate()">{{'DOWNLOAD_CSV' |
           translate}}&nbsp;&nbsp;<i class="fa fa-solid fa-file-download"></i></button>
       </div>
       <div class="col-md-3">
@@ -39,7 +39,7 @@
         <input #fileUploadSimple [accept]="'.csv'" type="file" class="file-input" (click)="$event.target.value=null"
           (change)="importDataFromCSV($event)" hidden="true" />
         <button class="filter-btn" (click)="fileUploadSimple.click()"
-          [disabled]="!(model.grade && model.academicYear && model.certificateType && !showProgress)">{{'UPLOAD_CSV' |
+          [disabled]="!(model.grade && model.academicYear &&  && !showProgress)">{{'UPLOAD_CSV' |
           translate }}&nbsp;<i class="fa fa-solid fa-file-upload"></i></button>
       </div>
     </div>

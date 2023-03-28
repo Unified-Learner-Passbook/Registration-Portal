@@ -125,7 +125,7 @@ export class RegisterEntityComponent implements OnInit {
     // link.remove();
 
     console.log('model', this.model);
-
+    this.model.certificateType = 'proofOfEnrollment';
     if (this.model?.certificateType) {
       const schemaId = this.certificateTypes.find(item => item.value === this.model.certificateType)?.schemaId;
 
