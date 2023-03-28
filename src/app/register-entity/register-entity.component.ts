@@ -341,7 +341,8 @@ export class RegisterEntityComponent implements OnInit {
             name: item.student.student_name,
             dob: item.student.dob,
             mobile: item.studentdetail.mobile,
-            guardian: item.studentdetail.gaurdian_name
+            guardian: item.studentdetail.gaurdian_name,
+            osid: item.studentdetail.osid
           }
         })
       }
@@ -369,7 +370,8 @@ export class RegisterEntityComponent implements OnInit {
             "studentName": item.name,
             "guardianName": item.guardian,
             "issuanceDate": date.toISOString(),
-            "expirationDate": nextYear.toISOString()
+            "expirationDate": nextYear.toISOString(),
+            "osid": item.osid
           }
         }),
         "issuerDetail": {
