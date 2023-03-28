@@ -39,7 +39,7 @@
         <input #fileUploadSimple [accept]="'.csv'" type="file" class="file-input" (click)="$event.target.value=null"
           (change)="importDataFromCSV($event)" hidden="true" />
         <button class="filter-btn" (click)="fileUploadSimple.click()"
-          [disabled]="!(model.grade && model.academicYear &&  && !showProgress)">{{'UPLOAD_CSV' |
+          [disabled]="!(model.grade && model.academicYear && !showProgress)">{{'UPLOAD_CSV' |
           translate }}&nbsp;<i class="fa fa-solid fa-file-upload"></i></button>
       </div>
     </div>
