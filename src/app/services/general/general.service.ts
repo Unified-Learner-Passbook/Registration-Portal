@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { DataService } from '../data/data-request.service';
 import { environment } from '../../../environments/environment';
 import { HttpHeaders } from '@angular/common/http';
@@ -13,6 +13,7 @@ import { TranslateService } from '@ngx-translate/core';
 export class GeneralService {
   baseUrl = this.config.getEnv('baseUrl');
   translatedString: string;
+  public languageChange = new EventEmitter<any>();
   constructor(public dataService: DataService, private config: AppConfig, public translate: TranslateService) {
   }
 
@@ -206,6 +207,10 @@ export class GeneralService {
       return '1 Day';
     }
     return `${diffDays} Days`
+  }
+
+  emitLanguageChangeEvent(language: any) {
+    this.languageChange.emit(language);
   }
 }
 
