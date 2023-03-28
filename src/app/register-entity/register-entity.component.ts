@@ -134,7 +134,8 @@ export class RegisterEntityComponent implements OnInit {
         .pipe(
           tap((res: any) => {
             if (res?.result?.schema?.properties) {
-              const columnFields = Object.keys(res.result.schema.properties);
+              // const columnFields = Object.keys(res.result.schema.properties);
+              const columnFields = ["studentName", "student_id", "mobile", "gaurdian_name", "aadhar_token", "dob"]
               const csvContent = this.csvService.generateCSV(columnFields);
               this.csvService.downloadCSVTemplate(csvContent, `${this.model.certificateType}-template`);
             } else {
@@ -384,10 +385,10 @@ export class RegisterEntityComponent implements OnInit {
 
     this.dataService.post(request).subscribe((res: any) => {
       this.isLoading = false;
-      if(res.success) {
+      if (res.success) {
         this.getStudentList();
         this.toastMsg.success("", "Credential issued Successfully!");
-      } else  {
+      } else {
         this.toastMsg.error("", "Error while issuing credentials!");
       }
     }, (error: any) => {
