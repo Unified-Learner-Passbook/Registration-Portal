@@ -273,5 +273,9 @@
   "CLAIM_APPROVAL": "दावा स्वीकृति",
   "REGISTERED_TOTAL_STUDENTS": "पंजीकृत / कुल छात्र",
   "ENROLMENT_CREDENTIAL": "नामांकन प्रमाण पत्र",
-  "PENDING_CLAIM_APPROVAL": "लंबित दावा स्वीकृति"
+  "PENDING_CLAIM_APPROVAL": "लंबित दावा स्वीकृति",
+  "SELECT_STATUS": "स्थिति का चयन करें",
+  "PENDING": "प्रलंबित",
+  "APPROVED": "अनुमत",
+  "REJECTED": "अस्वीकार"
 }
