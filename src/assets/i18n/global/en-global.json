@@ -237,6 +237,7 @@
     "ISSUED_CREDENTIAL":"Issued Credential",
     "SETTINGS":"Settings",
 
+
     "INSTRUCTIONS":"Instructions",
     "STEP_ONE":"Step 1:",
     "STEP_TWO":"Step 2:",
@@ -269,9 +270,6 @@
     "YES_CONFIRM": "Yes, Confirm",
     "LINK_YOUR_UDISE": "Link your UDISE",
     "LINK_NOW": "Link Now",
-
-
-
     "SELECT_USER_TYPE": "Select the user type",
     "PRINCIPAL":"Principal",
     "BLOCK_EDUCATIONAL_OFFICER":"Block Educational Officer",
@@ -279,6 +277,17 @@
     "YOUR_SESSION_EXPIRE":"Your session has expired! Please login again",
     "ERROR_WHILE_LOGIN":"Error while login",
     "SUCCESSFULLY_LINKED":"Successfully Linked!",
-    "USER_REGISTERED_SUCCESSFULLY":"User Registered successfully!"
+    "USER_REGISTERED_SUCCESSFULLY":"User Registered successfully!",
+    "ACCOUNT": "Account",
+    "WELCOME_NOTE": "Welcome! {{name}}, you have successfully verified your identity",
+    "MY_PROFILE": "My Profile",
+    "CLAIM_APPROVAL": "Claim Approval",
+    "REGISTERED_TOTAL_STUDENTS": "Registered / Total students",
+    "ENROLMENT_CREDENTIAL": "Enrolment credential",
+    "PENDING_CLAIM_APPROVAL": "Pending Claim approval",
+    "SELECT_STATUS": "Select Status",
+    "PENDING": "Pending",
+    "APPROVED": "Approved",
+    "REJECTED": "Rejected"
     
 }

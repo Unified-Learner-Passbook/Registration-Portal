@@ -39,13 +39,20 @@ import { ClaimApprovalComponent } from './claim-approval/claim-approval.componen
 import { OauthCallbackComponent } from './oauth-callback/oauth-callback.component';
 import { RegistrationFormComponent } from './registration-form/registration-form.component';
 import { AuthenticationGuard } from './utility/authentication.guard';
+import { MyAccountComponent } from './my-account/my-account.component';
+import { LandingPageComponent } from './landing-page/landing-page.component';
+
 // import { CreateCertificateComponent } from './create-certificate/create-certificate.component';
 // import { FaqComponent } from './custom-components/faq/faq.component';
 const routes: Routes = [
-  { path: '', component: RegistrationComponent },
+  { path: '', component: LandingPageComponent },
   {
     path: 'digilocker-callback',
     component: OauthCallbackComponent
+  },
+  {
+    path: 'sign-in',
+    component: RegistrationComponent
   },
   {
     path: 'register',
@@ -61,11 +68,7 @@ const routes: Routes = [
         component: RegisterEntityComponent
       },
       {
-        path: 'issue-credentials',
-        component: GetRecordsComponent
-      },
-      {
-        path: 'issue-credential',
+        path: 'issued-credential',
         component: IssuedCredentialComponent
       },
       {
@@ -76,6 +79,14 @@ const routes: Routes = [
         path: 'registration-form',
         component: RegistrationFormComponent
       },
+      {
+        path: 'my-account',
+        component: DocViewComponent
+      },
+      {
+        path: 'doc-view',
+        component: DocViewComponent
+      },
     ]
   },
   {
@@ -84,7 +95,10 @@ const routes: Routes = [
   }
 ];
 // { path: 'login', component: LoginComponent },
-
+// {
+//   path: 'issue-credentials',
+//   component: GetRecordsComponent
+// },
 // Home
 // { path: '', component: HomeComponent },
 

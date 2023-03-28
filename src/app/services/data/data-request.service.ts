@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { of as observableOf, throwError as observableThrowError, Observable, Subscriber } from 'rxjs';
 import { HttpOptions } from '../../interfaces/httpOptions.interface';
-import { mergeMap } from 'rxjs/operators';
+import { map, mergeMap } from 'rxjs/operators';
 import * as _ from 'lodash-es';
 import { environment} from '../../../environments/environment';
 import { KeycloakService } from 'keycloak-angular';
@@ -72,11 +72,11 @@ export class DataService {
     };
 
     return this.http.post(requestParam.url, requestParam.data, httpOptions).pipe(
-      mergeMap((data: any) => {
+      map((data: any) => {
         if (data.responseCode && data.responseCode !== 'OK') {
           return observableThrowError(data);
         }
-        return observableOf(data);
+        return data;
       }));
   }
 

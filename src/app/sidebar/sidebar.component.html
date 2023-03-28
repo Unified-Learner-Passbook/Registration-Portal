@@ -5,25 +5,21 @@
       <i [class]="item.class" ></i>
       <div class="title">{{item.label}}</div>
     </div>
+      <div class="pt-3 pl-39" (click)="logout()"><a href="#"><i class="fa fa-sign-out-alt fs-22 text-primary-color"></i><span class="fs-16 pl-3 text-primary-color">{{'LOGOUT' | translate }}</span></a></div>
   </section>
 
-  <section>
-    <div class="instructions">
-      <h6 class="text-primary-color title">
-        <img src="assets/icons/info.svg" class="info" alt="info">
+  <section *ngIf="showInstructions">
+    <div class="instructions pt-5">
+      <h6 class="title">
+        <i class="fa fa-info-circle"></i>
         {{'INSTRUCTIONS' | translate }}
       </h6>
       <ul>
-    
-    
-   
-    <li><span class="step">{{'STEP_ONE' | translate }}</span>&nbsp;{{'DOWNLOAD_CSV_TEMPLATE' | translate }}</li>
-        <li><span class="step">{{'STEP_TWO' | translate }}</span>&nbsp;{{'SELECT_GRADE_AY' | translate }},</li>
-        <li><span class="step">{{'STEP_THREE' | translate }}</span>&nbsp;{{'UPLOAD_FILLED_UP_CSV' | translate }}</li>
+      <li>Step-1 <div><i class="fa fa-download"></i> &nbsp;{{'DOWNLOAD_CSV_TEMPLATE' | translate }}</div></li>
+        <li>Step-2<div><i class="fa fa-check-circle"></i>&nbsp;{{'SELECT_GRADE_AY' | translate }}</div></li>
+        <li>Step-3<div><i class="fa fa-upload"></i>&nbsp;{{'UPLOAD_FILLED_UP_CSV' | translate }}</div></li>
       </ul>
     </div>
-    <div class="d-flex justify-content-center logout-icon" (click)="logout()"><a href="#"><img src="assets/images/logout.png" alt="" class="w-25px pr-2"><span class="fs-16 text-primary-color">{{'LOGOUT' | translate }}</span></a></div>
   </section>
 
-  <div></div>
 </div>

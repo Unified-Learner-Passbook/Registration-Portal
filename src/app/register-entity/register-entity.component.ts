@@ -7,9 +7,9 @@ import { concatMap, tap, toArray } from 'rxjs/operators';
 import { from, throwError } from 'rxjs';
 import { CsvService } from '../services/csv/csv.service';
 import { RequestParam } from '../interfaces/httpOptions.interface';
-import { HttpParams } from '@angular/common/http';
 import { AuthService } from '../services/auth/auth.service';
 
+const BATCH_LIMIT = 20;
 @Component({
   selector: 'app-register-entity',
   templateUrl: './register-entity.component.html',
@@ -19,7 +19,7 @@ export class RegisterEntityComponent implements OnInit {
   tableColumns: string[] = [];
   tableRows: any[] = [];
   allDataRows: any[] = [];
-  parsedCSV: any[] = []
+  parsedCSV: any[] = [];
   grades = [
     {
       label: '1st',
@@ -72,16 +72,16 @@ export class RegisterEntityComponent implements OnInit {
     {
       label: 'Proof of Assessment',
       value: 'proofOfAssessment',
-      isEnabled: true,
+      isEnabled: false,
       schemaId: 'clf0qfvna0000tj154706406y'
     },
     {
       label: 'Proof of Benefits',
       value: 'proofOfBenifits',
-      isEnabled: true,
+      isEnabled: false,
       schemaId: 'clf0wvyjs0008tj154rc071i1'
     }
-  ]
+  ];
   startYear = 2000;
   currentYear = new Date().getFullYear();
   academicYearRange: string[] = [];
@@ -92,6 +92,7 @@ export class RegisterEntityComponent implements OnInit {
   currentBatch = 0;
   totalBatches: number;
   schoolDetails: any;
+  studentList: any[];
 
   page = 1;
   pageSize = 30;
@@ -159,9 +160,12 @@ export class RegisterEntityComponent implements OnInit {
       this.resetTableData();
       this.getSchoolDetails();
       this.parsedCSV = await this.parseCSVFile(event);
-      const columns = Object.keys(this.parsedCSV[0]);
-      this.tableColumns = columns.map((header: string) => header.replace(/_/g, " ").trim());
+      // const columns = Object.keys(this.parsedCSV[0]);
+      // this.tableColumns = columns.map((header: string) => header.replace(/_/g, " ").trim());
+      this.tableColumns = Object.keys(this.parsedCSV[0]);
       this.allDataRows = this.parsedCSV.map(item => Object.values(item));
+
+      this.saveAndVerify();
       this.pageChange();
     } catch (error) {
       this.errorMessage = error?.message ? error.message : "Error while parsing CSV file";
@@ -189,8 +193,10 @@ export class RegisterEntityComponent implements OnInit {
     });
   }
 
-  onSelectChange(event: MouseEvent | KeyboardEvent) {
-
+  onModelChange() {
+    if (this.model.grade && this.model.academicYear) {
+      this.getStudentList();
+    }
   }
 
   private getTextFromFile(inputValue: any): Promise<string> {
@@ -200,7 +206,6 @@ export class RegisterEntityComponent implements OnInit {
       myReader.readAsText(file);
 
       myReader.onloadend = (e) => {
-        // console.log(myReader.result);
         let fileString: string = myReader.result as string;
         resolve(fileString);
       };
@@ -226,7 +231,7 @@ export class RegisterEntityComponent implements OnInit {
     console.log("parsedCSV", this.parsedCSV);
     console.log("model", this.model);
 
-    const dataBatches = _.chunk(this.parsedCSV, 20);
+    const dataBatches = _.chunk(this.parsedCSV, BATCH_LIMIT);
     console.log("dataBatches", dataBatches);
     this.isLoading = true;
     this.showProgress = true;
@@ -236,7 +241,8 @@ export class RegisterEntityComponent implements OnInit {
     from(dataBatches)
       .pipe(
         concatMap((data: any[]) => {
-          return this.importData(data)
+          // return this.importData(data)
+          return this.bulkRegister(data)
         }),
         tap((response) => {
           console.log(response);
@@ -263,8 +269,8 @@ export class RegisterEntityComponent implements OnInit {
 
   importData(list: any[]) {
     const request: RequestParam = {
-      url: `https://ulp.uniteframework.io/ulp-bff/v1/credentials/upload`,
-      param: new HttpParams().append('type', this.model.certificateType),
+      url: `https://ulp.uniteframework.io/ulp-bff/v1/credentials/upload/${this.model.certificateType}`,
+      // param: new HttpParams().append('type', this.model.certificateType),
       data: {
         grade: this.model.grade,
         academicYear: this.model.academicYear,
@@ -276,12 +282,116 @@ export class RegisterEntityComponent implements OnInit {
     return this.dataService.post(request);
   }
 
+
+  bulkRegister(list: any[]) {
+    // const studentList = list.map((item: any) => {
+    //   return {
+    //     "studentName": item.studentName,
+    //     "student_id": item.studentId,
+    //     "mobile": ,
+    //     "gaurdian_name": "",
+    //     "aadhar_token": "",
+    //     "dob": ""
+    //   }
+    // });
+
+    const request: RequestParam = {
+      url: `https://ulp.uniteframework.io/ulp-bff/v1/sso/student/bulk/register`,
+      data: {
+        "schoolDetails":
+        {
+          "grade": this.model.grade,
+          "schoolUdise": this.authService.schoolDetails.udiseCode,
+          "schoolName": this.authService.schoolDetails.schoolName,
+          "academic-year": this.model.academicYear,
+          "school_type": "private"
+        },
+        "studentDetails": list
+      }
+    }
+
+    return this.dataService.post(request);
+  }
+
   getSchoolDetails() {
     const udiseId = this.authService.currentUser.schoolUdise;
     this.dataService.get({ url: `https://ulp.uniteframework.io/ulp-bff/v1/sso/school/${udiseId}` }).subscribe((res: any) => {
       this.schoolDetails = res.result;
       console.log('schoolDetails', this.schoolDetails);
     });
+  }
+
+  getStudentList() {
+    this.studentList = [];
+    this.isLoading = true;
+    const request = {
+      url: `https://ulp.uniteframework.io/ulp-bff/v1/sso/student/list`,
+      data: {
+        "grade": this.model.grade,
+        "acdemic_year": this.model.academicYear
+      }
+    }
+    this.dataService.post(request).subscribe((res: any) => {
+      this.isLoading = false;
+      if (res?.result?.length) {
+        this.studentList = res.result.map((item: any) => {
+          return {
+            did: item.student.DID,
+            studentId: item.student.student_id,
+            name: item.student.student_name,
+            dob: item.student.dob,
+            mobile: item.studentdetail.mobile,
+            guardian: item.studentdetail.gaurdian_name
+          }
+        })
+      }
+    }, (error: any) => {
+      this.isLoading = false;
+      this.toastMsg.error("", "Error while fetching student list");
+    });
+  }
+
+  issueBulkCredentials() {
+    this.isLoading = true;
+    const date = new Date();
+    const nextYear = new Date(new Date().setFullYear(new Date().getFullYear() + 1))
+    const request = {
+      url: `https://ulp.uniteframework.io/ulp-bff/v1/sso/student/bulk/credentials`,
+      data: {
+        "credentialSubjectCommon": {
+          "grade": this.model.grade,
+          "academicYear": this.model.academicYear
+        },
+        "credentialSubject": this.studentList.map((item: any) => {
+          return {
+            "id": item.did,
+            "enrolledOn": date.toISOString(),
+            "studentName": item.name,
+            "guardianName": item.guardian,
+            "issuanceDate": date.toISOString(),
+            "expirationDate": nextYear.toISOString()
+          }
+        }),
+        "issuerDetail": {
+          "did": this.authService.schoolDetails.did,
+          "schoolName": this.authService.schoolDetails.schoolName,
+          "schemaId": "clf0rjgov0002tj15ml0fdest"
+        }
+      }
+    }
+
+    this.dataService.post(request).subscribe((res: any) => {
+      this.isLoading = false;
+      if(res.success) {
+        this.getStudentList();
+        this.toastMsg.success("", "Credential issued Successfully!");
+      } else  {
+        this.toastMsg.error("", "Error while issuing credentials!");
+      }
+    }, (error: any) => {
+      this.isLoading = false;
+      this.toastMsg.error("", "Error while issuing credentials!");
+    })
   }
 }
 

@@ -1,42 +1,56 @@
 <!-- <app-sidebar></app-sidebar> -->
 <div class="container bg-gray-100">
-    <h5 class="mb-5 title pt-4 d-flex text-center">
+    <h5 class="mb-3 title pt-4 d-flex text-center">
         Student Registration claim approval
       </h5>
+      <div class="col-md-8">
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label">{{'SELECT_STATUS' | translate}} :</label>
+          <select class="w-50 form-control" aria-label="Default select example" [(ngModel)]="model.status"
+            (ngModelChange)="onModelChange()" #status="ngModel">
+            <option [ngValue]="undefined" [disabled]="true">{{'SELECT_STATUS' | translate}}</option>
+            <option *ngFor="let status of statusValues" [value]="status.value">{{status.label}}</option>
+          </select>
+        </div>
+      </div>
       <!-- UI static table below -->
-      <table class="table mb-4" cellpadding="0" cellspacing="0">
-        <thead>
-          <tr>
-            <th>S.no.</th>
-            <th>Student Name</th>
-            <th>Guardian Name</th>
-            <th>Student ID</th>
-            <th>Date of Birth</th>
-            <th>Grade</th>
-            <th>Academic Year</th>
-            <th>Phone Number</th>
-            <th>Pending since</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let user of studentDetails; let index = index">
-            <td>{{index+1}}</td>
-            <td>{{user.studentName}}</td>
-            <td>{{user.gaurdianName}}</td>
-            <td>{{user.studentSchoolID}}</td>
-            <td>{{user.dob}}</td>
-            <td>{{user.grade}}</td>
-            <td>{{user.academicYear}}</td>
-            <td>{{user.phoneNo}}</td>
-            <td>{{user.osCreatedAt}}</td>
-            <td>
-                <img style="cursor: pointer;" src="assets/images/checkicon.png" (click) = "openPopup(user)" alt="" class=" ">
-                <img style="cursor: pointer;" src="assets/images/closecheck.png" alt="">
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="table-responsive">
+        <table class="table mb-4" cellpadding="0" cellspacing="0">
+          <thead>
+            <tr>
+              <th>S.no.</th>
+              <th>Student Name</th>
+              <th>Guardian Name</th>
+              <th>Student ID</th>
+              <th>Date of Birth</th>
+              <th>Grade</th>
+              <th>Academic Year</th>
+              <th>Phone Number</th>
+              <th>Status</th>
+              <th>Pending since</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let user of studentDetails; let index = index">
+              <td>{{index+1}}</td>
+              <td>{{user.student.student_name}}</td>
+              <td>{{user.gaurdian_name}}</td>
+              <td>{{user.student.student_id}}</td>
+              <td>{{user.student.dob}}</td>
+              <td>{{user.grade}}</td>
+              <td>{{user.acdemic_year}}</td>
+              <td>{{user.mobile}}</td>
+              <td>{{user.claim_status}}</td>
+              <td>{{user.osCreatedAt}}</td>
+              <td>
+                  <img style="cursor: pointer;" src="assets/images/checkicon.png" (click) = "openPopup(user)" alt="" class=" ">
+                  <img style="cursor: pointer;" src="assets/images/closecheck.png" (click) = "rejcetPopup(user)" alt="">
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
       <br>
     </div>
     <div class="d-flex justify-content-end align-items-start p-2 pb-3 pt-5 table-footer">
@@ -62,4 +76,22 @@
             </div>
         </div>
     </div>
+</ng-template>
+
+<ng-template #rejectModal tabindex="-1" role="dialog" aria-labelledby="rejectModal">
+  <div class="modal-content">
+      <div class="modal-body fs-14">
+        Are you sure want to reject
+          <div class="d-flex justify-content-center">
+              <button type="button" (click)="rejectConfirm(false)"
+                  class="custom-button default-button mt-20 mr-5 p-32 fs-14">
+                  {{'NO_CANCEL' | translate}}
+              </button>
+              <button type="button" (click)="rejectConfirm(true)"
+                  class="custom-button blue-button mt-20 p-32 fs-14">
+                  {{'YES_CONFIRM' | translate}}
+              </button>
+          </div>
+      </div>
+  </div>
 </ng-template>
