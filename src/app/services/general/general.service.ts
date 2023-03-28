@@ -164,6 +164,29 @@ export class GeneralService {
     return this.dataService.post(req);
   }
 
+
+  rejectStudentData(apiUrl, data) {
+    var url;
+    if (apiUrl.indexOf('http') > -1) {
+      url = apiUrl
+    } else {
+      if (apiUrl.charAt(0) == '/') {
+        url = `${this.baseUrl}${apiUrl}`
+      }
+      else {
+        url = `${this.baseUrl}/${apiUrl}`;
+      }
+    }
+
+    const req = {
+      url: 'https://ulp.uniteframework.io/ulp-bff/v1/credentials/rejectStudentv2',
+      //url: 'http://localhost:3000/v1/credentials/rejectStudentv2',
+      data: data
+    };
+
+    return this.dataService.post(req);
+  }
+
   setLanguage(langKey: string) {
     this.translate.use(langKey);
     localStorage.setItem('setLanguage', langKey);
