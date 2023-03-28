@@ -15,6 +15,7 @@
             <th>Grade</th>
             <th>Academic Year</th>
             <th>Phone Number</th>
+            <th>Status</th>
             <th>Pending since</th>
             <th></th>
           </tr>
@@ -22,13 +23,14 @@
         <tbody>
           <tr *ngFor="let user of studentDetails; let index = index">
             <td>{{index+1}}</td>
-            <td>{{user.studentName}}</td>
-            <td>{{user.gaurdianName}}</td>
-            <td>{{user.studentSchoolID}}</td>
-            <td>{{user.dob}}</td>
+            <td>{{user.student.student_name}}</td>
+            <td>{{user.gaurdian_name}}</td>
+            <td>{{user.student.student_id}}</td>
+            <td>{{user.student.dob}}</td>
             <td>{{user.grade}}</td>
-            <td>{{user.academicYear}}</td>
-            <td>{{user.phoneNo}}</td>
+            <td>{{user.acdemic_year}}</td>
+            <td>{{user.mobile}}</td>
+            <td>{{user.claim_status}}</td>
             <td>{{user.osCreatedAt}}</td>
             <td>
                 <img style="cursor: pointer;" src="assets/images/checkicon.png" (click) = "openPopup(user)" alt="" class=" ">

@@ -113,9 +113,9 @@ export class GeneralService {
     return this.dataService.put(req);
   }
 
-  translateString(constantStr){
-    this.translate.get(constantStr).subscribe((val)=>{
-       this.translatedString = val;
+  translateString(constantStr) {
+    this.translate.get(constantStr).subscribe((val) => {
+      this.translatedString = val;
     });
     return this.translatedString;
   }
@@ -134,8 +134,8 @@ export class GeneralService {
     }
 
     const req = {
-      url: 'https://ulp.uniteframework.io/ulp-bff/v1/sso/studentDetail',
-      //url: 'http://localhost:3000/v1/sso/studentDetail',
+      url: 'https://ulp.uniteframework.io/ulp-bff/v1/sso/studentDetailV2',
+      //url: 'http://localhost:3000/v1/sso/studentDetailV2',
       data: data
     };
 
@@ -156,8 +156,8 @@ export class GeneralService {
     }
 
     const req = {
-      url: 'https://ulp.uniteframework.io/ulp-bff/v1/credentials/approveStudent',
-      //url: 'http://localhost:3000/v1/credentials/approveStudent',
+      url: 'https://ulp.uniteframework.io/ulp-bff/v1/credentials/approveStudentV2',
+      //url: 'http://localhost:3000/v1/credentials/approveStudentV2',
       data: data
     };
 
@@ -170,5 +170,19 @@ export class GeneralService {
     location.reload();
   }
 
+  getDaysDifference(fromDate: string, toDate?) {
+    let date1 = new Date(fromDate);
+    let date2 = new Date();
+    if (toDate) {
+      date2 = new Date(toDate);
+    }
+    const diffTime = Math.abs(date2.getTime() - date1.getTime());
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+    if (diffDays === 1) {
+      return '1 Day';
+    }
+    return `${diffDays} Days`
+  }
 }
 
