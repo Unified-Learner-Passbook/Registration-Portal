@@ -23,10 +23,16 @@
       font-weight: 400;
       font-size: 14px;
       line-height: 21px;  
-      color: #303972
+      color: #303972;
+      width: 8%;
     }
     th {
       font-weight: 600;
       color: #414141;
     }
+  }
+  .form-group label {
+    font-size: 15px;
+    font-weight: 500;
+    padding-left: 0;
   }
