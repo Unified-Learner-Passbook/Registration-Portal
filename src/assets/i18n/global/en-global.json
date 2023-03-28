@@ -279,6 +279,10 @@
     "CLAIM_APPROVAL": "Claim Approval",
     "REGISTERED_TOTAL_STUDENTS": "Registered / Total students",
     "ENROLMENT_CREDENTIAL": "Enrolment credential",
-    "PENDING_CLAIM_APPROVAL": "Pending Claim approval"
+    "PENDING_CLAIM_APPROVAL": "Pending Claim approval",
+    "SELECT_STATUS": "Select Status",
+    "PENDING": "Pending",
+    "APPROVED": "Approved",
+    "REJECTED": "Rejected"
     
 }
