@@ -5,7 +5,7 @@
       <i [class]="item.class" ></i>
       <div class="title">{{item.label}}</div>
     </div>
-      <div class="pt-3 pl-39" (click)="logout()"><a href="#"><i class="fa fa-sign-out-alt fs-22 text-primary-color"></i><span class="fs-16 pl-3 text-primary-color">{{'LOGOUT' | translate }}</span></a></div>
+      <div class="menu" (click)="logout()"><a href="#"><i class="fa fa-sign-out-alt fs-22 text-primary-color"></i><span class="fs-16 pl-3 text-primary-color">{{'LOGOUT' | translate }}</span></a></div>
   </section>
 
   <section *ngIf="showInstructions">
