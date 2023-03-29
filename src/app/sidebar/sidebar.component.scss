@@ -7,7 +7,7 @@
   flex-direction: column;
 
   div {
-    color: #050C44;
+    color: #050c44;
     margin: 0.5rem 0.5rem 0.5rem 0;
     font-weight: 400;
   }
@@ -17,9 +17,9 @@
     flex-direction: row;
     align-items: center;
     cursor: pointer;
-    width: 286px;
+    width: 250px;
     border-radius: 0 8px 8px 0;
-    margin-left: 20px;
+    // margin-left: 20px;
 
       i{
         padding: 0 15px;
@@ -32,14 +32,13 @@
     color: #050c44;
     font-weight: 600;
     border-left: 5px solid #ff740f;
-    background: #F2F2F2;
+    background: #f2f2f2;
   }
-  
 }
 
 .instructions {
-     margin: 1rem;
-     margin-bottom: 75px;
+  margin: 1rem;
+  margin-bottom: 75px;
   .title {
     font-weight: 600;
     font-size: 14px;
@@ -65,7 +64,7 @@
       border-radius: 5px;
       padding: 10px;
       margin: 20px;
-      text-align:center;
+      text-align: center;
       .fa {
         font-size: 16px;
         color: #414141;
@@ -79,14 +78,15 @@
   vertical-align: middle;
 }
 
-.w-25px{
+.w-25px {
   width: 25px;
 }
 
 .pl-39{
   padding-left: 38px;
 }
-.disable , .disable ~ .title{
+.disable,
+.disable ~ .title {
   color: #ccc;
   opacity: 0.7;
   cursor: default;
