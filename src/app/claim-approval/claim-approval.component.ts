@@ -134,27 +134,19 @@ export class ClaimApprovalComponent implements OnInit {
       "issuer": this.schoolDetails.did,
       "credentialSubject": {
         //studentDetail:
-        //"student_detail_id": user.student_detail_id,
-        "studentId": user.student_id,
         "mobile": user.mobile,
-        "guardianName": user.gaurdian_name,
-        //"school_udise": user.school_udise,
-        "schoolName": user.school_name,
+        "guardian_name": user.gaurdian_name,
+        "school_name": user.school_name,
         "grade": user.grade,
-        "academicYear": user.acdemic_year,
-        //"start_date": user.start_date,
-        //"end_date": user.end_date,
-        //"claim_status": user.claim_status,
+        "academic_year": user.acdemic_year,
         "osid": user.osid,
         //student
-        //"DID": user.student.DID,
-        //"reference_id": user.student.reference_id,
-        //"aadhar_token": user.student.aadhar_token,
-        "studentName": user.student.student_name,
+        "student_id": user.student.student_id,
+        "student_name": user.student.student_name,
         "dob": user.student.dob,
-        //"school_type": user.student.school_type,
-        //"meripehchan_id": user.student.meripehchan_id,
-        //"username": user.student.username,
+        "aadhar_token": user.student.aadhar_token,
+        "reference_id": user.student.reference_id,
+        "student_osid": user.student_id,
       }
 
     }
