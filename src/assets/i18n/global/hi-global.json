@@ -277,5 +277,6 @@
   "SELECT_STATUS": "स्थिति का चयन करें",
   "PENDING": "प्रलंबित",
   "APPROVED": "अनुमत",
-  "REJECTED": "अस्वीकार"
+  "REJECTED": "अस्वीकार",
+  "ISSUED": "जारी"
 }

@@ -283,6 +283,7 @@
     "SELECT_STATUS": "Select Status",
     "PENDING": "Pending",
     "APPROVED": "Approved",
-    "REJECTED": "Rejected"
+    "REJECTED": "Rejected",
+    "ISSUED": "Issued"
     
 }
