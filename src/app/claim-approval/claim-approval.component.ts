@@ -38,7 +38,9 @@ export class ClaimApprovalComponent implements OnInit {
       value: "issued"
     }
   ]
-  model: any = {}
+  model: any = {
+    status: 'pending'
+  }
 
   @ViewChild('approveModal') approveModal: TemplateRef<any>
   @ViewChild('rejectModal') rejectModal: TemplateRef<any>
