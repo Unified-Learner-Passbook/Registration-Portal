@@ -170,7 +170,7 @@ export class RegistrationFormComponent implements OnInit {
         digimpid: this.registrationDetails.meripehchanid,
       }
 
-      this.authService.verifyAadhar(this.registrationForm.value.aadhar).pipe(
+      this.authService.verifyAadhar(this.registrationForm.value.aadharId).pipe(
         concatMap((res: any) => {
           if (res.success && res?.result?.aadhaar_token) {
             payload.userdata.teacher.aadharId = res.result.aadhaar_token;
