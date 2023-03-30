@@ -123,4 +123,10 @@ export class AuthService {
       }
     }));
   }
+
+  verifyAadhar(aadharId: number | string) {
+    const api = `${this.endpoint}/ulp-bff/v1/aadhaar/verify`;
+    return this.http.post(api, { aadhaar_id: aadharId});
+  }
+
 }

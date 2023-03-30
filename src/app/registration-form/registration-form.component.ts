@@ -8,6 +8,7 @@ import { AuthService } from '../services/auth/auth.service';
 import { Location } from '@angular/common';
 import { CredentialService } from '../services/credential/credential.service';
 import { concatMap, mergeMap } from 'rxjs/operators';
+import { throwError } from 'rxjs';
 
 @Component({
   selector: 'app-registration-form',
@@ -169,7 +170,15 @@ export class RegistrationFormComponent implements OnInit {
         digimpid: this.registrationDetails.meripehchanid,
       }
 
-      this.authService.ssoSignUp(payload).pipe(
+      this.authService.verifyAadhar(this.registrationForm.value.aadhar).pipe(
+        concatMap((res: any) => {
+          if (res.success && res?.result?.aadhaar_token) {
+            payload.userdata.teacher.aadharId = res.result.aadhaar_token;
+            return this.authService.ssoSignUp(payload);
+          } else {
+            return throwError('Aadhar Verification Failed');  
+          }
+        }),
         concatMap(_ => this.authService.getSchoolDetails()),
         concatMap(_ => this.credentialService.issueCredential())
       ).subscribe((res: any) => {
