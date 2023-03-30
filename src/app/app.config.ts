@@ -31,7 +31,7 @@ export class AppConfig {
             return this.environment[key];
         }
         catch(err) {
-            this.router.navigate(['install'])
+            // this.router.navigate(['install'])
           }
     }
 
@@ -59,7 +59,7 @@ export class AppConfig {
 
                     case 'install': {
                         console.error('environment is not set or invalid in config.json file');
-                        this.router.navigate(['install'])
+                        // this.router.navigate(['install'])
                         resolve(true);
                     } break;
                 }
@@ -72,18 +72,19 @@ export class AppConfig {
                             resolve(true);
                         }, err => {console.log('Error reading config.json configuration file . Please find Sample ->> https://sunbird-certificate-demo.xiv.in/assets/config/config.json', err);
                         // this.titleService.setTitle("Sunbird RC");
-                        this.router.navigate(['install'])});
+                        // this.router.navigate(['install'])
+                    });
                 } else {
                     console.error('config.json file is not valid . Please find Sample ->> https://sunbird-certificate-demo.xiv.in/assets/config/config.json');
                     // this.titleService.setTitle("Sunbird RC");
-                    this.router.navigate(['install'])
+                    // this.router.navigate(['install'])
                     resolve(true);
                 }
             }, 
             
             err => {console.log('Error reading config.json configuration file. Please find Sample ->> https://sunbird-certificate-demo.xiv.in/assets/config/config.json', err);
                     // this.titleService.setTitle("Sunbird RC");
-                    this.router.navigate(['install'])
+                    // this.router.navigate(['install'])
                     resolve(true);
                     }
             );
