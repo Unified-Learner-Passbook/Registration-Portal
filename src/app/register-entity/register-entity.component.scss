@@ -11,6 +11,9 @@
     text-align: center;
   }
 }
+.container {
+  width: 100% !important;
+}
 
 .filter-btn {
   background: #fff !important;
@@ -39,7 +42,7 @@ table {
   background: #fff;
   border-radius: 12px;
   border: none;
-  tr{
+  tr {
     padding: 10px;
     border-bottom: solid 1px #f5f2f2 !important;
   }
@@ -48,8 +51,8 @@ table {
     text-align: center;
     font-weight: 400;
     font-size: 14px;
-    line-height: 21px;  
-    color: #303972
+    line-height: 21px;
+    color: #303972;
   }
   th {
     font-weight: 600;
@@ -77,9 +80,9 @@ table {
     background-color: var(--primaryColor);
     border-color: var(--primaryColor);
   }
-  .page-link{
+  .page-link {
     border-radius: 50%;
-    color: #A098AE;
+    color: #a098ae;
     margin: 10px;
     width: 45px;
     line-height: 27px;
@@ -88,37 +91,37 @@ table {
   }
 }
 
-.filter-bx{
-  label{
+.filter-bx {
+  label {
     font-size: 12px;
     line-height: 21px;
     color: #434343;
   }
 }
 
-.fa-solid{
+.fa-solid {
   font-size: 16px;
   padding-left: 15px;
 }
-.text-gray-100{
+.text-gray-100 {
   color: #414141;
 }
-.p-65{
+.p-65 {
   padding: 12px 65px;
 }
-.verify{
+.verify {
   border-left: solid 3px #04bc00;
 }
-.warning{
-  border-left: solid 3px #D64040;
+.warning {
+  border-left: solid 3px #d64040;
 }
-.btn-warn{
-    background: none;
-    border: solid 1px #D64040;
-    color: #D64040;
-    padding: 6px 31px;
-    border-radius: 3px;
+.btn-warn {
+  background: none;
+  border: solid 1px #d64040;
+  color: #d64040;
+  padding: 6px 31px;
+  border-radius: 3px;
 }
-.pr-22{
+.pr-22 {
   padding-right: 22px;
 }

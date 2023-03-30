@@ -125,7 +125,7 @@ export class RegisterEntityComponent implements OnInit {
     // link.remove();
 
     console.log('model', this.model);
-
+    this.model.certificateType = 'proofOfEnrollment';
     if (this.model?.certificateType) {
       const schemaId = this.certificateTypes.find(item => item.value === this.model.certificateType)?.schemaId;
 
@@ -134,7 +134,8 @@ export class RegisterEntityComponent implements OnInit {
         .pipe(
           tap((res: any) => {
             if (res?.result?.schema?.properties) {
-              const columnFields = Object.keys(res.result.schema.properties);
+              // const columnFields = Object.keys(res.result.schema.properties);
+              const columnFields = ["studentName", "student_id", "mobile", "gaurdian_name", "aadhar_token", "dob"]
               const csvContent = this.csvService.generateCSV(columnFields);
               this.csvService.downloadCSVTemplate(csvContent, `${this.model.certificateType}-template`);
             } else {
@@ -341,7 +342,8 @@ export class RegisterEntityComponent implements OnInit {
             name: item.student.student_name,
             dob: item.student.dob,
             mobile: item.studentdetail.mobile,
-            guardian: item.studentdetail.gaurdian_name
+            guardian: item.studentdetail.gaurdian_name,
+            osid: item.studentdetail.osid
           }
         })
       }
@@ -369,7 +371,8 @@ export class RegisterEntityComponent implements OnInit {
             "studentName": item.name,
             "guardianName": item.guardian,
             "issuanceDate": date.toISOString(),
-            "expirationDate": nextYear.toISOString()
+            "expirationDate": nextYear.toISOString(),
+            "osid": item.osid
           }
         }),
         "issuerDetail": {
@@ -382,10 +385,10 @@ export class RegisterEntityComponent implements OnInit {
 
     this.dataService.post(request).subscribe((res: any) => {
       this.isLoading = false;
-      if(res.success) {
+      if (res.success) {
         this.getStudentList();
         this.toastMsg.success("", "Credential issued Successfully!");
-      } else  {
+      } else {
         this.toastMsg.error("", "Error while issuing credentials!");
       }
     }, (error: any) => {
