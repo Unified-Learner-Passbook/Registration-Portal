@@ -178,11 +178,11 @@ export class RegistrationFormComponent implements OnInit {
       //       localStorage.setItem('accessToken', res.token);
       //     }
 
-          if (res?.userData?.teacher) {
-            localStorage.setItem('currentUser', JSON.stringify(res.userData.teacher));
-          }
+          // if (res?.userData?.teacher) {
+          //   localStorage.setItem('currentUser', JSON.stringify(res.userData.teacher));
+          // }
           this.router.navigate(['/dashboard']);
-          this.toastMessage.success("", this.generalService.translateString('USER_REGISTERED_SUCCESSFULLY'));
+          //  this.toastMessage.success("", this.generalService.translateString('USER_REGISTERED_SUCCESSFULLY'));
       //     if (res?.userData?.teacher) {
       //       localStorage.setItem('currentUser', JSON.stringify(res.userData.teacher));
       //     }
@@ -217,7 +217,7 @@ export class RegistrationFormComponent implements OnInit {
         })
       ).subscribe((res: any) => {
         console.log("final", res);
-        this.toastMessage.success("", "User Registered successfully!");
+        this.toastMessage.success("",this.generalService.translateString('USER_REGISTERED_SUCCESSFULLY') );
         this.router.navigate(['/dashboard'], { state: { isFirstTimeLogin: true } });
       }, (error: any) => {
         const message = error.message ? error.message : 'Error while register user'

@@ -278,6 +278,7 @@
     "ERROR_WHILE_LOGIN":"Error while login",
     "SUCCESSFULLY_LINKED":"Successfully Linked!",
     "USER_REGISTERED_SUCCESSFULLY":"User Registered successfully!",
+
     "ACCOUNT": "Account",
     "WELCOME_NOTE": "Welcome! {{name}}, you have successfully verified your identity",
     "MY_PROFILE": "My Profile",
@@ -288,6 +289,7 @@
     "SELECT_STATUS": "Select Status",
     "PENDING": "Pending",
     "APPROVED": "Approved",
-    "REJECTED": "Rejected"
+    "REJECTED": "Rejected",
+    "SELECT_YOUR_DEPARTMENT":"Select your department"
     
 }
