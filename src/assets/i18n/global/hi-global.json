@@ -265,8 +265,16 @@
   "LINK_YOUR_UDISE": "अपना यूडीआईएसई लिंक करें",
   "LINK_NOW": "अभी लिंक करें",
   "SELECT_USER_TYPE": "उपयोगकर्ता प्रकार का चयन करें",
-  "PRINCIPAL": "प्रधान अध्यापक",
-  "BLOCK_EDUCATIONAL_OFFICER": "प्रखंड शिक्षा पदाधिकारी",
+  "PRINCIPAL":"प्रधान अध्यापक",
+  "BLOCK_EDUCATIONAL_OFFICER":"प्रखंड शिक्षा पदाधिकारी",
+
+  "YOUR_SESSION_EXPIRE":"आपका सत्र समाप्त हो गया है! फिर से लॉगिन करने का प्रयास करें",
+  "ERROR_WHILE_LOGIN":"लॉग इन करते समय त्रुटि",
+  "SUCCESSFULLY_LINKED":"सफलतापूर्वक लिंक किया गया!",
+  "USER_REGISTERED_SUCCESSFULLY":"उपयोगकर्ता सफलतापूर्वक पंजीकृत!",
+  "SELECT_YOUR_DEPARTMENT":"अपने विभाग का चयन करें",
+
+ 
   "ACCOUNT": "खाता",
   "WELCOME_NOTE": "स्वागत है {{name}}, आपने अपनी पहचान सफलतापूर्वक सत्यापित कर ली है",
   "MY_PROFILE": "मेरी प्रोफाइल",
@@ -277,5 +285,6 @@
   "SELECT_STATUS": "स्थिति का चयन करें",
   "PENDING": "प्रलंबित",
   "APPROVED": "अनुमत",
-  "REJECTED": "अस्वीकार"
+  "REJECTED": "अस्वीकार",
+  "ISSUED": "जारी"
 }
