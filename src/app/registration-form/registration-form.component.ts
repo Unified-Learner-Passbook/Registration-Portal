@@ -109,7 +109,7 @@ export class RegistrationFormComponent implements OnInit {
 
   linkUDISE() {
     if (this.registrationDetails) {
-      this.toastMessage.success('', 'Successfully Linked!');
+      this.toastMessage.success('', this.generalService.translateString('SUCCESSFULLY_LINKED'));
       if (this.schoolDetails?.udiseCode) {
         this.registrationForm.get('udiseId').setValue(this.schoolDetails.udiseCode);
       }
@@ -184,7 +184,7 @@ export class RegistrationFormComponent implements OnInit {
       ).subscribe((res: any) => {
         this.isLoading = false;
         console.log("final", res);
-        this.toastMessage.success("", "User Registered successfully!");
+        this.toastMessage.success("",this.generalService.translateString('USER_REGISTERED_SUCCESSFULLY') );
         this.router.navigate(['/dashboard'], { state: { isFirstTimeLogin: true } });
       }, (error: any) => {
         console.error(error);
