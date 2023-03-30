@@ -7,7 +7,7 @@ import { ToastMessageService } from '../services/toast-message/toast-message.ser
 import { AuthService } from '../services/auth/auth.service';
 import { Location } from '@angular/common';
 import { CredentialService } from '../services/credential/credential.service';
-import { concatMap, mergeMap } from 'rxjs/operators';
+import { concatMap } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 
 @Component({
