@@ -182,11 +182,13 @@ export class RegistrationFormComponent implements OnInit {
         concatMap(_ => this.authService.getSchoolDetails()),
         concatMap(_ => this.credentialService.issueCredential())
       ).subscribe((res: any) => {
+        this.isLoading = false;
         console.log("final", res);
         this.toastMessage.success("", "User Registered successfully!");
         this.router.navigate(['/dashboard'], { state: { isFirstTimeLogin: true } });
       }, (error: any) => {
         console.error(error);
+        this.isLoading = false;
         this.toastMessage.error("", "Error while register user");
       });
     }

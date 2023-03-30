@@ -18,7 +18,7 @@ export class DocViewComponent implements OnInit, OnDestroy {
     docUrl: string;
     extension;
     document = [];
-    loader: boolean = true;
+    isLoading: boolean = true;
     docName: any;
     docDetails: any;
     credential: any;
@@ -35,21 +35,10 @@ export class DocViewComponent implements OnInit, OnDestroy {
         private readonly location: Location,
         private readonly credentialService: CredentialService,
         private readonly toastMessage: ToastMessageService
-    ) {
-        // const navigation = this.router.getCurrentNavigation();
-        // this.credential = navigation?.extras?.state;
-        // this.canGoBack = !!(this.router.getCurrentNavigation()?.previousNavigation);
-
-        // if (!this.credential) {
-        //     if (this.canGoBack) {
-        //         this.location.back();
-        //     } else {
-        //         this.router.navigate(['/dashboard']);
-        //     }
-        // }
-    }
+    ) { }
 
     ngOnInit(): void {
+        this.isLoading = true;
         this.credentialService.getAllCredentials().pipe(takeUntil(this.unsubscribe$))
             .subscribe((res) => {
                 this.credential = res[0];
@@ -59,8 +48,12 @@ export class DocViewComponent implements OnInit, OnDestroy {
                         .subscribe((res) => {
                             this.templateId = res?.result?.[0]?.id;
                             this.getPDF(res?.result?.[0]?.template);
+                        }, (error: any) => {
+                            this.isLoading = false;
+                            console.error("Something went wrong!", error);
                         });
                 } else {
+                    this.isLoading = false;
                     console.error("Something went wrong!");
                 }
             });
@@ -94,8 +87,9 @@ export class DocViewComponent implements OnInit, OnDestroy {
                 type: 'application/pdf' // must match the Accept type
             });
             this.docUrl = window.URL.createObjectURL(this.blob);
+            this.isLoading = false;
         }), takeUntil(this.unsubscribe$)).subscribe((result: any) => {
-            this.loader = false;
+            this.isLoading = false;
             this.extension = 'pdf';
         });
     }
