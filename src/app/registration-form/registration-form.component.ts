@@ -7,7 +7,8 @@ import { ToastMessageService } from '../services/toast-message/toast-message.ser
 import { AuthService } from '../services/auth/auth.service';
 import { Location } from '@angular/common';
 import { CredentialService } from '../services/credential/credential.service';
-import { concatMap, mergeMap } from 'rxjs/operators';
+import { concatMap } from 'rxjs/operators';
+import { throwError } from 'rxjs';
 
 @Component({
   selector: 'app-registration-form',
@@ -169,58 +170,29 @@ export class RegistrationFormComponent implements OnInit {
         digimpid: this.registrationDetails.meripehchanid,
       }
 
-      // this.authService.ssoSignUp(payload).subscribe((res: any) => {
-      //   console.log("result register", res);
-      //   this.isLoading = false;
-      //   if (res.success && res.user === 'FOUND') {
-
-      //     if (res.token) {
-      //       localStorage.setItem('accessToken', res.token);
-      //     }
-
-      //     if (res?.userData?.teacher) {
-      //       localStorage.setItem('currentUser', JSON.stringify(res.userData.teacher));
-      //     }
-
-      //     this.authService.getSchoolDetails().subscribe((res: any) => {
-      //       this.credentialService.issueCredential();
-      //       this.toastMessage.success("", "User Registered successfully!");
-      //       this.router.navigate(['/dashboard']);
-      //     });
-
-      //   } else {
-      //     this.toastMessage.error("", res.message);
-      //   }
-      // }, (error) => {
-      //   this.isLoading = false;
-      //   if (error?.message) {
-      //     this.toastMessage.error("", error.message);
-      //   } else {
-      //     this.toastMessage.error("", 'Error while Registration, please try again!');
-      //   }
-      // });
-
-
-      this.authService.ssoSignUp(payload).pipe(
-        concatMap(_ => {
-          console.log("res1", _)
-          return this.authService.getSchoolDetails()
+      this.authService.verifyAadhar(this.registrationForm.value.aadharId).pipe(
+        concatMap((res: any) => {
+          if (res.success && res?.result?.aadhaar_token) {
+            payload.userdata.teacher.aadharId = res.result.aadhaar_token;
+            return this.authService.ssoSignUp(payload);
+          } else {
+            return throwError('Aadhar Verification Failed');  
+          }
         }),
-        concatMap(_ => {
-          console.log("res2", _);
-          return this.credentialService.issueCredential()
-        })
+        concatMap(_ => this.authService.getSchoolDetails()),
+        concatMap(_ => this.credentialService.issueCredential())
       ).subscribe((res: any) => {
+        this.isLoading = false;
         console.log("final", res);
         this.toastMessage.success("", "User Registered successfully!");
         this.router.navigate(['/dashboard'], { state: { isFirstTimeLogin: true } });
       }, (error: any) => {
-        const message = error.message ? error.message : 'Error while register user'
-        this.toastMessage.error("", message);
+        console.error(error);
+        this.isLoading = false;
+        this.toastMessage.error("", "Error while register user");
       });
     }
   }
-
 
   objectValuesToString(obj: any) {
     Object.keys(obj).forEach((key: any) => {
