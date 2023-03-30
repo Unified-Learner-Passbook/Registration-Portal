@@ -273,6 +273,12 @@
     "SELECT_USER_TYPE": "Select the user type",
     "PRINCIPAL":"Principal",
     "BLOCK_EDUCATIONAL_OFFICER":"Block Educational Officer",
+
+    "YOUR_SESSION_EXPIRE":"Your session has expired! Please login again",
+    "ERROR_WHILE_LOGIN":"Error while login",
+    "SUCCESSFULLY_LINKED":"Successfully Linked!",
+    "USER_REGISTERED_SUCCESSFULLY":"User Registered successfully!",
+
     "ACCOUNT": "Account",
     "WELCOME_NOTE": "Welcome! {{name}}, you have successfully verified your identity",
     "MY_PROFILE": "My Profile",
@@ -284,6 +290,7 @@
     "PENDING": "Pending",
     "APPROVED": "Approved",
     "REJECTED": "Rejected",
+    "SELECT_YOUR_DEPARTMENT":"Select your department",
     "ISSUED": "Issued"
     
 }

@@ -22,10 +22,11 @@
     border-left: 5px solid transparent;
     // margin-left: 20px;
 
-    i {
-      padding: 0 20px 0 17px;
-      font-size: 20px;
-    }
+      i{
+        padding: 0 15px;
+        font-size: 17px;
+        vertical-align: middle;
+      }
   }
 
   .active {
@@ -72,18 +73,18 @@
     }
   }
 }
-.logout-icon {
-  position: absolute;
-  left: 28px;
-  bottom: 92px;
+
+.fa-sign-out-alt{
+  font-size: 19px !important;
+  vertical-align: middle;
 }
 
 .w-25px {
   width: 25px;
 }
 
-.pl-39 {
-  padding-left: 39px;
+.pl-39{
+  padding-left: 38px;
 }
 .disable,
 .disable ~ .title {
