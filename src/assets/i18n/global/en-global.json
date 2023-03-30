@@ -290,6 +290,7 @@
     "PENDING": "Pending",
     "APPROVED": "Approved",
     "REJECTED": "Rejected",
-    "SELECT_YOUR_DEPARTMENT":"Select your department"
+    "SELECT_YOUR_DEPARTMENT":"Select your department",
+    "ISSUED": "Issued"
     
 }

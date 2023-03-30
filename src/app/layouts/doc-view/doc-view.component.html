@@ -1,5 +1,5 @@
-<div class="mt-3 pb-3">
-    <!-- <div class="text-center pb-0 d-flex flex-justify-center">
+<div class="container mt-3 pb-3">
+  <!-- <div class="text-center pb-0 d-flex flex-justify-center">
       <div>
         <img src="assets/images/headerlogo.png" class="img-fluid" alt="..." />
       </div>
@@ -12,24 +12,24 @@
         </h5>
       </div>
     </div> -->
-  
-    <div class="text-center" *ngIf="loader">
-      <div class="center-loading">
-          <div class="spinner-border">
-          </div>
-      </div>
-  </div>
-  
-    <ng-container *ngIf="extension === 'pdf'">
-      <div class="text-center img-mb">
-        <ngx-extended-pdf-viewer [showToolbar]="false" [src]="docUrl"></ngx-extended-pdf-viewer>
-      </div>
-    </ng-container>
-  
-    <div class="pt-2">
-      <div class="text-center mt-4" *ngIf="docUrl">
-        <a href=""><img src="assets/images/share.png" class="pr-3"></a>
-        <a href=""><img src="assets/images/download.png" (click)="downloadCertificate(docUrl)"></a>
+
+  <div class="text-center" *ngIf="isLoading">
+    <div class="center-loading">
+      <div class="spinner-border">
       </div>
     </div>
   </div>
+
+  <ng-container *ngIf="extension === 'pdf'">
+    <div class="text-center img-mb">
+      <ngx-extended-pdf-viewer [showToolbar]="false" [src]="docUrl"></ngx-extended-pdf-viewer>
+    </div>
+  </ng-container>
+
+  <div class="pt-2">
+    <div class="text-center mt-4" *ngIf="docUrl">
+      <img src="assets/images/share.png" *ngIf="canShareFile" (click)="shareFile()" class="pr-3">
+      <img src="assets/images/download.png" (click)="downloadCertificate(docUrl)">
+    </div>
+  </div>
+</div>

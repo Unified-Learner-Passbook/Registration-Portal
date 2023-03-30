@@ -7,6 +7,7 @@ import { map, takeUntil } from 'rxjs/operators';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { GeneralService } from 'src/app/services/general/general.service';
 import { CredentialService } from 'src/app/services/credential/credential.service';
+import { ToastMessageService } from 'src/app/services/toast-message/toast-message.service';
 
 @Component({
     selector: 'app-doc-view',
@@ -17,7 +18,7 @@ export class DocViewComponent implements OnInit, OnDestroy {
     docUrl: string;
     extension;
     document = [];
-    loader: boolean = true;
+    isLoading: boolean = true;
     docName: any;
     docDetails: any;
     credential: any;
@@ -25,27 +26,19 @@ export class DocViewComponent implements OnInit, OnDestroy {
     templateId: string;
     public unsubscribe$ = new Subject<void>();
     private readonly canGoBack: boolean;
+    blob: Blob;
+    canShareFile = !!navigator.share;
     constructor(
         public readonly generalService: GeneralService,
         private readonly router: Router,
         private readonly http: HttpClient,
         private readonly location: Location,
-        private readonly credentialService: CredentialService
-    ) {
-        // const navigation = this.router.getCurrentNavigation();
-        // this.credential = navigation?.extras?.state;
-        // this.canGoBack = !!(this.router.getCurrentNavigation()?.previousNavigation);
-
-        // if (!this.credential) {
-        //     if (this.canGoBack) {
-        //         this.location.back();
-        //     } else {
-        //         this.router.navigate(['/dashboard']);
-        //     }
-        // }
-    }
+        private readonly credentialService: CredentialService,
+        private readonly toastMessage: ToastMessageService
+    ) { }
 
     ngOnInit(): void {
+        this.isLoading = true;
         this.credentialService.getAllCredentials().pipe(takeUntil(this.unsubscribe$))
             .subscribe((res) => {
                 this.credential = res[0];
@@ -55,8 +48,12 @@ export class DocViewComponent implements OnInit, OnDestroy {
                         .subscribe((res) => {
                             this.templateId = res?.result?.[0]?.id;
                             this.getPDF(res?.result?.[0]?.template);
+                        }, (error: any) => {
+                            this.isLoading = false;
+                            console.error("Something went wrong!", error);
                         });
                 } else {
+                    this.isLoading = false;
                     console.error("Something went wrong!");
                 }
             });
@@ -86,12 +83,13 @@ export class DocViewComponent implements OnInit, OnDestroy {
         }
         // delete request.credential.credentialSubject;
         this.http.post('https://ulp.uniteframework.io/ulp-bff/v1/sso/student/credentials/render', request, requestOptions).pipe(map((data: any) => {
-            let blob = new Blob([data], {
+            this.blob = new Blob([data], {
                 type: 'application/pdf' // must match the Accept type
             });
-            this.docUrl = window.URL.createObjectURL(blob);
+            this.docUrl = window.URL.createObjectURL(this.blob);
+            this.isLoading = false;
         }), takeUntil(this.unsubscribe$)).subscribe((result: any) => {
-            this.loader = false;
+            this.isLoading = false;
             this.extension = 'pdf';
         });
     }
@@ -108,6 +106,25 @@ export class DocViewComponent implements OnInit, OnDestroy {
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
+    }
+
+    shareFile() {
+        const pdf = new File([this.blob], "certificate.pdf", { type: "application/pdf" });
+        const shareData = {
+            title: "Certificate",
+            files: [pdf]
+        };
+
+        if (navigator.share) {
+            navigator.share(shareData).then((res: any) => {
+                console.log("File shared successfully!");
+            }).catch((error: any) => {
+                this.toastMessage.error("", "Shared operation failed!");
+                console.error("Shared operation failed!", error);
+            })
+        } else {
+            console.log("Share not supported");
+        }
     }
 
     ngOnDestroy(): void {

@@ -11,7 +11,7 @@ import { ToastMessageService } from '../services/toast-message/toast-message.ser
 })
 export class IssuedCredentialComponent implements OnInit {
 
-  selectedType: any;
+  selectedType = 'proofOfEnrollment';
   schoolDetails: any;
   credentials: any[] = [];
   issuedCredentials = [];

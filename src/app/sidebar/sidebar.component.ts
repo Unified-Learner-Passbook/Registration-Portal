@@ -32,31 +32,31 @@ export class SidebarComponent implements OnInit {
     this.menuList = [
       {
         label: this.generalService.translateString('HOME'),
-        link: 'dashboard',
+        link: '/dashboard',
         class: 'fa fa-home',
         isActive: true,
       },
       {
         label: this.generalService.translateString('REGISTER_STUDENT'),
-        link: 'register-entity',
+        link: '/dashboard/register-entity',
         class: 'fa fa-user-plus',
         isActive: true,
       },
       {
         label: this.generalService.translateString('ISSUED_CREDENTIAL'),
-        link: 'issued-credential',
+        link: '/dashboard/issued-credential',
         class: 'fa fa-key',
         isActive: false,
       },
       {
         label: this.generalService.translateString('MY_PROFILE'),
-        link: 'my-account',
+        link: '/dashboard/my-account',
         class: 'fa fa-user',
         isActive: false,
       },
       {
         label: this.generalService.translateString('CLAIM_APPROVAL'),
-        link: 'claim-approval',
+        link: '/dashboard/claim-approval',
         class: 'fa fa-user-check',
         isActive: false,
       },
