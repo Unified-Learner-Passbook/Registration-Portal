@@ -286,5 +286,48 @@
   "PENDING": "प्रलंबित",
   "APPROVED": "अनुमत",
   "REJECTED": "अस्वीकार",
-  "ISSUED": "जारी"
+  "ISSUED": "जारी",
+
+
+  "LOADING_PLEASE_WAIT":"लोड हो रहा है कृपया प्रतीक्षा करें",
+  "VERIFIED":"सत्यापित",
+  "SCHOOL_NOT_AVAILABLE":"स्कूल उपलब्ध नहीं है",
+  "ERROR_WHILE_REGISTER_USER":"उपयोगकर्ता पंजीकृत करते समय त्रुटि",
+  "AADHAR_VERIFICATION_FAILED":"आधार सत्यापन विफल",
+  "SR_NO":"क्रमांक",
+  "STUDENT_ID":"स्टूडेंट आईडी",
+  "DATE_OF_BIRTH":"जन्म की तारीख",
+  "ISSUE_CREDENTIALS":"प्रमाण पत्र जारी करें",
+  "ERROR_WHILE_PARSING_CSV_FILE":"CSV फ़ाइल पार्स करते समय गड़बड़ी हुई",
+  "STUDENTS_DATA_IMPORTED_SUCCESSFULLY":"छात्र डेटा सफलतापूर्वक आयात किया गया!",
+  "ERROR_WHILE_IMPORTING_DATA":"डेटा आयात करते समय त्रुटि",
+  "ERROR_WHILE_FETCHING_STUDENT_LIST":"विद्यार्थी सूची लाते समय गड़बड़ी हुई",
+  "CREDENTIAL_ISSUED_SUCCESSFULLY":"क्रेडेंशियल सफलतापूर्वक जारी किया गया!",
+  "ERROR_WHILE_ISSUING_CREDENTIALS":"क्रेडेंशियल जारी करने में त्रुटि!",
+  "ERROR_WHILE_FETCHING_ISSUED_CREDENTIALS":"जारी किए गए क्रेडेंशियल लाने में गड़बड़ी हुई",
+  "STUDENT_REGISTRATION_CLAIM_APPROVAL":"छात्र पंजीकरण दावा स्वीकृति",
+  "ARE_YOU_SURE_WANT_TO_APPROVE":"क्या आप निश्चित रूप से स्वीकृति देना चाहते हैं",
+  "ARE_YOU_SURE_WANT_TO_REJECT":"क्या आप निश्चित रूप से अस्वीकार करना चाहते हैं",
+  "SHARED_OPERATION_FAILED":"साझा कार्रवाई विफल!"
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
 }
