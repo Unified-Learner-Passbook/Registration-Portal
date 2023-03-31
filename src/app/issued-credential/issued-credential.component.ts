@@ -3,6 +3,8 @@ import { Observable } from 'rxjs';
 import { AuthService } from '../services/auth/auth.service';
 import { DataService } from '../services/data/data-request.service';
 import { ToastMessageService } from '../services/toast-message/toast-message.service';
+import { GeneralService } from '../services/general/general.service';
+
 
 @Component({
   selector: 'app-issued-credential',
@@ -39,7 +41,10 @@ export class IssuedCredentialComponent implements OnInit {
   constructor(
     private readonly authService: AuthService,
     private readonly dataService: DataService,
-    private readonly toastMessage: ToastMessageService
+    private readonly toastMessage: ToastMessageService,
+    private readonly generalService: GeneralService,
+
+
   ) { }
 
   ngOnInit(): void {
@@ -86,7 +91,7 @@ export class IssuedCredentialComponent implements OnInit {
       }
     }, (error: any) => {
       this.isLoading = false;
-      this.toastMessage.error("", "Error while fetching issued Credentials");
+      this.toastMessage.error("", this.generalService.translateString('ERROR_WHILE_FETCHING_ISSUED_CREDENTIALS'));
     });
   }
 }

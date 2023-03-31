@@ -176,7 +176,7 @@ export class RegistrationFormComponent implements OnInit {
             payload.userdata.teacher.aadharId = res.result.aadhaar_token;
             return this.authService.ssoSignUp(payload);
           } else {
-            return throwError('Aadhar Verification Failed');  
+            return throwError(this.generalService.translateString('AADHAR_VERIFICATION_FAILED'));  
           }
         }),
         concatMap(_ => this.authService.getSchoolDetails()),
@@ -189,7 +189,7 @@ export class RegistrationFormComponent implements OnInit {
       }, (error: any) => {
         console.error(error);
         this.isLoading = false;
-        this.toastMessage.error("", "Error while register user");
+        this.toastMessage.error("", (this.generalService.translateString('ERROR_WHILE_REGISTER_USER')));
       });
     }
   }
