@@ -93,7 +93,6 @@ export class RegisterEntityComponent implements OnInit {
   progress = 0;
   currentBatch = 0;
   totalBatches: number;
-  schoolDetails: any;
   studentList: any[];
 
   page = 1;
@@ -163,7 +162,6 @@ export class RegisterEntityComponent implements OnInit {
   public async importDataFromCSV(event: any) {
     try {
       this.resetTableData();
-      this.schoolDetails = this.authService.schoolDetails;
       this.parsedCSV = await this.parseCSVFile(event);
       // const columns = Object.keys(this.parsedCSV[0]);
       // this.tableColumns = columns.map((header: string) => header.replace(/_/g, " ").trim());
@@ -279,8 +277,8 @@ export class RegisterEntityComponent implements OnInit {
       data: {
         grade: this.model.grade,
         academicYear: this.model.academicYear,
-        issuer: this.schoolDetails.did,
-        schoolName: this.schoolDetails.schoolName,
+        issuer: this.authService.schoolDetails?.did,
+        schoolName: this.authService.schoolDetails?.schoolName,
         credentialSubject: list
       }
     }
@@ -306,8 +304,8 @@ export class RegisterEntityComponent implements OnInit {
         "schoolDetails":
         {
           "grade": this.model.grade,
-          "schoolUdise": this.authService.schoolDetails.udiseCode,
-          "schoolName": this.authService.schoolDetails.schoolName,
+          "schoolUdise": this.authService.schoolDetails?.udiseCode,
+          "schoolName": this.authService.schoolDetails?.schoolName,
           "academic-year": this.model.academicYear,
           "school_type": "private"
         },
@@ -372,8 +370,8 @@ export class RegisterEntityComponent implements OnInit {
           }
         }),
         "issuerDetail": {
-          "did": this.authService.schoolDetails.did,
-          "schoolName": this.authService.schoolDetails.schoolName,
+          "did": this.authService.schoolDetails?.did,
+          "schoolName": this.authService.schoolDetails?.schoolName,
           "schemaId": "clf0rjgov0002tj15ml0fdest"
         }
       }

@@ -1,8 +1,6 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { element } from 'protractor';
 import { AuthService } from '../services/auth/auth.service';
-import { DataService } from '../services/data/data-request.service';
 import { GeneralService } from '../services/general/general.service';
 import { ToastMessageService } from '../services/toast-message/toast-message.service';
 
@@ -19,7 +17,6 @@ export class ClaimApprovalComponent implements OnInit {
   public selectedUser: any;
   modelRef: any;
   rejectModelRef: any;
-  schoolDetails: any;
   statusValues = [
     {
       label: this.generalService.translateString('PENDING'),
@@ -46,11 +43,15 @@ export class ClaimApprovalComponent implements OnInit {
   @ViewChild('rejectModal') rejectModal: TemplateRef<any>
 
 
-  constructor(public generalService: GeneralService, private toastService: ToastMessageService, private modalService: NgbModal, private authService: AuthService, private dataService: DataService,) { }
+  constructor(
+    private readonly generalService: GeneralService,
+    private readonly toastService: ToastMessageService,
+    private readonly modalService: NgbModal,
+    private readonly authService: AuthService
+  ) { }
 
   ngOnInit(): void {
     this.getStudentDetail()
-    this.schoolDetails = this.authService.schoolDetails;
   }
 
   getStudentDetail(claim_status = "pending") {
@@ -70,14 +71,14 @@ export class ClaimApprovalComponent implements OnInit {
       });
 
     }, (err) => {
-      // this.toastMsg.error('error', err.error.params.errmsg)
-      console.log('error', err)
+      this.toastService.error('', 'Error while fetching data')
+      console.log('error', err);
     });
   }
 
   approveStudent(user) {
     var payload = {
-      "issuer": this.schoolDetails.did,
+      "issuer": this.authService.schoolDetails?.did,
       "credentialSubject": {
         //studentDetail:
         "mobile": user.mobile,
@@ -115,7 +116,7 @@ export class ClaimApprovalComponent implements OnInit {
 
   rejectStudent(user) {
     var payload = {
-      "issuer": this.schoolDetails.did,
+      "issuer": this.authService.schoolDetails?.did,
       "credentialSubject": {
         //studentDetail:
         "mobile": user.mobile,
@@ -186,7 +187,4 @@ export class ClaimApprovalComponent implements OnInit {
       this.rejectStudent(this.selectedUser);
     }
   }
-
-
-
 }

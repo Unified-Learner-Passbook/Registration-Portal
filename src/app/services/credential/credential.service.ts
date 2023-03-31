@@ -98,14 +98,14 @@ export class CredentialService {
             "VerifiableCredential",
             "UniversityDegreeCredential"
           ],
-          "issuer": this.authService.schoolDetails.did,
+          "issuer": this.authService.schoolDetails?.did,
           "issuanceDate": new Date().toISOString(),
           "expirationDate": nextYearDate.toISOString(),
           "credentialSubject": {
             "id": this.authService.currentUser.did,
             "principalName": this.authService.currentUser.name,
-            "schoolName": this.authService.schoolDetails.schoolName,
-            "schoolUdiseId": this.authService.currentUser.schoolUdise,
+            "schoolName": this.authService.schoolDetails?.schoolName,
+            "schoolUdiseId": this.authService.currentUser?.schoolUdise,
             "pricipalContactNumber": this.authService.currentUser?.phone || "8698645680"
           },
           "options": {

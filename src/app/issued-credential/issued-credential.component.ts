@@ -16,7 +16,6 @@ import { GeneralService } from '../services/general/general.service';
 export class IssuedCredentialComponent implements OnInit {
 
   selectedType = 'proofOfEnrollment';
-  schoolDetails: any;
   credentials: any[] = [];
   issuedCredentials = [];
   isLoading = false;
@@ -43,17 +42,14 @@ export class IssuedCredentialComponent implements OnInit {
   ];
   constructor(
     private readonly authService: AuthService,
-    private readonly dataService: DataService,
     private readonly toastMessage: ToastMessageService,
     private readonly router: Router,
     private readonly credentialService: CredentialService,
-    private readonly generalService: GeneralService,
-
-
+    private readonly generalService: GeneralService
   ) { }
 
   ngOnInit(): void {
-    this.schoolDetails = this.authService.schoolDetails;
+    this.getCredentials();
   }
 
   onChange(event) {
@@ -63,7 +59,7 @@ export class IssuedCredentialComponent implements OnInit {
 
   getCredentials() {
     this.isLoading = true;
-    this.credentialService.getAllCredentials(this.schoolDetails.did).subscribe((res) => {
+    this.credentialService.getAllCredentials(this.authService?.schoolDetails?.did).subscribe((res) => {
       this.isLoading = false;
       this.issuedCredentials = res;
     }, (error: any) => {
