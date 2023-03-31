@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, throwError } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import {
   HttpClient,
@@ -113,6 +113,10 @@ export class AuthService {
   }
 
   getSchoolDetails(): Observable<any> {
+    // if (this.schoolDetails) {
+    //   return of(this.schoolDetails);
+    // }
+
     return this.dataService.get({ url: `https://ulp.uniteframework.io/ulp-bff/v1/sso/school/${this.currentUser.schoolUdise}` }).pipe(map((res: any) => {
       if (res.success && res.result) {
         localStorage.setItem('schoolDetails', JSON.stringify(res.result));
@@ -126,7 +130,7 @@ export class AuthService {
 
   verifyAadhar(aadharId: number | string) {
     const api = `${this.endpoint}/ulp-bff/v1/aadhaar/verify`;
-    return this.http.post(api, { aadhaar_id: aadharId});
+    return this.http.post(api, { aadhaar_id: aadharId });
   }
 
 }

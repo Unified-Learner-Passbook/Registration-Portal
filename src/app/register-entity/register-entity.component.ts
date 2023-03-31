@@ -159,7 +159,11 @@ export class RegisterEntityComponent implements OnInit {
   public async importDataFromCSV(event: any) {
     try {
       this.resetTableData();
-      this.getSchoolDetails();
+      // this.getSchoolDetails();
+      // this.authService.getSchoolDetails().subscribe((res: any) => {
+      //   this.schoolDetails = res;
+      // })
+      this.schoolDetails = this.authService.schoolDetails;
       this.parsedCSV = await this.parseCSVFile(event);
       // const columns = Object.keys(this.parsedCSV[0]);
       // this.tableColumns = columns.map((header: string) => header.replace(/_/g, " ").trim());

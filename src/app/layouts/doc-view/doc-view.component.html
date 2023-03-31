@@ -1,4 +1,7 @@
 <div class="container mt-3 pb-3">
+  <div *ngIf="!isMyAccountPage" class="ml-3 float-left">
+    <i onClick="history.go(-1); return false;" class="fas fa-arrow-left mr-2" aria-hidden="true"></i>
+  </div>
   <!-- <div class="text-center pb-0 d-flex flex-justify-center">
       <div>
         <img src="assets/images/headerlogo.png" class="img-fluid" alt="..." />
@@ -21,7 +24,7 @@
   </div>
 
   <ng-container *ngIf="extension === 'pdf'">
-    <div class="text-center img-mb">
+    <div class="text-center img-mb pt-4">
       <ngx-extended-pdf-viewer [showToolbar]="false" [src]="docUrl"></ngx-extended-pdf-viewer>
     </div>
   </ng-container>

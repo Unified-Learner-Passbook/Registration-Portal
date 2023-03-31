@@ -44,17 +44,24 @@ export class ClaimApprovalComponent implements OnInit {
 
   @ViewChild('approveModal') approveModal: TemplateRef<any>
   @ViewChild('rejectModal') rejectModal: TemplateRef<any>
-  
+
 
   constructor(public generalService: GeneralService, private toastService: ToastMessageService, private modalService: NgbModal, private authService: AuthService, private dataService: DataService,) { }
 
   ngOnInit(): void {
     this.getStudentDetail()
-    
-    this.getSchoolDetails();
+
+    // this.getSchoolDetails();
+    // this.authService.getSchoolDetails().subscribe((res: any) => {
+    //   this.schoolDetails = res;
+    // }, (error: any) => {
+    //   console.error(error);
+    // });
+
+    this.schoolDetails = this.authService.schoolDetails;
   }
 
-  getStudentDetail(claim_status="pending") {
+  getStudentDetail(claim_status = "pending") {
     var search = {
       "filters": {
         "claim_status": {

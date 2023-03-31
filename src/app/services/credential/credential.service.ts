@@ -57,8 +57,8 @@ export class CredentialService {
     }));
   }
 
-  getAllCredentials(): Observable<any> {
-    return this.getCredentials().pipe(
+  getAllCredentials(issuer?: string): Observable<any> {
+    return this.getCredentials(issuer).pipe(
       switchMap((credentials: any) => {
         if (credentials.length) {
           return forkJoin(
