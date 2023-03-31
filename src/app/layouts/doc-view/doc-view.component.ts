@@ -72,25 +72,6 @@ export class DocViewComponent implements OnInit, OnDestroy {
                     this.toastMessage.error("", "Error while fetching credential");
                 });
         }
-
-        // this.credentialService.getAllCredentials().pipe(takeUntil(this.unsubscribe$))
-        //     .subscribe((res) => {
-        //         this.credential = res[0];
-        // if (this.credential?.credential_schema) {
-        //     this.schemaId = this.credential.schemaId;
-        //     this.getTemplate(this.schemaId).pipe(takeUntil(this.unsubscribe$))
-        //         .subscribe((res) => {
-        //             this.templateId = res?.result?.[0]?.id;
-        //             this.getPDF(res?.result?.[0]?.template);
-        //         }, (error: any) => {
-        //             this.isLoading = false;
-        //             console.error("Something went wrong!", error);
-        //         });
-        // } else {
-        //     this.isLoading = false;
-        //     console.error("Something went wrong!");
-        // }
-        // });
     }
 
     loadPDF() {
@@ -140,7 +121,10 @@ export class DocViewComponent implements OnInit, OnDestroy {
                 type: 'application/pdf' // must match the Accept type
             });
             this.docUrl = window.URL.createObjectURL(this.blob);
-            this.isLoading = false;
+
+            setTimeout(() => {
+                this.isLoading = false;
+            }, 100);
         }), takeUntil(this.unsubscribe$)).subscribe((result: any) => {
             this.isLoading = false;
             this.extension = 'pdf';
