@@ -8,6 +8,8 @@ import { from, throwError } from 'rxjs';
 import { CsvService } from '../services/csv/csv.service';
 import { RequestParam } from '../interfaces/httpOptions.interface';
 import { AuthService } from '../services/auth/auth.service';
+import { GeneralService } from '../services/general/general.service';
+
 
 const BATCH_LIMIT = 20;
 @Component({
@@ -102,7 +104,9 @@ export class RegisterEntityComponent implements OnInit {
     private dataService: DataService,
     private toastMsg: ToastMessageService,
     private csvService: CsvService,
-    private authService: AuthService
+    private authService: AuthService,
+    private readonly generalService: GeneralService,
+
   ) { }
 
   ngOnInit(): void {
@@ -173,7 +177,7 @@ export class RegisterEntityComponent implements OnInit {
       this.saveAndVerify();
       this.pageChange();
     } catch (error) {
-      this.errorMessage = error?.message ? error.message : "Error while parsing CSV file";
+      this.errorMessage = error?.message ? error.message : this.generalService.translateString('ERROR_WHILE_PARSING_CSV_FILE');
       console.warn("Error while parsing csv file", error);
     }
   }
@@ -257,7 +261,7 @@ export class RegisterEntityComponent implements OnInit {
         toArray()
       ).subscribe((res) => {
         console.log("final", res);
-        this.toastMsg.success('', 'Students data imported successfully!');
+        this.toastMsg.success('', this.generalService.translateString('STUDENTS_DATA_IMPORTED_SUCCESSFULLY'));
         this.resetTableData();
         this.isLoading = false;
         setTimeout(() => {
@@ -266,7 +270,7 @@ export class RegisterEntityComponent implements OnInit {
         }, 2000);
       }, (error) => {
         console.log("error", error);
-        this.toastMsg.error('', 'Error while importing data');
+        this.toastMsg.error('', this.generalService.translateString('ERROR_WHILE_IMPORTING_DATA'));
         this.isLoading = false;
         this.showProgress = false;
       });
@@ -353,7 +357,7 @@ export class RegisterEntityComponent implements OnInit {
       }
     }, (error: any) => {
       this.isLoading = false;
-      this.toastMsg.error("", "Error while fetching student list");
+      this.toastMsg.error("", this.generalService.translateString('ERROR_WHILE_FETCHING_STUDENT_LIST'));
     });
   }
 
@@ -391,13 +395,13 @@ export class RegisterEntityComponent implements OnInit {
       this.isLoading = false;
       if (res.success) {
         this.getStudentList();
-        this.toastMsg.success("", "Credential issued Successfully!");
+        this.toastMsg.success("", this.generalService.translateString('CREDENTIAL_ISSUED_SUCCESSFULLY'));
       } else {
-        this.toastMsg.error("", "Error while issuing credentials!");
+        this.toastMsg.error("", this.generalService.translateString('ERROR_WHILE_ISSUING_CREDENTIALS'));
       }
     }, (error: any) => {
       this.isLoading = false;
-      this.toastMsg.error("", "Error while issuing credentials!");
+      this.toastMsg.error("",this.generalService.translateString('ERROR_WHILE_ISSUING_CREDENTIALS') );
     })
   }
 }

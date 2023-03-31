@@ -172,7 +172,7 @@ export class DocViewComponent implements OnInit, OnDestroy {
             navigator.share(shareData).then((res: any) => {
                 console.log("File shared successfully!");
             }).catch((error: any) => {
-                this.toastMessage.error("", "Shared operation failed!");
+                this.toastMessage.error("", this.generalService.translateString('SHARED_OPERATION_FAILED'));
                 console.error("Shared operation failed!", error);
             })
         } else {
