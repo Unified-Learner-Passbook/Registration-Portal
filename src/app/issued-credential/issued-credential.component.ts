@@ -6,6 +6,7 @@ import { CredentialService } from '../services/credential/credential.service';
 import { DataService } from '../services/data/data-request.service';
 import { ToastMessageService } from '../services/toast-message/toast-message.service';
 import { GeneralService } from '../services/general/general.service';
+import { concatMap, map } from 'rxjs/operators';
 
 
 @Component({
@@ -19,7 +20,6 @@ export class IssuedCredentialComponent implements OnInit {
   credentials: any[] = [];
   issuedCredentials = [];
   isLoading = false;
-  allCredentials = [];
   certificateTypes = [
     {
       label: 'Proof of Enrollment',
@@ -59,7 +59,7 @@ export class IssuedCredentialComponent implements OnInit {
 
   getCredentials() {
     this.isLoading = true;
-    this.credentialService.getAllCredentials(this.authService?.schoolDetails?.did).subscribe((res) => {
+    this.credentialService.getCredentials(this.authService?.schoolDetails?.did).subscribe((res) => {
       this.isLoading = false;
       this.issuedCredentials = res;
     }, (error: any) => {
@@ -69,9 +69,24 @@ export class IssuedCredentialComponent implements OnInit {
   }
 
   viewCredential(credential: any) {
-    const navigationExtra: NavigationExtras = {
-      state: credential
-    }
-    this.router.navigate(['/dashboard/doc-view'], navigationExtra);
+    this.credentialService.getCredentialSchemaId(credential.id).pipe(
+      concatMap((res: any) => {
+        credential.schemaId = res.credential_schema;
+        return this.credentialService.getSchema(res.credential_schema).pipe(
+          map((schema: any) => {
+            credential.credential_schema = schema;
+            return credential;
+          })
+        );
+      })
+    ).subscribe((res: any) => {
+      const navigationExtra: NavigationExtras = {
+        state: credential
+      }
+      this.router.navigate(['/dashboard/doc-view'], navigationExtra);
+    }, (error: any) => {
+      console.error(error);
+      this.toastMessage.error("", this.generalService.translateString('ERROR_WHILE_FETCHING_ISSUED_CREDENTIALS'));
+    });
   }
 }
