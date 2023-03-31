@@ -32,7 +32,6 @@ export class MainDashboardComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.currentUser = this.authService.currentUser;
-    // this.authService.getSchoolDetails().subscribe();
   }
 
   ngOnDestroy() {

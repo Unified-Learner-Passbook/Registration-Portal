@@ -53,13 +53,6 @@ export class IssuedCredentialComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    // this.getSchoolDetails();
-    // this.authService.getSchoolDetails().subscribe((res: any) => {
-    //   this.schoolDetails = res;
-    //   this.getCredentials();
-    // }, (error: any) => {
-    //   console.error(error);
-    // });
     this.schoolDetails = this.authService.schoolDetails;
   }
 
@@ -68,45 +61,8 @@ export class IssuedCredentialComponent implements OnInit {
     this.getCredentials();
   }
 
-  // getSchoolDetails() {
-  //   // const udiseId = this.authService.currentUser.schoolUdise;
-  //   // this.dataService.get({ url: `https://ulp.uniteframework.io/ulp-bff/v1/sso/school/${udiseId}` }).subscribe((res: any) => {
-  //   //   this.schoolDetails = res.result;
-  //   //   console.log('schoolDetails', this.schoolDetails);
-  //   // });
-  // }
-
   getCredentials() {
     this.isLoading = true;
-    // const payload = {
-    //   url: 'https://ulp.uniteframework.io/ulp-bff/v1/sso/student/credentials/search',
-    //   data: {
-    //     issuer: {
-    //       id: this.schoolDetails.did
-    //     }
-    //   }
-    // };
-
-    // this.dataService.post(payload).subscribe((res: any) => {
-    //   console.log("res", res);
-    //   this.isLoading = false;
-    //   if (res.success && res.result?.length) {
-    //     this.allCredentials = res.result;
-    //     this.issuedCredentials = res.result;
-    //     // this.issuedCredentials = res.result.map((item: any) => {
-    //     //   return {
-    //     //     studentName: item.credentialSubject.studentName,
-    //     //     studentId: item.credentialSubject?.studentId || '',
-    //     //     phoneNumber: item.credentialSubject.mobile,
-    //     //     credentialId: item.id
-    //     //   }
-    //     // });
-    //   }
-    // }, (error: any) => {
-    //   this.isLoading = false;
-    //   this.toastMessage.error("", "Error while fetching issued Credentials");
-    // });
-
     this.credentialService.getAllCredentials(this.schoolDetails.did).subscribe((res) => {
       this.isLoading = false;
       this.issuedCredentials = res;

@@ -163,10 +163,6 @@ export class RegisterEntityComponent implements OnInit {
   public async importDataFromCSV(event: any) {
     try {
       this.resetTableData();
-      // this.getSchoolDetails();
-      // this.authService.getSchoolDetails().subscribe((res: any) => {
-      //   this.schoolDetails = res;
-      // })
       this.schoolDetails = this.authService.schoolDetails;
       this.parsedCSV = await this.parseCSVFile(event);
       // const columns = Object.keys(this.parsedCSV[0]);
@@ -320,14 +316,6 @@ export class RegisterEntityComponent implements OnInit {
     }
 
     return this.dataService.post(request);
-  }
-
-  getSchoolDetails() {
-    const udiseId = this.authService.currentUser.schoolUdise;
-    this.dataService.get({ url: `https://ulp.uniteframework.io/ulp-bff/v1/sso/school/${udiseId}` }).subscribe((res: any) => {
-      this.schoolDetails = res.result;
-      console.log('schoolDetails', this.schoolDetails);
-    });
   }
 
   getStudentList() {

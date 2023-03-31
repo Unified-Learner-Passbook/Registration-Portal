@@ -113,10 +113,6 @@ export class AuthService {
   }
 
   getSchoolDetails(): Observable<any> {
-    // if (this.schoolDetails) {
-    //   return of(this.schoolDetails);
-    // }
-
     return this.dataService.get({ url: `https://ulp.uniteframework.io/ulp-bff/v1/sso/school/${this.currentUser.schoolUdise}` }).pipe(map((res: any) => {
       if (res.success && res.result) {
         localStorage.setItem('schoolDetails', JSON.stringify(res.result));

@@ -50,14 +50,6 @@ export class ClaimApprovalComponent implements OnInit {
 
   ngOnInit(): void {
     this.getStudentDetail()
-
-    // this.getSchoolDetails();
-    // this.authService.getSchoolDetails().subscribe((res: any) => {
-    //   this.schoolDetails = res;
-    // }, (error: any) => {
-    //   console.error(error);
-    // });
-
     this.schoolDetails = this.authService.schoolDetails;
   }
 
@@ -77,24 +69,9 @@ export class ClaimApprovalComponent implements OnInit {
         return { ...item, osCreatedAt: this.generalService.getDaysDifference(item.osCreatedAt) }
       });
 
-      // for (const iterator of res.result) {
-      //   if(!iterator.did) {
-      //     this.studentDetails.push(iterator)
-      //   }
-      // }
-      console.log("this.studentDetails", this.studentDetails.length)
     }, (err) => {
       // this.toastMsg.error('error', err.error.params.errmsg)
       console.log('error', err)
-    });
-  }
-
-  getSchoolDetails() {
-    const udiseId = this.authService.currentUser.schoolUdise;
-    console.log("udiseId", udiseId)
-    this.dataService.get({ url: `https://ulp.uniteframework.io/ulp-bff/v1/sso/school/${udiseId}` }).subscribe((res: any) => {
-      this.schoolDetails = res.result;
-      console.log('schoolDetails', this.schoolDetails);
     });
   }
 
