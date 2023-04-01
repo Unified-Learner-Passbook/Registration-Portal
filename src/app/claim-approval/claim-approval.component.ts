@@ -1,8 +1,6 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { element } from 'protractor';
 import { AuthService } from '../services/auth/auth.service';
-import { DataService } from '../services/data/data-request.service';
 import { GeneralService } from '../services/general/general.service';
 import { ToastMessageService } from '../services/toast-message/toast-message.service';
 
@@ -19,7 +17,6 @@ export class ClaimApprovalComponent implements OnInit {
   public selectedUser: any;
   modelRef: any;
   rejectModelRef: any;
-  schoolDetails: any;
   statusValues = [
     {
       label: this.generalService.translateString('PENDING'),
@@ -44,17 +41,20 @@ export class ClaimApprovalComponent implements OnInit {
 
   @ViewChild('approveModal') approveModal: TemplateRef<any>
   @ViewChild('rejectModal') rejectModal: TemplateRef<any>
-  
 
-  constructor(public generalService: GeneralService, private toastService: ToastMessageService, private modalService: NgbModal, private authService: AuthService, private dataService: DataService,) { }
+
+  constructor(
+    private readonly generalService: GeneralService,
+    private readonly toastService: ToastMessageService,
+    private readonly modalService: NgbModal,
+    private readonly authService: AuthService
+  ) { }
 
   ngOnInit(): void {
     this.getStudentDetail()
-    
-    this.getSchoolDetails();
   }
 
-  getStudentDetail(claim_status="pending") {
+  getStudentDetail(claim_status = "pending") {
     var search = {
       "filters": {
         "claim_status": {
@@ -70,30 +70,15 @@ export class ClaimApprovalComponent implements OnInit {
         return { ...item, osCreatedAt: this.generalService.getDaysDifference(item.osCreatedAt) }
       });
 
-      // for (const iterator of res.result) {
-      //   if(!iterator.did) {
-      //     this.studentDetails.push(iterator)
-      //   }
-      // }
-      console.log("this.studentDetails", this.studentDetails.length)
     }, (err) => {
-      // this.toastMsg.error('error', err.error.params.errmsg)
-      console.log('error', err)
-    });
-  }
-
-  getSchoolDetails() {
-    const udiseId = this.authService.currentUser.schoolUdise;
-    console.log("udiseId", udiseId)
-    this.dataService.get({ url: `https://ulp.uniteframework.io/ulp-bff/v1/sso/school/${udiseId}` }).subscribe((res: any) => {
-      this.schoolDetails = res.result;
-      console.log('schoolDetails', this.schoolDetails);
+      this.toastService.error('', 'Error while fetching data')
+      console.log('error', err);
     });
   }
 
   approveStudent(user) {
     var payload = {
-      "issuer": this.schoolDetails.did,
+      "issuer": this.authService.schoolDetails?.did,
       "credentialSubject": {
         //studentDetail:
         "mobile": user.mobile,
@@ -131,7 +116,7 @@ export class ClaimApprovalComponent implements OnInit {
 
   rejectStudent(user) {
     var payload = {
-      "issuer": this.schoolDetails.did,
+      "issuer": this.authService.schoolDetails?.did,
       "credentialSubject": {
         //studentDetail:
         "mobile": user.mobile,
@@ -202,7 +187,4 @@ export class ClaimApprovalComponent implements OnInit {
       this.rejectStudent(this.selectedUser);
     }
   }
-
-
-
 }

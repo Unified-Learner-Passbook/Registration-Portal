@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, throwError } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import {
   HttpClient,
@@ -126,7 +126,7 @@ export class AuthService {
 
   verifyAadhar(aadharId: number | string) {
     const api = `${this.endpoint}/ulp-bff/v1/aadhaar/verify`;
-    return this.http.post(api, { aadhaar_id: aadharId});
+    return this.http.post(api, { aadhaar_id: aadharId });
   }
 
 }

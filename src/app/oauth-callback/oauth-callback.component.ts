@@ -49,7 +49,7 @@ export class OauthCallbackComponent implements OnInit {
             localStorage.setItem('currentUser', JSON.stringify(res.userData[0]));
           }
 
-          this.authService.getSchoolDetails().subscribe();
+          this.authService.getSchoolDetails().subscribe(); // Add concatMap
           this.router.navigate(['/dashboard']);
         }
 
