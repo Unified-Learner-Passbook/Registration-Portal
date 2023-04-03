@@ -66,11 +66,11 @@
           {{'ARE_YOU_SURE_WANT_TO_APPROVE' | translate }}
             <div class="d-flex justify-content-center">
                 <button type="button" (click)="approveConfirm(false)"
-                    class="custom-button default-button mt-20 mr-5 p-32 fs-14">
+                    class="custom-button default-button mt-20 mr-5 p-32 fs-14" (click)="raiseInteractEvent('approve-cancel')">
                     {{'NO_CANCEL' | translate}}
                 </button>
                 <button type="button" (click)="approveConfirm(true)"
-                    class="custom-button blue-button mt-20 p-32 fs-14">
+                    class="custom-button blue-button mt-20 p-32 fs-14" (click)="raiseInteractEvent('approve-confirm')">
                     {{'YES_CONFIRM' | translate}}
                 </button>
             </div>
@@ -84,11 +84,11 @@
         {{'ARE_YOU_SURE_WANT_TO_REJECT' | translate}}
           <div class="d-flex justify-content-center">
               <button type="button" (click)="rejectConfirm(false)"
-                  class="custom-button default-button mt-20 mr-5 p-32 fs-14">
+                  class="custom-button default-button mt-20 mr-5 p-32 fs-14" (click)="raiseInteractEvent('reject-cancel')">
                   {{'NO_CANCEL' | translate}}
               </button>
               <button type="button" (click)="rejectConfirm(true)"
-                  class="custom-button blue-button mt-20 p-32 fs-14">
+                  class="custom-button blue-button mt-20 p-32 fs-14" (click)="raiseInteractEvent('reject-confirm')">
                   {{'YES_CONFIRM' | translate}}
               </button>
           </div>
