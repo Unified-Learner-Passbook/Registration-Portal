@@ -65,7 +65,7 @@
             <label class="col-sm-3 col-form-label">&nbsp;</label>
             <div class="col-sm-6">
                 <button type="submit" [disabled]="registrationForm.invalid"
-                class="custom-button blue-button mt-20">{{'REGISTER' | translate}}</button>
+                class="custom-button blue-button mt-20" (click)="raiseInteractEvent('register')">{{'REGISTER' | translate}}</button>
             </div>
         </div>
     </form>
@@ -77,11 +77,11 @@
             {{'USER_CONSENT' | translate}}
             <div class="d-flex justify-content-center">
                 <button type="button" (click)="submitDeclarationForm(false)"
-                    class="custom-button default-button mt-20 mr-5 p-32 fs-14">
+                    class="custom-button default-button mt-20 mr-5 p-32 fs-14" (click)="raiseInteractEvent('no-cancel')">
                     {{'NO_CANCEL' | translate}}
                 </button>
                 <button type="button" (click)="submitDeclarationForm(true)"
-                    class="custom-button blue-button mt-20 p-32 fs-14">
+                    class="custom-button blue-button mt-20 p-32 fs-14" (click)="raiseInteractEvent('yes-confirm')">
                     {{'YES_CONFIRM' | translate}}
                 </button>
             </div>

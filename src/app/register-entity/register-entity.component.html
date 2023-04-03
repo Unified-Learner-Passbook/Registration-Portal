@@ -31,7 +31,7 @@
       </div> -->
       <div class="col-md-3">
         <label>&nbsp;</label>
-        <button class="filter-btn" (click)="downloadTemplate()">{{'DOWNLOAD_CSV' |
+        <button class="filter-btn" (click)="downloadTemplate()" (click)="raiseInteractEvent('download-csv')">{{'DOWNLOAD_CSV' |
           translate}}&nbsp;&nbsp;<i class="fa fa-solid fa-file-download"></i></button>
       </div>
       <div class="col-md-3">
@@ -39,7 +39,7 @@
         <input #fileUploadSimple [accept]="'.csv'" type="file" class="file-input" (click)="$event.target.value=null"
           (change)="importDataFromCSV($event)" hidden="true" />
         <button class="filter-btn" (click)="fileUploadSimple.click()"
-          [disabled]="!(model.grade && model.academicYear && !showProgress)">{{'UPLOAD_CSV' |
+          [disabled]="!(model.grade && model.academicYear && !showProgress)" (click)="raiseInteractEvent('upload-csv')">{{'UPLOAD_CSV' |
           translate }}&nbsp;<i class="fa fa-solid fa-file-upload"></i></button>
       </div>
     </div>
