@@ -79,7 +79,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let item of studentList; index as i">
+        <tr *ngFor="let item of tableRows; index as i">
           <td>{{i+1}}</td>
           <td>{{item?.studentId}}</td>
           <td>{{item?.name}}</td>
@@ -148,3 +148,15 @@
     </ngb-pagination>
   </div>
 </div>
+
+<ng-template #downloadResModal>
+  <div class="modal-content">
+      <div class="modal-body fs-14">
+        <h6 class="py-3 text-center">Do you want save response for registered Students?</h6>
+        <div>
+          <button type="button" class="btn-warn" (click)="saveResponse()">Yes</button>
+          <button type="button" class="btn-primary" (click)="closeModal()">No</button>
+        </div>
+      </div>
+  </div>
+</ng-template>

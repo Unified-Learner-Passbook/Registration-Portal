@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import * as Papa from "papaparse";
 import { DataService } from '../services/data/data-request.service';
 import { ToastMessageService } from '../services/toast-message/toast-message.service';
@@ -9,6 +9,7 @@ import { CsvService } from '../services/csv/csv.service';
 import { RequestParam } from '../interfaces/httpOptions.interface';
 import { AuthService } from '../services/auth/auth.service';
 import { GeneralService } from '../services/general/general.service';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
 
 const BATCH_LIMIT = 20;
@@ -98,12 +99,16 @@ export class RegisterEntityComponent implements OnInit {
   page = 1;
   pageSize = 30;
 
+  downloadResModalRef: NgbModalRef;
+  @ViewChild('downloadResModal') downloadResponseModal: TemplateRef<any>;
+
   errorMessage: string;
   constructor(
-    private dataService: DataService,
-    private toastMsg: ToastMessageService,
-    private csvService: CsvService,
-    private authService: AuthService,
+    private readonly dataService: DataService,
+    private readonly toastMsg: ToastMessageService,
+    private readonly csvService: CsvService,
+    private readonly authService: AuthService,
+    private readonly modalService: NgbModal,
     private readonly generalService: GeneralService,
 
   ) { }
@@ -224,7 +229,7 @@ export class RegisterEntityComponent implements OnInit {
   }
 
   pageChange() {
-    this.tableRows = this.allDataRows.map((row, i) => row).slice(
+    this.tableRows = this.studentList.map((row, i) => row).slice(
       (this.page - 1) * this.pageSize,
       (this.page - 1) * this.pageSize + this.pageSize,
     );
@@ -339,7 +344,8 @@ export class RegisterEntityComponent implements OnInit {
             guardian: item.studentdetail.gaurdian_name,
             osid: item.studentdetail.osid
           }
-        })
+        });
+        this.pageChange();
       }
     }, (error: any) => {
       this.isLoading = false;
@@ -372,13 +378,14 @@ export class RegisterEntityComponent implements OnInit {
         "issuerDetail": {
           "did": this.authService.schoolDetails?.did,
           "schoolName": this.authService.schoolDetails?.schoolName,
-          "schemaId": "clf0rjgov0002tj15ml0fdest"
+          "schemaId": "clf0rjgov0002tj15ml0fdest" //TODO Need to update hard coded value
         }
       }
     }
 
     this.dataService.post(request).subscribe((res: any) => {
       this.isLoading = false;
+      this.openDownloadResponsePopup();
       if (res.success) {
         this.getStudentList();
         this.toastMsg.success("", this.generalService.translateString('CREDENTIAL_ISSUED_SUCCESSFULLY'));
@@ -387,8 +394,24 @@ export class RegisterEntityComponent implements OnInit {
       }
     }, (error: any) => {
       this.isLoading = false;
-      this.toastMsg.error("",this.generalService.translateString('ERROR_WHILE_ISSUING_CREDENTIALS') );
-    })
+      this.toastMsg.error("", this.generalService.translateString('ERROR_WHILE_ISSUING_CREDENTIALS'));
+    });
+  }
+
+  openDownloadResponsePopup() {
+    //Ask if want to download the response 
+  }
+
+  saveResponse(result: any) {
+    const blob = new Blob([JSON.stringify(result)], { type: 'application/json' });
+    const url = window.URL.createObjectURL(blob);
+    let link = document.createElement("a");
+    link.href = url;
+    link.download = 'response.json';
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   }
 }
 

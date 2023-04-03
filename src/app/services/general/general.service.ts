@@ -189,7 +189,6 @@ export class GeneralService {
   }
 
   setLanguage(langKey: string) {
-    // this.translate.use(langKey);
     localStorage.setItem('setLanguage', langKey);
     window.location.reload();
   }
