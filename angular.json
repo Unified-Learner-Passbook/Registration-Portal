@@ -52,7 +52,9 @@
               "./node_modules/grapesjs/dist/grapes.min.js",
               "./node_modules/grapesjs-preset-webpage/dist/grapesjs-preset-webpage.min.js",
              "./node_modules/grapesjs-component-code-editor/dist/grapesjs-component-code-editor.min.js",
-             "./node_modules/grapesjs-preset-newsletter/dist/grapesjs-preset-newsletter.min.js"
+             "./node_modules/grapesjs-preset-newsletter/dist/grapesjs-preset-newsletter.min.js",
+             "node_modules/@project-sunbird/telemetry-sdk/index.js",
+             "./node_modules/jquery/dist/jquery.min.js"
 
             ]
           },
