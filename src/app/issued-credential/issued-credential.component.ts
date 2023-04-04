@@ -22,6 +22,9 @@ export class IssuedCredentialComponent implements OnInit {
   credentials: any[] = [];
   issuedCredentials = [];
   isLoading = false;
+  page = 1;
+  pageSize = 20;
+  tableRows: any[] = [];
   certificateTypes = [
     {
       label: 'Proof of Enrollment',
@@ -66,6 +69,7 @@ export class IssuedCredentialComponent implements OnInit {
     this.credentialService.getCredentials(this.authService?.schoolDetails?.did).subscribe((res) => {
       this.isLoading = false;
       this.issuedCredentials = res;
+      this.pageChange();
     }, (error: any) => {
       this.isLoading = false;
       this.toastMessage.error("", this.generalService.translateString('ERROR_WHILE_FETCHING_ISSUED_CREDENTIALS'));
@@ -92,6 +96,13 @@ export class IssuedCredentialComponent implements OnInit {
       console.error(error);
       this.toastMessage.error("", this.generalService.translateString('ERROR_WHILE_FETCHING_ISSUED_CREDENTIALS'));
     });
+  }
+
+  pageChange() {
+    this.tableRows = this.issuedCredentials.map((row, i) => row).slice(
+      (this.page - 1) * this.pageSize,
+      (this.page - 1) * this.pageSize + this.pageSize,
+    );
   }
 
   ngAfterViewInit(): void {
