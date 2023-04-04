@@ -94,7 +94,7 @@
         <div class="modal-body fs-14">
             <div class="text-center">
                 <h6 class="py-3">{{'LINK_YOUR_UDISE' | translate}}</h6>
-                <input type="text" placeholder="Enter School UDISE" name="schoolUdiseInput" [(ngModel)]="schoolUdiseInput"> 
+                <input type="text" placeholder="Enter School UDISE" name="schoolUdiseInput" [(ngModel)]="schoolUdiseInput" class="px-5"> 
                 <button  *ngIf="isVerified !=='yes'" class="btn btn-primary fs-12 mt-4" type="button" (click)="verifyUDISE()">{{'VERIFY' | translate}}</button>
                 <p *ngIf="isVerified==='yes'">{{'VERIFIED' | translate }}</p>
                 <p *ngIf="isVerified==='no'">{{'SCHOOL_NOT_AVAILABLE' | translate }}</p>
