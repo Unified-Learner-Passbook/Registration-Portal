@@ -1,17 +1,7 @@
 <div class="container mt-3 pb-3">
-  <!-- <div class="text-center pb-0 d-flex flex-justify-center">
-      <div>
-        <img src="assets/images/headerlogo.png" class="img-fluid" alt="..." />
-      </div>
-  
-      <div class="text-center">
-        <h5 class="card-title fs-14 font-600 text-left">
-          <span class="text-gray-0 fs-12">DEPARTMENT OF</span> <br />
-          <span class="fs-16"> Basic Education</span><br />
-          <span class="text-orange fs-10">GOVERNMENT OF UTTAR PRADESH</span>
-        </h5>
-      </div>
-    </div> -->
+  <div *ngIf="!isMyAccountPage" class="ml-3 float-left">
+    <i onClick="history.go(-1); return false;" class="fas fa-arrow-left mr-2" aria-hidden="true"></i>
+  </div>
 
   <div class="text-center" *ngIf="isLoading">
     <div class="center-loading">
@@ -21,8 +11,8 @@
   </div>
 
   <ng-container *ngIf="extension === 'pdf'">
-    <div class="text-center img-mb">
-      <ngx-extended-pdf-viewer [showToolbar]="false" [src]="docUrl"></ngx-extended-pdf-viewer>
+    <div class="text-center img-mb pt-4">
+      <ngx-extended-pdf-viewer [showToolbar]="false" [showBorders]="false" [src]="docUrl"></ngx-extended-pdf-viewer>
     </div>
   </ng-container>
 

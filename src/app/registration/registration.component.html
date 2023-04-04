@@ -26,11 +26,11 @@
     </ul> -->
     <div class="pt-5 text-center"> {{'SELECT_USER_TYPE' | translate }} </div>
     <div class="text-center mt-5 d-flex jc-content-center">
-      <div class="square pt-4 mr-5" (click)="openSSO()"><img src="assets/images/profile.png" alt=""
+      <div class="square pt-4 mr-5" (click)="openSSO('login-auth-principal')"><img src="assets/images/profile.png" alt=""
           class="cursor-pointer">
         <div class="py-2 fs-13 font-600"> {{'PRINCIPAL' | translate }}</div>
       </div>
-      <div class="square pt-4" (click)="openSSO()"><img src="assets/images/beo.png" alt="" class="cursor-pointer">
+      <div class="square pt-4" (click)="openSSO('login-auth-BEO')"><img src="assets/images/beo.png" alt="" class="cursor-pointer">
         <div class="py-2 fs-13 font-600">{{'BLOCK_EDUCATIONAL_OFFICER' | translate }}</div>
       </div>
       <!-- <button type="button" class="custom-button blue-button mt-20 pr-80 mr-5"  >{{'REGISTER' | translate}}</button>
@@ -44,7 +44,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-body text-center">
-        <a href="">Link your UDISE </a>
+        <a href="">{{'LINK_YOUR_UDISE' | translate }} </a>
       </div>
     </div>
   </div>

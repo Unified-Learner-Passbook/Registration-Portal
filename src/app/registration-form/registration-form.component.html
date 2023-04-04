@@ -65,7 +65,7 @@
             <label class="col-sm-3 col-form-label">&nbsp;</label>
             <div class="col-sm-6">
                 <button type="submit" [disabled]="registrationForm.invalid"
-                class="custom-button blue-button mt-20">{{'REGISTER' | translate}}</button>
+                class="custom-button blue-button mt-20" (click)="raiseInteractEvent('register')">{{'REGISTER' | translate}}</button>
             </div>
         </div>
     </form>
@@ -77,11 +77,11 @@
             {{'USER_CONSENT' | translate}}
             <div class="d-flex justify-content-center">
                 <button type="button" (click)="submitDeclarationForm(false)"
-                    class="custom-button default-button mt-20 mr-5 p-32 fs-14">
+                    class="custom-button default-button mt-20 mr-5 p-32 fs-14" (click)="raiseInteractEvent('no-cancel')">
                     {{'NO_CANCEL' | translate}}
                 </button>
                 <button type="button" (click)="submitDeclarationForm(true)"
-                    class="custom-button blue-button mt-20 p-32 fs-14">
+                    class="custom-button blue-button mt-20 p-32 fs-14" (click)="raiseInteractEvent('yes-confirm')">
                     {{'YES_CONFIRM' | translate}}
                 </button>
             </div>
@@ -95,9 +95,9 @@
             <div class="text-center">
                 <h6 class="py-3">{{'LINK_YOUR_UDISE' | translate}}</h6>
                 <input type="text" placeholder="Enter School UDISE" name="schoolUdiseInput" [(ngModel)]="schoolUdiseInput" class="px-5"> 
-                <button  *ngIf="isVerified !=='yes'" class="btn btn-primary fs-12 mt-4" type="button" (click)="verifyUDISE()">{{'Verify' | translate}}</button>
-                <p *ngIf="isVerified==='yes'">Verified</p>
-                <p *ngIf="isVerified==='no'">School Not available</p>
+                <button  *ngIf="isVerified !=='yes'" class="btn btn-primary fs-12 mt-4" type="button" (click)="verifyUDISE()">{{'VERIFY' | translate}}</button>
+                <p *ngIf="isVerified==='yes'">{{'VERIFIED' | translate }}</p>
+                <p *ngIf="isVerified==='no'">{{'SCHOOL_NOT_AVAILABLE' | translate }}</p>
                 <button class="btn btn-primary fs-12 mt-4" type="button" [disabled]="isVerified !== 'yes'"  (click)="linkUDISE()">{{'LINK_NOW' | translate}}</button>
             </div>
         </div>

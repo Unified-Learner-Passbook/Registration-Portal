@@ -1,9 +1,10 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { element } from 'protractor';
 import { AuthService } from '../services/auth/auth.service';
-import { DataService } from '../services/data/data-request.service';
 import { GeneralService } from '../services/general/general.service';
+import { IImpressionEventInput, IInteractEventInput } from '../services/telemetry/telemetry-interface';
+import { TelemetryService } from '../services/telemetry/telemetry.service';
 import { ToastMessageService } from '../services/toast-message/toast-message.service';
 
 @Component({
@@ -19,7 +20,6 @@ export class ClaimApprovalComponent implements OnInit {
   public selectedUser: any;
   modelRef: any;
   rejectModelRef: any;
-  schoolDetails: any;
   statusValues = [
     {
       label: this.generalService.translateString('PENDING'),
@@ -44,17 +44,23 @@ export class ClaimApprovalComponent implements OnInit {
 
   @ViewChild('approveModal') approveModal: TemplateRef<any>
   @ViewChild('rejectModal') rejectModal: TemplateRef<any>
-  
 
-  constructor(public generalService: GeneralService, private toastService: ToastMessageService, private modalService: NgbModal, private authService: AuthService, private dataService: DataService,) { }
+
+  constructor(
+    private readonly generalService: GeneralService,
+    private readonly toastService: ToastMessageService,
+    private readonly modalService: NgbModal,
+    private readonly authService: AuthService,
+    private readonly router: Router,
+    private readonly activatedRoute: ActivatedRoute,
+    private readonly telemetryService: TelemetryService
+  ) { }
 
   ngOnInit(): void {
     this.getStudentDetail()
-    
-    this.getSchoolDetails();
   }
 
-  getStudentDetail(claim_status="pending") {
+  getStudentDetail(claim_status = "pending") {
     var search = {
       "filters": {
         "claim_status": {
@@ -70,30 +76,15 @@ export class ClaimApprovalComponent implements OnInit {
         return { ...item, osCreatedAt: this.generalService.getDaysDifference(item.osCreatedAt) }
       });
 
-      // for (const iterator of res.result) {
-      //   if(!iterator.did) {
-      //     this.studentDetails.push(iterator)
-      //   }
-      // }
-      console.log("this.studentDetails", this.studentDetails.length)
     }, (err) => {
-      // this.toastMsg.error('error', err.error.params.errmsg)
-      console.log('error', err)
-    });
-  }
-
-  getSchoolDetails() {
-    const udiseId = this.authService.currentUser.schoolUdise;
-    console.log("udiseId", udiseId)
-    this.dataService.get({ url: `https://ulp.uniteframework.io/ulp-bff/v1/sso/school/${udiseId}` }).subscribe((res: any) => {
-      this.schoolDetails = res.result;
-      console.log('schoolDetails', this.schoolDetails);
+      this.toastService.error('', 'Error while fetching data')
+      console.log('error', err);
     });
   }
 
   approveStudent(user) {
     var payload = {
-      "issuer": this.schoolDetails.did,
+      "issuer": this.authService.schoolDetails?.did,
       "credentialSubject": {
         //studentDetail:
         "mobile": user.mobile,
@@ -131,7 +122,7 @@ export class ClaimApprovalComponent implements OnInit {
 
   rejectStudent(user) {
     var payload = {
-      "issuer": this.schoolDetails.did,
+      "issuer": this.authService.schoolDetails?.did,
       "credentialSubject": {
         //studentDetail:
         "mobile": user.mobile,
@@ -203,6 +194,39 @@ export class ClaimApprovalComponent implements OnInit {
     }
   }
 
+  ngAfterViewInit(): void {
+    this.raiseImpressionEvent();
+  }
 
+  raiseInteractEvent(id: string, type: string = 'CLICK', subtype?: string) {
+    const telemetryInteract: IInteractEventInput = {
+      context: {
+        env: this.activatedRoute.snapshot?.data?.telemetry?.env,
+        cdata: []
+      },
+      edata: {
+        id,
+        type,
+        subtype,
+        pageid: this.activatedRoute.snapshot?.data?.telemetry?.pageid,
+      }
+    };
+    this.telemetryService.interact(telemetryInteract);
+  }
 
+  raiseImpressionEvent() {
+    const telemetryImpression: IImpressionEventInput = {
+      context: {
+        env: this.activatedRoute.snapshot?.data?.telemetry?.env,
+        cdata: []
+      },
+      edata: {
+        type: this.activatedRoute.snapshot?.data?.telemetry?.type,
+        pageid: this.activatedRoute.snapshot?.data?.telemetry?.pageid,
+        uri: this.router.url,
+        subtype: this.activatedRoute.snapshot?.data?.telemetry?.subtype,
+      }
+    };
+    this.telemetryService.impression(telemetryImpression);
+  }
 }

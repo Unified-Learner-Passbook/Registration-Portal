@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { forkJoin, Observable, of, throwError } from 'rxjs';
-import { concatMap, map, switchMap } from 'rxjs/operators';
+import { forkJoin, from, Observable, of, throwError } from 'rxjs';
+import { concatMap, map, switchMap, toArray } from 'rxjs/operators';
 import { AuthService } from '../auth/auth.service';
 import { DataService } from '../data/data-request.service';
 
@@ -13,14 +13,14 @@ export class CredentialService {
     private readonly dataService: DataService,
     private readonly authService: AuthService
   ) { }
-  private findSchema(schemaId: string) {
+  findSchema(schemaId: string) {
     if (this.schemas.length) {
       return this.schemas.find((schema: any) => schema.id === schemaId);
     }
     return false;
   }
 
-  private getCredentialSchemaId(credentialId: string): Observable<any> {
+  getCredentialSchemaId(credentialId: string): Observable<any> {
     const payload = { url: `https://ulp.uniteframework.io/ulp-bff/v1/sso/student/credentials/schema/${credentialId}` };
     return this.dataService.get(payload).pipe(map((res: any) => res.result));
   }
@@ -44,7 +44,7 @@ export class CredentialService {
     return this.dataService.post(payload).pipe(map((res: any) => res.result));
   }
 
-  private getSchema(schemaId: string): Observable<any> {
+  getSchema(schemaId: string): Observable<any> {
     const schema = this.findSchema(schemaId);
     if (schema) {
       return of(schema);
@@ -57,8 +57,32 @@ export class CredentialService {
     }));
   }
 
-  getAllCredentials(): Observable<any> {
-    return this.getCredentials().pipe(
+  // One after one
+  getAllCredentials(issuer?: string): Observable<any> {
+    return this.getCredentials(issuer).pipe(
+      switchMap((credentials: any) => {
+        return from(credentials).pipe(
+          concatMap((cred: any) => {
+            return this.getCredentialSchemaId(cred.id).pipe(
+              concatMap((res: any) => {
+                cred.schemaId = res.credential_schema;
+                return this.getSchema(res.credential_schema).pipe(
+                  map((schema: any) => {
+                    cred.credential_schema = schema;
+                    return cred;
+                  })
+                );
+              })
+            );
+          }), toArray()
+        )
+      })
+    );
+  }
+
+  // Parallel
+  getIssuedCredentials(issuer?: string): Observable<any> {
+    return this.getCredentials(issuer).pipe(
       switchMap((credentials: any) => {
         if (credentials.length) {
           return forkJoin(
@@ -98,15 +122,15 @@ export class CredentialService {
             "VerifiableCredential",
             "UniversityDegreeCredential"
           ],
-          "issuer": this.authService.schoolDetails.did,
+          "issuer": this.authService.schoolDetails?.did,
           "issuanceDate": new Date().toISOString(),
           "expirationDate": nextYearDate.toISOString(),
           "credentialSubject": {
             "id": this.authService.currentUser.did,
             "principalName": this.authService.currentUser.name,
-            "schoolName": this.authService.schoolDetails.schoolName,
-            "schoolUdiseId": this.authService.currentUser.schoolUdise,
-            "pricipalContactNumber": this.authService.currentUser?.phone || "8698645680"
+            "schoolName": this.authService.schoolDetails?.schoolName,
+            "schoolUdiseId": this.authService.currentUser?.schoolUdise,
+            "pricipalContactNumber": this.authService.currentUser?.mobile || "8698645680"
           },
           "options": {
             "created": "2020-04-02T18:48:36Z",

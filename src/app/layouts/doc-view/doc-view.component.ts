@@ -8,6 +8,8 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 import { GeneralService } from 'src/app/services/general/general.service';
 import { CredentialService } from 'src/app/services/credential/credential.service';
 import { ToastMessageService } from 'src/app/services/toast-message/toast-message.service';
+import { TelemetryService } from 'src/app/services/telemetry/telemetry.service';
+import { IImpressionEventInput, IInteractEventInput } from 'src/app/services/telemetry/telemetry-interface';
 
 @Component({
     selector: 'app-doc-view',
@@ -24,6 +26,7 @@ export class DocViewComponent implements OnInit, OnDestroy {
     credential: any;
     schemaId: string;
     templateId: string;
+    isMyAccountPage = false;
     public unsubscribe$ = new Subject<void>();
     private readonly canGoBack: boolean;
     blob: Blob;
@@ -34,29 +37,63 @@ export class DocViewComponent implements OnInit, OnDestroy {
         private readonly http: HttpClient,
         private readonly location: Location,
         private readonly credentialService: CredentialService,
-        private readonly toastMessage: ToastMessageService
-    ) { }
+        private readonly toastMessage: ToastMessageService,
+        private readonly activatedRoute: ActivatedRoute,
+        private readonly telemetryService: TelemetryService
+    ) {
+        const navigation = this.router.getCurrentNavigation();
+        this.credential = navigation.extras.state;
+        this.canGoBack = !!(this.router.getCurrentNavigation()?.previousNavigation);
+
+        // check if current route is my-account
+        const activeRouteUrl = this.activatedRoute.snapshot.url[0].path;
+        console.log("activeRouteUrl", activeRouteUrl);
+
+
+        if (!this.credential && !activeRouteUrl.includes('my-account')) {
+            if (this.canGoBack) {
+                this.location.back();
+            } else {
+                this.router.navigate(['/dashboard/issued-credential']);
+            }
+        }
+    }
 
     ngOnInit(): void {
         this.isLoading = true;
-        this.credentialService.getAllCredentials().pipe(takeUntil(this.unsubscribe$))
-            .subscribe((res) => {
-                this.credential = res[0];
-                if (this.credential?.credential_schema) {
-                    this.schemaId = this.credential.schemaId;
-                    this.getTemplate(this.schemaId).pipe(takeUntil(this.unsubscribe$))
-                        .subscribe((res) => {
-                            this.templateId = res?.result?.[0]?.id;
-                            this.getPDF(res?.result?.[0]?.template);
-                        }, (error: any) => {
-                            this.isLoading = false;
-                            console.error("Something went wrong!", error);
-                        });
-                } else {
+        if (this.credential) {
+            this.loadPDF();
+        } else {
+            this.isMyAccountPage = true;
+            this.credentialService.getAllCredentials().pipe(takeUntil(this.unsubscribe$))
+                .subscribe((res) => {
+                    this.credential = res[0];
+                    this.loadPDF();
+                }, (error: any) => {
                     this.isLoading = false;
-                    console.error("Something went wrong!");
-                }
-            });
+                    console.error(error);
+                    this.toastMessage.error("", "Error while fetching credential");
+                });
+        }
+    }
+
+    loadPDF() {
+        if (this.credential?.credential_schema) {
+            this.schemaId = this.credential.schemaId;
+            this.getTemplate(this.schemaId).pipe(takeUntil(this.unsubscribe$))
+                .subscribe((res) => {
+                    this.templateId = res?.result?.[0]?.id;
+                    this.getPDF(res?.result?.[0]?.template);
+                }, (error: any) => {
+                    this.isLoading = false;
+                    console.error("Something went wrong while fetching template!", error);
+                    this.toastMessage.error("", "Error while fetching credential");
+                });
+        } else {
+            this.isLoading = false;
+            console.error("credential_schema is not present");
+            this.toastMessage.error("", "Something went wrong!");
+        }
     }
 
     getSchema(id): Observable<any> {
@@ -87,7 +124,10 @@ export class DocViewComponent implements OnInit, OnDestroy {
                 type: 'application/pdf' // must match the Accept type
             });
             this.docUrl = window.URL.createObjectURL(this.blob);
-            this.isLoading = false;
+
+            setTimeout(() => {
+                this.isLoading = false;
+            }, 100);
         }), takeUntil(this.unsubscribe$)).subscribe((result: any) => {
             this.isLoading = false;
             this.extension = 'pdf';
@@ -119,7 +159,7 @@ export class DocViewComponent implements OnInit, OnDestroy {
             navigator.share(shareData).then((res: any) => {
                 console.log("File shared successfully!");
             }).catch((error: any) => {
-                this.toastMessage.error("", "Shared operation failed!");
+                this.toastMessage.error("", this.generalService.translateString('SHARED_OPERATION_FAILED'));
                 console.error("Shared operation failed!", error);
             })
         } else {
@@ -131,4 +171,41 @@ export class DocViewComponent implements OnInit, OnDestroy {
         this.unsubscribe$.next();
         this.unsubscribe$.complete();
     }
+
+    ngAfterViewInit(): void {
+        this.raiseImpressionEvent();
+      }
+    
+      raiseInteractEvent(id: string, type: string = 'CLICK', subtype?: string) {
+        console.log("raiseInteractEvent")
+        const telemetryInteract: IInteractEventInput = {
+          context: {
+            env: this.activatedRoute.snapshot?.data?.telemetry?.env,
+            cdata: []
+          },
+          edata: {
+            id,
+            type,
+            subtype,
+            pageid: this.activatedRoute.snapshot?.data?.telemetry?.pageid,
+          }
+        };
+        this.telemetryService.interact(telemetryInteract);
+      }
+    
+      raiseImpressionEvent() {
+        const telemetryImpression: IImpressionEventInput = {
+          context: {
+            env: this.activatedRoute.snapshot?.data?.telemetry?.env,
+            cdata: []
+          },
+          edata: {
+            type: this.activatedRoute.snapshot?.data?.telemetry?.type,
+            pageid: this.activatedRoute.snapshot?.data?.telemetry?.pageid,
+            uri: this.router.url,
+            subtype: this.activatedRoute.snapshot?.data?.telemetry?.subtype,
+          }
+        };
+        this.telemetryService.impression(telemetryImpression);
+      }
 }

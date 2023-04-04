@@ -291,6 +291,30 @@
     "APPROVED": "Approved",
     "REJECTED": "Rejected",
     "SELECT_YOUR_DEPARTMENT":"Select your department",
-    "ISSUED": "Issued"
+    "ISSUED": "Issued",
+
+
+    "LOADING_PLEASE_WAIT":"Loading... Please wait",
+    "VERIFIED":"Verified",
+    "SCHOOL_NOT_AVAILABLE":"School Not available",
+    "ERROR_WHILE_REGISTER_USER":"Error while register user",
+    "AADHAR_VERIFICATION_FAILED":"Aadhar Verification Failed",
+    "SR_NO":"Sr.No",
+    "STUDENT_ID":"Student ID",
+    "DATE_OF_BIRTH":"Date of Birth",
+    "ISSUE_CREDENTIALS":"Issue Credentials",
+    "ERROR_WHILE_PARSING_CSV_FILE":"Error while parsing CSV file",
+    "STUDENTS_DATA_IMPORTED_SUCCESSFULLY":"Students data imported successfully!",
+    "ERROR_WHILE_IMPORTING_DATA":"Error while importing data",
+    "ERROR_WHILE_FETCHING_STUDENT_LIST":"Error while fetching student list",
+    "CREDENTIAL_ISSUED_SUCCESSFULLY":"Credential issued Successfully!",
+    "ERROR_WHILE_ISSUING_CREDENTIALS":"Error while issuing credentials!",
+    "ERROR_WHILE_FETCHING_ISSUED_CREDENTIALS":"Error while fetching issued Credentials",
+    "STUDENT_REGISTRATION_CLAIM_APPROVAL":"Student Registration claim approval",
+    "ARE_YOU_SURE_WANT_TO_APPROVE":"Are you sure want to approve",
+    "ARE_YOU_SURE_WANT_TO_REJECT":"Are you sure want to reject",
+    "SHARED_OPERATION_FAILED":"Shared operation failed!"
+   
+    
     
 }

@@ -31,7 +31,7 @@
       </div> -->
       <div class="col-md-3">
         <label>&nbsp;</label>
-        <button class="filter-btn" (click)="downloadTemplate()">{{'DOWNLOAD_CSV' |
+        <button class="filter-btn" (click)="downloadTemplate()" (click)="raiseInteractEvent('download-csv')">{{'DOWNLOAD_CSV' |
           translate}}&nbsp;&nbsp;<i class="fa fa-solid fa-file-download"></i></button>
       </div>
       <div class="col-md-3">
@@ -39,7 +39,7 @@
         <input #fileUploadSimple [accept]="'.csv'" type="file" class="file-input" (click)="$event.target.value=null"
           (change)="importDataFromCSV($event)" hidden="true" />
         <button class="filter-btn" (click)="fileUploadSimple.click()"
-          [disabled]="!(model.grade && model.academicYear && !showProgress)">{{'UPLOAD_CSV' |
+          [disabled]="!(model.grade && model.academicYear && !showProgress)" (click)="raiseInteractEvent('upload-csv')">{{'UPLOAD_CSV' |
           translate }}&nbsp;<i class="fa fa-solid fa-file-upload"></i></button>
       </div>
     </div>
@@ -49,7 +49,7 @@
       [animated]="true">{{progress}}%</ngb-progressbar>
     <div class="d-flex justify-content-center" *ngIf="isLoading">
       <div class="spinner-border" role="status">
-        <span class="sr-only">Loading...</span>
+        <span class="sr-only">{{'LOADING' | translate }}</span>
       </div>
     </div>
     <ngb-alert type="danger" *ngIf="errorMessage">{{ errorMessage }}</ngb-alert>
@@ -71,10 +71,10 @@
     <table class="table" cellpadding="0" cellspacing="0" *ngIf="studentList?.length">
       <thead>
         <tr>
-          <th scope="col">Sr.No</th>
-          <th scope="col">Student ID</th>
-          <th scope="col">Name</th>
-          <th scope="col">Date of Birth</th>
+          <th scope="col">{{'SR_NO' | translate }}</th>
+          <th scope="col">{{'STUDENT_ID' | translate }}</th>
+          <th scope="col">{{'NAME' | translate }}</th>
+          <th scope="col">{{'DATE_OF_BIRTH' | translate }}</th>
           <th scope="col">Mobile</th>
         </tr>
       </thead>
@@ -141,8 +141,7 @@
   </div> -->
 
   <div class="d-flex justify-content-end align-items-start p-2 pb-3 pt-5 table-footer" *ngIf="studentList?.length">
-    <button type="button" class="custom-button blue-button mt-10 p-65" (click)="issueBulkCredentials()">Issue
-      Credentials
+    <button type="button" class="custom-button blue-button mt-10 p-65" (click)="issueBulkCredentials()">{{'ISSUE_CREDENTIALS' | translate }}
     </button>
     <ngb-pagination class="ml-2" [collectionSize]="studentList?.length" [(page)]="page" [pageSize]="pageSize"
       (pageChange)="pageChange()">

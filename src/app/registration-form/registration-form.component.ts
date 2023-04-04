@@ -1,6 +1,6 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { NgbModal, NgbModalOptions, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { GeneralService } from '../services/general/general.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ToastMessageService } from '../services/toast-message/toast-message.service';
@@ -9,6 +9,8 @@ import { Location } from '@angular/common';
 import { CredentialService } from '../services/credential/credential.service';
 import { concatMap } from 'rxjs/operators';
 import { throwError } from 'rxjs';
+import { TelemetryService } from '../services/telemetry/telemetry.service';
+import { IImpressionEventInput, IInteractEventInput } from '../services/telemetry/telemetry-interface';
 
 @Component({
   selector: 'app-registration-form',
@@ -45,7 +47,9 @@ export class RegistrationFormComponent implements OnInit {
     private readonly toastMessage: ToastMessageService,
     private readonly authService: AuthService,
     private readonly location: Location,
-    private readonly credentialService: CredentialService
+    private readonly credentialService: CredentialService,
+    private readonly activatedRoute: ActivatedRoute,
+    private readonly telemetryService: TelemetryService
   ) {
     const navigation = this.router.getCurrentNavigation();
     this.registrationDetails = navigation.extras.state;
@@ -105,6 +109,7 @@ export class RegistrationFormComponent implements OnInit {
     }
     console.log("schoolUdiseInput", this.schoolUdiseInput);
     this.udiseLinkModalRef = this.modalService.open(this.udiseLinkModal, options);
+    this.raiseImpressionEvent();
   }
 
   linkUDISE() {
@@ -176,7 +181,7 @@ export class RegistrationFormComponent implements OnInit {
             payload.userdata.teacher.aadharId = res.result.aadhaar_token;
             return this.authService.ssoSignUp(payload);
           } else {
-            return throwError('Aadhar Verification Failed');  
+            return throwError(this.generalService.translateString('AADHAR_VERIFICATION_FAILED'));  
           }
         }),
         concatMap(_ => this.authService.getSchoolDetails()),
@@ -189,7 +194,7 @@ export class RegistrationFormComponent implements OnInit {
       }, (error: any) => {
         console.error(error);
         this.isLoading = false;
-        this.toastMessage.error("", "Error while register user");
+        this.toastMessage.error("", (this.generalService.translateString('ERROR_WHILE_REGISTER_USER')));
       });
     }
   }
@@ -202,5 +207,40 @@ export class RegistrationFormComponent implements OnInit {
       obj[key] = '' + obj[key];
     });
     return obj;
+  }
+
+  
+
+  raiseInteractEvent(id: string, type: string = 'CLICK', subtype?: string) {
+    console.log("raiseInteractEvent")
+    const telemetryInteract: IInteractEventInput = {
+      context: {
+        env: this.activatedRoute.snapshot?.data?.telemetry?.env,
+        cdata: []
+      },
+      edata: {
+        id,
+        type,
+        subtype,
+        pageid: this.activatedRoute.snapshot?.data?.telemetry?.pageid,
+      }
+    };
+    this.telemetryService.interact(telemetryInteract);
+  }
+
+  raiseImpressionEvent() {
+    const telemetryImpression: IImpressionEventInput = {
+      context: {
+        env: this.activatedRoute.snapshot?.data?.telemetry?.env,
+        cdata: []
+      },
+      edata: {
+        type: this.activatedRoute.snapshot?.data?.telemetry?.type,
+        pageid: this.activatedRoute.snapshot?.data?.telemetry?.pageid,
+        uri: this.router.url,
+        subtype: this.activatedRoute.snapshot?.data?.telemetry?.subtype,
+      }
+    };
+    this.telemetryService.impression(telemetryImpression);
   }
 }

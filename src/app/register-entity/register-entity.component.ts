@@ -8,6 +8,11 @@ import { from, throwError } from 'rxjs';
 import { CsvService } from '../services/csv/csv.service';
 import { RequestParam } from '../interfaces/httpOptions.interface';
 import { AuthService } from '../services/auth/auth.service';
+import { GeneralService } from '../services/general/general.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { TelemetryService } from '../services/telemetry/telemetry.service';
+import { IImpressionEventInput, IInteractEventInput } from '../services/telemetry/telemetry-interface';
+
 
 const BATCH_LIMIT = 20;
 @Component({
@@ -91,7 +96,6 @@ export class RegisterEntityComponent implements OnInit {
   progress = 0;
   currentBatch = 0;
   totalBatches: number;
-  schoolDetails: any;
   studentList: any[];
 
   page = 1;
@@ -102,7 +106,12 @@ export class RegisterEntityComponent implements OnInit {
     private dataService: DataService,
     private toastMsg: ToastMessageService,
     private csvService: CsvService,
-    private authService: AuthService
+    private authService: AuthService,
+    private readonly generalService: GeneralService,
+    private readonly router: Router,
+    private readonly activatedRoute: ActivatedRoute,
+    private readonly telemetryService: TelemetryService
+
   ) { }
 
   ngOnInit(): void {
@@ -159,7 +168,6 @@ export class RegisterEntityComponent implements OnInit {
   public async importDataFromCSV(event: any) {
     try {
       this.resetTableData();
-      this.getSchoolDetails();
       this.parsedCSV = await this.parseCSVFile(event);
       // const columns = Object.keys(this.parsedCSV[0]);
       // this.tableColumns = columns.map((header: string) => header.replace(/_/g, " ").trim());
@@ -169,7 +177,7 @@ export class RegisterEntityComponent implements OnInit {
       this.saveAndVerify();
       this.pageChange();
     } catch (error) {
-      this.errorMessage = error?.message ? error.message : "Error while parsing CSV file";
+      this.errorMessage = error?.message ? error.message : this.generalService.translateString('ERROR_WHILE_PARSING_CSV_FILE');
       console.warn("Error while parsing csv file", error);
     }
   }
@@ -253,7 +261,7 @@ export class RegisterEntityComponent implements OnInit {
         toArray()
       ).subscribe((res) => {
         console.log("final", res);
-        this.toastMsg.success('', 'Students data imported successfully!');
+        this.toastMsg.success('', this.generalService.translateString('STUDENTS_DATA_IMPORTED_SUCCESSFULLY'));
         this.resetTableData();
         this.isLoading = false;
         setTimeout(() => {
@@ -262,7 +270,7 @@ export class RegisterEntityComponent implements OnInit {
         }, 2000);
       }, (error) => {
         console.log("error", error);
-        this.toastMsg.error('', 'Error while importing data');
+        this.toastMsg.error('', this.generalService.translateString('ERROR_WHILE_IMPORTING_DATA'));
         this.isLoading = false;
         this.showProgress = false;
       });
@@ -275,8 +283,8 @@ export class RegisterEntityComponent implements OnInit {
       data: {
         grade: this.model.grade,
         academicYear: this.model.academicYear,
-        issuer: this.schoolDetails.did,
-        schoolName: this.schoolDetails.schoolName,
+        issuer: this.authService.schoolDetails?.did,
+        schoolName: this.authService.schoolDetails?.schoolName,
         credentialSubject: list
       }
     }
@@ -302,8 +310,8 @@ export class RegisterEntityComponent implements OnInit {
         "schoolDetails":
         {
           "grade": this.model.grade,
-          "schoolUdise": this.authService.schoolDetails.udiseCode,
-          "schoolName": this.authService.schoolDetails.schoolName,
+          "schoolUdise": this.authService.schoolDetails?.udiseCode,
+          "schoolName": this.authService.schoolDetails?.schoolName,
           "academic-year": this.model.academicYear,
           "school_type": "private"
         },
@@ -312,14 +320,6 @@ export class RegisterEntityComponent implements OnInit {
     }
 
     return this.dataService.post(request);
-  }
-
-  getSchoolDetails() {
-    const udiseId = this.authService.currentUser.schoolUdise;
-    this.dataService.get({ url: `https://ulp.uniteframework.io/ulp-bff/v1/sso/school/${udiseId}` }).subscribe((res: any) => {
-      this.schoolDetails = res.result;
-      console.log('schoolDetails', this.schoolDetails);
-    });
   }
 
   getStudentList() {
@@ -349,7 +349,7 @@ export class RegisterEntityComponent implements OnInit {
       }
     }, (error: any) => {
       this.isLoading = false;
-      this.toastMsg.error("", "Error while fetching student list");
+      this.toastMsg.error("", this.generalService.translateString('ERROR_WHILE_FETCHING_STUDENT_LIST'));
     });
   }
 
@@ -376,8 +376,8 @@ export class RegisterEntityComponent implements OnInit {
           }
         }),
         "issuerDetail": {
-          "did": this.authService.schoolDetails.did,
-          "schoolName": this.authService.schoolDetails.schoolName,
+          "did": this.authService.schoolDetails?.did,
+          "schoolName": this.authService.schoolDetails?.schoolName,
           "schemaId": "clf0rjgov0002tj15ml0fdest"
         }
       }
@@ -387,14 +387,50 @@ export class RegisterEntityComponent implements OnInit {
       this.isLoading = false;
       if (res.success) {
         this.getStudentList();
-        this.toastMsg.success("", "Credential issued Successfully!");
+        this.toastMsg.success("", this.generalService.translateString('CREDENTIAL_ISSUED_SUCCESSFULLY'));
       } else {
-        this.toastMsg.error("", "Error while issuing credentials!");
+        this.toastMsg.error("", this.generalService.translateString('ERROR_WHILE_ISSUING_CREDENTIALS'));
       }
     }, (error: any) => {
       this.isLoading = false;
-      this.toastMsg.error("", "Error while issuing credentials!");
+      this.toastMsg.error("",this.generalService.translateString('ERROR_WHILE_ISSUING_CREDENTIALS') );
     })
+  }
+
+  ngAfterViewInit(): void {
+    this.raiseImpressionEvent();
+  }
+
+  raiseInteractEvent(id: string, type: string = 'CLICK', subtype?: string) {
+    const telemetryInteract: IInteractEventInput = {
+      context: {
+        env: this.activatedRoute.snapshot?.data?.telemetry?.env,
+        cdata: []
+      },
+      edata: {
+        id,
+        type,
+        subtype,
+        pageid: this.activatedRoute.snapshot?.data?.telemetry?.pageid,
+      }
+    };
+    this.telemetryService.interact(telemetryInteract);
+  }
+
+  raiseImpressionEvent() {
+    const telemetryImpression: IImpressionEventInput = {
+      context: {
+        env: this.activatedRoute.snapshot?.data?.telemetry?.env,
+        cdata: []
+      },
+      edata: {
+        type: this.activatedRoute.snapshot?.data?.telemetry?.type,
+        pageid: this.activatedRoute.snapshot?.data?.telemetry?.pageid,
+        uri: this.router.url,
+        subtype: this.activatedRoute.snapshot?.data?.telemetry?.subtype,
+      }
+    };
+    this.telemetryService.impression(telemetryImpression);
   }
 }
 

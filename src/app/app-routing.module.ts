@@ -48,11 +48,23 @@ const routes: Routes = [
   { path: '', component: LandingPageComponent },
   {
     path: 'digilocker-callback',
-    component: OauthCallbackComponent
+    component: OauthCallbackComponent,
+    data: {
+      showToolbar: false,
+      telemetry: {
+        env: 'digilocker', pageid: 'digilocker-callback', type: 'digilocker', subtype: 'scroll'
+      }
+    }
   },
   {
     path: 'sign-in',
-    component: RegistrationComponent
+    component: RegistrationComponent,
+    data: {
+      showToolbar: false,
+      telemetry: {
+        env: 'sign-in', pageid: 'sign-in', type: 'edit', subtype: 'scroll'
+      }
+    }
   },
   {
     path: 'register',
@@ -65,27 +77,64 @@ const routes: Routes = [
     children: [
       {
         path: 'register-entity',
-        component: RegisterEntityComponent
+        component: RegisterEntityComponent,
+        data: {
+          showToolbar: false,
+          telemetry: {
+            env: 'register', pageid: 'register-entity', type: 'edit', subtype: 'scroll'
+          }
+        }
+        
       },
       {
         path: 'issued-credential',
-        component: IssuedCredentialComponent
+        component: IssuedCredentialComponent,
+        data: {
+          showToolbar: false,
+          telemetry: {
+            env: 'credential', pageid: 'issued-credential', type: 'view', subtype: 'scroll'
+          }
+        }
       },
       {
         path: 'claim-approval',
-        component: ClaimApprovalComponent
+        component: ClaimApprovalComponent,
+        data: {
+          showToolbar: false,
+          telemetry: {
+            env: 'approval', pageid: 'claim-approval', type: 'view', subtype: 'scroll'
+          }
+        }
       },
       {
         path: 'registration-form',
-        component: RegistrationFormComponent
+        component: RegistrationFormComponent,
+        data: {
+          showToolbar: false,
+          telemetry: {
+            env: 'registration', pageid: 'registration-form', type: 'edit', subtype: 'scroll'
+          }
+        }
       },
       {
         path: 'my-account',
-        component: DocViewComponent
+        component: DocViewComponent,
+        data: {
+          showToolbar: false,
+          telemetry: {
+            env: 'my-account', pageid: 'my-account', type: 'view', subtype: 'scroll'
+          }
+        }
       },
       {
         path: 'doc-view',
-        component: DocViewComponent
+        component: DocViewComponent,
+        data: {
+          showToolbar: false,
+          telemetry: {
+            env: 'view-document', pageid: 'doc-view', type: 'view', subtype: 'scroll'
+          }
+        }
       },
     ]
   },
