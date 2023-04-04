@@ -77,7 +77,7 @@ export class SidebarComponent implements OnInit {
     this.router.events.pipe(
       filter(e => e instanceof NavigationEnd))
       .subscribe((event: NavigationEnd) => {
-        this.showInstructions = event.url === '/register-entity';
+        this.showInstructions = event.url === '/dashboard/register-entity';
       });
   }
 }
