@@ -9,7 +9,7 @@ import { CsvService } from '../services/csv/csv.service';
 import { RequestParam } from '../interfaces/httpOptions.interface';
 import { AuthService } from '../services/auth/auth.service';
 import { GeneralService } from '../services/general/general.service';
-import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbModalOptions, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TelemetryService } from '../services/telemetry/telemetry.service';
 import { IImpressionEventInput, IInteractEventInput } from '../services/telemetry/telemetry-interface';
@@ -102,8 +102,11 @@ export class RegisterEntityComponent implements OnInit {
   page = 1;
   pageSize = 30;
 
+  bulkRegRes: any;
   downloadResModalRef: NgbModalRef;
-  @ViewChild('downloadResModal') downloadResponseModal: TemplateRef<any>;
+  declarationModalRef: NgbModalRef;
+  @ViewChild('downloadResModal') downloadResModal: TemplateRef<any>;
+  @ViewChild('declarationModal') declarationModal: TemplateRef<any>;
 
   errorMessage: string;
   constructor(
@@ -172,7 +175,7 @@ export class RegisterEntityComponent implements OnInit {
 
   public async importDataFromCSV(event: any) {
     try {
-      this.resetTableData();
+      // this.resetTableData();
       this.parsedCSV = await this.parseCSVFile(event);
       // const columns = Object.keys(this.parsedCSV[0]);
       // this.tableColumns = columns.map((header: string) => header.replace(/_/g, " ").trim());
@@ -252,6 +255,7 @@ export class RegisterEntityComponent implements OnInit {
     this.progress = 0;
     this.totalBatches = dataBatches.length;
 
+    this.bulkRegRes = {};
     from(dataBatches)
       .pipe(
         concatMap((data: any[]) => {
@@ -266,8 +270,11 @@ export class RegisterEntityComponent implements OnInit {
         toArray()
       ).subscribe((res) => {
         console.log("final", res);
+        this.bulkRegRes = res;
         this.toastMsg.success('', this.generalService.translateString('STUDENTS_DATA_IMPORTED_SUCCESSFULLY'));
-        this.resetTableData();
+        // this.resetTableData();
+        this.getStudentList();
+        this.openDownloadResponsePopup();
         this.isLoading = false;
         setTimeout(() => {
           this.progress = 1;
@@ -275,6 +282,8 @@ export class RegisterEntityComponent implements OnInit {
         }, 2000);
       }, (error) => {
         console.log("error", error);
+        this.bulkRegRes = error;
+        this.openDownloadResponsePopup();
         this.toastMsg.error('', this.generalService.translateString('ERROR_WHILE_IMPORTING_DATA'));
         this.isLoading = false;
         this.showProgress = false;
@@ -298,17 +307,6 @@ export class RegisterEntityComponent implements OnInit {
 
 
   bulkRegister(list: any[]) {
-    // const studentList = list.map((item: any) => {
-    //   return {
-    //     "studentName": item.studentName,
-    //     "student_id": item.studentId,
-    //     "mobile": ,
-    //     "gaurdian_name": "",
-    //     "aadhar_token": "",
-    //     "dob": ""
-    //   }
-    // });
-
     const request: RequestParam = {
       url: `https://ulp.uniteframework.io/ulp-bff/v1/sso/student/bulk/register`,
       data: {
@@ -359,6 +357,24 @@ export class RegisterEntityComponent implements OnInit {
     });
   }
 
+  openDeclarationModal() {
+    const options: NgbModalOptions = {
+      backdrop: 'static',
+      animation: true,
+      centered: true,
+      size: 'md'
+    }
+    this.declarationModalRef = this.modalService.open(this.declarationModal, options);
+  }
+
+  submitDeclarationForm(isConfirmed: boolean) {
+    this.declarationModalRef.close();
+
+    if (isConfirmed) {
+      this.issueBulkCredentials();
+    }
+  }
+
   issueBulkCredentials() {
     this.isLoading = true;
     const date = new Date();
@@ -375,6 +391,8 @@ export class RegisterEntityComponent implements OnInit {
             "id": item.did,
             "enrolledOn": date.toISOString(),
             "studentName": item.name,
+            "student_id": item?.studentId,
+            "school_id": this.authService.schoolDetails?.udiseCode,
             "guardianName": item.guardian,
             "issuanceDate": date.toISOString(),
             "expirationDate": nextYear.toISOString(),
@@ -391,7 +409,8 @@ export class RegisterEntityComponent implements OnInit {
 
     this.dataService.post(request).subscribe((res: any) => {
       this.isLoading = false;
-      this.openDownloadResponsePopup();
+
+      // this.openDownloadResponsePopup();
       if (res.success) {
         this.getStudentList();
         this.toastMsg.success("", this.generalService.translateString('CREDENTIAL_ISSUED_SUCCESSFULLY'));
@@ -405,11 +424,18 @@ export class RegisterEntityComponent implements OnInit {
   }
 
   openDownloadResponsePopup() {
-    //Ask if want to download the response 
+    const options: NgbModalOptions = {
+      backdrop: 'static',
+      animation: true,
+      centered: true,
+      size: 'md'
+    }
+    this.downloadResModalRef = this.modalService.open(this.downloadResModal, options);
   }
 
-  saveResponse(result: any) {
-    const blob = new Blob([JSON.stringify(result)], { type: 'application/json' });
+  saveResponse() {
+    this.downloadResModalRef.close();
+    const blob = new Blob([JSON.stringify(this.bulkRegRes)], { type: 'application/json' });
     const url = window.URL.createObjectURL(blob);
     let link = document.createElement("a");
     link.href = url;
@@ -418,6 +444,20 @@ export class RegisterEntityComponent implements OnInit {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+  }
+
+  closeSaveResponseModal() {
+    this.downloadResModalRef.close();
+  }
+
+  closeModal(modal: string) {
+    if (modal === 'download') {
+      this.downloadResModalRef.close();
+    }
+
+    if (modal === 'declaration') {
+      this.declarationModalRef.close();
+    }
   }
 
   ngAfterViewInit(): void {
