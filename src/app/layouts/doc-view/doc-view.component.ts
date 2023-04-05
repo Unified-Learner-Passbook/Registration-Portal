@@ -39,7 +39,8 @@ export class DocViewComponent implements OnInit, OnDestroy {
         private readonly credentialService: CredentialService,
         private readonly toastMessage: ToastMessageService,
         private readonly activatedRoute: ActivatedRoute,
-        private readonly telemetryService: TelemetryService
+        private readonly telemetryService: TelemetryService,
+        private readonly authService: AuthService
     ) {
         const navigation = this.router.getCurrentNavigation();
         this.credential = navigation.extras.state;
@@ -167,7 +168,7 @@ export class DocViewComponent implements OnInit, OnDestroy {
     downloadCertificate(url) {
         let link = document.createElement("a");
         link.href = url;
-        link.download = 'certificate.pdf';
+        link.download = `${this.authService.currentUser?.name}_certificate.pdf`.replace(/\s+/g, '_');;
         link.style.visibility = 'hidden';
         document.body.appendChild(link);
         link.click();
@@ -177,7 +178,7 @@ export class DocViewComponent implements OnInit, OnDestroy {
     shareFile() {
         const pdf = new File([this.blob], "certificate.pdf", { type: "application/pdf" });
         const shareData = {
-            title: "Certificate",
+            title: `${this.authService.currentUser?.name}_certificate`.replace(/\s+/g, '_'),
             files: [pdf]
         };
 
