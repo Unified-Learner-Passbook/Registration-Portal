@@ -68,13 +68,6 @@ table {
   font-size: 16px;
 }
 
-.table-footer {
-  margin-bottom: 56px;
-  button {
-    margin-right: 30px !important;
-  }
-}
-
 ::ng-deep {
   .page-item.active .page-link {
     background-color: var(--primaryColor);
