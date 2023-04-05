@@ -23,6 +23,10 @@ export class SidebarComponent implements OnInit {
     this.initialize();
     this.getRouteData();
 
+    if (this.router.url === '/dashboard/register-entity') {
+      this.showInstructions = true;
+    }
+
     this.generalService.languageChange.subscribe((res) => {
       this.initialize();
     });
