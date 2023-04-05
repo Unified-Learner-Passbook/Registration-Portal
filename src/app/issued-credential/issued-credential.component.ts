@@ -66,6 +66,9 @@ export class IssuedCredentialComponent implements OnInit {
 
   getCredentials() {
     this.isLoading = true;
+    this.issuedCredentials = [];
+    this.tableRows = [];
+    this.page = 1;
     this.credentialService.getCredentials(this.authService?.schoolDetails?.did).subscribe((res) => {
       this.isLoading = false;
       this.issuedCredentials = res;

@@ -76,6 +76,7 @@ export class ClaimApprovalComponent implements OnInit {
     this.isLoading = true;
     this.studentDetails = [];
     this.tableRows = [];
+    this.page = 1;
     this.generalService.postStudentData('/studentDetail', search).subscribe((res) => {
 
       console.log('studentDetail length', res.result.length);
