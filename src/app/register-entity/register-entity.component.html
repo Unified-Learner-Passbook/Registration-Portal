@@ -5,7 +5,7 @@
 
   <div>
     <div class="row filter-bx">
-      <div class="col-md-2">
+      <div class="col-md-3">
         <label>{{'SELECT_GRADE' | translate}}</label>
         <select class="filter-btn" aria-label="Default select example" [(ngModel)]="model.grade"
           (ngModelChange)="onModelChange()" #grade="ngModel">
@@ -13,7 +13,7 @@
           <option *ngFor="let grade of grades" [value]="grade.value">{{grade.label}}</option>
         </select>
       </div>
-      <div class="col-md-2">
+      <div class="col-md-3">
         <label for="academicYear">{{'SELECT_ACADEMIC_YEAR' | translate }}</label>
         <select class="filter-btn" id="academicYear" [(ngModel)]="model.academicYear" #academicYear="ngModel"
           (ngModelChange)="onModelChange()">
