@@ -88,7 +88,7 @@ export class RegisterEntityComponent implements OnInit {
       schemaId: 'clf0wvyjs0008tj154rc071i1'
     }
   ];
-  startYear = 2000;
+  startYear = 2015;
   currentYear = new Date().getFullYear();
   academicYearRange: string[] = [];
   model: any = {};
@@ -119,7 +119,6 @@ export class RegisterEntityComponent implements OnInit {
     private readonly router: Router,
     private readonly activatedRoute: ActivatedRoute,
     private readonly telemetryService: TelemetryService
-
   ) { }
 
   ngOnInit(): void {
@@ -152,7 +151,7 @@ export class RegisterEntityComponent implements OnInit {
           tap((res: any) => {
             if (res?.result?.schema?.properties) {
               // const columnFields = Object.keys(res.result.schema.properties);
-              const columnFields = ["studentName", "student_id", "mobile", "gaurdian_name", "aadhar_token", "dob"]
+              const columnFields = ["studentName", "student_id", "mobile", "gaurdian_name", "aadhar_token", "dob"] //TODO: Add label field in schema and use it here
               const csvContent = this.csvService.generateCSV(columnFields);
               this.csvService.downloadCSVTemplate(csvContent, `${this.model.certificateType}-template`);
             } else {
@@ -214,27 +213,6 @@ export class RegisterEntityComponent implements OnInit {
     if (this.model.grade && this.model.academicYear) {
       this.getStudentList();
     }
-  }
-
-  private getTextFromFile(inputValue: any): Promise<string> {
-    return new Promise((resolve, reject) => {
-      const file: File = inputValue.target.files[0];
-      const myReader: FileReader = new FileReader();
-      myReader.readAsText(file);
-
-      myReader.onloadend = (e) => {
-        let fileString: string = myReader.result as string;
-        resolve(fileString);
-      };
-
-      myReader.onerror = (e) => {
-        reject(e);
-      }
-
-      myReader.onprogress = (e) => {
-        console.info("progress", e)
-      }
-    });
   }
 
   pageChange() {
