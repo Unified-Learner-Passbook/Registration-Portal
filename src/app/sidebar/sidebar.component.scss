@@ -22,11 +22,11 @@
     border-left: 5px solid transparent;
     // margin-left: 20px;
 
-      i{
-        padding: 0 15px;
-        font-size: 17px;
-        vertical-align: middle;
-      }
+    i {
+      padding: 0 15px;
+      font-size: 17px;
+      vertical-align: middle;
+    }
   }
 
   .active {
@@ -70,11 +70,32 @@
         font-size: 16px;
         color: #414141;
       }
+
+      position: relative;
+      margin-top: 30px;
+      z-index: 2;
+    }
+    li:first-child {
+      margin-top: 0;
+    }
+    li:before {
+      position: absolute;
+      border: 1px solid #ccc;
+      width: 0;
+      height: 30px;
+      display: block;
+      content: "";
+      left: 50%;
+      z-index: 1;
+      top: -30px;
+    }
+    li:first-child:before {
+      display: none;
     }
   }
 }
 
-.fa-sign-out-alt{
+.fa-sign-out-alt {
   font-size: 19px !important;
   vertical-align: middle;
 }
@@ -83,7 +104,7 @@
   width: 25px;
 }
 
-.pl-39{
+.pl-39 {
   padding-left: 38px;
 }
 .disable,

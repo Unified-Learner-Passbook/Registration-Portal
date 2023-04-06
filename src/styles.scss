@@ -1,18 +1,18 @@
 /* You can add global styles to this file, and also import other style files */
 
-@import '~@fortawesome/fontawesome-free/scss/fontawesome.scss';
-@import '~@fortawesome/fontawesome-free/scss/solid.scss';
-@import '~@fortawesome/fontawesome-free/scss/regular.scss';
-@import '~@fortawesome/fontawesome-free/scss/brands.scss';
-@import '~mdb-angular-ui-kit/assets/scss/mdb.scss';
+@import "~@fortawesome/fontawesome-free/scss/fontawesome.scss";
+@import "~@fortawesome/fontawesome-free/scss/solid.scss";
+@import "~@fortawesome/fontawesome-free/scss/regular.scss";
+@import "~@fortawesome/fontawesome-free/scss/brands.scss";
+@import "~mdb-angular-ui-kit/assets/scss/mdb.scss";
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 @import "https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,300;0,400;0,500;0,700;1,200;1,300;1,400;1,600&display=swap";
 @import "https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css";
 
 /* Importing Bootstrap SCSS file. */
 
-@import '~bootstrap/scss/bootstrap';
-@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+@import "~bootstrap/scss/bootstrap";
+@import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
 @import "~jsoneditor/dist/jsoneditor.min.css";
 
 :root {
@@ -28,19 +28,18 @@
     // --primaryTextColor: #000000;
     // --secondaryTextColor: #8D9091;
     // SL
-    --primaryColor: #050C44;
-    --secondaryColor: #0098AB;
-    --bodyBackground: #F6F8FC;
-    --cardBackground: #FFFFFF;
-    --tagsBackground: #F4ECFF;
-    --navLabelColor: #0098AB;
-    --headerColor: #FFFFFF;
-    --headerLinkColor: #0098AB;
+    --primaryColor: #050c44;
+    --secondaryColor: #0098ab;
+    --bodyBackground: #f6f8fc;
+    --cardBackground: #ffffff;
+    --tagsBackground: #f4ecff;
+    --navLabelColor: #0098ab;
+    --headerColor: #ffffff;
+    --headerLinkColor: #0098ab;
     --primaryTextColor: #000000;
     --secondaryTextColor: #000000;
-    --linkColor: #443DF6;
+    --linkColor: #443df6;
     --secondaryBtnBgColor: #e8f3f8;
-
 
     //   dark
     // --primaryColor: #F07D00;
@@ -71,13 +70,11 @@
   --textWhite:#ffffff;*/
 }
 
-
 /* PK changes for - theme support */
 
 .nav-link-color {
-    color: var(--navlinkColor) !important;  
+    color: var(--navlinkColor) !important;
 }
-
 
 .tagstextColor {
     color: var(--primarybgColor) !important;
@@ -100,7 +97,6 @@
     color: var(--primaryTextColor) !important;
 }
 
-
 /* pk changes - end */
 
 .bg-header {
@@ -117,17 +113,16 @@
 
 .btn-success {
     background-color: #88ecb226 !important;
-    color: #22B02E !important;
+    color: #22b02e !important;
     border: 0 !important;
 }
 
 .bg-primary {
-    background-color: var(--primaryColor) !important
+    background-color: var(--primaryColor) !important;
 }
 
 .ngx-pagination .current {
     background: var(--primaryColor) !important;
-    ;
 }
 
 .d-contents {
@@ -136,7 +131,7 @@
 
 .btn-deny {
     background-color: #f3c2c24f !important;
-    color: #C5292A !important;
+    color: #c5292a !important;
     border: 0 !important;
 }
 
@@ -186,7 +181,7 @@ legend {
 }
 
 .img16 {
-    width: 16px
+    width: 16px;
 }
 
 .p12 {
@@ -195,19 +190,19 @@ legend {
 }
 
 .btn-bg {
-    background-color: var( --btnBgColor) !important;
+    background-color: var(--btnBgColor) !important;
     color: #fff !important;
 }
 
-.btn-sec-bg{
-    background-color: var( --secondaryBtnBgColor) !important;
-    color: #1987B6 !important;
+.btn-sec-bg {
+    background-color: var(--secondaryBtnBgColor) !important;
+    color: #1987b6 !important;
     font-weight: 600 !important;
 }
 .badge-secondary {
-    border: 1px solid #CCCCCC !important;
+    border: 1px solid #cccccc !important;
     background-color: var(--bodyBackground) !important;
-    color: #8D9091 !important;
+    color: #8d9091 !important;
 }
 
 .marker-pointer {
@@ -304,7 +299,7 @@ $gray-color: #8d9091;
 
 $primary-color-dark: #000;
 .primary-color-dark {
-    background-color: $gray-color!important;
+    background-color: $gray-color !important;
 }
 
 // .text-primary-color{
@@ -326,7 +321,7 @@ body {
 body {
     margin: 0;
     // font-family: "Lato", sans-serif !important;
-    font-family: 'Poppins', sans-serif !important;
+    font-family: "Poppins", sans-serif !important;
     color: rgb(0, 0, 0);
     // background: var(--bodyBackground) !important;
 }
@@ -339,7 +334,7 @@ body {
     font-size: 0.7rem;
 }
 
-.font-700{
+.font-700 {
     font-weight: 700 !important;
 }
 
@@ -349,7 +344,7 @@ body {
 
 a {
     text-decoration: none !important;
-   // color: var(--linkColor) !important;
+    // color: var(--linkColor) !important;
 }
 
 // /* Importing Bootstrap SCSS file. */
@@ -357,7 +352,7 @@ a {
 button.calendar,
 button.calendar:active {
     width: 2.75rem;
-    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAcCAYAAAAEN20fAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAOxAAADsQBlSsOGwAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAEUSURBVEiJ7ZQxToVAEIY/YCHGxN6XGOIpnpaEsBSeQC9ArZbm9TZ6ADyBNzAhQGGl8Riv4BLAWAgmkpBYkH1b8FWT2WK/zJ8ZJ4qiI6XUI3ANnGKWBnht2/ZBDRK3hgVGNsCd7/ui+JkEIrKtqurLpEWaphd933+IyI3LEIdpCYCiKD6HcuOa/nwOa0ScJEnk0BJg0UTUWJRl6RxCYEzEmomsIlPU3IPW+grIAbquy+q6fluy/28RIBeRMwDXdXMgXLj/B2uimRXpui4D9sBeRLKl+1N+L+t6RwbWrZliTTTr1oxYtzVWiTQAcRxvTX+eJMnlUDaO1vpZRO5NS0x48sIwfPc87xg4B04MCzQi8hIEwe4bl1DnFMCN2zsAAAAASUVORK5CYII=)!important;
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAcCAYAAAAEN20fAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAOxAAADsQBlSsOGwAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAEUSURBVEiJ7ZQxToVAEIY/YCHGxN6XGOIpnpaEsBSeQC9ArZbm9TZ6ADyBNzAhQGGl8Riv4BLAWAgmkpBYkH1b8FWT2WK/zJ8ZJ4qiI6XUI3ANnGKWBnht2/ZBDRK3hgVGNsCd7/ui+JkEIrKtqurLpEWaphd933+IyI3LEIdpCYCiKD6HcuOa/nwOa0ScJEnk0BJg0UTUWJRl6RxCYEzEmomsIlPU3IPW+grIAbquy+q6fluy/28RIBeRMwDXdXMgXLj/B2uimRXpui4D9sBeRLKl+1N+L+t6RwbWrZliTTTr1oxYtzVWiTQAcRxvTX+eJMnlUDaO1vpZRO5NS0x48sIwfPc87xg4B04MCzQi8hIEwe4bl1DnFMCN2zsAAAAASUVORK5CYII=) !important;
     background-repeat: no-repeat;
     background-size: 23px;
     background-position: 50%;
@@ -377,7 +372,7 @@ button.calendar:active {
     display: flex;
 }
 
-.dflex-dc-column{
+.dflex-dc-column {
     flex-direction: column;
 }
 
@@ -477,7 +472,6 @@ button.calendar:active {
     padding: 15px 15px 80px;
 }
 
-
 /*Right*/
 
 .modal.fade .modal-dialog.panel-right {
@@ -496,18 +490,18 @@ button.calendar:active {
     //margin-top: 100px;
     // padding-bottom: 100px;
     // margin-top: 50px;
-    // max-width: 94% !important; 
+    // max-width: 94% !important;
 }
 
-.modal{
-    .container{
+.modal {
+    .container {
         padding-bottom: 38px;
     }
 }
 
 .sub-container {
     //margin-top: 100px;
-   margin: 20px;
+    margin: 20px;
 }
 
 formly-field {
@@ -521,14 +515,14 @@ formly-field {
     width: 0;
 }
 
-[type="file"]+label {
+[type="file"] + label {
     background: white;
     border: none;
     border-radius: 5px;
     color: blue;
     cursor: pointer;
     display: inline-block;
-    font-family: 'Rubik', sans-serif;
+    font-family: "Rubik", sans-serif;
     font-size: inherit;
     font-weight: 500;
     margin-bottom: 1rem;
@@ -557,14 +551,13 @@ formly-field {
 }
 
 .list-area {
-    background-color : var(--cardBackground) !important;
- color: var(--primaryTextColor) !important;
+    background-color: var(--cardBackground) !important;
+    color: var(--primaryTextColor) !important;
 }
 
 .list-filter {
-    background: #FFFFFF;
+    background: #ffffff;
 }
-
 
 formly-autocomplete-type .ng-select {
     margin-top: 25px !important;
@@ -596,7 +589,6 @@ formly-autocomplete-type .ng-select {
     text-align: center;
     margin: 0 auto;
 }
-
 
 /* MM */
 
@@ -653,7 +645,6 @@ formly-autocomplete-type .ng-select {
     font-size: 45px;
 }
 
-
 /* Button */
 
 .btn {
@@ -678,7 +669,6 @@ formly-autocomplete-type .ng-select {
     border-color: var(--primarybgColor) !important;
 }
 
-
 /* Tags */
 
 .tags-list {
@@ -699,7 +689,6 @@ formly-autocomplete-type .ng-select {
         }
     }
 }
-
 
 /* Tabs */
 
@@ -722,7 +711,6 @@ formly-autocomplete-type .ng-select {
         }
     }
 }
-
 
 /* Card */
 
@@ -759,32 +747,32 @@ formly-autocomplete-type .ng-select {
     color: var(--primaryColor) !important;
 }
 
-
 /* borders */
 
 .bb-1 {
     border-bottom: 1px solid #cecece;
 }
 
-legend{
+legend {
     color: var(--primaryTextColor) !important;
- 
 }
 
-h4, h3 , h2{
-    color: var(--primaryTextColor)
+h4,
+h3,
+h2 {
+    color: var(--primaryTextColor);
 }
 
 h5 {
-    color: var(--primaryTextColor)
+    color: var(--primaryTextColor);
 }
 
 h6 {
-    color: var(--primaryTextColor)
+    color: var(--primaryTextColor);
 }
 
 p {
-    color: var(--primaryTextColor)
+    color: var(--primaryTextColor);
 }
 
 .text-dark {
@@ -819,11 +807,9 @@ label {
     color: var(--primaryTextColor) !important;
 }
 
-.modal-header
-{
+.modal-header {
     background-color: var(--headerColor) !important;
 }
-
 
 /* home.html css*/
 
@@ -835,12 +821,12 @@ label {
     width: 55%;
 }
 
-.xx-small{
+.xx-small {
     font-size: xx-small;
 }
 
 .langing-bg-color {
-    background: radial-gradient(72.14% 138.06% at 4.8% 90.49%, #D5EBE9 0%, #D5EBE9 45.05%, #B5E6DF 100%);
+    background: radial-gradient(72.14% 138.06% at 4.8% 90.49%, #d5ebe9 0%, #d5ebe9 45.05%, #b5e6df 100%);
 }
 
 .small-card {
@@ -849,8 +835,8 @@ label {
     right: 0%;
     top: 0%;
     bottom: 0%;
-    background: #FFFFFF;
-    border: 1px solid #EFEFEF;
+    background: #ffffff;
+    border: 1px solid #efefef;
     box-sizing: border-box;
     border-radius: 4px;
     height: 141px;
@@ -862,7 +848,7 @@ label {
 }
 
 formly-field formly-object-type p {
-    color: #8D9091;
+    color: #8d9091;
     font-size: 14px;
 }
 
@@ -871,25 +857,25 @@ formly-field .col-6 {
     padding: 0 0 0 5px;
 }
 
-.ui-tabs{
+.ui-tabs {
     border-bottom: 1px solid #dee2e6 !important;
     margin-bottom: 10px !important;
     text-align: center;
-    li{
+    li {
         margin-right: 15px;
-        a{
+        a {
             color: #000;
             padding-bottom: 10px;
         }
     }
-    li.active{
-      border-bottom: solid 2px #1987B6;
-      a{
-        color: #1987B6;
-      }
+    li.active {
+        border-bottom: solid 2px #1987b6;
+        a {
+            color: #1987b6;
+        }
     }
-  }
-  .preview-footer{
+}
+.preview-footer {
     position: fixed;
     width: 100%;
     bottom: 0px;
@@ -897,150 +883,153 @@ formly-field .col-6 {
     background: #fff;
     left: 0;
     padding: 10px;
-  }
+}
 
-  .h-90{
-      height: 90%;
-  }
-  .bx-none{
+.h-90 {
+    height: 90%;
+}
+.bx-none {
     box-shadow: none !important;
 }
-.cursor-pointer{
+.cursor-pointer {
     cursor: pointer;
 }
-.pt-70{
+.pt-70 {
     padding-top: 70px;
 }
-.modal-open .fixed-bottom{
+.modal-open .fixed-bottom {
     display: none;
 }
 
-.modal-open .preview-footer{
+.modal-open .preview-footer {
     background: rgb(145 142 142 / 10%);
     z-index: 9;
 }
-.heading-5{
+.heading-5 {
     font-size: 24px !important;
     font-weight: 700 !important;
     line-height: 32px !important;
 }
 
-.heading-2{
+.heading-2 {
     font-size: 16px;
     font-weight: 700;
     line-height: 32px;
 }
-.heading-3{
+.heading-3 {
     font-size: 14px !important;
     line-height: 32px !important;
     font-weight: 700 !important;
 }
-.heading-4{
+.heading-4 {
     font-size: 12px !important;
     font-weight: 400;
-    line-height: 16px !important;  
+    line-height: 16px !important;
 }
 
-.sb-gray-color{
-    color: #8D9091;
+.sb-gray-color {
+    color: #8d9091;
 }
 
-.btn-primary-sm{
-    background: #1987B6;
+.btn-primary-sm {
+    background: #1987b6;
     border-radius: 8px !important;
     font-size: 14px !important;
     font-weight: 700 !important;
     text-align: center !important;
     line-height: 32px !important;
 }
-.p1{
+.p1 {
     padding: 0.175rem 2.5rem !important;
 }
-.p2{
-    padding: 0.275rem .85rem !important;
+.p2 {
+    padding: 0.275rem 0.85rem !important;
 }
-.p0{
-    padding:0.175rem 1.5rem !important
+.p0 {
+    padding: 0.175rem 1.5rem !important;
 }
-.sb-text-primary{
-    color: #1987B6 !important;
+.sb-text-primary {
+    color: #1987b6 !important;
 }
-.iframe-container{
-    background: #EFEFEF;
-    border: solid 1px #EFEFEF;
+.iframe-container {
+    background: #efefef;
+    border: solid 1px #efefef;
 }
-.border-light-color{
-    border: 1px solid #EFEFEF;
+.border-light-color {
+    border: 1px solid #efefef;
 }
-.mtn-28{
+.mtn-28 {
     margin-top: -28px;
 }
-.pt-34{
+.pt-34 {
     padding-top: 34px;
 }
-.mb-05{
+.mb-05 {
     margin-bottom: 0.5rem !important;
 }
-.bg-none{
+.bg-none {
     background: none !important;
 }
-.navbar-inverse{
+.navbar-inverse {
     justify-content: flex-start !important;
-  }
+}
 
-  .tox .tox-dialog--width-lg, .tox .tox-dialog {
+.tox .tox-dialog--width-lg,
+.tox .tox-dialog {
     height: 547px !important;
-    max-height: 70% !important
+    max-height: 70% !important;
 }
 
 .tox .tox-dialog-wrap__backdrop {
     z-index: 5000;
 }
 
-  /*  Json Editor : start*/
+/*  Json Editor : start*/
 
-  .json-editor, div.jsoneditor-outer , .ace-jsoneditor, textarea.jsoneditor-text{
+.json-editor,
+div.jsoneditor-outer,
+.ace-jsoneditor,
+textarea.jsoneditor-text {
     min-height: 400px !important;
-  }
+}
 
-.jsoneditor-menu{
+.jsoneditor-menu {
     display: none;
 }
 
-.mt-6{
+.mt-6 {
     margin-top: 6rem !important;
 }
 
-.jsoneditor{
+.jsoneditor {
     height: 600px !important;
 }
- /*  Json Editor : end */
+/*  Json Editor : end */
 
- /*  Advance editor: start */
+/*  Advance editor: start */
 
- .formcomponents {
- padding-right: 5px !important;
- padding-left: 5px !important;
-
+.formcomponents {
+    padding-right: 5px !important;
+    padding-left: 5px !important;
 }
 
- /*  advance editor: End */
+/*  advance editor: End */
 
- /*   Gragesjs editor - start */
- .gjs-cv-canvas{
-     width: 70% !important;
- }
+/*   Gragesjs editor - start */
+.gjs-cv-canvas {
+    width: 70% !important;
+}
 
- .gjs-pn-panel{
+.gjs-pn-panel {
     width: 30% !important;
- }
+}
 
- .gjs-pn-options {
+.gjs-pn-options {
     right: 30% !important;
- }
+}
 
-.gjs-pn-btn{
-margin-right :15px !important;
+.gjs-pn-btn {
+    margin-right: 15px !important;
 }
 
 .gjs-pn-commands {
@@ -1048,25 +1037,26 @@ margin-right :15px !important;
 }
 
 .adv-btn {
-    color: #A6D4FF !important;
+    color: #a6d4ff !important;
     background-color: #100e0e9c !important;
     font-size: 14px !important;
     line-height: 18px !important;
     font-weight: 700 !important;
-  }
-  
-  .builder-sidebar_scroll {
+}
+
+.builder-sidebar_scroll {
     margin: -8px !important;
 }
 
-  .pcard {
+.pcard {
     background-color: #322931 !important;
-    color: #FFFFFF !important;
+    color: #ffffff !important;
 }
 
-.pcard-body, .card-body-container{
-    background: #1B2124;
-    color: #FFFFFF !important;
+.pcard-body,
+.card-body-container {
+    background: #1b2124;
+    color: #ffffff !important;
 }
 
 /* Start - ngx-editor css */
@@ -1082,88 +1072,89 @@ margin-right :15px !important;
     outline: none;
     font-size: 15px;
     margin-bottom: 5px;
-  }
-  
-  .content {
+}
+
+.content {
     padding: 0 18px;
     display: none;
     overflow: hidden;
     background-color: #f1f1f1;
-  }
-  
-  .ngx-text-editor{
+}
+
+.ngx-text-editor {
     background-color: #ffffff !important;
     font-size: 14px;
     height: 600px !important;
-  }
+}
 
-  .ngx-text-editor-textarea{
+.ngx-text-editor-textarea {
     height: 600px !important;
-  }
+}
 
-  .ngx-toolbar {
+.ngx-toolbar {
     display: none !important;
-  }
+}
 
-  /* End - ngx-editor css */
-  .custom-button {
+/* End - ngx-editor css */
+.custom-button {
     border-radius: 5px;
     font-weight: 600;
     font-size: 16px;
     padding: 12px 145px;
-  }
-  .blue-button{
-    background: #050C44;
+}
+.blue-button {
+    background: #050c44;
     color: #fff;
-  }
-  .p-32{
+}
+.p-32 {
     padding: 7px 32px !important;
-  }
-  .default-button{
+}
+.default-button {
     background: none;
-    color: #050C44;
-    border: solid 1px #050C44;
-  }
-  .mt-20{
+    color: #050c44;
+    border: solid 1px #050c44;
+}
+.mt-20 {
     margin-top: 20px;
-  }
-  .horizontal-line {
+}
+.horizontal-line {
     height: 0;
     width: 37%;
     margin: 0 auto;
-  }
-  .text-gray-0{
+}
+.text-gray-0 {
     color: #79787c;
-  }
-  .text-gray-100{
-    color: #A3A3A3;
-  }
-  .bg-gray-100{
-    background: #f5f5f5 ;
-  }
-  .text-orange{
+}
+.text-gray-100 {
+    color: #a3a3a3;
+}
+.bg-gray-100 {
+    background: #f5f5f5;
+}
+.text-orange {
     color: #ee8908;
-  }
-  .fs-10{
+}
+.fs-10 {
     font-size: 10px;
-  }
-  .fs-16{
+}
+.fs-16 {
     font-size: 16px;
-  }
-  .font-600{
+}
+.font-600 {
     font-weight: 600;
-  }
-  .pagination li:last-child a,.pagination li:first-child a{
+}
+.pagination li:last-child a,
+.pagination li:first-child a {
     border: none !important;
-      background: none !important;
-      font-size: 26px;
-  }
-  .title {
+    background: none !important;
+    font-size: 26px;
+}
+.title {
     color: #414141;
     font-size: 16px;
     text-align: center;
-  }
-  .center-loading {
+}
+.center-loading {
     position: fixed;
     z-index: 999;
     height: 2em;
@@ -1174,7 +1165,7 @@ margin-right :15px !important;
     left: 0;
     bottom: 0;
     right: 0;
-    color:azure;
+    color: azure;
 }
 
 /* Transparent Overlay */
@@ -1193,10 +1184,10 @@ margin-right :15px !important;
     width: 5rem;
     height: 5rem;
 }
-  .text-red{
-    color: #D64040;
-  }
-  .card {
+.text-red {
+    color: #d64040;
+}
+.card {
     padding: 15px 0;
     margin-bottom: 20px;
 
@@ -1224,13 +1215,13 @@ margin-right :15px !important;
         padding-right: 5px;
     }
 }
-.card{
+.card {
     border-radius: 22px !important;
 }
-.pb-55{
+.pb-55 {
     padding-bottom: 55px !important;
 }
-.box{
+.box {
     width: 33%;
     border: solid 1px #303972;
     border-radius: 7px;
@@ -1239,6 +1230,29 @@ margin-right :15px !important;
     background: #303972;
     color: #fff;
 }
-.gap-20{
+.gap-20 {
     gap: 20px;
+}
+
+.table-footer {
+    margin-bottom: 56px;
+    button {
+        margin-right: 30px !important;
+    }
+}
+
+::ng-deep {
+    .page-item.active .page-link {
+        background-color: var(--primaryColor);
+        border-color: var(--primaryColor);
+    }
+    .page-link {
+        border-radius: 50%;
+        color: #a098ae;
+        margin: 10px;
+        width: 45px;
+        line-height: 27px;
+        height: 45px;
+        text-align: center;
+    }
 }

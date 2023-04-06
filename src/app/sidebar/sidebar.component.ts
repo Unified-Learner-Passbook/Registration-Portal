@@ -23,6 +23,10 @@ export class SidebarComponent implements OnInit {
     this.initialize();
     this.getRouteData();
 
+    if (this.router.url === '/dashboard/register-entity') {
+      this.showInstructions = true;
+    }
+
     this.generalService.languageChange.subscribe((res) => {
       this.initialize();
     });
@@ -77,7 +81,7 @@ export class SidebarComponent implements OnInit {
     this.router.events.pipe(
       filter(e => e instanceof NavigationEnd))
       .subscribe((event: NavigationEnd) => {
-        this.showInstructions = event.url === '/register-entity';
+        this.showInstructions = event.url === '/dashboard/register-entity';
       });
   }
 }

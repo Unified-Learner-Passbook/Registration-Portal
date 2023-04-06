@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, throwError } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { GeneralService } from 'src/app/services/general/general.service';
@@ -39,7 +39,8 @@ export class DocViewComponent implements OnInit, OnDestroy {
         private readonly credentialService: CredentialService,
         private readonly toastMessage: ToastMessageService,
         private readonly activatedRoute: ActivatedRoute,
-        private readonly telemetryService: TelemetryService
+        private readonly telemetryService: TelemetryService,
+        private readonly authService: AuthService
     ) {
         const navigation = this.router.getCurrentNavigation();
         this.credential = navigation.extras.state;
@@ -82,8 +83,8 @@ export class DocViewComponent implements OnInit, OnDestroy {
             this.schemaId = this.credential.schemaId;
             this.getTemplate(this.schemaId).pipe(takeUntil(this.unsubscribe$))
                 .subscribe((res) => {
-                    this.templateId = res?.result?.[0]?.id;
-                    this.getPDF(res?.result?.[0]?.template);
+                    this.templateId = res?.id;
+                    this.getPDF(res?.template);
                 }, (error: any) => {
                     this.isLoading = false;
                     console.error("Something went wrong while fetching template!", error);
@@ -101,7 +102,33 @@ export class DocViewComponent implements OnInit, OnDestroy {
     }
 
     getTemplate(id: string): Observable<any> {
-        return this.generalService.getData(`https://ulp.uniteframework.io/ulp-bff/v1/sso/student/credentials/rendertemplateschema/${id}`, true)
+        return this.generalService.getData(`https://ulp.uniteframework.io/ulp-bff/v1/sso/student/credentials/rendertemplateschema/${id}`, true).pipe(
+            map((res: any) => {
+                if (res.result.length > 1) {
+                    const selectedLangKey = localStorage.getItem('setLanguage');
+                    const certExpireTime = new Date(this.credential.expirationDate).getTime();
+                    const currentDateTime = new Date().getTime();
+                    const isExpired = certExpireTime < currentDateTime;
+
+                    const type = isExpired ? `inactive-${selectedLangKey}` : `active-${selectedLangKey}`;
+                    const template = res.result.find((item: any) => item.type === type);
+
+                    if (template) {
+                        return template;
+                    } else {
+                        const genericTemplate = res.result.find((item: any) => item.type === 'Handlebar');
+                        if (genericTemplate) {
+                            return genericTemplate;
+                        } else {
+                            return res.result[0];
+                        }
+                    }
+                } else if (res.result.length === 1) {
+                    return res.result[0];
+                }
+                throwError('Template not attached to schema');
+            })
+        )
     }
 
     getPDF(template) {
@@ -141,7 +168,7 @@ export class DocViewComponent implements OnInit, OnDestroy {
     downloadCertificate(url) {
         let link = document.createElement("a");
         link.href = url;
-        link.download = 'certificate.pdf';
+        link.download = `${this.authService.currentUser?.name}_certificate.pdf`.replace(/\s+/g, '_');;
         link.style.visibility = 'hidden';
         document.body.appendChild(link);
         link.click();
@@ -151,7 +178,7 @@ export class DocViewComponent implements OnInit, OnDestroy {
     shareFile() {
         const pdf = new File([this.blob], "certificate.pdf", { type: "application/pdf" });
         const shareData = {
-            title: "Certificate",
+            title: `${this.authService.currentUser?.name}_certificate`.replace(/\s+/g, '_'),
             files: [pdf]
         };
 
@@ -174,38 +201,38 @@ export class DocViewComponent implements OnInit, OnDestroy {
 
     ngAfterViewInit(): void {
         this.raiseImpressionEvent();
-      }
-    
-      raiseInteractEvent(id: string, type: string = 'CLICK', subtype?: string) {
+    }
+
+    raiseInteractEvent(id: string, type: string = 'CLICK', subtype?: string) {
         console.log("raiseInteractEvent")
         const telemetryInteract: IInteractEventInput = {
-          context: {
-            env: this.activatedRoute.snapshot?.data?.telemetry?.env,
-            cdata: []
-          },
-          edata: {
-            id,
-            type,
-            subtype,
-            pageid: this.activatedRoute.snapshot?.data?.telemetry?.pageid,
-          }
+            context: {
+                env: this.activatedRoute.snapshot?.data?.telemetry?.env,
+                cdata: []
+            },
+            edata: {
+                id,
+                type,
+                subtype,
+                pageid: this.activatedRoute.snapshot?.data?.telemetry?.pageid,
+            }
         };
         this.telemetryService.interact(telemetryInteract);
-      }
-    
-      raiseImpressionEvent() {
+    }
+
+    raiseImpressionEvent() {
         const telemetryImpression: IImpressionEventInput = {
-          context: {
-            env: this.activatedRoute.snapshot?.data?.telemetry?.env,
-            cdata: []
-          },
-          edata: {
-            type: this.activatedRoute.snapshot?.data?.telemetry?.type,
-            pageid: this.activatedRoute.snapshot?.data?.telemetry?.pageid,
-            uri: this.router.url,
-            subtype: this.activatedRoute.snapshot?.data?.telemetry?.subtype,
-          }
+            context: {
+                env: this.activatedRoute.snapshot?.data?.telemetry?.env,
+                cdata: []
+            },
+            edata: {
+                type: this.activatedRoute.snapshot?.data?.telemetry?.type,
+                pageid: this.activatedRoute.snapshot?.data?.telemetry?.pageid,
+                uri: this.router.url,
+                subtype: this.activatedRoute.snapshot?.data?.telemetry?.subtype,
+            }
         };
         this.telemetryService.impression(telemetryImpression);
-      }
+    }
 }

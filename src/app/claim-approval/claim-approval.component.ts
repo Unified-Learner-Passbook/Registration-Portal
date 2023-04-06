@@ -13,11 +13,13 @@ import { ToastMessageService } from '../services/toast-message/toast-message.ser
   styleUrls: ['./claim-approval.component.scss']
 })
 export class ClaimApprovalComponent implements OnInit {
-  public studentDetails = []
+  studentDetails = []
+  tableRows: any[] = [];
   isApproveConfirmed = false;
   userConsent = false;
+  isLoading = false;
   consentModalRef: NgbModalRef;
-  public selectedUser: any;
+  selectedUser: any;
   modelRef: any;
   rejectModelRef: any;
   statusValues = [
@@ -42,6 +44,9 @@ export class ClaimApprovalComponent implements OnInit {
     status: 'pending'
   }
 
+  page = 1;
+  pageSize = 10;
+
   @ViewChild('approveModal') approveModal: TemplateRef<any>
   @ViewChild('rejectModal') rejectModal: TemplateRef<any>
 
@@ -60,14 +65,18 @@ export class ClaimApprovalComponent implements OnInit {
     this.getStudentDetail()
   }
 
-  getStudentDetail(claim_status = "pending") {
-    var search = {
+  getStudentDetail(claimStatus = "pending") {
+    const search = {
       "filters": {
         "claim_status": {
-          "eq": claim_status
+          "eq": claimStatus
         }
       }
     }
+    this.isLoading = true;
+    this.studentDetails = [];
+    this.tableRows = [];
+    this.page = 1;
     this.generalService.postStudentData('/studentDetail', search).subscribe((res) => {
 
       console.log('studentDetail length', res.result.length);
@@ -75,15 +84,17 @@ export class ClaimApprovalComponent implements OnInit {
       this.studentDetails = res.result.map((item: any) => {
         return { ...item, osCreatedAt: this.generalService.getDaysDifference(item.osCreatedAt) }
       });
-
+      this.pageChange();
+      this.isLoading = false;
     }, (err) => {
-      this.toastService.error('', 'Error while fetching data')
+      this.toastService.error('', 'Error while fetching data');
+      this.isLoading = false;
       console.log('error', err);
     });
   }
 
   approveStudent(user) {
-    var payload = {
+    const payload = {
       "issuer": this.authService.schoolDetails?.did,
       "credentialSubject": {
         //studentDetail:
@@ -121,7 +132,7 @@ export class ClaimApprovalComponent implements OnInit {
   }
 
   rejectStudent(user) {
-    var payload = {
+    const payload = {
       "issuer": this.authService.schoolDetails?.did,
       "credentialSubject": {
         //studentDetail:
@@ -178,7 +189,7 @@ export class ClaimApprovalComponent implements OnInit {
     this.getStudentDetail(this.model.status)
   }
 
-  rejcetPopup(user) {
+  rejectPopup(user) {
     this.selectedUser = user;
     this.rejectModelRef = this.modalService.open(this.rejectModal)
   }
@@ -192,6 +203,13 @@ export class ClaimApprovalComponent implements OnInit {
     if (isConfirmed) {
       this.rejectStudent(this.selectedUser);
     }
+  }
+
+  pageChange() {
+    this.tableRows = this.studentDetails.map((row, i) => row).slice(
+      (this.page - 1) * this.pageSize,
+      (this.page - 1) * this.pageSize + this.pageSize,
+    );
   }
 
   ngAfterViewInit(): void {

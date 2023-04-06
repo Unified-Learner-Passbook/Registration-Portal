@@ -34,7 +34,7 @@
   width: 100%;
   white-space: nowrap;
   overflow: auto;
-  height: 385px;
+  max-height: 385px;
 }
 
 table {
@@ -66,13 +66,6 @@ table {
 .title {
   color: #414141;
   font-size: 16px;
-}
-
-.table-footer {
-  margin-bottom: 56px;
-  button {
-    margin-right: 30px !important;
-  }
 }
 
 ::ng-deep {
