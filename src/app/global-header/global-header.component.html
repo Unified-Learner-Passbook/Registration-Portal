@@ -27,10 +27,19 @@
   </div>
   <div class="d-flex header-btns">
     <div>
-      <select class="selectpicker pr-3 mr-3" *ngIf="languages?.length" data-width="fit" [(ngModel)]="selectedLanguage"
+      <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle language" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" *ngIf="languages?.length" data-width="fit" [(ngModel)]="selectedLanguage"
+        (ngModelChange)="changeLanguage()">
+         <i class="fa fa-globe text-white"></i> Language
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <a class="dropdown-item" href="#" *ngFor="let language of languages" [value]="language.code">{{language.name}}</a>
+        </div>
+      </div>
+      <!-- <select class="selectpicker pr-3 mr-3" *ngIf="languages?.length" data-width="fit" [(ngModel)]="selectedLanguage"
         (ngModelChange)="changeLanguage()">
         <option *ngFor="let language of languages" [value]="language.code">{{language.name}}</option>
-      </select>
+      </select> -->
     </div>
     <div>
       <div class="dropdown">
