@@ -6,7 +6,7 @@
   <div class="col-md-8">
     <div class="form-group row">
       <label class="col-sm-2 col-form-label">{{'SELECT_STATUS' | translate}} :</label>
-      <select class="w-50 form-control" aria-label="Default select example" [(ngModel)]="model.status"
+      <select class="w-20 form-control" aria-label="Default select example" [(ngModel)]="model.status"
         (ngModelChange)="onModelChange()" #status="ngModel">
         <option [ngValue]="undefined" [disabled]="true">{{'SELECT_STATUS' | translate}}</option>
         <option *ngFor="let status of statusValues" [value]="status.value">{{status.label}}</option>

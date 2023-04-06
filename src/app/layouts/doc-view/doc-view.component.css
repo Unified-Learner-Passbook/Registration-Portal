@@ -1,0 +1,5 @@
+.ngx-extended-pdf-viewer{
+    display: block;
+    overflow: hidden;
+    height: 480px;
+}
