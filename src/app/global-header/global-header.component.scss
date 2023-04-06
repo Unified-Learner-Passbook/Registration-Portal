@@ -60,7 +60,14 @@ header {
   border: solid 1px #303972 !important;
   color: #303972 !important;
   background: #fff !important;
+  padding: 5px 27px;
+  border-radius: 5px;
   i{
     color: #303972 !important;
   }
+}
+.fa-globe{
+  margin-left: 10px;
+  position: absolute;
+  top: 10px;
 }
