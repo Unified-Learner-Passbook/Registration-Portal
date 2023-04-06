@@ -313,10 +313,7 @@ $primary-color-dark: #000;
     color: $primary-color-dark;
 }
 
-html,
-body {
-    height: 100%;
-}
+
 
 body {
     margin: 0;
@@ -1255,4 +1252,7 @@ textarea.jsoneditor-text {
         height: 45px;
         text-align: center;
     }
+}
+.min-375{
+    min-height: 375px;
 }
