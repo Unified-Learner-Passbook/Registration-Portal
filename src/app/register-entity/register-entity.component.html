@@ -96,7 +96,7 @@
 
 <div class="text-center" *ngIf="strictLoader">
   <!-- TODO: Add Progressbar on loader -->
-  <ngb-progressbar *ngIf="true" type="info" [value]="progress" [striped]="true"
+  <ngb-progressbar *ngIf="showProgress" type="info" [value]="progress" [striped]="true"
     [animated]="true">{{progress}}%</ngb-progressbar>
   <div class="center-loading">
     <div class="spinner-border">
@@ -113,15 +113,15 @@
         <table>
           <tr>
             <td>Successfully Registered</td>
-            <td>{{bulkRegRes.success_count}}</td>
+            <td>{{bulkRegRes?.success_count}}</td>
           </tr>
           <tr>
             <td>Duplicate Records</td>
-            <td>{{bulkRegRes.duplicate_count}}</td>
+            <td>{{bulkRegRes?.duplicate_count}}</td>
           </tr>
           <tr>
             <td>Unable to Register</td>
-            <td>{{bulkRegRes.error_count}}</td>
+            <td>{{bulkRegRes?.error_count}}</td>
           </tr>
         </table>
       </div>
@@ -143,11 +143,11 @@
         <table>
           <tr>
             <td>Successfully Issued</td>
-            <td>{{bulkIssuedCredRes.success_count}}</td>
+            <td>{{bulkIssuedCredRes?.success_count}}</td>
           </tr>
           <tr>
             <td>Unable to Issue a credential</td>
-            <td>{{bulkIssuedCredRes.error_count}}</td>
+            <td>{{bulkIssuedCredRes?.error_count}}</td>
           </tr>
         </table>
       </div>
