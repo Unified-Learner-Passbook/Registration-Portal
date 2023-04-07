@@ -47,29 +47,18 @@
     </div>
   </div>
   <div class="student-list">
-    <ngb-progressbar *ngIf="showProgress" type="info" class="pt-4"  [value]="progress" [striped]="true"
-      [animated]="true">{{progress}}%</ngb-progressbar>
+    <h6 class="pt-4">Registered Students
+      <i style="font-weight: normal;font-size: small;">(Following students are
+        Registered but credentials are not issued against them)</i>
+    </h6>
+    <!-- <ngb-progressbar *ngIf="showProgress" type="info" class="pt-4" [value]="progress" [striped]="true"
+      [animated]="true">{{progress}}%</ngb-progressbar> -->
     <div class="d-flex justify-content-center pt-4" *ngIf="isLoading">
       <div class="spinner-border" role="status">
         <span class="sr-only">{{'LOADING' | translate }}</span>
       </div>
     </div>
-    <ngb-alert type="danger" *ngIf="errorMessage" class="pt-4">{{ errorMessage }}</ngb-alert>
-    <table class="table" cellpadding="0" cellspacing="0" *ngIf="false">
-      <thead>
-        <tr>
-          <th scope="col" *ngFor="let columnValue of tableColumns">{{columnValue | titlecase}}</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let rowValues of tableRows; index as i">
-          <td *ngFor="let item of rowValues">{{ item }}</td>
-          <td><img src="assets/icons/edit.svg" alt="Edit Details" class="img-btn"></td>
-          <td><img src="assets/icons/delete.svg" alt="Delete Details" class="img-btn"></td>
-        </tr>
-      </tbody>
-    </table>
-
+    <!-- <ngb-alert type="danger" *ngIf="errorMessage" class="pt-4">{{ errorMessage }}</ngb-alert> -->
     <table class="table" cellpadding="0" cellspacing="0" *ngIf="studentList?.length">
       <thead>
         <tr>
@@ -92,55 +81,7 @@
     </table>
 
     <p class="text-center mt-4" *ngIf="!isLoading && !studentList?.length">{{'NO_RECORDS_FOUND' | translate}}</p>
-
-
-    <!-- UI static table below -->
-    <!-- <table class="table" cellpadding="0" cellspacing="0">
-      <thead>
-        <tr>
-          <th>Verified</th>
-          <th>Name</th>
-          <th>ID</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-        <td class="verify"><img src="assets/images/verifyicon.png" alt=""></td>
-        <td>wewe</td>
-        <td>wewe</td>
-        <td></td>
-        </tr>
-        <tr>
-          <td class="verify"><img src="assets/images/verifyicon.png" alt=""></td>
-          <td>wewe</td>
-          <td>wewe</td>
-          <td></td>
-          </tr> <tr>
-            <td class="verify"><img src="assets/images/verifyicon.png" alt=""></td>
-            <td>wewe</td>
-            <td>wewe</td>
-            <td></td>
-            </tr> <tr>
-              <td class="warning"><img src="assets/images/warningicon.png" alt=""></td>
-              <td>wewe</td>
-              <td>wewe</td>
-              <td><button type="button" class="btn-warn">Verify !</button></td>
-              </tr> <tr>
-                <td class="verify"><img src="assets/images/verifyicon.png" alt=""></td>
-                <td>wewe</td>
-                <td>wewe</td>
-                <td><img src="assets/images/checkicon.png" alt="" class="pr-22"><img src="assets/images/closecheck.png" alt=""></td>
-              </tr>
-      </tbody>
-    </table> -->
   </div>
-  <!-- <div class="d-flex justify-content-end align-items-start p-2 pb-3 pt-5 table-footer" *ngIf="allDataRows?.length">
-    <button type="button" class="custom-button blue-button mt-10 p-65" (click)="saveAndVerify()">Save and Verify Student</button>
-    <ngb-pagination class="ml-2" [collectionSize]="allDataRows?.length" [(page)]="page" [pageSize]="pageSize"
-      (pageChange)="pageChange()">
-    </ngb-pagination>
-  </div> -->
 
   <div class="d-flex justify-content-end align-items-start p-2 pb-3 pt-5 table-footer" *ngIf="studentList?.length">
     <button type="button" class="custom-button blue-button mt-10 p-65"
@@ -152,32 +93,87 @@
   </div>
 </div>
 
+
+<div class="text-center" *ngIf="strictLoader">
+  <!-- TODO: Add Progressbar on loader -->
+  <ngb-progressbar *ngIf="true" type="info" [value]="progress" [striped]="true"
+    [animated]="true">{{progress}}%</ngb-progressbar>
+  <div class="center-loading">
+    <div class="spinner-border">
+    </div>
+  </div>
+</div>
+
 <ng-template #downloadResModal>
   <div class="modal-content">
     <div class="modal-body fs-14">
-      <h5 class="py-3 text-center">Do you want save response for registered Students?</h5>
+
+      <div>
+        <h6>Report</h6>
+        <table>
+          <tr>
+            <td>Successfully Registered</td>
+            <td>{{bulkRegRes.success_count}}</td>
+          </tr>
+          <tr>
+            <td>Duplicate Records</td>
+            <td>{{bulkRegRes.duplicate_count}}</td>
+          </tr>
+          <tr>
+            <td>Unable to Register</td>
+            <td>{{bulkRegRes.error_count}}</td>
+          </tr>
+        </table>
+      </div>
+
+      <h5 class="py-3 text-center">Do you want save detailed report?</h5>
     </div>
     <div class="modal-footer">
-      <button type="button" class="btn btn-light" (click)="closeSaveResponseModal()">No</button>
-      <button type="button" class="btn btn-primary" (click)="saveResponse()">Yes</button>
+      <!-- <button type="button" class="btn btn-light" (click)="closeSaveResponseModal()">No</button> -->
+      <button type="button" class="btn btn-primary" (click)="downloadBulkRegisterResponse()">Download</button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #downloadIssuedResModal>
+  <div class="modal-content">
+    <div class="modal-body fs-14">
+      <div>
+        <h6>Report</h6>
+        <table>
+          <tr>
+            <td>Successfully Issued</td>
+            <td>{{bulkIssuedCredRes.success_count}}</td>
+          </tr>
+          <tr>
+            <td>Unable to Issue a credential</td>
+            <td>{{bulkIssuedCredRes.error_count}}</td>
+          </tr>
+        </table>
+      </div>
+
+      <h5 class="py-3 text-center">Do you want download detailed report?</h5>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-primary" (click)="downloadIssuedCredResponse()">Download</button>
     </div>
   </div>
 </ng-template>
 
 <ng-template #declarationModal tabindex="-1" role="dialog" aria-labelledby="declarationModal">
   <div class="modal-content">
-      <div class="modal-body fs-14">
-          {{'USER_CONSENT' | translate}}
-          <div class="d-flex justify-content-center">
-              <button type="button" (click)="submitDeclarationForm(false)"
-                  class="custom-button default-button mt-20 mr-5 p-32 fs-14" (click)="raiseInteractEvent('no-cancel')">
-                  {{'NO_CANCEL' | translate}}
-              </button>
-              <button type="button" (click)="submitDeclarationForm(true)"
-                  class="custom-button blue-button mt-20 p-32 fs-14" (click)="raiseInteractEvent('yes-confirm')">
-                  {{'YES_CONFIRM' | translate}}
-              </button>
-          </div>
+    <div class="modal-body fs-14">
+      {{'USER_CONSENT' | translate}}
+      <div class="d-flex justify-content-center">
+        <button type="button" (click)="submitDeclarationForm(false)"
+          class="custom-button default-button mt-20 mr-5 p-32 fs-14" (click)="raiseInteractEvent('no-cancel')">
+          {{'NO_CANCEL' | translate}}
+        </button>
+        <button type="button" (click)="submitDeclarationForm(true)" class="custom-button blue-button mt-20 p-32 fs-14"
+          (click)="raiseInteractEvent('yes-confirm')">
+          {{'YES_CONFIRM' | translate}}
+        </button>
       </div>
+    </div>
   </div>
 </ng-template>

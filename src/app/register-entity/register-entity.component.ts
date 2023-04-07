@@ -13,9 +13,10 @@ import { NgbModal, NgbModalOptions, NgbModalRef } from '@ng-bootstrap/ng-bootstr
 import { ActivatedRoute, Router } from '@angular/router';
 import { TelemetryService } from '../services/telemetry/telemetry.service';
 import { IImpressionEventInput, IInteractEventInput } from '../services/telemetry/telemetry-interface';
+import { UtilService } from '../services/util/util.service';
 
 
-const BATCH_LIMIT = 20;
+const BATCH_LIMIT = 10;
 @Component({
   selector: 'app-register-entity',
   templateUrl: './register-entity.component.html',
@@ -24,50 +25,7 @@ const BATCH_LIMIT = 20;
 export class RegisterEntityComponent implements OnInit {
   tableColumns: string[] = [];
   tableRows: any[] = [];
-  allDataRows: any[] = [];
   parsedCSV: any[] = [];
-  grades = [
-    {
-      label: '1st',
-      value: 'class-1'
-    },
-    {
-      label: '2nd',
-      value: 'class-2'
-    },
-    {
-      label: '3rd',
-      value: 'class-3'
-    },
-    {
-      label: '4th',
-      value: 'class-4'
-    },
-    {
-      label: '5th',
-      value: 'class-5'
-    },
-    {
-      label: '6th',
-      value: 'class-6'
-    },
-    {
-      label: '7th',
-      value: 'class-7'
-    },
-    {
-      label: '8th',
-      value: 'class-8'
-    },
-    {
-      label: '9th',
-      value: 'class-9'
-    },
-    {
-      label: '10th',
-      value: 'class-10'
-    },
-  ];
   certificateTypes = [
     {
       label: 'Proof of Enrollment',
@@ -92,6 +50,7 @@ export class RegisterEntityComponent implements OnInit {
   currentYear = new Date().getFullYear();
   academicYearRange: string[] = [];
   model: any = {};
+  grades: any[];
   isLoading = false;
   showProgress = false;
   progress = 0;
@@ -99,13 +58,19 @@ export class RegisterEntityComponent implements OnInit {
   totalBatches: number;
   studentList: any[];
 
+  strictLoader = false;
+
   page = 1;
-  pageSize = 30;
+  pageSize = 20;
 
   bulkRegRes: any;
+  bulkIssuedCredRes: any;
   downloadResModalRef: NgbModalRef;
+  downloadIssuedResModalRef: NgbModalRef;
   declarationModalRef: NgbModalRef;
+
   @ViewChild('downloadResModal') downloadResModal: TemplateRef<any>;
+  @ViewChild('downloadIssuedResModal') downloadIssuedResModal: TemplateRef<any>;
   @ViewChild('declarationModal') declarationModal: TemplateRef<any>;
 
   errorMessage: string;
@@ -118,11 +83,24 @@ export class RegisterEntityComponent implements OnInit {
     private readonly generalService: GeneralService,
     private readonly router: Router,
     private readonly activatedRoute: ActivatedRoute,
-    private readonly telemetryService: TelemetryService
+    private readonly telemetryService: TelemetryService,
+    private readonly utilService: UtilService
   ) { }
 
   ngOnInit(): void {
+    this.utilService.getNumberOrdinals(1, 10);
     this.setAcademicYear();
+    this.setGrades();
+  }
+
+  setGrades() {
+    const ordinals = this.utilService.getNumberOrdinals(1, 10);
+    this.grades = ordinals.map((item: string, index: number) => {
+      return {
+        label: item,
+        value: `class-${index + 1}`
+      }
+    });
   }
 
   setAcademicYear() {
@@ -133,19 +111,9 @@ export class RegisterEntityComponent implements OnInit {
   }
 
   downloadTemplate() {
-    // let link = document.createElement("a");
-    // link.setAttribute('type', 'hidden');
-    // link.download = "registration-template";
-    // link.href = "assets/template/registration-template.csv";
-    // link.click();
-    // link.remove();
-
-    console.log('model', this.model);
     this.model.certificateType = 'proofOfEnrollment';
     if (this.model?.certificateType) {
       const schemaId = this.certificateTypes.find(item => item.value === this.model.certificateType)?.schemaId;
-
-      // this.csvService.getTemplateSchema('did:ulpschema:8b8eda70-6dfb-43e6-8a8a-6084188ce516')
       this.csvService.getTemplateSchema(schemaId)
         .pipe(
           tap((res: any) => {
@@ -165,26 +133,31 @@ export class RegisterEntityComponent implements OnInit {
     }
   }
 
-  resetTableData() {
-    this.errorMessage = '';
-    this.tableColumns = [];
-    this.tableRows = [];
-    this.allDataRows = [];
-  }
+  // resetTableData() {
+  //   this.errorMessage = '';
+  //   this.tableColumns = [];
+  //   this.tableRows = [];
+  //   this.allDataRows = [];
+  // }
 
   public async importDataFromCSV(event: any) {
     try {
       // this.resetTableData();
       this.parsedCSV = await this.parseCSVFile(event);
+
+      if (!this.parsedCSV.length) {
+        throw new Error('It seems you have uploaded empty csv file, please upload valid csv file');
+      }
+
       // const columns = Object.keys(this.parsedCSV[0]);
       // this.tableColumns = columns.map((header: string) => header.replace(/_/g, " ").trim());
       this.tableColumns = Object.keys(this.parsedCSV[0]);
-      this.allDataRows = this.parsedCSV.map(item => Object.values(item));
-
-      this.saveAndVerify();
+      // this.allDataRows = this.parsedCSV.map(item => Object.values(item));
+      this.uploadCsvValues();
       this.pageChange();
     } catch (error) {
       this.errorMessage = error?.message ? error.message : this.generalService.translateString('ERROR_WHILE_PARSING_CSV_FILE');
+      this.toastMsg.error('', this.errorMessage);
       console.warn("Error while parsing csv file", error);
     }
   }
@@ -195,6 +168,7 @@ export class RegisterEntityComponent implements OnInit {
         header: true,
         skipEmptyLines: true,
         error: (err) => {
+          console.error("err", err);
           console.warn("Error while parsing CSV file", err);
           reject(err);
         },
@@ -222,22 +196,22 @@ export class RegisterEntityComponent implements OnInit {
     );
   }
 
-  saveAndVerify() {
+  uploadCsvValues() {
     console.log("parsedCSV", this.parsedCSV);
     console.log("model", this.model);
 
     const dataBatches = _.chunk(this.parsedCSV, BATCH_LIMIT);
     console.log("dataBatches", dataBatches);
-    this.isLoading = true;
+    this.strictLoader = true;
     this.showProgress = true;
     this.progress = 0;
+    this.currentBatch = 0;
     this.totalBatches = dataBatches.length;
 
     this.bulkRegRes = {};
     from(dataBatches)
       .pipe(
         concatMap((data: any[]) => {
-          // return this.importData(data)
           return this.bulkRegister(data)
         }),
         tap((response) => {
@@ -248,12 +222,10 @@ export class RegisterEntityComponent implements OnInit {
         toArray()
       ).subscribe((res) => {
         console.log("final", res);
-        this.bulkRegRes = res;
         this.toastMsg.success('', this.generalService.translateString('STUDENTS_DATA_IMPORTED_SUCCESSFULLY'));
-        // this.resetTableData();
         this.getStudentList();
-        this.openDownloadResponsePopup();
-        this.isLoading = false;
+        this.generateBulkRegisterResponse(res);
+        this.strictLoader = false;
         setTimeout(() => {
           this.progress = 1;
           this.showProgress = false;
@@ -261,11 +233,49 @@ export class RegisterEntityComponent implements OnInit {
       }, (error) => {
         console.log("error", error);
         this.bulkRegRes = error;
-        this.openDownloadResponsePopup();
+        // this.generateBulkRegisterResponse(res);
         this.toastMsg.error('', this.generalService.translateString('ERROR_WHILE_IMPORTING_DATA'));
-        this.isLoading = false;
+        this.strictLoader = false;
         this.showProgress = false;
       });
+  }
+
+  generateBulkRegisterResponse(response: any) {
+    this.bulkRegRes = response.reduce((prev, current) => {
+      const currentCSV = current.result.map((item) => {
+        return {
+          ...item.studentDetails,
+          status: item.status,
+          error: item.error
+        }
+      });
+      return {
+        success_count: prev.success_count + current.success_count,
+        error_count: prev.error_count + current.error_count,
+        duplicate_count: prev.duplicate_count + current.duplicate_count,
+        csv: prev.csv.concat(currentCSV)
+      }
+    }, {
+      success_count: 0,
+      error_count: 0,
+      duplicate_count: 0,
+      csv: []
+    });
+    this.downloadResModalRef = this.openModal(this.downloadResModal);
+  }
+
+
+  generateBulkIssueCredentialResponse(response: any) {
+    this.bulkIssuedCredRes.error_count = response.error_count;
+    this.bulkIssuedCredRes.success_count = response.success_count;
+    this.bulkIssuedCredRes.csv = response.result.map((item: any) => {
+      return {
+        ...item.credentialSubject,
+        status: item.status,
+        error: item?.error?.code ? item.error.code : ''
+      }
+    });
+    this.downloadIssuedResModalRef = this.openModal(this.downloadIssuedResModal);
   }
 
   importData(list: any[]) {
@@ -336,13 +346,17 @@ export class RegisterEntityComponent implements OnInit {
   }
 
   openDeclarationModal() {
+    this.declarationModalRef = this.openModal(this.declarationModal);
+  }
+
+  openModal(content: TemplateRef<any>) {
     const options: NgbModalOptions = {
       backdrop: 'static',
       animation: true,
       centered: true,
       size: 'md'
     }
-    this.declarationModalRef = this.modalService.open(this.declarationModal, options);
+    return this.modalService.open(content, options);
   }
 
   submitDeclarationForm(isConfirmed: boolean) {
@@ -354,7 +368,9 @@ export class RegisterEntityComponent implements OnInit {
   }
 
   issueBulkCredentials() {
-    this.isLoading = true;
+    //TODO: add batching
+    this.strictLoader = true;
+    this.bulkIssuedCredRes = {};
     const date = new Date();
     const nextYear = new Date(new Date().setFullYear(new Date().getFullYear() + 1))
     const request = {
@@ -386,56 +402,30 @@ export class RegisterEntityComponent implements OnInit {
     }
 
     this.dataService.post(request).subscribe((res: any) => {
-      this.isLoading = false;
-
-      // this.openDownloadResponsePopup();
+      this.strictLoader = false;
       if (res.success) {
         this.getStudentList();
+        this.generateBulkIssueCredentialResponse(res);
         this.toastMsg.success("", this.generalService.translateString('CREDENTIAL_ISSUED_SUCCESSFULLY'));
       } else {
         this.toastMsg.error("", this.generalService.translateString('ERROR_WHILE_ISSUING_CREDENTIALS'));
       }
     }, (error: any) => {
-      this.isLoading = false;
+      this.strictLoader = false;
       this.toastMsg.error("", this.generalService.translateString('ERROR_WHILE_ISSUING_CREDENTIALS'));
     });
   }
 
-  openDownloadResponsePopup() {
-    const options: NgbModalOptions = {
-      backdrop: 'static',
-      animation: true,
-      centered: true,
-      size: 'md'
-    }
-    this.downloadResModalRef = this.modalService.open(this.downloadResModal, options);
-  }
-
-  saveResponse() {
+  downloadBulkRegisterResponse() {
     this.downloadResModalRef.close();
-    const blob = new Blob([JSON.stringify(this.bulkRegRes)], { type: 'application/json' });
-    const url = window.URL.createObjectURL(blob);
-    let link = document.createElement("a");
-    link.href = url;
-    link.download = 'response.json';
-    link.style.visibility = 'hidden';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    const csv = Papa.unparse(this.bulkRegRes.csv);
+    this.utilService.downloadFile(`${this.model.grade}-registration-report.csv`, 'text/csv;charset=utf-8;', csv);
   }
 
-  closeSaveResponseModal() {
-    this.downloadResModalRef.close();
-  }
-
-  closeModal(modal: string) {
-    if (modal === 'download') {
-      this.downloadResModalRef.close();
-    }
-
-    if (modal === 'declaration') {
-      this.declarationModalRef.close();
-    }
+  downloadIssuedCredResponse() {
+    this.downloadIssuedResModalRef.close();
+    const csv = Papa.unparse(this.bulkIssuedCredRes.csv);
+    this.utilService.downloadFile(`${this.model.grade}-credentials-report.csv`, 'text/csv;charset=utf-8;', csv);
   }
 
   ngAfterViewInit(): void {
