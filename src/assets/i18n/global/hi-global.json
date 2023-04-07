@@ -267,14 +267,11 @@
   "SELECT_USER_TYPE": "उपयोगकर्ता प्रकार का चयन करें",
   "PRINCIPAL":"प्रधान अध्यापक",
   "BLOCK_EDUCATIONAL_OFFICER":"प्रखंड शिक्षा पदाधिकारी",
-
   "YOUR_SESSION_EXPIRE":"आपका सत्र समाप्त हो गया है! फिर से लॉगिन करने का प्रयास करें",
   "ERROR_WHILE_LOGIN":"लॉग इन करते समय त्रुटि",
   "SUCCESSFULLY_LINKED":"सफलतापूर्वक लिंक किया गया!",
   "USER_REGISTERED_SUCCESSFULLY":"उपयोगकर्ता सफलतापूर्वक पंजीकृत!",
   "SELECT_YOUR_DEPARTMENT":"अपने विभाग का चयन करें",
-
- 
   "ACCOUNT": "खाता",
   "WELCOME_NOTE": "स्वागत है {{name}}, आपने अपनी पहचान सफलतापूर्वक सत्यापित कर ली है",
   "MY_PROFILE": "मेरी प्रोफाइल",
@@ -287,8 +284,6 @@
   "APPROVED": "अनुमत",
   "REJECTED": "अस्वीकार",
   "ISSUED": "जारी",
-
-
   "LOADING_PLEASE_WAIT":"लोड हो रहा है कृपया प्रतीक्षा करें",
   "VERIFIED":"सत्यापित",
   "SCHOOL_NOT_AVAILABLE":"स्कूल उपलब्ध नहीं है",
@@ -309,25 +304,4 @@
   "ARE_YOU_SURE_WANT_TO_APPROVE":"क्या आप निश्चित रूप से स्वीकृति देना चाहते हैं",
   "ARE_YOU_SURE_WANT_TO_REJECT":"क्या आप निश्चित रूप से अस्वीकार करना चाहते हैं",
   "SHARED_OPERATION_FAILED":"साझा कार्रवाई विफल!"
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
 }
