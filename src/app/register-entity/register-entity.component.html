@@ -52,10 +52,13 @@
     </h6>
     <!-- <ngb-progressbar *ngIf="showProgress" type="info" class="pt-4" [value]="progress" [striped]="true"
       [animated]="true">{{progress}}%</ngb-progressbar> -->
-    <div class="d-flex justify-content-center pt-4" *ngIf="isLoading">
+    <div class="text-center pt-4" *ngIf="isLoading">
       <div class="spinner-border" role="status">
         <span class="sr-only">{{'LOADING' | translate }}</span>
       </div>
+      <div class="text-center">
+        Please wait....
+      </div> 
     </div>
     <!-- <ngb-alert type="danger" *ngIf="errorMessage" class="pt-4">{{ errorMessage }}</ngb-alert> -->
     <table class="table" cellpadding="0" cellspacing="0" *ngIf="studentList?.length">

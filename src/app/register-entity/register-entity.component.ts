@@ -346,15 +346,16 @@ export class RegisterEntityComponent implements OnInit {
   }
 
   openDeclarationModal() {
-    this.declarationModalRef = this.openModal(this.declarationModal);
+
+    this.declarationModalRef = this.openModal(this.declarationModal, 'md');
   }
 
-  openModal(content: TemplateRef<any>) {
+  openModal(content: TemplateRef<any>,size='sm') {
     const options: NgbModalOptions = {
       backdrop: 'static',
       animation: true,
       centered: true,
-      size: 'sm'
+      size
     }
     return this.modalService.open(content, options);
   }
