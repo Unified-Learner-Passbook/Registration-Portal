@@ -114,6 +114,10 @@ function initConfig(config: AppConfig) {
   return () => config.load()
 }
 
+export function createTranslateLoader(http: HttpClient) {
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
+
 import ISO6391 from 'iso-639-1';
 import { PagesComponent } from './pages/pages.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
@@ -221,7 +225,9 @@ console.log(configData['default']);
     NgSelectModule,
 
     HttpClientModule,
-    TranslateModule.forRoot(),
+    TranslateModule.forRoot({
+      loader: { provide: TranslateLoader, useFactory: (createTranslateLoader), deps: [HttpClient] }
+    }),
 
     WebcamModule,
     ColorPickerModule,
@@ -295,12 +301,12 @@ console.log(configData['default']);
     //   deps: [KeycloakService, AuthConfigService],
     // },
     // { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { floatLabel: 'always' } },
-    {
-      provide: APP_INITIALIZER,
-      useFactory: initLang,
-      deps: [HttpClient, TranslateService],
-      multi: true
-    },
+    // {
+    //   provide: APP_INITIALIZER,
+    //   useFactory: initLang,
+    //   deps: [HttpClient, TranslateService],
+    //   multi: true
+    // },
     {
       provide: APP_INITIALIZER,
       useFactory: initTheme,
@@ -315,6 +321,7 @@ export class AppModule {
   languages;
   constructor(translate: TranslateService, authConfig: AuthConfigService) {
 
+    translate.setDefaultLang('en');
     authConfig.getConfig().subscribe((config) => {
       this.languages = config.languages;
       var installed_languages = [];

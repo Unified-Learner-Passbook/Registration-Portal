@@ -364,12 +364,48 @@ export class RegisterEntityComponent implements OnInit {
     this.declarationModalRef.close();
 
     if (isConfirmed) {
-      this.issueBulkCredentials();
+      this.issueBatchCredential();
     }
   }
 
-  issueBulkCredentials() {
-    //TODO: add batching
+  issueBatchCredential() {
+    const studentBatches = _.chunk(this.studentList, BATCH_LIMIT);
+    this.strictLoader = true;
+    this.showProgress = true;
+    this.progress = 0;
+    this.currentBatch = 0;
+    this.totalBatches = studentBatches.length;
+
+    this.bulkRegRes = {};
+    from(studentBatches)
+      .pipe(
+        concatMap((data: any[]) => {
+          return this.issueBulkCredentials(data)
+        }),
+        tap((response) => {
+          console.log(response);
+          this.currentBatch++;
+          this.progress = Math.ceil((this.currentBatch / this.totalBatches) * 100);
+        }),
+        toArray()
+      ).subscribe((res) => {
+        this.getStudentList();
+        this.strictLoader = false;
+        setTimeout(() => {
+          this.progress = 1;
+          this.showProgress = false;
+        }, 2000);
+        this.generateBulkIssueCredentialResponse(res);
+        this.toastMsg.success("", this.generalService.translateString('CREDENTIAL_ISSUED_SUCCESSFULLY'));
+      }, (error: any) => {
+        this.strictLoader = false;
+        this.showProgress = false;
+        this.progress = 1;
+        this.toastMsg.error("", this.generalService.translateString('ERROR_WHILE_ISSUING_CREDENTIALS'));
+      });
+  }
+
+  private issueBulkCredentials(studentList: any[]) {
     this.strictLoader = true;
     this.bulkIssuedCredRes = {};
     const date = new Date();
@@ -381,7 +417,7 @@ export class RegisterEntityComponent implements OnInit {
           "grade": this.model.grade,
           "academicYear": this.model.academicYear
         },
-        "credentialSubject": this.studentList.map((item: any) => {
+        "credentialSubject": studentList.map((item: any) => {
           return {
             "id": item.did,
             "enrolledOn": date.toISOString(),
@@ -402,19 +438,7 @@ export class RegisterEntityComponent implements OnInit {
       }
     }
 
-    this.dataService.post(request).subscribe((res: any) => {
-      this.strictLoader = false;
-      if (res.success) {
-        this.getStudentList();
-        this.generateBulkIssueCredentialResponse(res);
-        this.toastMsg.success("", this.generalService.translateString('CREDENTIAL_ISSUED_SUCCESSFULLY'));
-      } else {
-        this.toastMsg.error("", this.generalService.translateString('ERROR_WHILE_ISSUING_CREDENTIALS'));
-      }
-    }, (error: any) => {
-      this.strictLoader = false;
-      this.toastMsg.error("", this.generalService.translateString('ERROR_WHILE_ISSUING_CREDENTIALS'));
-    });
+    return this.dataService.post(request);
   }
 
   downloadBulkRegisterResponse() {
