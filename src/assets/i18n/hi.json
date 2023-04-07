@@ -303,5 +303,7 @@
   "STUDENT_REGISTRATION_CLAIM_APPROVAL":"छात्र पंजीकरण दावा स्वीकृति",
   "ARE_YOU_SURE_WANT_TO_APPROVE":"क्या आप निश्चित रूप से स्वीकृति देना चाहते हैं",
   "ARE_YOU_SURE_WANT_TO_REJECT":"क्या आप निश्चित रूप से अस्वीकार करना चाहते हैं",
-  "SHARED_OPERATION_FAILED":"साझा कार्रवाई विफल!"
+  "SHARED_OPERATION_FAILED":"साझा कार्रवाई विफल!",
+  "CLAIM_APPROVED": "दावा स्वीकृत",
+  "CLAIM_REJECTED": "दावा अस्वीकृत"
 }

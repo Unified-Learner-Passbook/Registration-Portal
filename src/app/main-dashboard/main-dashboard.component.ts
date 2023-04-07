@@ -3,6 +3,7 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 import { AuthService } from '../services/auth/auth.service';
+import { DataService } from '../services/data/data-request.service';
 @Component({
   selector: 'app-main-dashboard',
   templateUrl: './main-dashboard.component.html',
@@ -13,11 +14,13 @@ export class MainDashboardComponent implements OnInit, OnDestroy {
   isChildRoute = false;
   isFirstTimeLogin = false;
   currentUser: any;
+  metrics: any;
   private unsubscribe$ = new Subject<void>();
   constructor(
     private readonly activatedRoute: ActivatedRoute,
     private readonly router: Router,
-    private readonly authService: AuthService
+    private readonly authService: AuthService,
+    private readonly dataService: DataService
   ) {
     this.router.events.pipe(
       takeUntil(this.unsubscribe$),
@@ -32,6 +35,29 @@ export class MainDashboardComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.currentUser = this.authService.currentUser;
+  }
+
+  getMetrics() {
+    const payload = {
+      url: 'https://ulp.uniteframework.io/ulp-bff/v1/portal/count',
+      data: {
+        "countFields": [
+          "students_registered",
+          "claims_pending",
+          "claims_approved",
+          "claims_rejected",
+          "credentials_issued"
+        ]
+      }
+    }
+
+    this.dataService.post(payload)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((response: any) => {
+        if (response.success) {
+          this.metrics = response.result;
+        }
+      });
   }
 
   ngOnDestroy() {

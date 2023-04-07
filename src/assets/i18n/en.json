@@ -306,5 +306,6 @@
   "ARE_YOU_SURE_WANT_TO_APPROVE": "Are you sure want to approve",
   "ARE_YOU_SURE_WANT_TO_REJECT": "Are you sure want to reject",
   "SHARED_OPERATION_FAILED": "Shared operation failed!",
-  "MY_KEY": "My Key"
+  "CLAIM_APPROVED": "Claim Approved",
+  "CLAIM_REJECTED": "Claim Rejected"
 }
