@@ -190,7 +190,7 @@ export class GeneralService {
 
   setLanguage(langKey: string) {
     localStorage.setItem('setLanguage', langKey);
-    window.location.reload();
+    this.translate.use(langKey);
   }
 
   getDaysDifference(fromDate: string, toDate?) {

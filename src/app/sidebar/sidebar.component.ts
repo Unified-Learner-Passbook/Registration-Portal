@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { filter } from 'rxjs/operators';
 import { AuthService } from '../services/auth/auth.service';
 import { GeneralService } from '../services/general/general.service';
@@ -16,7 +17,8 @@ export class SidebarComponent implements OnInit {
   constructor(
     private readonly generalService: GeneralService,
     private readonly authService: AuthService,
-    private readonly router: Router
+    private readonly router: Router,
+    private readonly translate: TranslateService
   ) { }
 
   ngOnInit(): void {
@@ -28,6 +30,10 @@ export class SidebarComponent implements OnInit {
     }
 
     this.generalService.languageChange.subscribe((res) => {
+      this.initialize();
+    });
+
+    this.translate.onLangChange.subscribe(_ => {
       this.initialize();
     });
   }
