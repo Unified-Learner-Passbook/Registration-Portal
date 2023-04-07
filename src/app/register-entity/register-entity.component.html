@@ -2,7 +2,6 @@
   <h5 class="text-center mb-5 title pt-4">
     {{'REGISTER_STUD_EXCEL_TEMPLATE' | translate}}<a href="#" class="text-gray-100">{{'DEMO_VIDEO' | translate }}</a>
   </h5>
-
   <div>
     <div class="row filter-bx">
       <div class="col-md-3">
@@ -106,56 +105,43 @@
 
 <ng-template #downloadResModal>
   <div class="modal-content">
-    <div class="modal-body fs-14">
-
-      <div>
-        <h6>Report</h6>
-        <table>
-          <tr>
-            <td>Successfully Registered</td>
-            <td>{{bulkRegRes?.success_count}}</td>
-          </tr>
-          <tr>
-            <td>Duplicate Records</td>
-            <td>{{bulkRegRes?.duplicate_count}}</td>
-          </tr>
-          <tr>
-            <td>Unable to Register</td>
-            <td>{{bulkRegRes?.error_count}}</td>
-          </tr>
-        </table>
+    <div class="modal-body fs-14 text-center">
+      <h4 class="text-center text-underline">Report</h4>
+      <div class="py-3">
+        <div class="d-flex py-15 text-success">
+          <div><i class="fa fa-user-check"></i>&nbsp;Successfully Registered &nbsp;</div>
+            <div>{{bulkRegRes?.success_count}}</div>
+        </div>
+          <div class="d-flex py-15">
+            <div><i class="fa fa-copy"></i>&nbsp;Duplicate Records&nbsp;</div>
+            <div>{{bulkRegRes?.duplicate_count}}</div>
+          </div>
+          <div class="d-flex py-15 text-red">
+            <div><i class="fa fa-user-times"></i>&nbsp;Unable to Register&nbsp;</div>
+            <div>{{bulkRegRes?.error_count}}</div>
+          </div>
       </div>
 
-      <h5 class="py-3 text-center">Do you want save detailed report?</h5>
-    </div>
-    <div class="modal-footer">
-      <!-- <button type="button" class="btn btn-light" (click)="closeSaveResponseModal()">No</button> -->
-      <button type="button" class="btn btn-primary" (click)="downloadBulkRegisterResponse()">Download</button>
+      <button type="button" class="btn btn-primary mt-3 fs-14" (click)="downloadBulkRegisterResponse()"><i class="fa fa-download"></i>&nbsp;Download Report</button>
     </div>
   </div>
 </ng-template>
 
 <ng-template #downloadIssuedResModal>
   <div class="modal-content">
-    <div class="modal-body fs-14">
-      <div>
-        <h6>Report</h6>
-        <table>
-          <tr>
-            <td>Successfully Issued</td>
-            <td>{{bulkIssuedCredRes?.success_count}}</td>
-          </tr>
-          <tr>
-            <td>Unable to Issue a credential</td>
-            <td>{{bulkIssuedCredRes?.error_count}}</td>
-          </tr>
-        </table>
+    <div class="modal-body fs-14 text-center">
+      <h4 class=" text-underline">Report</h4>
+      <div>        
+        <div class="d-flex py-15 text-success">
+          <div><i class="fa fa-user-check"></i>&nbsp;Successfully Issued&nbsp;</div>
+          <div>{{bulkIssuedCredRes?.success_count}}</div>
+        </div>
+        <div class="d-flex py-15 text-red">
+          <div><i class="fa fa-user-times"></i>&nbsp;Unable to Issue a credential &nbsp;</div>
+          <div>{{bulkIssuedCredRes?.error_count}}</div>
+        </div>
       </div>
-
-      <h5 class="py-3 text-center">Do you want download detailed report?</h5>
-    </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-primary" (click)="downloadIssuedCredResponse()">Download</button>
+      <button type="button" class="btn btn-primary mt-3 fs-14 " (click)="downloadIssuedCredResponse()"><i class="fa fa-download"></i>&nbsp;Download</button>
     </div>
   </div>
 </ng-template>

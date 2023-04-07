@@ -354,7 +354,7 @@ export class RegisterEntityComponent implements OnInit {
       backdrop: 'static',
       animation: true,
       centered: true,
-      size: 'md'
+      size: 'sm'
     }
     return this.modalService.open(content, options);
   }
