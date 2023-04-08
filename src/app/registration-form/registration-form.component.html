@@ -98,7 +98,7 @@
                 <button  *ngIf="isVerified !=='yes'" class="btn btn-primary fs-12 mt-4" type="button" (click)="verifyUDISE()">{{'VERIFY' | translate}}</button>
                 <p *ngIf="isVerified==='yes'">{{'VERIFIED' | translate }}</p>
                 <p *ngIf="isVerified==='no'">{{'SCHOOL_NOT_AVAILABLE' | translate }}</p>
-                <button class="btn btn-primary fs-12 mt-4 mr-2" type="button" [disabled]="isVerified !== 'yes'"  (click)="linkUDISE()">{{'LINK_NOW' | translate}}</button>
+                <button class="btn btn-primary fs-12 mt-4 mr-2 ml-2" type="button" [disabled]="isVerified !== 'yes'"  (click)="linkUDISE()">{{'LINK_NOW' | translate}}</button>
             </div>
         </div>
     </div>
