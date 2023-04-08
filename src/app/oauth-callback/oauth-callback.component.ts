@@ -43,24 +43,31 @@ export class OauthCallbackComponent implements OnInit {
       console.log("Result", res);
 
       if (res.success) {
-        if (res.user === 'FOUND') {
-          if (res.token) {
-            localStorage.setItem('accessToken', res.token);
-          }
-
-          if (res?.userData?.length) {
-            localStorage.setItem('currentUser', JSON.stringify(res.userData[0]));
-          }
-
-          this.authService.getSchoolDetails().subscribe(); // Add concatMap
-          this.router.navigate(['/dashboard']);
-        }
-
-        if (res.user === 'NO_FOUND' && res.result) {
+        if (res?.needaadhaar === 'YES') {
           const navigationExtras: NavigationExtras = {
-            state: res.result
-          };
-          this.router.navigate(['/register'], navigationExtras)
+            state: res
+          }
+          this.router.navigate(['/ekyc'], navigationExtras);
+        } else {
+          if (res.user === 'FOUND') {
+            if (res.token) {
+              localStorage.setItem('accessToken', res.token);
+            }
+
+            if (res?.userData?.length) {
+              localStorage.setItem('currentUser', JSON.stringify(res.userData[0]));
+            }
+  
+            this.authService.getSchoolDetails().subscribe(); // Add concatMap
+            this.router.navigate(['/dashboard']);
+          }
+  
+          if (res.user === 'NO_FOUND' && res.result) {
+            const navigationExtras: NavigationExtras = {
+              state: res.result
+            };
+            this.router.navigate(['/register'], navigationExtras)
+          }
         }
       } else {
         console.error(res);

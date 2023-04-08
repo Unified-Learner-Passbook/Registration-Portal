@@ -129,4 +129,8 @@ export class AuthService {
     return this.http.post(api, { aadhaar_id: aadharId });
   }
 
+  verifyAccountAadharLink(payload: any) {
+    const api = `${this.endpoint}/ulp-bff/v1/sso/digilocker/aadhaar`;
+    return this.http.post(api, payload);
+  }
 }

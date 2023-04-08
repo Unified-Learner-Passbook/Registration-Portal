@@ -154,6 +154,7 @@ import { AuthInterceptor } from './authentication/auth.interceptor';
 import { MyAccountComponent } from './my-account/my-account.component';
 import { CommonModule } from '@angular/common';
 import { LandingPageComponent } from './landing-page/landing-page.component';
+import { EkycComponent } from './ekyc/ekyc.component';
 console.log(configData['default']);
 
 @NgModule({
@@ -205,7 +206,8 @@ console.log(configData['default']);
     OauthCallbackComponent,
     RegistrationFormComponent,
     MyAccountComponent,
-    LandingPageComponent
+    LandingPageComponent,
+    EkycComponent
 
   ],
   imports: [

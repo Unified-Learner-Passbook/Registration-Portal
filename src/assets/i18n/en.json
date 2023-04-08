@@ -313,5 +313,7 @@
   "GUARDIAN_NAME": "Guardian Name",
   "GRADE": "Grade",
   "ACADEMIC_YEAR": "Academic Year",
-  "ENROLLED_ON": "Enrolled On"
+  "ENROLLED_ON": "Enrolled On",
+  "ENTER_AADHAAR_NO": "Enter Aadhaar Number",
+  "INCORRECT_AADHAR":"It should be 12 digit number"
 }

@@ -34,9 +34,9 @@ export class RegistrationFormComponent implements OnInit {
   registrationForm = new FormGroup({
     schoolName: new FormControl(null, [Validators.required]),
     udiseId: new FormControl(null, [Validators.required]),
-    name: new FormControl(null, [Validators.required, Validators.minLength(2)]),
+    name: new FormControl(null, [Validators.required]),
     phone: new FormControl(null, [Validators.required, Validators.minLength(10), Validators.maxLength(10), Validators.pattern('^[0-9]{10}$')]),
-    aadharId: new FormControl(null, [Validators.required, Validators.minLength(12), Validators.maxLength(12), Validators.pattern('^[0-9]*$')]),
+    aadharId: new FormControl(null, [Validators.required]),
     joiningdate: new FormControl(null, [Validators.required, Validators.max(Date.now())]),
   });
 
@@ -98,6 +98,11 @@ export class RegistrationFormComponent implements OnInit {
 
       if (this.registrationDetails.mobile) {
         this.registrationForm.get('phone').setValue(this.registrationDetails.mobile);
+      }
+
+      if (this.registrationDetails.uuid) {
+        this.registrationForm.get('username').setValue(this.registrationDetails.uuid);
+        this.registrationForm.get('aadharId').setValue(this.registrationDetails.uuid);
       }
 
     }
@@ -169,7 +174,7 @@ export class RegistrationFormComponent implements OnInit {
             aadharId: this.registrationForm.value.aadharId,
             schoolUdise: this.registrationForm.value.udiseId,
             meripehchanLoginId: this.registrationDetails.meripehchanid,
-            username: this.registrationDetails.meripehchanid,
+            username: this.registrationDetails.uuid,
             consent: "yes",
             consentDate: new Date().toISOString().substring(0, 10),
             did: ""
@@ -212,8 +217,6 @@ export class RegistrationFormComponent implements OnInit {
     });
     return obj;
   }
-
-  
 
   raiseInteractEvent(id: string, type: string = 'CLICK', subtype?: string) {
     console.log("raiseInteractEvent")

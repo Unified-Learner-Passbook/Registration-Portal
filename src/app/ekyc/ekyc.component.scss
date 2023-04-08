@@ -1,0 +1,23 @@
+label {
+  color: var(--primaryTextColor);
+  font-size: 16px;
+  text-align: left;
+  display: block;
+}
+.form-check-input {
+  border-color: var(--primaryColor);
+}
+.font-700 {
+  font-weight: 700;
+}
+.form-control {
+  background: #ffffff;
+}
+.login-btn {
+  cursor: pointer;
+}
+
+button {
+  background: var(--primaryColor) !important;
+  color: #ffffff;
+}
