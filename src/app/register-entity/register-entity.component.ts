@@ -245,7 +245,7 @@ export class RegisterEntityComponent implements OnInit {
         return {
           ...item.studentDetails,
           status: item.status,
-          error: item.error
+          error: item.status ? '' : item.error
         }
       });
       return {
@@ -263,16 +263,24 @@ export class RegisterEntityComponent implements OnInit {
     this.downloadResModalRef = this.openModal(this.downloadResModal);
   }
 
-
   generateBulkIssueCredentialResponse(response: any) {
-    this.bulkIssuedCredRes.error_count = response.error_count;
-    this.bulkIssuedCredRes.success_count = response.success_count;
-    this.bulkIssuedCredRes.csv = response.result.map((item: any) => {
+    this.bulkIssuedCredRes = response.reduce((prev, current) => {
+      const currentCSV = current.result.map((item: any) => {
+        return {
+          ...item.credentialSubject,
+          status: item.status,
+          error: item.status ? '' : item.error
+        }
+      });
       return {
-        ...item.credentialSubject,
-        status: item.status,
-        error: item?.error?.code ? item.error.code : ''
+        success_count: prev.success_count + current.success_count,
+        error_count: prev.error_count + current.error_count,
+        csv: prev.csv.concat(currentCSV)
       }
+    }, {
+      success_count: 0,
+      error_count: 0,
+      csv: []
     });
     this.downloadIssuedResModalRef = this.openModal(this.downloadIssuedResModal);
   }
