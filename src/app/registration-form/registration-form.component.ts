@@ -101,7 +101,6 @@ export class RegistrationFormComponent implements OnInit {
       }
 
       if (this.registrationDetails.uuid) {
-        this.registrationForm.get('username').setValue(this.registrationDetails.uuid);
         this.registrationForm.get('aadharId').setValue(this.registrationDetails.uuid);
       }
 
