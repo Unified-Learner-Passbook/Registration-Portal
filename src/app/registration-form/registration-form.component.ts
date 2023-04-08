@@ -34,9 +34,9 @@ export class RegistrationFormComponent implements OnInit {
   registrationForm = new FormGroup({
     schoolName: new FormControl(null, [Validators.required]),
     udiseId: new FormControl(null, [Validators.required]),
-    name: new FormControl(null, [Validators.required, Validators.minLength(2)]),
+    name: new FormControl(null, [Validators.required]),
     phone: new FormControl(null, [Validators.required, Validators.minLength(10), Validators.maxLength(10), Validators.pattern('^[0-9]{10}$')]),
-    aadharId: new FormControl(null, [Validators.required, Validators.minLength(12), Validators.maxLength(12), Validators.pattern('^[0-9]*$')]),
+    aadharId: new FormControl(null, [Validators.required]),
     joiningdate: new FormControl(null, [Validators.required, Validators.max(Date.now())]),
   });
 
@@ -100,6 +100,10 @@ export class RegistrationFormComponent implements OnInit {
         this.registrationForm.get('phone').setValue(this.registrationDetails.mobile);
       }
 
+      if (this.registrationDetails.uuid) {
+        this.registrationForm.get('aadharId').setValue(this.registrationDetails.uuid);
+      }
+
     }
     const options: NgbModalOptions = {
       backdrop: 'static',
@@ -143,6 +147,10 @@ export class RegistrationFormComponent implements OnInit {
       } else {
         this.isVerified = "no";
       }
+    }, error => {
+      this.isVerified = "no";
+      console.error(error);
+      this.toastMessage.error('', this.generalService.translateString('SOMETHING_WENT_WRONG'));
     })
   }
 
@@ -165,7 +173,7 @@ export class RegistrationFormComponent implements OnInit {
             aadharId: this.registrationForm.value.aadharId,
             schoolUdise: this.registrationForm.value.udiseId,
             meripehchanLoginId: this.registrationDetails.meripehchanid,
-            username: this.registrationDetails.meripehchanid,
+            username: this.registrationDetails.uuid,
             consent: "yes",
             consentDate: new Date().toISOString().substring(0, 10),
             did: ""
@@ -175,26 +183,27 @@ export class RegistrationFormComponent implements OnInit {
         digimpid: this.registrationDetails.meripehchanid,
       }
 
-      this.authService.verifyAadhar(this.registrationForm.value.aadharId).pipe(
-        concatMap((res: any) => {
-          if (res.success && res?.result?.aadhaar_token) {
-            payload.userdata.teacher.aadharId = res.result.aadhaar_token;
-            return this.authService.ssoSignUp(payload);
-          } else {
-            return throwError(this.generalService.translateString('AADHAR_VERIFICATION_FAILED'));  
-          }
-        }),
+      // this.authService.verifyAadhar(this.registrationForm.value.aadharId).pipe(
+      //   concatMap((res: any) => {
+      //     if (res.success && res?.result?.aadhaar_token) {
+      //       payload.userdata.teacher.aadharId = res.result.aadhaar_token;
+      //       return this.authService.ssoSignUp(payload);
+      //     } else {
+      //       return throwError(this.generalService.translateString('AADHAR_VERIFICATION_FAILED'));  
+      //     }
+      //   }),
+      this.authService.ssoSignUp(payload).pipe(
         concatMap(_ => this.authService.getSchoolDetails()),
         concatMap(_ => this.credentialService.issueCredential())
       ).subscribe((res: any) => {
         this.isLoading = false;
         console.log("final", res);
-        this.toastMessage.success("",this.generalService.translateString('USER_REGISTERED_SUCCESSFULLY') );
+        this.toastMessage.success("", this.generalService.translateString('USER_REGISTERED_SUCCESSFULLY'));
         this.router.navigate(['/dashboard'], { state: { isFirstTimeLogin: true } });
       }, (error: any) => {
         console.error(error);
         this.isLoading = false;
-        this.toastMessage.error("", (this.generalService.translateString('ERROR_WHILE_REGISTER_USER')));
+        this.toastMessage.error("", this.generalService.translateString('ERROR_WHILE_REGISTER_USER'));
       });
     }
   }
@@ -208,8 +217,6 @@ export class RegistrationFormComponent implements OnInit {
     });
     return obj;
   }
-
-  
 
   raiseInteractEvent(id: string, type: string = 'CLICK', subtype?: string) {
     console.log("raiseInteractEvent")

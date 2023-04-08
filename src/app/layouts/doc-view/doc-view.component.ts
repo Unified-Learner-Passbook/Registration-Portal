@@ -73,7 +73,7 @@ export class DocViewComponent implements OnInit, OnDestroy {
                 }, (error: any) => {
                     this.isLoading = false;
                     console.error(error);
-                    this.toastMessage.error("", "Error while fetching credential");
+                    this.toastMessage.error("", this.generalService.translateString('SOMETHING_WENT_WRONG'));
                 });
         }
     }
@@ -88,12 +88,12 @@ export class DocViewComponent implements OnInit, OnDestroy {
                 }, (error: any) => {
                     this.isLoading = false;
                     console.error("Something went wrong while fetching template!", error);
-                    this.toastMessage.error("", "Error while fetching credential");
+                    this.toastMessage.error("", this.generalService.translateString('SOMETHING_WENT_WRONG'));
                 });
         } else {
             this.isLoading = false;
             console.error("credential_schema is not present");
-            this.toastMessage.error("", "Something went wrong!");
+            this.toastMessage.error("", this.generalService.translateString('SOMETHING_WENT_WRONG'));
         }
     }
 

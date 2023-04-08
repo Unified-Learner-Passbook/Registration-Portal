@@ -5,6 +5,7 @@ import { AuthService } from '../services/auth/auth.service';
 import { GeneralService } from '../services/general/general.service';
 import { IImpressionEventInput, IInteractEventInput } from '../services/telemetry/telemetry-interface';
 import { TelemetryService } from '../services/telemetry/telemetry.service';
+import { ToastMessageService } from '../services/toast-message/toast-message.service';
 
 @Component({
   selector: 'app-registration',
@@ -24,14 +25,14 @@ export class RegistrationComponent implements OnInit {
     private readonly authService: AuthService,
     private readonly router: Router,
     private readonly activatedRoute: ActivatedRoute,
-    private readonly telemetryService: TelemetryService
+    private readonly telemetryService: TelemetryService,
+    private readonly toastMessageService: ToastMessageService
     ) { }
 
   ngOnInit(): void {
     if (this.authService.isLoggedIn) {
       this.router.navigate(['/dashboard']);
     }
-
   }
 
   openSSO(buttonId: string) {
@@ -39,6 +40,9 @@ export class RegistrationComponent implements OnInit {
     this.generalService.getData('https://ulp.uniteframework.io/ulp-bff/v1/sso/digilocker/authorize/portal', true).subscribe((res) => {
       console.log("res", res);
       window.open(res.digiauthurl, "_self");
+    }, error => {
+      console.error(error);
+      this.toastMessageService.error('', this.generalService.translateString('SOMETHING_WENT_WRONG'));
     });
   }
 

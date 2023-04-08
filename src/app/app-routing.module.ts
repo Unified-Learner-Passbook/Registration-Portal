@@ -41,6 +41,7 @@ import { RegistrationFormComponent } from './registration-form/registration-form
 import { AuthenticationGuard } from './utility/authentication.guard';
 import { MyAccountComponent } from './my-account/my-account.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
+import { EkycComponent } from './ekyc/ekyc.component';
 
 // import { CreateCertificateComponent } from './create-certificate/create-certificate.component';
 // import { FaqComponent } from './custom-components/faq/faq.component';
@@ -63,6 +64,16 @@ const routes: Routes = [
       showToolbar: false,
       telemetry: {
         env: 'sign-in', pageid: 'sign-in', type: 'edit', subtype: 'scroll'
+      }
+    }
+  },
+  {
+    path: 'ekyc',
+    component: EkycComponent,
+    data: {
+      showToolbar: false,
+      telemetry: {
+        env: 'login', pageid: 'kyc', type: 'edit', subtype: 'scroll'
       }
     }
   },
