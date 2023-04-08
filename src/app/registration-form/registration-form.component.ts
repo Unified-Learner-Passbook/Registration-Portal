@@ -183,21 +183,22 @@ export class RegistrationFormComponent implements OnInit {
         digimpid: this.registrationDetails.meripehchanid,
       }
 
-      this.authService.verifyAadhar(this.registrationForm.value.aadharId).pipe(
-        concatMap((res: any) => {
-          if (res.success && res?.result?.aadhaar_token) {
-            payload.userdata.teacher.aadharId = res.result.aadhaar_token;
-            return this.authService.ssoSignUp(payload);
-          } else {
-            return throwError(this.generalService.translateString('AADHAR_VERIFICATION_FAILED'));  
-          }
-        }),
+      // this.authService.verifyAadhar(this.registrationForm.value.aadharId).pipe(
+      //   concatMap((res: any) => {
+      //     if (res.success && res?.result?.aadhaar_token) {
+      //       payload.userdata.teacher.aadharId = res.result.aadhaar_token;
+      //       return this.authService.ssoSignUp(payload);
+      //     } else {
+      //       return throwError(this.generalService.translateString('AADHAR_VERIFICATION_FAILED'));  
+      //     }
+      //   }),
+      this.authService.ssoSignUp(payload).pipe(
         concatMap(_ => this.authService.getSchoolDetails()),
         concatMap(_ => this.credentialService.issueCredential())
       ).subscribe((res: any) => {
         this.isLoading = false;
         console.log("final", res);
-        this.toastMessage.success("",this.generalService.translateString('USER_REGISTERED_SUCCESSFULLY') );
+        this.toastMessage.success("", this.generalService.translateString('USER_REGISTERED_SUCCESSFULLY'));
         this.router.navigate(['/dashboard'], { state: { isFirstTimeLogin: true } });
       }, (error: any) => {
         console.error(error);
