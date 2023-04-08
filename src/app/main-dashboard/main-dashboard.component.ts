@@ -4,6 +4,8 @@ import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 import { AuthService } from '../services/auth/auth.service';
 import { DataService } from '../services/data/data-request.service';
+import { GeneralService } from '../services/general/general.service';
+import { ToastMessageService } from '../services/toast-message/toast-message.service';
 @Component({
   selector: 'app-main-dashboard',
   templateUrl: './main-dashboard.component.html',
@@ -20,7 +22,9 @@ export class MainDashboardComponent implements OnInit, OnDestroy {
     private readonly activatedRoute: ActivatedRoute,
     private readonly router: Router,
     private readonly authService: AuthService,
-    private readonly dataService: DataService
+    private readonly dataService: DataService,
+    private readonly generalService: GeneralService,
+    private readonly toastMessageService: ToastMessageService
   ) {
     this.router.events.pipe(
       takeUntil(this.unsubscribe$),
@@ -58,6 +62,9 @@ export class MainDashboardComponent implements OnInit, OnDestroy {
         if (response.success) {
           this.metrics = response.result;
         }
+      }, error => {
+        console.error(error);
+        this.toastMessageService.error('', this.generalService.translateString('SOMETHING_WENT_WRONG'));
       });
   }
 
@@ -65,5 +72,4 @@ export class MainDashboardComponent implements OnInit, OnDestroy {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
   }
-
 }

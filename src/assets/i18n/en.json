@@ -307,5 +307,11 @@
   "ARE_YOU_SURE_WANT_TO_REJECT": "Are you sure want to reject",
   "SHARED_OPERATION_FAILED": "Shared operation failed!",
   "CLAIM_APPROVED": "Claim Approved",
-  "CLAIM_REJECTED": "Claim Rejected"
+  "CLAIM_REJECTED": "Claim Rejected",
+  "REGISTERED_STUDENTS": "Registered Students",
+  "STUDENT_NAME": "Student Name",
+  "GUARDIAN_NAME": "Guardian Name",
+  "GRADE": "Grade",
+  "ACADEMIC_YEAR": "Academic Year",
+  "ENROLLED_ON": "Enrolled On"
 }

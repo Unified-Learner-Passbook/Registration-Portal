@@ -305,5 +305,11 @@
   "ARE_YOU_SURE_WANT_TO_REJECT":"क्या आप निश्चित रूप से अस्वीकार करना चाहते हैं",
   "SHARED_OPERATION_FAILED":"साझा कार्रवाई विफल!",
   "CLAIM_APPROVED": "दावा स्वीकृत",
-  "CLAIM_REJECTED": "दावा अस्वीकृत"
+  "CLAIM_REJECTED": "दावा अस्वीकृत",
+  "REGISTERED_STUDENTS": "पंजीकृत छात्र",
+  "STUDENT_NAME": "छात्र का नाम",
+  "GUARDIAN_NAME": "अभिभावक का नाम",
+  "GRADE": "श्रेणी",
+  "ACADEMIC_YEAR": "शैक्षणिक वर्ष",
+  "ENROLLED_ON": "शैक्षणिक वर्ष"
 }

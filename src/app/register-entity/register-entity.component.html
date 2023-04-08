@@ -46,7 +46,7 @@
     </div>
   </div>
   <div class="student-list">
-    <h6 class="pt-4">Registered Students
+    <h6 class="pt-4">{{'REGISTERED_STUDENTS' | translate}}
       <i style="font-weight: normal;font-size: small;">(Following students are
         Registered but credentials are not issued against them)</i>
     </h6>
@@ -57,7 +57,7 @@
         <span class="sr-only">{{'LOADING' | translate }}</span>
       </div>
       <div class="text-center">
-        Please wait....
+        {{'LOADING_PLEASE_WAIT' | translate}}
       </div> 
     </div>
     <!-- <ngb-alert type="danger" *ngIf="errorMessage" class="pt-4">{{ errorMessage }}</ngb-alert> -->
@@ -68,7 +68,7 @@
           <th scope="col">{{'STUDENT_ID' | translate }}</th>
           <th scope="col">{{'NAME' | translate }}</th>
           <th scope="col">{{'DATE_OF_BIRTH' | translate }}</th>
-          <th scope="col">Mobile</th>
+          <th scope="col">{{'MOBILE_NUMBER' | translate}}</th>
         </tr>
       </thead>
       <tbody>

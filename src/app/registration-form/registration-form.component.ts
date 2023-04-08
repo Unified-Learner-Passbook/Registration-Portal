@@ -143,6 +143,10 @@ export class RegistrationFormComponent implements OnInit {
       } else {
         this.isVerified = "no";
       }
+    }, error => {
+      this.isVerified = "no";
+      console.error(error);
+      this.toastMessage.error('', this.generalService.translateString('SOMETHING_WENT_WRONG'));
     })
   }
 
@@ -194,7 +198,7 @@ export class RegistrationFormComponent implements OnInit {
       }, (error: any) => {
         console.error(error);
         this.isLoading = false;
-        this.toastMessage.error("", (this.generalService.translateString('ERROR_WHILE_REGISTER_USER')));
+        this.toastMessage.error("", this.generalService.translateString('ERROR_WHILE_REGISTER_USER'));
       });
     }
   }

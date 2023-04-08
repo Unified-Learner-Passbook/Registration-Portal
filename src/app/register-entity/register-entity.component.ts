@@ -88,7 +88,6 @@ export class RegisterEntityComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.utilService.getNumberOrdinals(1, 10);
     this.setAcademicYear();
     this.setGrades();
   }
@@ -242,7 +241,7 @@ export class RegisterEntityComponent implements OnInit {
 
   generateBulkRegisterResponse(response: any) {
     this.bulkRegRes = response.reduce((prev, current) => {
-      const currentCSV = current.result.map((item) => {
+      const currentCSV = current.result.map((item: any) => {
         return {
           ...item.studentDetails,
           status: item.status,
