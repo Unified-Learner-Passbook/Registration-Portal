@@ -10,11 +10,13 @@ import { Title } from '@angular/platform-browser';
 export class AppConfig {
 
     private config: Object = null;
-    private environment:    Object = null;
+    private environment: Object = null;
 
-    constructor(private http: HttpClient, public router: Router, private titleService: Title) {
-
-    }
+    constructor(
+        private readonly http: HttpClient,
+        private readonly router: Router,
+        private readonly titleService: Title
+    ) { }
 
     /**
      * Use to get the data found in the second file (config file)
@@ -30,9 +32,9 @@ export class AppConfig {
         try {
             return this.environment[key];
         }
-        catch(err) {
+        catch (err) {
             // this.router.navigate(['install'])
-          }
+        }
     }
 
     /**
@@ -43,8 +45,8 @@ export class AppConfig {
     public load() {
         return new Promise((resolve, reject) => {
             this.http.get('/assets/config/config.json').subscribe((envResponse) => {
-                this.environment= envResponse;
-                let request:any = null;
+                this.environment = envResponse;
+                let request: any = null;
 
                 switch (envResponse['environment']) {
                     case 'production': {
@@ -70,23 +72,25 @@ export class AppConfig {
                             this.config = responseData;
                             this.titleService.setTitle(responseData.title);
                             resolve(true);
-                        }, err => {console.log('Error reading config.json configuration file . Please find Sample ->> https://sunbird-certificate-demo.xiv.in/assets/config/config.json', err);
-                        // this.titleService.setTitle("Sunbird RC");
-                        // this.router.navigate(['install'])
-                    });
+                        }, err => {
+                            console.log('Error reading config.json configuration file . Please find Sample ->> https://sunbird-certificate-demo.xiv.in/assets/config/config.json', err);
+                            // this.titleService.setTitle("Sunbird RC");
+                            // this.router.navigate(['install'])
+                        });
                 } else {
                     console.error('config.json file is not valid . Please find Sample ->> https://sunbird-certificate-demo.xiv.in/assets/config/config.json');
                     // this.titleService.setTitle("Sunbird RC");
                     // this.router.navigate(['install'])
                     resolve(true);
                 }
-            }, 
-            
-            err => {console.log('Error reading config.json configuration file. Please find Sample ->> https://sunbird-certificate-demo.xiv.in/assets/config/config.json', err);
+            },
+
+                err => {
+                    console.log('Error reading config.json configuration file. Please find Sample ->> https://sunbird-certificate-demo.xiv.in/assets/config/config.json', err);
                     // this.titleService.setTitle("Sunbird RC");
                     // this.router.navigate(['install'])
                     resolve(true);
-                    }
+                }
             );
 
         });

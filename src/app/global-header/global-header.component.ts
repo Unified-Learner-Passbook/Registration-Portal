@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { interval } from 'rxjs';
-import { mergeMap } from 'rxjs/operators';
+import { mergeMap, startWith } from 'rxjs/operators';
 import { GeneralService } from '../services/general/general.service';
 
 const ONE_HOUR = 1 * 60 * 60 * 1000; //3600000 seconds
@@ -15,6 +15,7 @@ export class GlobalHeaderComponent implements OnInit {
   languages = [];
   selectedLanguage = '';
   isClaimsPending = false;
+
   constructor(
     private readonly generalService: GeneralService
   ) { }
@@ -51,9 +52,10 @@ export class GlobalHeaderComponent implements OnInit {
 
     interval(ONE_HOUR)
       .pipe(
-        mergeMap(() => this.generalService.postStudentData('/studentDetail', search))
-      ).subscribe((res) => {
-        this.isClaimsPending = !!res.length;
+        startWith(0),
+        mergeMap(_ => this.generalService.postStudentData('/studentDetail', search))
+      ).subscribe((res: any) => {
+        this.isClaimsPending = !!res.result.length;
       }, error => this.isClaimsPending = false);
   }
 }

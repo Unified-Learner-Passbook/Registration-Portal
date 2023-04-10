@@ -44,7 +44,7 @@ export class OauthCallbackComponent implements OnInit {
       digiacc: "portal",
       auth_code: code
     }
-    this.generalService.postData('${this.baseUrl}/v1/sso/digilocker/token', request).subscribe((res: any) => {
+    this.generalService.postData(`${this.baseUrl}/v1/sso/digilocker/token`, request).subscribe((res: any) => {
       console.log("Result", res);
 
       if (res.success) {

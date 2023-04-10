@@ -34,7 +34,7 @@ export class CredentialService {
 
   getCredentials(issuerId?: string): Observable<any> {
     const payload = {
-      url: '${this.baseUrl}/v1/sso/student/credentials/search',
+      url: `${this.baseUrl}/v1/sso/student/credentials/search`,
       data: {}
     };
 
@@ -117,7 +117,7 @@ export class CredentialService {
     const nextYearDate = new Date();
     nextYearDate.setFullYear(nextYearDate.getFullYear() + 1);
     const payload = {
-      url: '${this.baseUrl}/v1/sso/student/credentials/issue', //TODO: Need to change this to /teacher
+      url: `${this.baseUrl}/v1/sso/student/credentials/issue`, //TODO: Need to change this to /teacher
       data: {
         "credential": {
           "@context": [

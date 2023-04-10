@@ -151,7 +151,7 @@ export class DocViewComponent implements OnInit, OnDestroy {
             output: "HTML"
         }
         // delete request.credential.credentialSubject;
-        this.http.post('${this.baseUrl}/v1/sso/student/credentials/render', request, requestOptions).pipe(map((data: any) => {
+        this.http.post(`${this.baseUrl}/v1/sso/student/credentials/render`, request, requestOptions).pipe(map((data: any) => {
             this.blob = new Blob([data], {
                 type: 'application/pdf' // must match the Accept type
             });
