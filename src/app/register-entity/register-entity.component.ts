@@ -14,6 +14,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { TelemetryService } from '../services/telemetry/telemetry.service';
 import { IImpressionEventInput, IInteractEventInput } from '../services/telemetry/telemetry-interface';
 import { UtilService } from '../services/util/util.service';
+import { environment } from 'src/environments/environment';
+
 
 
 const BATCH_LIMIT = 10;
@@ -23,6 +25,8 @@ const BATCH_LIMIT = 10;
   styleUrls: ['./register-entity.component.scss']
 })
 export class RegisterEntityComponent implements OnInit {
+  baseUrl: string;
+
   tableColumns: string[] = [];
   tableRows: any[] = [];
   parsedCSV: any[] = [];
@@ -85,7 +89,10 @@ export class RegisterEntityComponent implements OnInit {
     private readonly activatedRoute: ActivatedRoute,
     private readonly telemetryService: TelemetryService,
     private readonly utilService: UtilService
-  ) { }
+  ) { 
+    this.baseUrl = environment.baseUrl;
+
+  }
 
   ngOnInit(): void {
     this.setAcademicYear();
@@ -287,7 +294,7 @@ export class RegisterEntityComponent implements OnInit {
 
   importData(list: any[]) {
     const request: RequestParam = {
-      url: `https://ulp.uniteframework.io/ulp-bff/v1/credentials/upload/${this.model.certificateType}`,
+      url: `${this.baseUrl}/v1/credentials/upload/${this.model.certificateType}`,
       // param: new HttpParams().append('type', this.model.certificateType),
       data: {
         grade: this.model.grade,
@@ -303,7 +310,7 @@ export class RegisterEntityComponent implements OnInit {
 
   bulkRegister(list: any[]) {
     const request: RequestParam = {
-      url: `https://ulp.uniteframework.io/ulp-bff/v1/sso/student/bulk/register`,
+      url: `${this.baseUrl}/v1/sso/student/bulk/register`,
       data: {
         "schoolDetails":
         {
@@ -324,7 +331,7 @@ export class RegisterEntityComponent implements OnInit {
     this.studentList = [];
     this.isLoading = true;
     const request = {
-      url: `https://ulp.uniteframework.io/ulp-bff/v1/sso/student/list`,
+      url: `${this.baseUrl}/v1/sso/student/list`,
       data: {
         "grade": this.model.grade,
         "acdemic_year": this.model.academicYear
@@ -418,7 +425,7 @@ export class RegisterEntityComponent implements OnInit {
     const date = new Date();
     const nextYear = new Date(new Date().setFullYear(new Date().getFullYear() + 1))
     const request = {
-      url: `https://ulp.uniteframework.io/ulp-bff/v1/sso/student/bulk/credentials`,
+      url: `${this.baseUrl}/v1/sso/student/bulk/credentials`,
       data: {
         "credentialSubjectCommon": {
           "grade": this.model.grade,
