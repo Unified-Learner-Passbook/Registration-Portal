@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable, of, throwError } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
+
 import {
   HttpClient,
   HttpHeaders,
@@ -12,13 +14,18 @@ import { DataService } from '../data/data-request.service';
   providedIn: 'root',
 })
 export class AuthService {
+  baseUrl: string;
+
   endpoint: string = 'https://ulp.uniteframework.io';
   headers = new HttpHeaders().set('Content-Type', 'application/json');
   constructor(
     private readonly http: HttpClient,
     private readonly router: Router,
     private readonly dataService: DataService
-  ) { }
+  ) {
+    this.baseUrl = environment.baseUrl;
+
+   }
 
   // Sign-up
   signUp(user): Observable<any> {
@@ -113,7 +120,7 @@ export class AuthService {
   }
 
   getSchoolDetails(): Observable<any> {
-    return this.dataService.get({ url: `https://ulp.uniteframework.io/ulp-bff/v1/sso/school/${this.currentUser.schoolUdise}` }).pipe(map((res: any) => {
+    return this.dataService.get({ url: `${this.baseUrl}/v1/sso/school/${this.currentUser.schoolUdise}` }).pipe(map((res: any) => {
       if (res.success && res.result) {
         localStorage.setItem('schoolDetails', JSON.stringify(res.result));
         console.log('schoolDetails', this.schoolDetails);

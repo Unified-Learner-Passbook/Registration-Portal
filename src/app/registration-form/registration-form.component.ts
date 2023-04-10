@@ -11,6 +11,7 @@ import { concatMap } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 import { TelemetryService } from '../services/telemetry/telemetry.service';
 import { IImpressionEventInput, IInteractEventInput } from '../services/telemetry/telemetry-interface';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-registration-form',
@@ -18,6 +19,7 @@ import { IImpressionEventInput, IInteractEventInput } from '../services/telemetr
   styleUrls: ['./registration-form.component.scss']
 })
 export class RegistrationFormComponent implements OnInit {
+  baseUrl: string;
 
   registrationDetails: any;
   schoolDetails: any;
@@ -51,6 +53,8 @@ export class RegistrationFormComponent implements OnInit {
     private readonly activatedRoute: ActivatedRoute,
     private readonly telemetryService: TelemetryService
   ) {
+    this.baseUrl = environment.baseUrl;
+
     const navigation = this.router.getCurrentNavigation();
     this.registrationDetails = navigation.extras.state;
     const canGoBack = !!(this.router.getCurrentNavigation()?.previousNavigation);
@@ -140,7 +144,7 @@ export class RegistrationFormComponent implements OnInit {
   }
 
   verifyUDISE() {
-    this.generalService.getData(`https://ulp.uniteframework.io/ulp-bff/v1/sso/udise/school/list/${this.schoolUdiseInput}`, true).subscribe((res: any) => {
+    this.generalService.getData(`${this.baseUrl}/v1/sso/udise/school/list/${this.schoolUdiseInput}`, true).subscribe((res: any) => {
       if (res?.success && res?.status === 'found') {
         this.isVerified = "yes";
         this.schoolDetails = res.data;

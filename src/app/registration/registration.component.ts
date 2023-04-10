@@ -6,6 +6,7 @@ import { GeneralService } from '../services/general/general.service';
 import { IImpressionEventInput, IInteractEventInput } from '../services/telemetry/telemetry-interface';
 import { TelemetryService } from '../services/telemetry/telemetry.service';
 import { ToastMessageService } from '../services/toast-message/toast-message.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-registration',
@@ -13,6 +14,7 @@ import { ToastMessageService } from '../services/toast-message/toast-message.ser
   styleUrls: ['./registration.component.scss']
 })
 export class RegistrationComponent implements OnInit {
+  baseUrl: string;
 
 
   featureList = [
@@ -27,7 +29,10 @@ export class RegistrationComponent implements OnInit {
     private readonly activatedRoute: ActivatedRoute,
     private readonly telemetryService: TelemetryService,
     private readonly toastMessageService: ToastMessageService
-    ) { }
+    ) {
+      this.baseUrl = environment.baseUrl;
+
+     }
 
   ngOnInit(): void {
     if (this.authService.isLoggedIn) {
@@ -37,7 +42,7 @@ export class RegistrationComponent implements OnInit {
 
   openSSO(buttonId: string) {
     this.raiseInteractEvent(buttonId)
-    this.generalService.getData('https://ulp.uniteframework.io/ulp-bff/v1/sso/digilocker/authorize/portal', true).subscribe((res) => {
+    this.generalService.getData('${this.baseUrl}/v1/sso/digilocker/authorize/portal', true).subscribe((res) => {
       console.log("res", res);
       window.open(res.digiauthurl, "_self");
     }, error => {
