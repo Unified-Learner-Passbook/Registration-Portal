@@ -14,7 +14,6 @@
   "private": true,
   "proxy": "https://elocker.xiv.in",
   "dependencies": {
-    "jquery": "^3.5.1",
     "@ajsf/bootstrap4": "^0.4.0-beta.1",
     "@altack/quar": "0.0.7",
     "@angular/animations": "^10.0.1",
@@ -67,6 +66,7 @@
     "grapesjs-preset-webpage": "^0.1.11",
     "iso-639-1": "^2.1.11",
     "jexl": "^2.3.0",
+    "jquery": "^3.5.1",
     "json-refs": "^3.0.4",
     "jsoneditor": "^9.7.4",
     "keycloak-angular": "^8.1.0",
@@ -87,6 +87,7 @@
     "ngx-webcam": "^0.3.2",
     "papaparse": "^5.3.2",
     "path": "^0.12.7",
+    "popper.js": "^1.16.1",
     "prismjs": "^1.27.0",
     "random-words": "^1.1.0",
     "redux": "4.0.1",
