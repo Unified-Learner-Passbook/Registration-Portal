@@ -314,4 +314,6 @@
   "ENROLLED_ON": "शैक्षणिक वर्ष",
   "ENTER_AADHAAR_NO": "आधार नंबर दर्ज करें।",
   "INCORRECT_AADHAR":"यह 12 अंकों की संख्या होनी चाहिए",
+  "APPROVED_CLAIMS":"स्वीकृत दावे",
+  "REJECTED_CLAIMS":"अस्वीकृत दावे"
 }

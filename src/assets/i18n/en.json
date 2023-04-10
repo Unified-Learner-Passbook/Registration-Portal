@@ -315,5 +315,7 @@
   "ACADEMIC_YEAR": "Academic Year",
   "ENROLLED_ON": "Enrolled On",
   "ENTER_AADHAAR_NO": "Enter Aadhaar Number",
-  "INCORRECT_AADHAR":"It should be 12 digit number"
+  "INCORRECT_AADHAR":"It should be 12 digit number",
+  "APPROVED_CLAIMS":"Approved Claims",
+  "REJECTED_CLAIMS":"Rejected Claims"
 }
