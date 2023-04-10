@@ -7,14 +7,19 @@ import { AppConfig } from 'src/app/app.config';
 import { TranslateService } from '@ngx-translate/core';
 
 
+
 @Injectable({
   providedIn: 'root'
 })
 export class GeneralService {
-  baseUrl = this.config.getEnv('baseUrl');
+  baseUrl: string;
+
+  // baseUrl = this.config.getEnv('baseUrl');
   translatedString: string;
   public languageChange = new EventEmitter<any>();
   constructor(public dataService: DataService, private config: AppConfig, public translate: TranslateService) {
+    this.baseUrl = environment.baseUrl;
+
   }
 
   postData(apiUrl, data) {
@@ -135,7 +140,7 @@ export class GeneralService {
     }
 
     const req = {
-      url: 'https://ulp.uniteframework.io/ulp-bff/v1/sso/studentDetailV2',
+      url: '${this.baseUrl}/v1/sso/studentDetailV2',
       //url: 'http://localhost:3000/v1/sso/studentDetailV2',
       data: data
     };
@@ -157,7 +162,7 @@ export class GeneralService {
     }
 
     const req = {
-      url: 'https://ulp.uniteframework.io/ulp-bff/v1/credentials/approveStudentV2',
+      url: '${this.baseUrl}/v1/credentials/approveStudentV2',
       //url: 'http://localhost:3000/v1/credentials/approveStudentV2',
       data: data
     };
@@ -180,7 +185,7 @@ export class GeneralService {
     }
 
     const req = {
-      url: 'https://ulp.uniteframework.io/ulp-bff/v1/credentials/rejectStudentv2',
+      url: '${this.baseUrl}/v1/credentials/rejectStudentv2',
       //url: 'http://localhost:3000/v1/credentials/rejectStudentv2',
       data: data
     };

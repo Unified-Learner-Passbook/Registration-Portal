@@ -6,12 +6,15 @@ import { AuthService } from '../services/auth/auth.service';
 import { DataService } from '../services/data/data-request.service';
 import { GeneralService } from '../services/general/general.service';
 import { ToastMessageService } from '../services/toast-message/toast-message.service';
+import { environment } from 'src/environments/environment';
+
 @Component({
   selector: 'app-main-dashboard',
   templateUrl: './main-dashboard.component.html',
   styleUrls: ['./main-dashboard.component.scss']
 })
 export class MainDashboardComponent implements OnInit, OnDestroy {
+  baseUrl: string;
 
   isChildRoute = false;
   isFirstTimeLogin = false;
@@ -26,6 +29,8 @@ export class MainDashboardComponent implements OnInit, OnDestroy {
     private readonly generalService: GeneralService,
     private readonly toastMessageService: ToastMessageService
   ) {
+    this.baseUrl = environment.baseUrl;
+
     this.router.events.pipe(
       takeUntil(this.unsubscribe$),
       filter(e => e instanceof NavigationEnd))
@@ -44,7 +49,7 @@ export class MainDashboardComponent implements OnInit, OnDestroy {
 
   getMetrics() {
     const payload = {
-      url: 'https://ulp.uniteframework.io/ulp-bff/v1/portal/count',
+      url: '${this.baseUrl}/v1/portal/count',
       data: {
         "countFields": [
           "students_registered",
