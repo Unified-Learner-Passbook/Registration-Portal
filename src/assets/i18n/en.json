@@ -317,5 +317,6 @@
   "ENTER_AADHAAR_NO": "Enter Aadhaar Number",
   "INCORRECT_AADHAR":"It should be 12 digit number",
   "APPROVED_CLAIMS":"Approved Claims",
-  "REJECTED_CLAIMS":"Rejected Claims"
+  "REJECTED_CLAIMS":"Rejected Claims",
+  "COMPATIBLE_ONLY_IN_DESKTOP":"Compatible only in Desktop"
 }
