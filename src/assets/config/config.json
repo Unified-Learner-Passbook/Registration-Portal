@@ -1,11 +1,6 @@
 {
     "environment": "development",
     "appType": "issuer",
-    "keycloak": {
-        "url": "https://sunbird-certificate-demo.xiv.in/auth",
-        "realm": "sunbird-rc",
-        "clientId": "registry-frontend"
-    },
     "configFolder": "/assets/config/ui-config",
     "default_theme": {
         "logoPath": "https://user-images.githubusercontent.com/580711/160328409-37b07505-399f-4feb-8dcd-4a51769c5a1b.svg",
@@ -37,10 +32,10 @@
         "linkColor": "#443DF6",
         "secondaryBtnBgColor": "#e0edf5"
     },
-    "baseUrl": "https://sunbird-certificate-demo.xiv.in/registry/api/v1",
-    "schemaUrl": "https://sunbird-certificate-demo.xiv.in/registry/api/docs/swagger.json",
-    "title": "Registration Portal",
-    "footerText": "Registration Portal",
+    "baseUrl": "https://ulp.uniteframework.io/ulp-bff",
+    "schemaUrl": "https://ulp.uniteframework.io/registry/api/docs/swagger.json",
+    "title": "AVSAR Registration Portal",
+    "footerText": "AVSAR Registration Portal",
     "languages": [
         "en",
         "hi"

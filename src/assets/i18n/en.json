@@ -318,5 +318,17 @@
   "INCORRECT_AADHAR":"It should be 12 digit number",
   "APPROVED_CLAIMS":"Approved Claims",
   "REJECTED_CLAIMS":"Rejected Claims",
-  "COMPATIBLE_ONLY_IN_DESKTOP":"Compatible only in Desktop"
+  "COMPATIBLE_ONLY_IN_DESKTOP":"Compatible only in Desktop",
+  "ENTER_STUDENT_NAME": "Enter Student Name",
+  "ENTER_STUDENT_ID": "Enter Student ID",
+  "ENTER_STUDENT_MOBILE": "Enter Student Mobile Number",
+  "ENTER_STUDENT_DOB": "Enter Student Date of Birth",
+  "ENTER_GUARDIAN_NAME": "Enter Guardian Name",
+  "ENTER_STUDENT_AADHAR_NUMBER": "Enter Student Aadhar Number",
+  "STUDENT_NAME_REQUIRED": "Student Name is required",
+  "STUDENT_ID_REQUIRED": "Student ID is required",
+  "STUDENT_MOBILE_REQUIRED": "Student Mobile is required",
+  "STUDENT_DOB_REQUIRED": "Student Date of Birth is required",
+  "STUDENT_AADHAR_REQUIRED": "Student Aadhar is required",
+  "GUARDIAN_NAME_REQUIRED": "Guardian Name  is required"
 }
