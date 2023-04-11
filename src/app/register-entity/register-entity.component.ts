@@ -441,7 +441,8 @@ export class RegisterEntityComponent implements OnInit {
   }
 
   issueBatchCredential() {
-    const studentBatches = _.chunk(this.studentList, BATCH_LIMIT);
+    const verifiedList = this.studentList.filter(item => item.isVerified);
+    const studentBatches = _.chunk(verifiedList, BATCH_LIMIT);
     this.strictLoader = true;
     this.showProgress = true;
     this.progress = 0;

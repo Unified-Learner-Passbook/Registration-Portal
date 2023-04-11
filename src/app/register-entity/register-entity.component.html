@@ -47,8 +47,7 @@
   </div>
   <div class="student-list">
     <h6 class="pt-4">{{'REGISTERED_STUDENTS' | translate}}
-      <i style="font-weight: normal;font-size: small;">(Following students are
-        Registered but credentials are not issued against them)</i>
+      <i style="font-weight: normal;font-size: small;">({{'REGISTERED_STUDENT_SUBTITLE_NOTE' | translate}})</i>
     </h6>
     <!-- <ngb-progressbar *ngIf="showProgress" type="info" class="pt-4" [value]="progress" [striped]="true"
       [animated]="true">{{progress}}%</ngb-progressbar> -->
@@ -65,7 +64,7 @@
       <thead>
         <tr>
           <!-- <th scope="col">{{'SR_NO' | translate }}</th> -->
-          <th scope="col">Verified</th>
+          <th scope="col">{{'VERIFIED' | translate}}</th>
           <th scope="col">{{'STUDENT_ID' | translate }}</th>
           <th scope="col">{{'NAME' | translate }}</th>
           <th scope="col">{{'DATE_OF_BIRTH' | translate }}</th>
@@ -82,7 +81,8 @@
           <td>{{item?.name}}</td>
           <td>{{item?.dob}}</td>
           <td>{{item?.mobile}}</td>
-          <td><button type="button" *ngIf="!item?.isVerified" class="btn-warn" (click)="verifyStudent(item)">Verify</button></td>
+          <td><button type="button" *ngIf="!item?.isVerified" class="btn-warn" (click)="verifyStudent(item)">{{'VERIFY'
+              | translate}}</button></td>
         </tr>
       </tbody>
     </table>
@@ -91,9 +91,9 @@
   </div>
 
   <div class="d-flex justify-content-end align-items-start p-2 pb-3 pt-5 table-footer" *ngIf="studentList?.length">
-    <button type="button" class="custom-button blue-button mt-10 p-65"
+    <!-- <button type="button" class="custom-button blue-button mt-10 p-65"
       (click)="verifyStudentsAadhar()">{{'VERIFY_STUDENTS_AADHAR' | translate }}
-    </button>
+    </button> -->
     <button type="button" class="custom-button blue-button mt-10 p-65"
       (click)="openDeclarationModal()">{{'ISSUE_CREDENTIALS' | translate }}
     </button>
@@ -117,24 +117,24 @@
 <ng-template #downloadResModal>
   <div class="modal-content">
     <div class="modal-body fs-14 text-center">
-      <h4 class="text-center text-underline">Report</h4>
+      <h4 class="text-center text-underline">{{'REPORT' | translate}}</h4>
       <div class="py-3">
         <div class="d-flex py-15 text-success">
-          <div><i class="fa fa-user-check"></i>&nbsp;Successfully Registered &nbsp;</div>
+          <div><i class="fa fa-user-check"></i>&nbsp;{{'SUCCESSFULLY_REGISTERED' | translate}} &nbsp;</div>
           <div>{{bulkRegRes?.success_count}}</div>
         </div>
         <div class="d-flex py-15">
-          <div><i class="fa fa-copy"></i>&nbsp;Duplicate Records&nbsp;</div>
+          <div><i class="fa fa-copy"></i>&nbsp;{{'DUPLICATE_RECORDS' | translate}}&nbsp;</div>
           <div>{{bulkRegRes?.duplicate_count}}</div>
         </div>
         <div class="d-flex py-15 text-red">
-          <div><i class="fa fa-user-times"></i>&nbsp;Unable to Register&nbsp;</div>
+          <div><i class="fa fa-user-times"></i>&nbsp;{{'UNABLE_TO_REGISTER' | translate}}&nbsp;</div>
           <div>{{bulkRegRes?.error_count}}</div>
         </div>
       </div>
 
       <button type="button" class="btn btn-primary mt-3 fs-14" (click)="downloadBulkRegisterResponse()"><i
-          class="fa fa-download"></i>&nbsp;Download Report</button>
+          class="fa fa-download"></i>&nbsp;{{'DOWNLOAD_REPORT' | translate}}</button>
     </div>
   </div>
 </ng-template>
@@ -142,19 +142,19 @@
 <ng-template #downloadIssuedResModal>
   <div class="modal-content">
     <div class="modal-body fs-14 text-center">
-      <h4 class=" text-underline">Report</h4>
+      <h4 class=" text-underline">{{'REPORT' | translate}}</h4>
       <div>
         <div class="d-flex py-15 text-success">
-          <div><i class="fa fa-user-check"></i>&nbsp;Successfully Issued&nbsp;</div>
+          <div><i class="fa fa-user-check"></i>&nbsp;{{'SUCCESSFULLY_ISSUED' | translate}}&nbsp;</div>
           <div>{{bulkIssuedCredRes?.success_count}}</div>
         </div>
         <div class="d-flex py-15 text-red">
-          <div><i class="fa fa-user-times"></i>&nbsp;Unable to Issue a credential &nbsp;</div>
+          <div><i class="fa fa-user-times"></i>&nbsp;{{'UNABLE_TO_ISSUE_A_CREDENTIAL' | translate}} &nbsp;</div>
           <div>{{bulkIssuedCredRes?.error_count}}</div>
         </div>
       </div>
       <button type="button" class="btn btn-primary mt-3 fs-14 " (click)="downloadIssuedCredResponse()"><i
-          class="fa fa-download"></i>&nbsp;Download</button>
+          class="fa fa-download"></i>&nbsp;{{'DOWNLOAD' | translate}}</button>
     </div>
   </div>
 </ng-template>
