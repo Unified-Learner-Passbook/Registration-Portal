@@ -84,7 +84,7 @@ const routes: Routes = [
   {
     path: 'dashboard',
     component: MainDashboardComponent,
-    canActivate: [AuthenticationGuard],
+    // canActivate: [AuthenticationGuard],
     children: [
       {
         path: 'register-entity',

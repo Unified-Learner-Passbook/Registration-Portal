@@ -32,22 +32,29 @@ export class CredentialService {
     return this.dataService.get(payload).pipe(map((res: any) => res.result));
   }
 
-  getCredentials(issuerId?: string): Observable<any> {
-    const payload = {
-      url: '${this.baseUrl}/v1/sso/student/credentials/search',
+  getCredentials(data?:any): Observable<any> {
+    const payload:any= {
+      url: `${this.baseUrl}/v1/sso/student/credentials/search`,
       data: {}
     };
 
-    if (issuerId) {
-      payload.data = {
-        issuer: { id: issuerId }
-      }
+    if (data?.issuerId) {
+      payload.data.issuer = { id: data.issuerId };
+      
+        if(data?.grade) {
+         payload.data.subject.grade = data.grade
+        }
+        if(data?.academicYear) {
+          payload.data.subject.academicYear= data.academicYear
+        }
+       
+      
     } else {
       payload.data = {
         subject: { id: this.authService.currentUser.did }
       }
     }
-
+   
     return this.dataService.post(payload).pipe(map((res: any) => res.result));
   }
 
@@ -117,7 +124,7 @@ export class CredentialService {
     const nextYearDate = new Date();
     nextYearDate.setFullYear(nextYearDate.getFullYear() + 1);
     const payload = {
-      url: '${this.baseUrl}/v1/sso/student/credentials/issue', //TODO: Need to change this to /teacher
+      url: `${this.baseUrl}/v1/sso/student/credentials/issue`, //TODO: Need to change this to /teacher
       data: {
         "credential": {
           "@context": [
