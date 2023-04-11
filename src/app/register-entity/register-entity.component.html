@@ -47,8 +47,7 @@
   </div>
   <div class="student-list">
     <h6 class="pt-4">{{'REGISTERED_STUDENTS' | translate}}
-      <i style="font-weight: normal;font-size: small;">(Following students are
-        Registered but credentials are not issued against them)</i>
+      <i style="font-weight: normal;font-size: small;">({{'REGISTERED_STUDENT_SUBTITLE_NOTE' | translate}})</i>
     </h6>
     <!-- <ngb-progressbar *ngIf="showProgress" type="info" class="pt-4" [value]="progress" [striped]="true"
       [animated]="true">{{progress}}%</ngb-progressbar> -->
@@ -58,26 +57,32 @@
       </div>
       <div class="text-center">
         {{'LOADING_PLEASE_WAIT' | translate}}
-      </div> 
+      </div>
     </div>
     <!-- <ngb-alert type="danger" *ngIf="errorMessage" class="pt-4">{{ errorMessage }}</ngb-alert> -->
     <table class="table" cellpadding="0" cellspacing="0" *ngIf="studentList?.length">
       <thead>
         <tr>
-          <th scope="col">{{'SR_NO' | translate }}</th>
+          <!-- <th scope="col">{{'SR_NO' | translate }}</th> -->
+          <th scope="col">{{'VERIFIED' | translate}}</th>
           <th scope="col">{{'STUDENT_ID' | translate }}</th>
           <th scope="col">{{'NAME' | translate }}</th>
           <th scope="col">{{'DATE_OF_BIRTH' | translate }}</th>
           <th scope="col">{{'MOBILE_NUMBER' | translate}}</th>
+          <th scope="col"></th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let item of tableRows; index as i">
-          <td>{{i+1}}</td>
+          <!-- <td>{{i+1}}</td> -->
+          <td class="verify" *ngIf="item?.isVerified"><img src="assets/images/verifyicon.png" alt=""></td>
+          <td class="warning" *ngIf="!item?.isVerified"><img src="assets/images/warningicon.png" alt=""></td>
           <td>{{item?.studentId}}</td>
           <td>{{item?.name}}</td>
           <td>{{item?.dob}}</td>
           <td>{{item?.mobile}}</td>
+          <td><button type="button" *ngIf="!item?.isVerified" class="btn-warn" (click)="verifyStudent(item)">{{'VERIFY'
+              | translate}}</button></td>
         </tr>
       </tbody>
     </table>
@@ -86,6 +91,9 @@
   </div>
 
   <div class="d-flex justify-content-end align-items-start p-2 pb-3 pt-5 table-footer" *ngIf="studentList?.length">
+    <!-- <button type="button" class="custom-button blue-button mt-10 p-65"
+      (click)="verifyStudentsAadhar()">{{'VERIFY_STUDENTS_AADHAR' | translate }}
+    </button> -->
     <button type="button" class="custom-button blue-button mt-10 p-65"
       (click)="openDeclarationModal()">{{'ISSUE_CREDENTIALS' | translate }}
     </button>
@@ -109,23 +117,24 @@
 <ng-template #downloadResModal>
   <div class="modal-content">
     <div class="modal-body fs-14 text-center">
-      <h4 class="text-center text-underline">Report</h4>
+      <h4 class="text-center text-underline">{{'REPORT' | translate}}</h4>
       <div class="py-3">
         <div class="d-flex py-15 text-success">
-          <div><i class="fa fa-user-check"></i>&nbsp;Successfully Registered &nbsp;</div>
-            <div>{{bulkRegRes?.success_count}}</div>
+          <div><i class="fa fa-user-check"></i>&nbsp;{{'SUCCESSFULLY_REGISTERED' | translate}} &nbsp;</div>
+          <div>{{bulkRegRes?.success_count}}</div>
         </div>
-          <div class="d-flex py-15">
-            <div><i class="fa fa-copy"></i>&nbsp;Duplicate Records&nbsp;</div>
-            <div>{{bulkRegRes?.duplicate_count}}</div>
-          </div>
-          <div class="d-flex py-15 text-red">
-            <div><i class="fa fa-user-times"></i>&nbsp;Unable to Register&nbsp;</div>
-            <div>{{bulkRegRes?.error_count}}</div>
-          </div>
+        <div class="d-flex py-15">
+          <div><i class="fa fa-copy"></i>&nbsp;{{'DUPLICATE_RECORDS' | translate}}&nbsp;</div>
+          <div>{{bulkRegRes?.duplicate_count}}</div>
+        </div>
+        <div class="d-flex py-15 text-red">
+          <div><i class="fa fa-user-times"></i>&nbsp;{{'UNABLE_TO_REGISTER' | translate}}&nbsp;</div>
+          <div>{{bulkRegRes?.error_count}}</div>
+        </div>
       </div>
 
-      <button type="button" class="btn btn-primary mt-3 fs-14" (click)="downloadBulkRegisterResponse()"><i class="fa fa-download"></i>&nbsp;Download Report</button>
+      <button type="button" class="btn btn-primary mt-3 fs-14" (click)="downloadBulkRegisterResponse()"><i
+          class="fa fa-download"></i>&nbsp;{{'DOWNLOAD_REPORT' | translate}}</button>
     </div>
   </div>
 </ng-template>
@@ -133,18 +142,19 @@
 <ng-template #downloadIssuedResModal>
   <div class="modal-content">
     <div class="modal-body fs-14 text-center">
-      <h4 class=" text-underline">Report</h4>
-      <div>        
+      <h4 class=" text-underline">{{'REPORT' | translate}}</h4>
+      <div>
         <div class="d-flex py-15 text-success">
-          <div><i class="fa fa-user-check"></i>&nbsp;Successfully Issued&nbsp;</div>
+          <div><i class="fa fa-user-check"></i>&nbsp;{{'SUCCESSFULLY_ISSUED' | translate}}&nbsp;</div>
           <div>{{bulkIssuedCredRes?.success_count}}</div>
         </div>
         <div class="d-flex py-15 text-red">
-          <div><i class="fa fa-user-times"></i>&nbsp;Unable to Issue a credential &nbsp;</div>
+          <div><i class="fa fa-user-times"></i>&nbsp;{{'UNABLE_TO_ISSUE_A_CREDENTIAL' | translate}} &nbsp;</div>
           <div>{{bulkIssuedCredRes?.error_count}}</div>
         </div>
       </div>
-      <button type="button" class="btn btn-primary mt-3 fs-14 " (click)="downloadIssuedCredResponse()"><i class="fa fa-download"></i>&nbsp;Download</button>
+      <button type="button" class="btn btn-primary mt-3 fs-14 " (click)="downloadIssuedCredResponse()"><i
+          class="fa fa-download"></i>&nbsp;{{'DOWNLOAD' | translate}}</button>
     </div>
   </div>
 </ng-template>
@@ -165,4 +175,70 @@
       </div>
     </div>
   </div>
+</ng-template>
+
+
+<ng-template #editFormModal>
+  <form [formGroup]="editStudentForm" (ngSubmit)="onUpdate()" class="col-md-9 offset-md-2 pl-5">
+    <div class="form-group row">
+      <label for="studentName" class="col-sm-3 col-form-label fs-14">{{'STUDENT_NAME' | translate}}</label>
+      <div class="col-sm-6">
+        <input type="text" formControlName="studentName" class="form-control" id="studentName"
+          placeholder="{{'ENTER_STUDENT_NAME' | translate}}">
+        <p class="text-red pt-2 mb-0" *ngIf="studentName.invalid && studentName.touched">{{'STUDENT_NAME_REQUIRED'
+          | translate}}
+        </p>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="studentId" class="col-sm-3 col-form-label fs-14">{{'STUDENT_ID' | translate}}</label>
+      <div class="col-sm-6">
+        <input type="text" formControlName="studentId" class="form-control" id="studentId"
+          placeholder="{{'ENTER_STUDENT_ID' | translate}}">
+        <p class="text-red pt-2 mb-0" *ngIf="studentId.invalid && studentId.touched">{{'STUDENT_ID_REQUIRED'
+          | translate}}
+        </p>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="mobile" class="col-sm-3 col-form-label fs-14">{{'MOBILE_NUMBER' | translate}}</label>
+      <div class="col-sm-6">
+        <input type="text" formControlName="mobile" class="form-control" id="mobile"
+          placeholder="{{'ENTER_STUDENT_MOBILE' | translate}}">
+        <p class="text-red pt-2 mb-0" *ngIf="mobile.invalid && mobile.touched">{{'STUDENT_MOBILE_REQUIRED'
+          | translate}}
+        </p>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="guardianName" class="col-sm-3 col-form-label fs-14">{{'GUARDIAN_NAME' | translate}}</label>
+      <div class="col-sm-6">
+        <input type="text" formControlName="guardianName" class="form-control" id="guardianName"
+          placeholder="{{'ENTER_GUARDIAN_NAME' | translate}}">
+        <p class="text-red pt-2 mb-0" *ngIf="guardianName.invalid && guardianName.touched">{{'GUARDIAN_NAME_REQUIRED'
+          | translate}}
+        </p>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="aadharNumber" class="col-sm-3 col-form-label fs-14">{{'AADHAR_NUMBER' | translate}}</label>
+      <div class="col-sm-6">
+        <input type="text" formControlName="aadharNumber" class="form-control" id="aadharNumber"
+          placeholder="{{'ENTER_STUDENT_AADHAR_NUMBER' | translate}}">
+        <p class="text-red pt-2 mb-0" *ngIf="aadharNumber.invalid && aadharNumber.touched">{{'STUDENT_AADHAR_REQUIRED'
+          | translate}}
+        </p>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="dob" class="col-sm-3 col-form-label fs-14">{{'DATE_OF_BIRTH' | translate}}</label>
+      <div class="col-sm-6">
+        <input type="text" formControlName="dob" class="form-control" id="dob"
+          placeholder="{{'ENTER_STUDENT_DOB' | translate}}">
+        <p class="text-red pt-2 mb-0" *ngIf="dob.invalid && dob.touched">{{'STUDENT_AADHAR_REQUIRED'
+          | translate}}
+        </p>
+      </div>
+    </div>
+  </form>
 </ng-template>

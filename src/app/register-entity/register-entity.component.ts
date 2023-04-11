@@ -3,8 +3,8 @@ import * as Papa from "papaparse";
 import { DataService } from '../services/data/data-request.service';
 import { ToastMessageService } from '../services/toast-message/toast-message.service';
 import * as _ from 'lodash-es'
-import { concatMap, tap, toArray } from 'rxjs/operators';
-import { from, throwError } from 'rxjs';
+import { catchError, concatMap, tap, toArray } from 'rxjs/operators';
+import { forkJoin, from, of, throwError } from 'rxjs';
 import { CsvService } from '../services/csv/csv.service';
 import { RequestParam } from '../interfaces/httpOptions.interface';
 import { AuthService } from '../services/auth/auth.service';
@@ -15,8 +15,8 @@ import { TelemetryService } from '../services/telemetry/telemetry.service';
 import { IImpressionEventInput, IInteractEventInput } from '../services/telemetry/telemetry-interface';
 import { UtilService } from '../services/util/util.service';
 import { environment } from 'src/environments/environment';
-
-
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { CredentialService } from '../services/credential/credential.service';
 
 const BATCH_LIMIT = 10;
 @Component({
@@ -61,6 +61,8 @@ export class RegisterEntityComponent implements OnInit {
   currentBatch = 0;
   totalBatches: number;
   studentList: any[];
+  allStudents: any[] = [];
+  selectedStudent: any;
 
   strictLoader = false;
 
@@ -72,12 +74,23 @@ export class RegisterEntityComponent implements OnInit {
   downloadResModalRef: NgbModalRef;
   downloadIssuedResModalRef: NgbModalRef;
   declarationModalRef: NgbModalRef;
+  editFormModalRef: NgbModalRef;
 
   @ViewChild('downloadResModal') downloadResModal: TemplateRef<any>;
   @ViewChild('downloadIssuedResModal') downloadIssuedResModal: TemplateRef<any>;
   @ViewChild('declarationModal') declarationModal: TemplateRef<any>;
+  @ViewChild('editFormModal') editFormModal: TemplateRef<any>;
 
   errorMessage: string;
+  editStudentForm = new FormGroup({
+    studentName: new FormControl(null, [Validators.required]),
+    studentId: new FormControl(null, [Validators.required]),
+    guardianName: new FormControl(null, [Validators.required]),
+    mobile: new FormControl(null, [Validators.required, Validators.minLength(10), Validators.maxLength(10), Validators.pattern('^[0-9]{10}$')]),
+    aadharNumber: new FormControl(null, [Validators.required]),
+    dob: new FormControl(null, [Validators.required]),
+  });
+
   constructor(
     private readonly dataService: DataService,
     private readonly toastMsg: ToastMessageService,
@@ -88,10 +101,10 @@ export class RegisterEntityComponent implements OnInit {
     private readonly router: Router,
     private readonly activatedRoute: ActivatedRoute,
     private readonly telemetryService: TelemetryService,
-    private readonly utilService: UtilService
-  ) { 
+    private readonly utilService: UtilService,
+    private readonly credentialService: CredentialService
+  ) {
     this.baseUrl = environment.baseUrl;
-
   }
 
   ngOnInit(): void {
@@ -229,7 +242,9 @@ export class RegisterEntityComponent implements OnInit {
       ).subscribe((res) => {
         console.log("final", res);
         this.toastMsg.success('', this.generalService.translateString('STUDENTS_DATA_IMPORTED_SUCCESSFULLY'));
-        this.getStudentList();
+        setTimeout(() => {
+          this.getStudentList(true);
+        }, 500);
         this.generateBulkRegisterResponse(res);
         this.strictLoader = false;
         setTimeout(() => {
@@ -327,19 +342,22 @@ export class RegisterEntityComponent implements OnInit {
     return this.dataService.post(request);
   }
 
-  getStudentList() {
+  getStudentList(verifyAadhar: boolean = false) {
     this.studentList = [];
     this.isLoading = true;
     const request = {
       url: `${this.baseUrl}/v1/sso/student/list`,
       data: {
         "grade": this.model.grade,
-        "acdemic_year": this.model.academicYear
+        "acdemic_year": this.model.academicYear,
+        "aadhaar_status": "all"
       }
     }
     this.dataService.post(request).subscribe((res: any) => {
       this.isLoading = false;
+      this.strictLoader = false;
       if (res?.result?.length) {
+        this.allStudents = res.result;
         this.studentList = res.result.map((item: any) => {
           return {
             did: item.student.DID,
@@ -348,25 +366,30 @@ export class RegisterEntityComponent implements OnInit {
             dob: item.student.dob,
             mobile: item.studentdetail.mobile,
             guardian: item.studentdetail.gaurdian_name,
-            osid: item.studentdetail.osid
+            osid: item.studentdetail.osid,
+            isVerified: item.student.aadhaar_status === 'verified'
           }
         });
+
+        if (verifyAadhar) {
+          this.verifyStudentsAadhar();
+        }
         this.pageChange();
       }
     }, (error: any) => {
       this.isLoading = false;
+      this.strictLoader = false;
       this.toastMsg.error("", this.generalService.translateString('ERROR_WHILE_FETCHING_STUDENT_LIST'));
     });
   }
 
   openDeclarationModal() {
-
     this.declarationModalRef = this.openModal(this.declarationModal, 'md');
   }
 
-  openModal(content: TemplateRef<any>,size='sm') {
+  openModal(content: TemplateRef<any>, size = 'sm') {
     const options: NgbModalOptions = {
-      backdrop: 'static',
+      // backdrop: 'static',
       animation: true,
       centered: true,
       size
@@ -382,8 +405,44 @@ export class RegisterEntityComponent implements OnInit {
     }
   }
 
+  verifyStudent(student: any) {
+    const user = this.allStudents.find((item => item.studentdetail.osid === student.osid));
+
+    if (user) {
+      this.strictLoader = true;
+      this.credentialService.verifyAadhar({ studentData: user.student }).subscribe((res: any) => {
+        this.strictLoader = false;
+        this.toastMsg.success("", this.generalService.translateString('AADHAAR_VERIFIED_SUCCESSFULLY'));
+        this.getStudentList();
+      }, error => {
+        this.strictLoader = false;
+        this.toastMsg.error("", this.generalService.translateString('ERROR_WHILE_VERIFYING_AADHAAR'));
+      });
+    }
+  }
+
+  verifyStudentsAadhar() {
+    this.strictLoader = true;
+    const pendingVerification = this.allStudents.filter(item => item?.student?.aadhaar_status === '');
+    forkJoin(
+      pendingVerification.map((item: any) => {
+        return this.credentialService.verifyAadhar({ studentData: item.student }).pipe(catchError(error => of(error)))
+      })).subscribe((res: any) => {
+        console.log("Result", res);
+        this.strictLoader = false;
+        this.toastMsg.success("", this.generalService.translateString('AADHAAR_VERIFIED_SUCCESSFULLY'));
+        setTimeout(() => {
+          this.getStudentList();
+        }, 500);
+      }, error => {
+        this.strictLoader = false;
+        this.toastMsg.error("", this.generalService.translateString('ERROR_WHILE_VERIFYING_AADHAAR'));
+      });
+  }
+
   issueBatchCredential() {
-    const studentBatches = _.chunk(this.studentList, BATCH_LIMIT);
+    const verifiedList = this.studentList.filter(item => item.isVerified);
+    const studentBatches = _.chunk(verifiedList, BATCH_LIMIT);
     this.strictLoader = true;
     this.showProgress = true;
     this.progress = 0;
@@ -403,7 +462,9 @@ export class RegisterEntityComponent implements OnInit {
         }),
         toArray()
       ).subscribe((res) => {
-        this.getStudentList();
+        setTimeout(() => {
+          this.getStudentList();
+        }, 100);
         this.strictLoader = false;
         setTimeout(() => {
           this.progress = 1;
@@ -466,6 +527,52 @@ export class RegisterEntityComponent implements OnInit {
     const csv = Papa.unparse(this.bulkIssuedCredRes.csv);
     this.utilService.downloadFile(`${this.model.grade}-credentials-report.csv`, 'text/csv;charset=utf-8;', csv);
   }
+
+
+  editStudent(student: any) {
+    console.log("student", student);
+    this.editStudentForm.patchValue({
+      studentName: student.studentName,
+      studentId: student.student_id,
+      dob: student.dob,
+      guardianName: student.gaurdian_name,
+      aadharNumber: student.aadhar_token,
+      mobile: student.mobile
+    });
+    this.selectedStudent = student;
+    this.editFormModalRef = this.openModal(this.editFormModal);
+  }
+
+  onUpdate() {
+    if (this.editStudentForm.valid) {
+      const payload = {
+        studentNewData: {
+          studentName: this.editStudentForm.value.studentName,
+          student_id: this.editStudentForm.value.studentId,
+          dob: this.editStudentForm.value.dob,
+          gaurdian_name: this.editStudentForm.value.guardianName,
+          aadhar_token: this.editStudentForm.value.aadharNumber,
+          mobile: this.editStudentForm.value.mobile
+        },
+        osid: this.selectedStudent.osid
+      }
+      const aadharVerifyPayload = {
+        "studentData": {
+          "student_name": this.editStudentForm.value.studentName
+        }
+      }
+      this.credentialService.updateStudent(payload)
+        .pipe(concatMap(_ => this.credentialService.verifyAadhar(aadharVerifyPayload)))
+        .subscribe((res: any) => {
+          console.log("res", res);
+          //call new student list call
+        })
+    } else {
+      console.error("Invalid Form");
+    }
+
+  }
+
 
   ngAfterViewInit(): void {
     this.raiseImpressionEvent();
