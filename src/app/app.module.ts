@@ -64,7 +64,6 @@ import { LoginComponent } from './login/login.component';
 import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient } from '@angular/common/http';
-import { config } from 'process';
 import { ColorPickerModule } from 'ngx-color-picker';
 
 import { VerifyModule } from 'vc-verification'

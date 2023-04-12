@@ -42,7 +42,7 @@ export class RegistrationComponent implements OnInit {
 
   openSSO(buttonId: string) {
     this.raiseInteractEvent(buttonId)
-    this.generalService.getData('${this.baseUrl}/v1/sso/digilocker/authorize/portal', true).subscribe((res) => {
+    this.generalService.getData(`${this.baseUrl}/v1/sso/digilocker/authorize/portal`, true).subscribe((res) => {
       console.log("res", res);
       window.open(res.digiauthurl, "_self");
     }, error => {

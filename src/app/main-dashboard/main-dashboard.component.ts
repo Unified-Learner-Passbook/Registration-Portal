@@ -49,7 +49,7 @@ export class MainDashboardComponent implements OnInit, OnDestroy {
 
   getMetrics() {
     const payload = {
-      url: '${this.baseUrl}/v1/portal/count',
+      url: `${this.baseUrl}/v1/portal/count`,
       data: {
         "countFields": [
           "students_registered",
