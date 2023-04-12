@@ -9,6 +9,7 @@ import { GeneralService } from '../services/general/general.service';
 import { concatMap, map } from 'rxjs/operators';
 import { TelemetryService } from '../services/telemetry/telemetry.service';
 import { IImpressionEventInput, IInteractEventInput } from '../services/telemetry/telemetry-interface';
+import { UtilService } from '../services/util/util.service';
 
 
 @Component({
@@ -45,6 +46,15 @@ export class IssuedCredentialComponent implements OnInit {
       schemaId: 'clf0wvyjs0008tj154rc071i1'
     }
   ];
+  startYear = 2015;
+  currentYear = new Date().getFullYear();
+  academicYearRange: string[] = [];
+  model: any = {};
+  studentDetails = [];
+  grades: any[];
+  
+
+  
   constructor(
     private readonly authService: AuthService,
     private readonly toastMessage: ToastMessageService,
@@ -52,25 +62,75 @@ export class IssuedCredentialComponent implements OnInit {
     private readonly credentialService: CredentialService,
     private readonly generalService: GeneralService,
     private readonly activatedRoute: ActivatedRoute,
-    private readonly telemetryService: TelemetryService
+    private readonly telemetryService: TelemetryService,
+    private readonly utilService: UtilService,
+    private readonly toastService: ToastMessageService,
+
+
   ) { }
+  
 
   ngOnInit(): void {
-    this.getCredentials();
+     this.getCredentials();
+    this.setAcademicYear();
+    this.setGrades();
+
   }
+
+
+
+  setGrades() {
+    const ordinals = this.utilService.getNumberOrdinals(1, 10);
+    this.grades = ordinals.map((item: string, index: number) => {
+      return {
+        label: item,
+        value: `class-${index + 1}`
+      }
+      
+    });
+    
+  }
+
+  setAcademicYear() {
+    for (let fromYear = this.startYear; fromYear < this.currentYear; fromYear++) {
+      this.academicYearRange.push(`${fromYear}-${fromYear + 1}`);
+     
+    }
+ 
+  }
+
+  onModelChange() {
+  
+    this.getCredentials();
+    // if (this.model.grade && this.model.academicYear) {
+    //   console.log(this.model.grade + ',' + this.model.academicYear);
+    // }
+  }
+
+ 
 
   onChange(event) {
     console.log("event", this.selectedType);
-    this.getCredentials();
+    // this.getCredentials();
+    console.log(this.model);
+   
   }
 
+  
+  
   getCredentials() {
     this.isLoading = true;
     this.issuedCredentials = [];
     this.tableRows = [];
     this.page = 1;
-    this.credentialService.getCredentials(this.authService?.schoolDetails?.did).subscribe((res) => {
-      this.isLoading = false;
+    let payload={
+      issuerId:this.authService?.schoolDetails?.did,
+      grade:this.model.grade,
+      academicYear:this.model.academicYear
+    }
+
+    this.credentialService.getCredentials(payload).subscribe((res) => {
+     this.isLoading = false;
       this.issuedCredentials = res;
       this.pageChange();
     }, (error: any) => {
