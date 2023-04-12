@@ -120,6 +120,7 @@ export class ClaimApprovalComponent implements OnInit {
       if (res.success == true) {
         this.toastService.success('', res.message)
         this.studentDetails = this.studentDetails.filter(item => item.osid !== user.osid);
+        this.pageChange();
         console.log("61", this.studentDetails.length)
       } else {
         this.toastService.error('', res.message)
