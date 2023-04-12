@@ -102,39 +102,6 @@
 .bg-header {
     background: var(--headerColor) !important;
 }
-
-.text-wb {
-    color: var(--primaryTextColor) !important;
-}
-
-.table-striped tbody tr:nth-of-type(odd) {
-    background-color: var(--bodyBackground) !important;
-}
-
-.btn-success {
-    background-color: #88ecb226 !important;
-    color: #22b02e !important;
-    border: 0 !important;
-}
-
-.bg-primary {
-    background-color: var(--primaryColor) !important;
-}
-
-.ngx-pagination .current {
-    background: var(--primaryColor) !important;
-}
-
-.d-contents {
-    display: contents !important;
-}
-
-.btn-deny {
-    background-color: #f3c2c24f !important;
-    color: #c5292a !important;
-    border: 0 !important;
-}
-
 textarea.form-control {
     height: 100px !important;
     font-size: 12px;
@@ -171,18 +138,7 @@ formly-autocomplete-type,
     font-size: 14px !important;
 }
 
-.p16,
-legend {
-    font-size: 16px !important;
-}
 
-legend {
-    font-weight: 700;
-}
-
-.img16 {
-    width: 16px;
-}
 
 .p12 {
     font-size: 12px !important;
@@ -198,30 +154,6 @@ legend {
     background-color: var(--secondaryBtnBgColor) !important;
     color: #1987b6 !important;
     font-weight: 600 !important;
-}
-.badge-secondary {
-    border: 1px solid #cccccc !important;
-    background-color: var(--bodyBackground) !important;
-    color: #8d9091 !important;
-}
-
-.marker-pointer {
-    font-family: "Font Awesome 5 Free";
-    content: "\f3c5";
-    display: inline-block;
-    padding-left: 10px;
-    vertical-align: middle;
-    font-weight: 900;
-    font-style: normal;
-    font-size: 12px;
-}
-
-.input-group-text {
-    background: none !important;
-    border: none !important;
-    font-size: 14px !important;
-    padding-left: 0 !important;
-    padding-right: 5px !important;
 }
 
 form-group {
@@ -240,47 +172,6 @@ form-group {
     font-weight: 700;
 }
 
-.custom-control-label {
-    font-size: 14px;
-    font-weight: 400 !important;
-    padding-top: 5px !important;
-}
-
-// .text-primary-color{
-//     color: #1987B6 !important;
-// }
-.private-access:before {
-    font-family: "Font Awesome 5 Free";
-    content: "\f023";
-    display: inline-block;
-    padding-left: 10px;
-    vertical-align: middle;
-    font-weight: 900;
-    font-style: normal;
-    font-size: 12px;
-}
-
-.internal-access:before {
-    font-family: "Font Awesome 5 Free";
-    content: "\f023 ";
-    display: inline-block;
-    padding-left: 10px;
-    vertical-align: middle;
-    font-weight: 900;
-    font-size: 12px;
-    font-style: normal;
-}
-
-.public-access:before {
-    font-family: "Font Awesome 5 Free";
-    content: "\f57c ";
-    display: inline-block;
-    padding-left: 10px;
-    vertical-align: middle;
-    font-weight: 900;
-    font-size: 12px;
-    font-style: normal;
-}
 
 .custom-input-class {
     color: #2a8bac;
@@ -312,15 +203,10 @@ $primary-color-dark: #000;
 .form-label {
     color: $primary-color-dark;
 }
-
-
-
 body {
     margin: 0;
-    // font-family: "Lato", sans-serif !important;
     font-family: "Poppins", sans-serif !important;
     color: rgb(0, 0, 0);
-    // background: var(--bodyBackground) !important;
 }
 
 .fs-7 {
@@ -346,82 +232,10 @@ a {
 
 // /* Importing Bootstrap SCSS file. */
 // @import '~bootstrap/scss/bootstrap';
-button.calendar,
-button.calendar:active {
-    width: 2.75rem;
-    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAcCAYAAAAEN20fAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAOxAAADsQBlSsOGwAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAEUSURBVEiJ7ZQxToVAEIY/YCHGxN6XGOIpnpaEsBSeQC9ArZbm9TZ6ADyBNzAhQGGl8Riv4BLAWAgmkpBYkH1b8FWT2WK/zJ8ZJ4qiI6XUI3ANnGKWBnht2/ZBDRK3hgVGNsCd7/ui+JkEIrKtqurLpEWaphd933+IyI3LEIdpCYCiKD6HcuOa/nwOa0ScJEnk0BJg0UTUWJRl6RxCYEzEmomsIlPU3IPW+grIAbquy+q6fluy/28RIBeRMwDXdXMgXLj/B2uimRXpui4D9sBeRLKl+1N+L+t6RwbWrZliTTTr1oxYtzVWiTQAcRxvTX+eJMnlUDaO1vpZRO5NS0x48sIwfPc87xg4B04MCzQi8hIEwe4bl1DnFMCN2zsAAAAASUVORK5CYII=) !important;
-    background-repeat: no-repeat;
-    background-size: 23px;
-    background-position: 50%;
-}
-
-.btn-outline-secondary {
-    color: #8d9091;
-    border-color: #8d9091;
-}
-
-.btn-outline-secondary:hover {
-    color: #8d9091;
-    border-color: #8d9091;
-}
 
 .d-flex {
     display: flex;
 }
-
-.dflex-dc-column {
-    flex-direction: column;
-}
-
-.flex-justify-between {
-    justify-content: space-between;
-}
-
-.alert-warning {
-    color: #0e0e0e !important;
-    background-color: #f7efe0 !important;
-    border-color: #f7efe0 !important;
-    font-size: 0.8rem;
-    padding: 1rem;
-}
-
-.alert-success {
-    color: #0e0e0e !important;
-    font-size: 0.8rem;
-}
-
-.red {
-    color: red;
-}
-
-.display-flex {
-    display: flex;
-}
-
-.flex-1 {
-    flex: 1;
-}
-
-.flex-2 {
-    flex: 2;
-}
-
-.flex-3 {
-    flex: 3;
-}
-
-.flex-4 {
-    flex: 4;
-}
-
-.flex-5 {
-    flex: 5;
-}
-
-.flex-6 {
-    flex: 6;
-}
-
 [class*="flex-"] {
     padding-left: 10px;
     padding-right: 10px;
@@ -439,28 +253,6 @@ button.calendar:active {
 //     max-width: 100% !important;
 //     width: 100% !important;
 // }
-
-.modal-dialog.panel-right {
-    position: fixed !important;
-    left: auto;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    margin: auto !important;
-    height: 100%;
-    -webkit-transform: translate3d(0%, 0, 0) !important;
-    -ms-transform: translate3d(0%, 0, 0) !important;
-    -o-transform: translate3d(0%, 0, 0) !important;
-    transform: translate3d(0%, 0, 0) !important;
-}
-
-.modal-dialog.panel-right .modal-content {
-    height: 100%;
-    overflow-y: auto;
-    border-top-right-radius: 0px;
-    border-bottom-right-radius: 0px;
-}
-
 .modal-content {
     background-color: var(--cardBackground) !important;
 }
@@ -483,22 +275,10 @@ button.calendar:active {
     right: 0;
 }
 
-.container {
-    //margin-top: 100px;
-    // padding-bottom: 100px;
-    // margin-top: 50px;
-    // max-width: 94% !important;
-}
-
 .modal {
     .container {
         padding-bottom: 38px;
     }
-}
-
-.sub-container {
-    //margin-top: 100px;
-    margin: 20px;
 }
 
 formly-field {
@@ -536,26 +316,6 @@ formly-field {
         color: #aaa;
     }
 }
-
-// discovery page
-.selected-list .c-list .c-token {
-    background-color: #6495ed99 !important;
-}
-
-.dropdown-list.tagToBody {
-    position: fixed;
-    width: 400px !important;
-}
-
-.list-area {
-    background-color: var(--cardBackground) !important;
-    color: var(--primaryTextColor) !important;
-}
-
-.list-filter {
-    background: #ffffff;
-}
-
 formly-autocomplete-type .ng-select {
     margin-top: 25px !important;
     margin-bottom: 5px;
@@ -665,28 +425,6 @@ formly-autocomplete-type .ng-select {
     background-color: var(--primarybgColor) !important;
     border-color: var(--primarybgColor) !important;
 }
-
-/* Tags */
-
-.tags-list {
-    margin-top: 10px;
-    ul {
-        margin: 0;
-        padding: 0;
-        li {
-            display: inline-block;
-            list-style: none;
-            font-size: 11px;
-            background-color: var(--secondarybgColor) !important;
-            padding: 5px 7px;
-            border-radius: 5px;
-            margin-right: 5px;
-            margin-bottom: 5px;
-            color: var(--tagstextColor) !important;
-        }
-    }
-}
-
 /* Tabs */
 
 .nav-tabs {
@@ -748,10 +486,6 @@ formly-autocomplete-type .ng-select {
 
 .bb-1 {
     border-bottom: 1px solid #cecece;
-}
-
-legend {
-    color: var(--primaryTextColor) !important;
 }
 
 h4,
@@ -970,17 +704,6 @@ formly-field .col-6 {
 .navbar-inverse {
     justify-content: flex-start !important;
 }
-
-.tox .tox-dialog--width-lg,
-.tox .tox-dialog {
-    height: 547px !important;
-    max-height: 70% !important;
-}
-
-.tox .tox-dialog-wrap__backdrop {
-    z-index: 5000;
-}
-
 /*  Json Editor : start*/
 
 .json-editor,
@@ -990,10 +713,6 @@ textarea.jsoneditor-text {
     min-height: 400px !important;
 }
 
-.jsoneditor-menu {
-    display: none;
-}
-
 .mt-6 {
     margin-top: 6rem !important;
 }
@@ -1001,61 +720,6 @@ textarea.jsoneditor-text {
 .jsoneditor {
     height: 600px !important;
 }
-/*  Json Editor : end */
-
-/*  Advance editor: start */
-
-.formcomponents {
-    padding-right: 5px !important;
-    padding-left: 5px !important;
-}
-
-/*  advance editor: End */
-
-/*   Gragesjs editor - start */
-.gjs-cv-canvas {
-    width: 70% !important;
-}
-
-.gjs-pn-panel {
-    width: 30% !important;
-}
-
-.gjs-pn-options {
-    right: 30% !important;
-}
-
-.gjs-pn-btn {
-    margin-right: 15px !important;
-}
-
-.gjs-pn-commands {
-    display: flex !important;
-}
-
-.adv-btn {
-    color: #a6d4ff !important;
-    background-color: #100e0e9c !important;
-    font-size: 14px !important;
-    line-height: 18px !important;
-    font-weight: 700 !important;
-}
-
-.builder-sidebar_scroll {
-    margin: -8px !important;
-}
-
-.pcard {
-    background-color: #322931 !important;
-    color: #ffffff !important;
-}
-
-.pcard-body,
-.card-body-container {
-    background: #1b2124;
-    color: #ffffff !important;
-}
-
 /* Start - ngx-editor css */
 .collapsible {
     background-color: #777;
@@ -1259,5 +923,309 @@ textarea.jsoneditor-text {
 ngx-extended-pdf-viewer{
     display: block;
     overflow: hidden;
-    height: 480px;
+    height: 380px;
 }
+
+.container{
+    padding-bottom: 30px;
+}
+// .text-wb {
+//     color: var(--primaryTextColor) !important;
+// }
+
+// .table-striped tbody tr:nth-of-type(odd) {
+//     background-color: var(--bodyBackground) !important;
+// }
+
+// .btn-success {
+//     background-color: #88ecb226 !important;
+//     color: #22b02e !important;
+//     border: 0 !important;
+// }
+
+// .bg-primary {
+//     background-color: var(--primaryColor) !important;
+// }
+
+// .ngx-pagination .current {
+//     background: var(--primaryColor) !important;
+// }
+
+// .d-contents {
+//     display: contents !important;
+// }
+
+// .btn-deny {
+//     background-color: #f3c2c24f !important;
+//     color: #c5292a !important;
+//     border: 0 !important;
+// }
+// .p16,
+// legend {
+//     font-size: 16px !important;
+// }
+
+// legend {
+//     font-weight: 700;
+// }
+
+// .img16 {
+//     width: 16px;
+// }
+// .badge-secondary {
+//     border: 1px solid #cccccc !important;
+//     background-color: var(--bodyBackground) !important;
+//     color: #8d9091 !important;
+// }
+
+// .marker-pointer {
+//     font-family: "Font Awesome 5 Free";
+//     content: "\f3c5";
+//     display: inline-block;
+//     padding-left: 10px;
+//     vertical-align: middle;
+//     font-weight: 900;
+//     font-style: normal;
+//     font-size: 12px;
+// }
+
+// .input-group-text {
+//     background: none !important;
+//     border: none !important;
+//     font-size: 14px !important;
+//     padding-left: 0 !important;
+//     padding-right: 5px !important;
+// }
+// .custom-control-label {
+//     font-size: 14px;
+//     font-weight: 400 !important;
+//     padding-top: 5px !important;
+// }
+
+// // .text-primary-color{
+// //     color: #1987B6 !important;
+// // }
+// .private-access:before {
+//     font-family: "Font Awesome 5 Free";
+//     content: "\f023";
+//     display: inline-block;
+//     padding-left: 10px;
+//     vertical-align: middle;
+//     font-weight: 900;
+//     font-style: normal;
+//     font-size: 12px;
+// }
+
+// .internal-access:before {
+//     font-family: "Font Awesome 5 Free";
+//     content: "\f023 ";
+//     display: inline-block;
+//     padding-left: 10px;
+//     vertical-align: middle;
+//     font-weight: 900;
+//     font-size: 12px;
+//     font-style: normal;
+// }
+
+// .public-access:before {
+//     font-family: "Font Awesome 5 Free";
+//     content: "\f57c ";
+//     display: inline-block;
+//     padding-left: 10px;
+//     vertical-align: middle;
+//     font-weight: 900;
+//     font-size: 12px;
+//     font-style: normal;
+// }
+// button.calendar,
+// button.calendar:active {
+//     width: 2.75rem;
+//     background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAcCAYAAAAEN20fAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAOxAAADsQBlSsOGwAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAEUSURBVEiJ7ZQxToVAEIY/YCHGxN6XGOIpnpaEsBSeQC9ArZbm9TZ6ADyBNzAhQGGl8Riv4BLAWAgmkpBYkH1b8FWT2WK/zJ8ZJ4qiI6XUI3ANnGKWBnht2/ZBDRK3hgVGNsCd7/ui+JkEIrKtqurLpEWaphd933+IyI3LEIdpCYCiKD6HcuOa/nwOa0ScJEnk0BJg0UTUWJRl6RxCYEzEmomsIlPU3IPW+grIAbquy+q6fluy/28RIBeRMwDXdXMgXLj/B2uimRXpui4D9sBeRLKl+1N+L+t6RwbWrZliTTTr1oxYtzVWiTQAcRxvTX+eJMnlUDaO1vpZRO5NS0x48sIwfPc87xg4B04MCzQi8hIEwe4bl1DnFMCN2zsAAAAASUVORK5CYII=) !important;
+//     background-repeat: no-repeat;
+//     background-size: 23px;
+//     background-position: 50%;
+// }
+
+// .btn-outline-secondary {
+//     color: #8d9091;
+//     border-color: #8d9091;
+// }
+
+// .btn-outline-secondary:hover {
+//     color: #8d9091;
+//     border-color: #8d9091;
+// }
+// .dflex-dc-column {
+//     flex-direction: column;
+// }
+
+// .alert-warning {
+//     color: #0e0e0e !important;
+//     background-color: #f7efe0 !important;
+//     border-color: #f7efe0 !important;
+//     font-size: 0.8rem;
+//     padding: 1rem;
+// }
+
+// .alert-success {
+//     color: #0e0e0e !important;
+//     font-size: 0.8rem;
+// }
+
+// .red {
+//     color: red;
+// }
+// .display-flex {
+//     display: flex;
+// }
+
+// .flex-1 {
+//     flex: 1;
+// }
+
+// .flex-2 {
+//     flex: 2;
+// }
+
+// .flex-3 {
+//     flex: 3;
+// }
+
+// .flex-4 {
+//     flex: 4;
+// }
+
+// .flex-5 {
+//     flex: 5;
+// }
+
+// .flex-6 {
+//     flex: 6;
+// }
+// .modal-dialog.panel-right {
+//     position: fixed !important;
+//     left: auto;
+//     top: 0;
+//     right: 0;
+//     bottom: 0;
+//     margin: auto !important;
+//     height: 100%;
+//     -webkit-transform: translate3d(0%, 0, 0) !important;
+//     -ms-transform: translate3d(0%, 0, 0) !important;
+//     -o-transform: translate3d(0%, 0, 0) !important;
+//     transform: translate3d(0%, 0, 0) !important;
+// }
+
+// .modal-dialog.panel-right .modal-content {
+//     height: 100%;
+//     overflow-y: auto;
+//     border-top-right-radius: 0px;
+//     border-bottom-right-radius: 0px;
+// }
+// .sub-container {
+//     margin: 20px;
+// }
+// // discovery page
+// .selected-list .c-list .c-token {
+//     background-color: #6495ed99 !important;
+// }
+
+// .dropdown-list.tagToBody {
+//     position: fixed;
+//     width: 400px !important;
+// }
+
+// .list-area {
+//     background-color: var(--cardBackground) !important;
+//     color: var(--primaryTextColor) !important;
+// }
+
+// .list-filter {
+//     background: #ffffff;
+// }
+// /* Tags */
+
+// .tags-list {
+//     margin-top: 10px;
+//     ul {
+//         margin: 0;
+//         padding: 0;
+//         li {
+//             display: inline-block;
+//             list-style: none;
+//             font-size: 11px;
+//             background-color: var(--secondarybgColor) !important;
+//             padding: 5px 7px;
+//             border-radius: 5px;
+//             margin-right: 5px;
+//             margin-bottom: 5px;
+//             color: var(--tagstextColor) !important;
+//         }
+//     }
+// }
+// legend {
+//     color: var(--primaryTextColor) !important;
+// }
+// .tox .tox-dialog--width-lg,
+// .tox .tox-dialog {
+//     height: 547px !important;
+//     max-height: 70% !important;
+// }
+
+// .tox .tox-dialog-wrap__backdrop {
+//     z-index: 5000;
+// }
+
+// .jsoneditor-menu {
+//     display: none;
+// }
+// /*   Gragesjs editor - start */
+// .gjs-cv-canvas {
+//     width: 70% !important;
+// }
+
+// .gjs-pn-panel {
+//     width: 30% !important;
+// }
+
+// .gjs-pn-options {
+//     right: 30% !important;
+// }
+
+// .gjs-pn-btn {
+//     margin-right: 15px !important;
+// }
+
+// .gjs-pn-commands {
+//     display: flex !important;
+// }
+
+
+// .adv-btn {
+//     color: #a6d4ff !important;
+//     background-color: #100e0e9c !important;
+//     font-size: 14px !important;
+//     line-height: 18px !important;
+//     font-weight: 700 !important;
+// }
+
+// .builder-sidebar_scroll {
+//     margin: -8px !important;
+// }
+
+// .pcard {
+//     background-color: #322931 !important;
+//     color: #ffffff !important;
+// }
+
+// .pcard-body,
+// .card-body-container {
+//     background: #1b2124;
+//     color: #ffffff !important;
+// }
+// /*  Advance editor: start */
+
+// .formcomponents {
+//     padding-right: 5px !important;
+//     padding-left: 5px !important;
+// }
