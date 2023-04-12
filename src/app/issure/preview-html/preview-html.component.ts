@@ -187,7 +187,7 @@ export class PreviewHtmlComponent implements OnInit {
             const cardDiv = document.createElement('div');
             cardDiv.className = 'pcard p-3';
             cardDiv.setAttribute('style', 'text-align: left; color:white');
-            cardDiv.innerHTML = ` <div class="d-flex flex-justify-between px-2 py-2">
+            cardDiv.innerHTML = ` <div class="d-flex justify-content-between px-2 py-2">
             <div class="heading-2">Preview</div>
             <div>
                 <button id="advanceBtn" (click)="editTemplate()"
