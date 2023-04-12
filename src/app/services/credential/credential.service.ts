@@ -19,7 +19,7 @@ export class CredentialService {
   ) {
     this.baseUrl = environment.baseUrl;
 
-   }
+  }
   findSchema(schemaId: string) {
     if (this.schemas.length) {
       return this.schemas.find((schema: any) => schema.id === schemaId);
@@ -32,29 +32,30 @@ export class CredentialService {
     return this.dataService.get(payload).pipe(map((res: any) => res.result));
   }
 
-  getCredentials(data?:any): Observable<any> {
-    const payload:any= {
+  getCredentials(data?: any): Observable<any> {
+    const payload: any = {
       url: `${this.baseUrl}/v1/sso/student/credentials/search`,
       data: {}
     };
 
     if (data?.issuerId) {
-      payload.data.issuer = { id: data.issuerId };
-      
-        if(data?.grade) {
-         payload.data.subject.grade = data.grade
-        }
-        if(data?.academicYear) {
-          payload.data.subject.academicYear= data.academicYear
-        }
-       
-      
+      payload.data = {
+        issuer: { id: data.issuerId },
+        subject: {}
+      }
+
+      if (data?.grade) {
+        payload.data.subject.grade = data.grade
+      }
+      if (data?.academicYear) {
+        payload.data.subject.academic_year = data.academicYear;
+      }
     } else {
       payload.data = {
         subject: { id: this.authService.currentUser.did }
       }
     }
-   
+
     return this.dataService.post(payload).pipe(map((res: any) => res.result));
   }
 

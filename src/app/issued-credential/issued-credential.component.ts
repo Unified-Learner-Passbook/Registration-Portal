@@ -52,9 +52,7 @@ export class IssuedCredentialComponent implements OnInit {
   model: any = {};
   studentDetails = [];
   grades: any[];
-  
 
-  
   constructor(
     private readonly authService: AuthService,
     private readonly toastMessage: ToastMessageService,
@@ -64,20 +62,14 @@ export class IssuedCredentialComponent implements OnInit {
     private readonly activatedRoute: ActivatedRoute,
     private readonly telemetryService: TelemetryService,
     private readonly utilService: UtilService,
-    private readonly toastService: ToastMessageService,
-
-
+    private readonly toastService: ToastMessageService
   ) { }
-  
 
   ngOnInit(): void {
-     this.getCredentials();
+    this.getCredentials();
     this.setAcademicYear();
     this.setGrades();
-
   }
-
-
 
   setGrades() {
     const ordinals = this.utilService.getNumberOrdinals(1, 10);
@@ -86,51 +78,40 @@ export class IssuedCredentialComponent implements OnInit {
         label: item,
         value: `class-${index + 1}`
       }
-      
     });
-    
   }
 
   setAcademicYear() {
     for (let fromYear = this.startYear; fromYear < this.currentYear; fromYear++) {
       this.academicYearRange.push(`${fromYear}-${fromYear + 1}`);
-     
     }
- 
   }
 
   onModelChange() {
-  
     this.getCredentials();
-    // if (this.model.grade && this.model.academicYear) {
-    //   console.log(this.model.grade + ',' + this.model.academicYear);
-    // }
   }
 
- 
+
 
   onChange(event) {
-    console.log("event", this.selectedType);
+    // console.log("event", this.selectedType);
     // this.getCredentials();
-    console.log(this.model);
-   
+    // console.log(this.model);
   }
 
-  
-  
   getCredentials() {
     this.isLoading = true;
     this.issuedCredentials = [];
     this.tableRows = [];
     this.page = 1;
-    let payload={
-      issuerId:this.authService?.schoolDetails?.did,
-      grade:this.model.grade,
-      academicYear:this.model.academicYear
+    let payload = {
+      issuerId: this.authService?.schoolDetails?.did,
+      grade: this.model.grade,
+      academicYear: this.model.academicYear
     }
 
     this.credentialService.getCredentials(payload).subscribe((res) => {
-     this.isLoading = false;
+      this.isLoading = false;
       this.issuedCredentials = res;
       this.pageChange();
     }, (error: any) => {
