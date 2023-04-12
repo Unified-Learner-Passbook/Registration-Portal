@@ -138,7 +138,8 @@ export class RegisterEntityComponent implements OnInit {
           tap((res: any) => {
             if (res?.result?.schema?.properties) {
               // const columnFields = Object.keys(res.result.schema.properties);
-              const columnFields = ["studentName", "student_id", "mobile", "gaurdian_name", "aadhar_token", "dob"] //TODO: Add label field in schema and use it here
+              // const columnFields = ["studentName", "student_id", "mobile", "gaurdian_name", "aadhar_token", "dob"] //TODO: Add label field in schema and use it here
+              const columnFields = ["Student Name", "Student ID", "Mobile", "Guardian Name", "Aadhar ID", "Date of Birth"];
               const csvContent = this.csvService.generateCSV(columnFields);
               this.csvService.downloadCSVTemplate(csvContent, `${this.model.certificateType}-template`);
             } else {
@@ -168,10 +169,24 @@ export class RegisterEntityComponent implements OnInit {
         throw new Error('It seems you have uploaded empty csv file, please upload valid csv file');
       }
 
+      console.log("parsedCSV", this.parsedCSV);
+
       // const columns = Object.keys(this.parsedCSV[0]);
       // this.tableColumns = columns.map((header: string) => header.replace(/_/g, " ").trim());
       this.tableColumns = Object.keys(this.parsedCSV[0]);
       // this.allDataRows = this.parsedCSV.map(item => Object.values(item));
+
+      this.parsedCSV = this.parsedCSV.map((item: any) => {
+        return {
+          studentName: item["Student Name"],
+          student_id: item["Student ID"],
+          mobile: item["Mobile"],
+          gaurdian_name: item["Guardian Name"],
+          aadhar_token: item["Aadhar ID"],
+          dob: item["Date of Birth"]
+        }
+      });
+
       this.uploadCsvValues();
       this.pageChange();
     } catch (error) {
@@ -389,7 +404,7 @@ export class RegisterEntityComponent implements OnInit {
 
   openModal(content: TemplateRef<any>, size = 'sm') {
     const options: NgbModalOptions = {
-      // backdrop: 'static',
+      backdrop: 'static',
       animation: true,
       centered: true,
       size
