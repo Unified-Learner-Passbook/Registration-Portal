@@ -43,7 +43,7 @@
     (click)="resetModel(index)">View All</button> -->
     <ng-template ngFor let-block [ngForOf]="Data" let-blockIndex="index">
         <div *ngIf="block.items[0].length > 0; else noData">
-            <div [ngClass]="public ? 'd-flex flex-justify-between' : 'd-flex flex-justify-between mt-1'">
+            <div [ngClass]="public ? 'd-flex justify-content-between' : 'd-flex justify-content-between mt-1'">
                 <div class="mt-1">
                     <p class="d-inline-block fs-6 font-weight-bold mb-2">{{block.title | translate}}</p>
                     <ng-template [ngIf]="block.edit">
