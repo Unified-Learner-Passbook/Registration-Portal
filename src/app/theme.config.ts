@@ -4,19 +4,17 @@ import { HttpClient } from '@angular/common/http';
 export var THEMES: { default: any; dark: any; };
 
 export function initTheme(http: HttpClient) {
-  
-  return ()  => {
 
-    http.get('./assets/config/config.json').subscribe((res)=>{
-       THEMES = {
-        default : res['default_theme'],
+  return () => {
+    http.get('./assets/config/config.json').subscribe((res) => {
+      THEMES = {
+        default: res['default_theme'],
         dark: res['dark_theme']
       }
     });
   }
-
 }
-    
+
 /*export const THEMES = {
 
   default: {

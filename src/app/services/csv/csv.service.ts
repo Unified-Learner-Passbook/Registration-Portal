@@ -29,7 +29,7 @@ export class CsvService {
     // return this.generalService.getData(`https://ulp.uniteframework.io/cred-schema/schema/jsonld?id=${id}`, true);
   }
 
-  downloadCSVTemplate(csvContent: string, fileName: string = 'template.csv') {
+  downloadCSVTemplate(csvContent: string, fileName: string = 'template.csv') { //TODO use util service
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
     let link = document.createElement("a");
     link.href = URL.createObjectURL(blob);

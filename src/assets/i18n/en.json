@@ -289,7 +289,7 @@
   "LOADING_PLEASE_WAIT": "Loading... Please wait",
   "VERIFIED": "Verified",
   "SCHOOL_NOT_AVAILABLE": "School Not available",
-  "ERROR_WHILE_REGISTER_USER": "Error while register user",
+  "ERROR_WHILE_REGISTER_USER": "Error while registration, Please try again",
   "AADHAR_VERIFICATION_FAILED": "Aadhar Verification Failed",
   "SR_NO": "Sr.No",
   "STUDENT_ID": "Student ID",
