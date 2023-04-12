@@ -287,7 +287,7 @@
   "LOADING_PLEASE_WAIT":"लोड हो रहा है कृपया प्रतीक्षा करें",
   "VERIFIED":"सत्यापित",
   "SCHOOL_NOT_AVAILABLE":"स्कूल उपलब्ध नहीं है",
-  "ERROR_WHILE_REGISTER_USER":"उपयोगकर्ता पंजीकृत करते समय त्रुटि",
+  "ERROR_WHILE_REGISTER_USER":"पंजीकरण के दौरान त्रुटि, कृपया पुन: प्रयास करें",
   "AADHAR_VERIFICATION_FAILED":"आधार सत्यापन विफल",
   "SR_NO":"क्रमांक",
   "STUDENT_ID":"स्टूडेंट आईडी",
