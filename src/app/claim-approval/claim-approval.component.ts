@@ -97,8 +97,15 @@ export class ClaimApprovalComponent implements OnInit {
   }
 
   approveStudent(user) {
+    const date = new Date();
+    const nextYear = new Date(new Date().setFullYear(new Date().getFullYear() + 1))
+
     const payload = {
       "issuer": this.authService.schoolDetails?.did,
+      "vcData": {
+        "issuanceDate": date.toISOString(),
+        "expirationDate": nextYear.toISOString()
+      },
       "credentialSubject": {
         //studentDetail:
         "mobile": user.mobile,
