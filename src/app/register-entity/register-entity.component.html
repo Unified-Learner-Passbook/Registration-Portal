@@ -96,7 +96,7 @@
       (click)="openDeclarationModal()">{{'ISSUE_CREDENTIALS' | translate }}
     </button>
     <ngb-pagination class="ml-2" [collectionSize]="studentList?.length" [(page)]="page" [pageSize]="pageSize"
-      (pageChange)="pageChange()">
+      [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="pageChange()">
     </ngb-pagination>
   </div>
 </div>

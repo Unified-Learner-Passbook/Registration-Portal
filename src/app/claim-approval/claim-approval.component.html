@@ -65,7 +65,7 @@
 <div class="d-flex justify-content-end align-items-start p-2 pb-3 pt-5 table-footer"
   *ngIf="studentDetails?.length > pageSize">
   <ngb-pagination class="ml-2" [collectionSize]="studentDetails?.length" [(page)]="page" [pageSize]="pageSize"
-    (pageChange)="pageChange()">
+    [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="pageChange()">
   </ngb-pagination>
 </div>
 
