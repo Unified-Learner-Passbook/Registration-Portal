@@ -1,14 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { concatMap, map } from 'rxjs/operators';
 import { AuthService } from '../services/auth/auth.service';
 import { CredentialService } from '../services/credential/credential.service';
-import { DataService } from '../services/data/data-request.service';
-import { ToastMessageService } from '../services/toast-message/toast-message.service';
 import { GeneralService } from '../services/general/general.service';
-import { concatMap, map } from 'rxjs/operators';
-import { TelemetryService } from '../services/telemetry/telemetry.service';
 import { IImpressionEventInput, IInteractEventInput } from '../services/telemetry/telemetry-interface';
+import { TelemetryService } from '../services/telemetry/telemetry.service';
+import { ToastMessageService } from '../services/toast-message/toast-message.service';
 import { UtilService } from '../services/util/util.service';
 
 

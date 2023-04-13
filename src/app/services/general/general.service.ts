@@ -147,22 +147,9 @@ export class GeneralService {
     return this.dataService.post(req);
   }
 
-  approveStudentData(apiUrl, data) {
-    var url;
-    if (apiUrl.indexOf('http') > -1) {
-      url = apiUrl
-    } else {
-      if (apiUrl.charAt(0) == '/') {
-        url = `${this.baseUrl}${apiUrl}`
-      }
-      else {
-        url = `${this.baseUrl}/${apiUrl}`;
-      }
-    }
-
+  approveStudentData(data) {
     const req = {
       url: `${this.baseUrl}/v1/credentials/approveStudentV2`,
-      //url: 'http://localhost:3000/v1/credentials/approveStudentV2',
       data: data
     };
 
@@ -170,22 +157,9 @@ export class GeneralService {
   }
 
 
-  rejectStudentData(apiUrl, data) {
-    var url;
-    if (apiUrl.indexOf('http') > -1) {
-      url = apiUrl
-    } else {
-      if (apiUrl.charAt(0) == '/') {
-        url = `${this.baseUrl}${apiUrl}`
-      }
-      else {
-        url = `${this.baseUrl}/${apiUrl}`;
-      }
-    }
-
+  rejectStudentData(data) {
     const req = {
       url: `${this.baseUrl}/v1/credentials/rejectStudentv2`,
-      //url: 'http://localhost:3000/v1/credentials/rejectStudentv2',
       data: data
     };
 
