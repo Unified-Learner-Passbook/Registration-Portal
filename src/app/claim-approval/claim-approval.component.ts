@@ -68,13 +68,14 @@ export class ClaimApprovalComponent implements OnInit {
   }
 
   getStudentDetail(claimStatus = "pending") {
+    console.log("getStudentDetail", this.authService.schoolDetails.udiseCode)
     const search = {
       "filters": {
         "claim_status": {
           "eq": claimStatus
         },
         "school_udise": {
-          "eq": this.authService.schoolDetails?.schoolUdise
+          "eq": this.authService.schoolDetails?.udiseCode
         }
       }
     }
