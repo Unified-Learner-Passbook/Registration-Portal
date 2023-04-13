@@ -70,6 +70,9 @@ export class ClaimApprovalComponent implements OnInit {
       "filters": {
         "claim_status": {
           "eq": claimStatus
+        },
+        "school_udise": {
+          "eq": this.authService.schoolDetails?.schoolUdise
         }
       }
     }
