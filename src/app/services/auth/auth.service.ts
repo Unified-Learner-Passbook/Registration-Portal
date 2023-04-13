@@ -1,41 +1,38 @@
 import { Injectable } from '@angular/core';
-import { Observable, of, throwError } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import { Observable, throwError } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 
 import {
-  HttpClient,
-  HttpHeaders,
-  HttpErrorResponse,
+  HttpClient, HttpErrorResponse, HttpHeaders
 } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { DataService } from '../data/data-request.service';
+import { UtilService } from '../util/util.service';
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   baseUrl: string;
-
-  endpoint: string = 'https://ulp.uniteframework.io';
   headers = new HttpHeaders().set('Content-Type', 'application/json');
   constructor(
     private readonly http: HttpClient,
     private readonly router: Router,
-    private readonly dataService: DataService
+    private readonly dataService: DataService,
+    private readonly utilService: UtilService
   ) {
     this.baseUrl = environment.baseUrl;
-
-   }
+  }
 
   // Sign-up
   signUp(user): Observable<any> {
-    const api = `${this.endpoint}/ulp-bff/v1/sso/student/register`;
+    const api = `${this.baseUrl}/v1/sso/student/register`;
     return this.http.post(api, user);
   }
 
 
   ssoSignUp(user: any) {
-    const api = `${this.endpoint}/ulp-bff/v1/sso/digilocker/register`;
+    const api = `${this.baseUrl}/v1/sso/digilocker/register`;
     return this.http.post(api, user).pipe(
       map((res: any) => {
         if (res.success && res.user === 'FOUND') {
@@ -48,7 +45,7 @@ export class AuthService {
           }
           return res;
         } else {
-          throwError(new Error('Error while register'));
+          throwError(new Error(this.utilService.translateString('ERROR_WHILE_REGISTRATION')));
         }
       }))
   }
@@ -56,7 +53,7 @@ export class AuthService {
   // Sign-in
   signIn(user) {
     return this.http
-      .post<any>(`${this.endpoint}/ulp-bff/v1/sso/student/login`, user)
+      .post<any>(`${this.baseUrl}/v1/sso/student/login`, user)
       .pipe(tap((res: any) => {
         console.log("res", res);
 
@@ -99,7 +96,7 @@ export class AuthService {
 
   // User profile
   getUserProfile(id: any): Observable<any> {
-    let api = `${this.endpoint}/user-profile/${id}`;
+    let api = `${this.baseUrl}/v1/user-profile/${id}`;
     return this.http.get(api, { headers: this.headers }).pipe(
       map((res) => {
         return res || {};
@@ -119,6 +116,11 @@ export class AuthService {
     return throwError(msg);
   }
 
+  /**
+   * Gets the details of the school associated with the current user.
+   * @returns An observable that emits the school details when the HTTP request is successful.
+   * @throws An error when the HTTP request fails.
+   */
   getSchoolDetails(): Observable<any> {
     return this.dataService.get({ url: `${this.baseUrl}/v1/sso/school/${this.currentUser.schoolUdise}` }).pipe(map((res: any) => {
       if (res.success && res.result) {
@@ -126,18 +128,25 @@ export class AuthService {
         console.log('schoolDetails', this.schoolDetails);
         return res.result;
       } else {
-        throwError(new Error('Error while fetching school details'));
+        throwError(new Error(this.utilService.translateString('ERROR_WHILE_FETCHING_SCHOOL_DETAILS')));
       }
     }));
   }
 
+  /**
+   * Verifies the given Aadhaar ID by sending a POST request to the ULP BFF API.
+   *
+   * @param aadharId - The Aadhaar ID to verify.
+   * @returns A Promise that resolves to the response of the POST request.
+   */
+
   verifyAadhar(aadharId: number | string) {
-    const api = `${this.endpoint}/ulp-bff/v1/aadhaar/verify`;
+    const api = `${this.baseUrl}/v1/aadhaar/verify`;
     return this.http.post(api, { aadhaar_id: aadharId });
   }
 
   verifyAccountAadharLink(payload: any) {
-    const api = `${this.endpoint}/ulp-bff/v1/sso/digilocker/aadhaar`;
+    const api = `${this.baseUrl}/v1/sso/digilocker/aadhaar`;
     return this.http.post(api, payload);
   }
 }
