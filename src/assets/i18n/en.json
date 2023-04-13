@@ -338,5 +338,8 @@
   "UNABLE_TO_REGISTER": "Unable to Register",
   "DOWNLOAD_REPORT": "Download Report",
   "SUCCESSFULLY_ISSUED": "Successfully Issued",
-  "UNABLE_TO_ISSUE_A_CREDENTIAL": "Unable to Issue a credential"
+  "UNABLE_TO_ISSUE_A_CREDENTIAL": "Unable to Issue a credential",
+  "SELECT_GRADE_AND_ACADEMIC_YEAR": "Please select grade and academic year",
+  "ERROR_WHILE_FETCHING_SCHOOL_DETAILS": "Error while fetching school details",
+  "ERROR_WHILE_REGISTRATION": "Error while registration"
 }
