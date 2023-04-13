@@ -6,6 +6,7 @@ import { GeneralService } from '../services/general/general.service';
 import { IImpressionEventInput, IInteractEventInput } from '../services/telemetry/telemetry-interface';
 import { TelemetryService } from '../services/telemetry/telemetry.service';
 import { ToastMessageService } from '../services/toast-message/toast-message.service';
+import { UtilService } from '../services/util/util.service';
 
 @Component({
   selector: 'app-claim-approval',
@@ -45,7 +46,7 @@ export class ClaimApprovalComponent implements OnInit {
   }
 
   page = 1;
-  pageSize = 10;
+  pageSize = 20;
 
   @ViewChild('approveModal') approveModal: TemplateRef<any>
   @ViewChild('rejectModal') rejectModal: TemplateRef<any>
@@ -58,11 +59,12 @@ export class ClaimApprovalComponent implements OnInit {
     private readonly authService: AuthService,
     private readonly router: Router,
     private readonly activatedRoute: ActivatedRoute,
-    private readonly telemetryService: TelemetryService
+    private readonly telemetryService: TelemetryService,
+    private readonly utilService: UtilService
   ) { }
 
   ngOnInit(): void {
-    this.getStudentDetail()
+    this.getStudentDetail();
   }
 
   getStudentDetail(claimStatus = "pending") {
@@ -90,7 +92,7 @@ export class ClaimApprovalComponent implements OnInit {
       this.pageChange();
       this.isLoading = false;
     }, (err) => {
-      this.toastService.error('', 'Error while fetching data');
+      this.toastService.error('', this.utilService.translateString('ERROR_WHILE_FETCHING_STUDENT_LIST'));
       this.isLoading = false;
       console.log('error', err);
     });
@@ -107,14 +109,12 @@ export class ClaimApprovalComponent implements OnInit {
         "expirationDate": nextYear.toISOString()
       },
       "credentialSubject": {
-        //studentDetail:
         "mobile": user.mobile,
         "guardian_name": user.gaurdian_name,
         "school_name": user.school_name,
         "grade": user.grade,
         "academic_year": user.acdemic_year,
         "osid": user.osid,
-        //student
         "student_id": user.student.student_id,
         "student_name": user.student.student_name,
         "dob": user.student.dob,
@@ -124,10 +124,9 @@ export class ClaimApprovalComponent implements OnInit {
       }
 
     }
-    this.generalService.approveStudentData('/studentDetailV2', payload).subscribe((res) => {
+    this.generalService.approveStudentData(payload).subscribe((res) => {
       console.log('approveStudent', res);
-      //this.studentDetails = this.studentDetails.filter(())
-      if (res.success == true) {
+      if (res.success) {
         this.toastService.success('', res.message)
         this.studentDetails = this.studentDetails.filter(item => item.osid !== user.osid);
         this.pageChange();
@@ -135,9 +134,7 @@ export class ClaimApprovalComponent implements OnInit {
       } else {
         this.toastService.error('', res.message)
       }
-
     }, (err) => {
-      // this.toastMsg.error('error', err.error.params.errmsg)
       console.log('approveStudent error', err)
     });
   }
@@ -146,14 +143,12 @@ export class ClaimApprovalComponent implements OnInit {
     const payload = {
       "issuer": this.authService.schoolDetails?.did,
       "credentialSubject": {
-        //studentDetail:
         "mobile": user.mobile,
         "guardian_name": user.gaurdian_name,
         "school_name": user.school_name,
         "grade": user.grade,
         "academic_year": user.acdemic_year,
         "osid": user.osid,
-        //student
         "student_id": user.student.student_id,
         "student_name": user.student.student_name,
         "dob": user.student.dob,
@@ -161,14 +156,14 @@ export class ClaimApprovalComponent implements OnInit {
         "reference_id": user.student.reference_id,
         "student_osid": user.student_id,
       }
-
     }
-    this.generalService.rejectStudentData('/studentDetailV2', payload).subscribe((res) => {
+
+    this.generalService.rejectStudentData(payload).subscribe((res) => {
       console.log('approveStudent', res);
-      //this.studentDetails = this.studentDetails.filter(())
-      if (res.success == true) {
+      if (res.success) {
         this.toastService.success('', res.message)
         this.studentDetails = this.studentDetails.filter(item => item.osid !== user.osid);
+        this.pageChange();
         console.log("61", this.studentDetails.length)
       } else {
         this.toastService.error('', res.message)
@@ -183,7 +178,6 @@ export class ClaimApprovalComponent implements OnInit {
   openPopup(user) {
     this.selectedUser = user;
     this.modelRef = this.modalService.open(this.approveModal)
-
   }
 
   approveConfirm(isConfirmed: boolean) {
