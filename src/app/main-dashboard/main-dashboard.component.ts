@@ -7,6 +7,8 @@ import { DataService } from '../services/data/data-request.service';
 import { GeneralService } from '../services/general/general.service';
 import { ToastMessageService } from '../services/toast-message/toast-message.service';
 import { environment } from 'src/environments/environment';
+import { IImpressionEventInput, IInteractEventInput } from '../services/telemetry/telemetry-interface';
+import { TelemetryService } from '../services/telemetry/telemetry.service';
 
 @Component({
   selector: 'app-main-dashboard',
@@ -27,7 +29,8 @@ export class MainDashboardComponent implements OnInit, OnDestroy {
     private readonly authService: AuthService,
     private readonly dataService: DataService,
     private readonly generalService: GeneralService,
-    private readonly toastMessageService: ToastMessageService
+    private readonly toastMessageService: ToastMessageService,
+    private readonly telemetryService: TelemetryService,
   ) {
     this.baseUrl = environment.baseUrl;
 
@@ -76,5 +79,41 @@ export class MainDashboardComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
+  }
+
+  ngAfterViewInit(): void {
+    this.raiseImpressionEvent();
+  }
+
+  raiseInteractEvent(id: string, type: string = 'CLICK', subtype?: string) {
+    const telemetryInteract: IInteractEventInput = {
+      context: {
+        env: this.activatedRoute.snapshot?.data?.telemetry?.env,
+        cdata: []
+      },
+      edata: {
+        id,
+        type,
+        subtype,
+        pageid: this.activatedRoute.snapshot?.data?.telemetry?.pageid,
+      }
+    };
+    this.telemetryService.interact(telemetryInteract);
+  }
+
+  raiseImpressionEvent() {
+    const telemetryImpression: IImpressionEventInput = {
+      context: {
+        env: this.activatedRoute.snapshot?.data?.telemetry?.env,
+        cdata: []
+      },
+      edata: {
+        type: this.activatedRoute.snapshot?.data?.telemetry?.type,
+        pageid: this.activatedRoute.snapshot?.data?.telemetry?.pageid,
+        uri: this.router.url,
+        subtype: this.activatedRoute.snapshot?.data?.telemetry?.subtype,
+      }
+    };
+    this.telemetryService.impression(telemetryImpression);
   }
 }

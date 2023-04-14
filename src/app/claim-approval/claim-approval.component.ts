@@ -129,6 +129,8 @@ export class ClaimApprovalComponent implements OnInit {
       console.log('approveStudent', res);
       //this.studentDetails = this.studentDetails.filter(())
       if (res.success == true) {
+        // telemetry cliam approval
+        this.raiseInteractEvent('claim-approval')
         this.toastService.success('', res.message)
         this.studentDetails = this.studentDetails.filter(item => item.osid !== user.osid);
         this.pageChange();

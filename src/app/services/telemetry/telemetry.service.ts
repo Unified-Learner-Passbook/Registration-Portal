@@ -34,7 +34,7 @@ export class TelemetryService {
       },
       contextRollup: {},
       tags: [],
-      host: 'https://ulp.uniteframework.io/telemetry',
+      host: 'http://localhost:9001',
       endpoint: '/v1/telemetry',
       // userData?: {
       //     firstName: string;
@@ -54,7 +54,7 @@ export class TelemetryService {
         sid: this.context.sid,
         batchsize: 1,// 20
         mode: this.context.mode,
-        host: this.context.host || 'https://ulp.uniteframework.io/telemetry',
+        host: this.context.host || 'http://localhost:9001',
         endpoint: this.context.endpoint || '/v1/telemetry',
         tags: this.context.tags,
         enableValidation: true
