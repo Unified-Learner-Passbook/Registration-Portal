@@ -15,7 +15,8 @@ import { environment } from 'src/environments/environment';
 })
 export class OauthCallbackComponent implements OnInit {
   baseUrl: string;
-
+  isError = false;
+  errorCode: string;
   constructor(
     private readonly activatedRoute: ActivatedRoute,
     private readonly generalService: GeneralService,
@@ -30,6 +31,11 @@ export class OauthCallbackComponent implements OnInit {
       console.log("params", params);
       if (params.code) {
         this.getUserData(params.code);
+      }
+
+      if (params.error) {
+        this.isError = true;
+        this.errorCode = params.error;
       }
     });
   }
