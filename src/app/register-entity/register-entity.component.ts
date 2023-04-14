@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import * as Papa from "papaparse";
 import { DataService } from '../services/data/data-request.service';
 import { ToastMessageService } from '../services/toast-message/toast-message.service';
@@ -80,6 +80,7 @@ export class RegisterEntityComponent implements OnInit {
   @ViewChild('downloadIssuedResModal') downloadIssuedResModal: TemplateRef<any>;
   @ViewChild('declarationModal') declarationModal: TemplateRef<any>;
   @ViewChild('editFormModal') editFormModal: TemplateRef<any>;
+  @ViewChild('fileUpload') fileUpload: ElementRef<HTMLElement>;
 
   errorMessage: string;
   editStudentForm = new FormGroup({
@@ -153,12 +154,14 @@ export class RegisterEntityComponent implements OnInit {
     }
   }
 
-  // resetTableData() {
-  //   this.errorMessage = '';
-  //   this.tableColumns = [];
-  //   this.tableRows = [];
-  //   this.allDataRows = [];
-  // }
+  openFileBrowser() {
+    if (this.model?.grade && this.model?.academicYear) {
+      this.fileUpload.nativeElement.click();
+      this.raiseInteractEvent('upload-csv');
+    } else {
+      this.toastMsg.warning('', this.generalService.translateString('SELECT_GRADE_AND_ACADEMIC_YEAR'));
+    }
+  }
 
   public async importDataFromCSV(event: any) {
     try {

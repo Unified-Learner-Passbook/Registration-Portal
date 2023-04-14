@@ -36,11 +36,9 @@
       </div>
       <div class="col-md-3">
         <label>&nbsp;</label>
-        <input #fileUploadSimple [accept]="'.csv'" type="file" class="file-input" (click)="$event.target.value=null"
+        <input #fileUpload [accept]="'.csv'" type="file" class="file-input" (click)="$event.target.value=null"
           (change)="importDataFromCSV($event)" hidden="true" />
-        <button class="filter-btn" (click)="fileUploadSimple.click()"
-          [disabled]="!(model.grade && model.academicYear && !showProgress)"
-          (click)="raiseInteractEvent('upload-csv')">{{'UPLOAD_CSV' |
+        <button class="filter-btn" (click)="openFileBrowser()">{{'UPLOAD_CSV' |
           translate }}&nbsp;<i class="fa fa-solid fa-file-upload"></i></button>
       </div>
     </div>

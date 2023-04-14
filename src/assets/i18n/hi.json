@@ -336,5 +336,8 @@
   "UNABLE_TO_REGISTER": "रजिस्टर करने में असमर्थ",
   "DOWNLOAD_REPORT": "रिपोर्ट डाउनलोड करें",
   "SUCCESSFULLY_ISSUED": "सफलतापूर्वक जारी किया गया है",
-  "UNABLE_TO_ISSUE_A_CREDENTIAL": "क्रेडेंशियल जारी करने में असमर्थ"
+  "UNABLE_TO_ISSUE_A_CREDENTIAL": "क्रेडेंशियल जारी करने में असमर्थ",
+  "SELECT_GRADE_AND_ACADEMIC_YEAR": "कृपया ग्रेड और शैक्षणिक वर्ष चुनें",
+  "ERROR_WHILE_FETCHING_SCHOOL_DETAILS": "स्कूल विवरण लाने में त्रुटि",
+  "ERROR_WHILE_REGISTRATION": "पंजीकरण करते समय त्रुटि"
 }
