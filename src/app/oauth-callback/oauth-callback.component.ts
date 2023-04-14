@@ -62,7 +62,8 @@ export class OauthCallbackComponent implements OnInit {
             if (res?.userData?.length) {
               localStorage.setItem('currentUser', JSON.stringify(res.userData[0]));
             }
-  
+            //telemetry to add impression event
+            this.raiseInteractEvent('login-success');
             this.authService.getSchoolDetails().subscribe(); // Add concatMap
             this.router.navigate(['/dashboard']);
           }
