@@ -170,7 +170,7 @@ export class RegistrationFormComponent implements OnInit {
 
     if (this.registrationForm.valid) {
       // telemetry succesful reg claim
-      this.raiseInteractEvent('reistration-success')
+      this.raiseInteractEvent('registration-success')
       this.isLoading = true;
       const payload = {
         digiacc: "portal",
