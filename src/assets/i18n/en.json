@@ -181,7 +181,6 @@
   "ONLY_BY_CONSENT": "Only by consent",
   "ONLY_BY_ME": "Only by me",
   "ANYONE": "Anyone",
-  "SOMETHING_WENT_WRONG": "Something went wrong while uploading files, please try again",
   "ADD_NEW_DOCUMENT": "Add New Document",
   "GENRAL_TEMPLATES": "General Templates",
   "SELECT_DOCUMENT_TYPE": "Select Document Type",
@@ -341,5 +340,9 @@
   "UNABLE_TO_ISSUE_A_CREDENTIAL": "Unable to Issue a credential",
   "SELECT_GRADE_AND_ACADEMIC_YEAR": "Please select grade and academic year",
   "ERROR_WHILE_FETCHING_SCHOOL_DETAILS": "Error while fetching school details",
-  "ERROR_WHILE_REGISTRATION": "Error while registration"
+  "ERROR_WHILE_REGISTRATION": "Error while registration",
+  "ACCESS_DENIED": "Access Denied",
+  "OAUTH_ACCESS_DENIED_WARNING": "We were unable to authenticate you with our system as you have denied access to your information. Please try logging in again and grant access to your information to proceed.",
+  "SOMETHING_WENT_WRONG": "Something went wrong",
+  "RETRY_LOGIN": "Retry Login"
 }

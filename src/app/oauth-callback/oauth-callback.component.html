@@ -1,4 +1,23 @@
-<div class="center-loader">
+<div class="center-loader" *ngIf="!isError">
   <img src="assets/images/loading.gif" alt="loading">
   <p class="text-center fs-16 text-primary-color">{{'LOADING_PLEASE_WAIT' | translate}}</p>
+</div>
+
+<div class="container mt-5" *ngIf="isError">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="alert alert-danger text-center" role="alert">
+        <div *ngIf="errorCode === 'access_denied'">
+          <h4 class="alert-heading">&#9888;&nbsp;{{'ACCESS_DENIED' | translate}}!</h4>
+          <p>{{'OAUTH_ACCESS_DENIED_WARNING' | translate}}</p>
+        </div>
+        <div *ngIf="errorCode !== 'access_denied'">
+          <h4 class="alert-heading">&#9888;&nbsp;{{'SOMETHING_WENT_WRONG' | translate}}!</h4>
+        </div>
+        <hr>
+        <button class="btn btn-primary btn-lg" onclick="location.href='#'" role="button">{{'RETRY_LOGIN' |
+          translate}}</button>
+      </div>
+    </div>
+  </div>
 </div>
