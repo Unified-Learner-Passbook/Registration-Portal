@@ -43,7 +43,7 @@
       </div>
     </div>
   </div>
-  <div class="student-list">
+  <div class="student-list table-responsive table-hover">
     <h6 class="pt-4">{{'REGISTERED_STUDENTS' | translate}}
       <i style="font-weight: normal;font-size: small;">({{'REGISTERED_STUDENT_SUBTITLE_NOTE' | translate}})</i>
     </h6>
@@ -96,7 +96,7 @@
       (click)="openDeclarationModal()">{{'ISSUE_CREDENTIALS' | translate }}
     </button>
     <ngb-pagination class="ml-2" [collectionSize]="studentList?.length" [(page)]="page" [pageSize]="pageSize"
-      (pageChange)="pageChange()">
+      [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="pageChange()">
     </ngb-pagination>
   </div>
 </div>
