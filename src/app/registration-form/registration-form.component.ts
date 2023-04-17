@@ -55,7 +55,6 @@ export class RegistrationFormComponent implements OnInit {
     private readonly cdr: ChangeDetectorRef
   ) {
     this.baseUrl = environment.baseUrl;
-
     const navigation = this.router.getCurrentNavigation();
     this.registrationDetails = navigation.extras.state;
     const canGoBack = !!(this.router.getCurrentNavigation()?.previousNavigation);
@@ -104,13 +103,13 @@ export class RegistrationFormComponent implements OnInit {
       if (this.registrationDetails.mobile) {
         this.registrationForm.get('phone').setValue(this.registrationDetails.mobile);
         this.registrationForm.controls.phone.disable();
-        this.cdr.detectChanges();
       }
 
       if (this.registrationDetails.uuid) {
         this.registrationForm.get('aadharId').setValue(this.registrationDetails.uuid);
       }
     }
+    this.cdr.detectChanges();
     const options: NgbModalOptions = {
       backdrop: 'static',
       animation: true,
@@ -170,6 +169,7 @@ export class RegistrationFormComponent implements OnInit {
       return;
     }
 
+    this.registrationForm.controls.phone.enable();
     if (this.registrationForm.valid) {
       // telemetry successful reg claim
       this.raiseInteractEvent('registration-success')
