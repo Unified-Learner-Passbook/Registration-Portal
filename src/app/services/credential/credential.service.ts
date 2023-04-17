@@ -145,7 +145,7 @@ export class CredentialService {
             "principalName": this.authService.currentUser.name,
             "schoolName": this.authService.schoolDetails?.schoolName,
             "schoolUdiseId": this.authService.currentUser?.schoolUdise,
-            "pricipalContactNumber": this.authService.currentUser?.mobile || "8698645680"
+            "pricipalContactNumber": this.authService.currentUser?.mobile
           },
           "options": {
             "created": "2020-04-02T18:48:36Z",

@@ -84,7 +84,7 @@ const routes: Routes = [
   {
     path: 'dashboard',
     component: MainDashboardComponent,
-     canActivate: [AuthenticationGuard],
+    canActivate: [AuthenticationGuard],
     children: [
       {
         path: 'register-entity',
@@ -95,7 +95,7 @@ const routes: Routes = [
             env: 'register', pageid: 'register-entity', type: 'edit', subtype: 'scroll'
           }
         }
-        
+
       },
       {
         path: 'issued-credential',

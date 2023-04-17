@@ -3,9 +3,9 @@
     {{'STUDENT_REGISTRATION_CLAIM_APPROVAL' | translate }}
   </h5>
   <div class="col-md-8">
-    <div class="form-group row">
-      <label class="col-sm-2 col-form-label">{{'SELECT_STATUS' | translate}} :</label>
-      <select class="w-20 form-control" aria-label="Default select example" [(ngModel)]="model.status"
+    <div class="form-group d-flex flex-row">
+      <label class="col-form-label">{{'SELECT_STATUS' | translate}} :</label>
+      <select class="ml-2 w-20 form-select" aria-label="Default select example" [(ngModel)]="model.status"
         (ngModelChange)="onModelChange()" #status="ngModel">
         <option [ngValue]="undefined" [disabled]="true">{{'SELECT_STATUS' | translate}}</option>
         <option *ngFor="let status of statusValues" [value]="status.value">{{status.label}}</option>
@@ -54,9 +54,12 @@
   <h5 class="text-center mt-4" *ngIf="!isLoading && !tableRows.length">{{'NO_RECORDS_FOUND' | translate }}</h5>
   <ng-container *ngIf="isLoading">
     <br>
-    <div class="d-flex justify-content-center">
-      <div class="spinner-border" style="width: 5rem; height: 5rem;" role="status">
-        <span class="sr-only">{{'LOADING'|translate}}</span>
+    <div class="text-center pt-4">
+      <div class="spinner-border" role="status">
+        <span class="sr-only">{{'LOADING' | translate }}</span>
+      </div>
+      <div class="text-center">
+        {{'LOADING_PLEASE_WAIT' | translate}}
       </div>
     </div>
   </ng-container>

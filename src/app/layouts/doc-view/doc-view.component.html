@@ -1,5 +1,5 @@
 <div class="container mt-3 pb-3">
-  <div *ngIf="!isMyAccountPage" class="ml-3 float-left">
+  <div *ngIf="!isMyAccountPage" class="ml-3 float-left cursor-pointer">
     <i onClick="history.go(-1); return false;" class="fas fa-arrow-left mr-2" aria-hidden="true"></i>
   </div>
 
@@ -17,7 +17,7 @@
   </ng-container>
 
   <div class="pt-2">
-    <div class="text-center mt-4" *ngIf="docUrl">
+    <div class="text-center mt-4 cursor-pointer" *ngIf="docUrl">
       <img src="assets/images/share.png" *ngIf="canShareFile" (click)="shareFile()" class="pr-3">
       <img src="assets/images/download.png" (click)="downloadCertificate(docUrl)">
     </div>
