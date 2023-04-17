@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { NgbModal, NgbModalOptions, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GeneralService } from '../services/general/general.service';
@@ -51,7 +51,8 @@ export class RegistrationFormComponent implements OnInit {
     private readonly location: Location,
     private readonly credentialService: CredentialService,
     private readonly activatedRoute: ActivatedRoute,
-    private readonly telemetryService: TelemetryService
+    private readonly telemetryService: TelemetryService,
+    private readonly cdr: ChangeDetectorRef
   ) {
     this.baseUrl = environment.baseUrl;
 
@@ -102,12 +103,13 @@ export class RegistrationFormComponent implements OnInit {
 
       if (this.registrationDetails.mobile) {
         this.registrationForm.get('phone').setValue(this.registrationDetails.mobile);
+        this.registrationForm.controls.phone.disable();
+        this.cdr.detectChanges();
       }
 
       if (this.registrationDetails.uuid) {
         this.registrationForm.get('aadharId').setValue(this.registrationDetails.uuid);
       }
-
     }
     const options: NgbModalOptions = {
       backdrop: 'static',
@@ -169,7 +171,7 @@ export class RegistrationFormComponent implements OnInit {
     }
 
     if (this.registrationForm.valid) {
-      // telemetry succesful reg claim
+      // telemetry successful reg claim
       this.raiseInteractEvent('registration-success')
       this.isLoading = true;
       const payload = {
@@ -179,6 +181,7 @@ export class RegistrationFormComponent implements OnInit {
             name: this.registrationForm.value.name,
             joiningdate: this.registrationForm.value.joiningdate,
             aadharId: this.registrationForm.value.aadharId,
+            mobile: this.registrationForm.value.phone,
             schoolUdise: this.registrationForm.value.udiseId,
             meripehchanLoginId: this.registrationDetails.meripehchanid,
             username: this.registrationDetails.uuid,
