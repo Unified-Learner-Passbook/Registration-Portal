@@ -43,8 +43,8 @@
           <td *ngIf="model.status === 'pending'">{{user.claim_status}}</td>
           <td *ngIf="model.status === 'pending'">{{user.osCreatedAt}}</td>
           <td *ngIf="model.status === 'pending'">
-            <img style="cursor: pointer;" src="assets/images/checkicon.png" (click)="openPopup(user)" alt="" class=" ">
-            <img style="cursor: pointer;" src="assets/images/closecheck.png" (click)="rejectPopup(user)" alt="">
+            <img src="assets/images/checkicon.png" (click)="openPopup(user)" alt="" class="cursor-pointer">
+            <img src="assets/images/closecheck.png" (click)="rejectPopup(user)" alt="" class="cursor-pointer">
           </td>
         </tr>
       </tbody>

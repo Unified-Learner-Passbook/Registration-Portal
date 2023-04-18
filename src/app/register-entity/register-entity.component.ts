@@ -140,7 +140,7 @@ export class RegisterEntityComponent implements OnInit {
             if (res?.result?.schema?.properties) {
               // const columnFields = Object.keys(res.result.schema.properties);
               // const columnFields = ["studentName", "student_id", "mobile", "gaurdian_name", "aadhar_token", "dob"] //TODO: Add label field in schema and use it here
-              const columnFields = ["Student Name", "Student ID", "Mobile", "Guardian Name", "Aadhar ID", "Date of Birth"];
+              const columnFields = ["Student Name", "Student ID", "Mobile", "Guardian Name", "Aadhar ID", "Date of Birth", "Enrolled On"];
               const csvContent = this.csvService.generateCSV(columnFields);
               this.csvService.downloadCSVTemplate(csvContent, `${this.model.certificateType}-template`);
             } else {
@@ -186,7 +186,8 @@ export class RegisterEntityComponent implements OnInit {
           mobile: item["Mobile"],
           gaurdian_name: item["Guardian Name"],
           aadhar_token: item["Aadhar ID"],
-          dob: item["Date of Birth"]
+          dob: item["Date of Birth"],
+          enrolledOn: item["Enrolled On"]
         }
       });
 
@@ -513,7 +514,7 @@ export class RegisterEntityComponent implements OnInit {
         "credentialSubject": studentList.map((item: any) => {
           return {
             "id": item.did,
-            "enrolledOn": date.toISOString(),
+            "enrolledOn": item.enrolledOn || date.toISOString(),
             "studentName": item.name,
             "student_id": item?.studentId,
             "school_id": this.authService.schoolDetails?.udiseCode,
