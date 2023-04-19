@@ -67,6 +67,14 @@ export class AuthService {
     return localStorage.getItem('accessToken');
   }
 
+  set digilockerAccessToken(token: string) {
+    localStorage.setItem('digilockerAccessToken', token);
+  }
+
+  get digilockerAccessToken() {
+    return localStorage.getItem('digilockerAccessToken');
+  }
+
   get isLoggedIn(): boolean {
     let authToken = localStorage.getItem('accessToken');
     return authToken !== null ? true : false;
@@ -89,8 +97,16 @@ export class AuthService {
   }
 
   doLogout() {
+    if (this.digilockerAccessToken){
+      const payload = {
+        "digiacc": "ewallet",
+        "access_token": this.digilockerAccessToken
+      }
+      this.http.post(`${this.baseUrl}/v1/sso/digilocker/logout`, payload).subscribe();
+    }
     localStorage.removeItem('accessToken');
     localStorage.removeItem('currentUser');
+    localStorage.removeItem('digilockerAccessToken');
     this.router.navigate(['']);
   }
 

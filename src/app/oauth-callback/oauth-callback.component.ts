@@ -81,6 +81,10 @@ export class OauthCallbackComponent implements OnInit {
             this.router.navigate(['/register'], navigationExtras)
           }
         }
+
+        if (res?.digi?.access_token) {
+          this.authService.digilockerAccessToken = res.digi.access_token;
+        }
       } else {
         console.error(res);
         this.toastMessage.error('', this.generalService.translateString('ERROR_WHILE_LOGIN'));
