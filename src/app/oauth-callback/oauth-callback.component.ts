@@ -73,7 +73,7 @@ export class OauthCallbackComponent implements OnInit {
             this.authService.getSchoolDetails().subscribe(); // Add concatMap
             this.router.navigate(['/dashboard']);
           }
-  
+
           if (res.user === 'NO_FOUND' && res.result) {
             const navigationExtras: NavigationExtras = {
               state: res.result
@@ -87,12 +87,19 @@ export class OauthCallbackComponent implements OnInit {
         }
       } else {
         console.error(res);
-        this.toastMessage.error('', this.generalService.translateString('ERROR_WHILE_LOGIN'));
+        this.handleLoginError();
       }
     }, (error) => {
       console.error(error);
-      this.toastMessage.error('', this.generalService.translateString('ERROR_WHILE_LOGIN'));
+      this.handleLoginError();
     });
+  }
+
+  handleLoginError() {
+    this.toastMessage.error('', this.generalService.translateString('ERROR_WHILE_LOGIN'));
+    setTimeout(() => {
+      this.router.navigate(['']);
+    }, 100);
   }
 
   ngAfterViewInit(): void {
