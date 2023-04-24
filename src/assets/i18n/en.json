@@ -216,7 +216,7 @@
   "PHONE": "phone",
   "OTP": "OTP",
   "DIDN'T_RECEIVE_OTP": "Didn't receive OTP? Resend",
-  "REGISTER_STUD_EXCEL_TEMPLATE": "To register students download Excel template and upload it-",
+  "REGISTER_STUD_EXCEL_TEMPLATE": "To register students download Excel template and upload it.",
   "DEMO_VIDEO": "Demo (Video)",
   "SELECT_GRADE": "Select Grade",
   "SELECT_ACADEMIC_YEAR": "Select Academic year",
@@ -347,5 +347,6 @@
   "RETRY_LOGIN": "Retry Login",
   "QUICK_LINKS": "Quick Links",
   "AADHAAR_VERIFIED_SUCCESSFULLY": "Aadhar Verified Successfully",
-  "ERROR_WHILE_VERIFYING_AADHAAR": "Error while verifying Aadhar"
+  "ERROR_WHILE_VERIFYING_AADHAAR": "Error while verifying Aadhar",
+  "ENTERED_PHONE_N0_SHOULD_BE_LINKED_TO_AADHAR" : "Entered phone no. should be linked to Aadhar"
 }

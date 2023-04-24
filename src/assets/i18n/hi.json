@@ -345,5 +345,6 @@
   "RETRY_LOGIN": "लॉगिन पुनः प्रयास करें",
   "QUICK_LINKS": "त्वरित सम्पक",
   "AADHAAR_VERIFIED_SUCCESSFULLY": "आधार सत्यापित सफलतापूर्वक",
-  "ERROR_WHILE_VERIFYING_AADHAAR": "आधार सत्यापित करते समय त्रुटि"
+  "ERROR_WHILE_VERIFYING_AADHAAR": "आधार सत्यापित करते समय त्रुटि",
+  "ENTERED_PHONE_N0_SHOULD_BE_LINKED_TO_AADHAR":"फोन नं. आधार से जोड़ा हुआ होना चाहिए"
 }
