@@ -346,5 +346,5 @@
   "SOMETHING_WENT_WRONG": "Something went wrong",
   "RETRY_LOGIN": "Retry Login",
   "QUICK_LINKS": "Quick Links",
-  "Entered_Phone_No_Should_Be_Linked_To_Aadhar":"Entered phone no. should be linked to Aadhar"
+  "ENTERED_PHONE_N0_SHOULD_BE_LINKED_TO_AADHAR" : "Entered phone no. should be linked to Aadhar"
 }
