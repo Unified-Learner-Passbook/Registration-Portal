@@ -344,5 +344,5 @@
   "SOMETHING_WENT_WRONG": "कुछ गलत हो गया",
   "RETRY_LOGIN": "लॉगिन पुनः प्रयास करें",
   "QUICK_LINKS": "त्वरित सम्पक",
-  "ENTERED_PHONE_N0_SHOULD_BE_LINKED_TO_AADHAR":"फोन नं. आधार से जोड़ा जाना चाहिए"
+  "ENTERED_PHONE_N0_SHOULD_BE_LINKED_TO_AADHAR":"फोन नं. आधार से जोड़ा हुआ होना चाहिए"
 }
