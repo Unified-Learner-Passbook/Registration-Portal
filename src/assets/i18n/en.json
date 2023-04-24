@@ -345,5 +345,7 @@
   "OAUTH_ACCESS_DENIED_WARNING": "We were unable to authenticate you with our system as you have denied access to your information. Please try logging in again and grant access to your information to proceed.",
   "SOMETHING_WENT_WRONG": "Something went wrong",
   "RETRY_LOGIN": "Retry Login",
-  "QUICK_LINKS": "Quick Links"
+  "QUICK_LINKS": "Quick Links",
+  "AADHAAR_VERIFIED_SUCCESSFULLY": "Aadhar Verified Successfully",
+  "ERROR_WHILE_VERIFYING_AADHAAR": "Error while verifying Aadhar"
 }

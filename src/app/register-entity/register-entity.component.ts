@@ -3,7 +3,7 @@ import * as Papa from "papaparse";
 import { DataService } from '../services/data/data-request.service';
 import { ToastMessageService } from '../services/toast-message/toast-message.service';
 import * as _ from 'lodash-es'
-import { catchError, concatMap, tap, toArray } from 'rxjs/operators';
+import { catchError, concatMap, map, retry, tap, toArray } from 'rxjs/operators';
 import { forkJoin, from, of, throwError } from 'rxjs';
 import { CsvService } from '../services/csv/csv.service';
 import { RequestParam } from '../interfaces/httpOptions.interface';
@@ -186,7 +186,8 @@ export class RegisterEntityComponent implements OnInit {
           mobile: item["Mobile"],
           gaurdian_name: item["Guardian Name"],
           aadhar_token: item["Aadhar ID"],
-          dob: item["Date of Birth"]
+          dob: item["Date of Birth"],
+          enrolledOn: item["Enrolled On"]
         }
       });
 
@@ -337,7 +338,7 @@ export class RegisterEntityComponent implements OnInit {
         credentialSubject: list
       }
     }
-    return this.dataService.post(request);
+    return this.dataService.post(request).pipe(retry(2));
   }
 
 
@@ -357,7 +358,12 @@ export class RegisterEntityComponent implements OnInit {
       }
     }
 
-    return this.dataService.post(request);
+    return this.dataService.post(request).pipe(map((res: any) => {
+      if (res.iserror) {
+        throwError('Unable to register');
+      }
+      return res;
+    }), retry(1));
   }
 
   getStudentList(verifyAadhar: boolean = false) {
@@ -531,7 +537,13 @@ export class RegisterEntityComponent implements OnInit {
       }
     }
 
-    return this.dataService.post(request);
+    return this.dataService.post(request).pipe(map((res: any) => {
+      if (res.isError) {
+        throwError('Unable to issue credential');
+      }
+      return res;
+    }),
+    retry(1));
   }
 
   downloadBulkRegisterResponse() {

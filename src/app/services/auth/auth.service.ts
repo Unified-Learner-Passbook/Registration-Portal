@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { map, retry, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 
 import {
@@ -47,7 +47,7 @@ export class AuthService {
         } else {
           throwError(new Error(this.utilService.translateString('ERROR_WHILE_REGISTRATION')));
         }
-      }))
+      }), retry(3));
   }
 
   // Sign-in
