@@ -521,7 +521,7 @@ export class RegisterEntityComponent implements OnInit {
         "credentialSubject": studentList.map((item: any) => {
           return {
             "id": item.did,
-            "enrolledOn": item?.enrolledon, //date.toISOString(),
+            "enrolledOn": item?.enrolledOn, //date.toISOString(),
             "studentName": item.name,
             "student_id": item?.studentId,
             "school_id": this.authService.schoolDetails?.udiseCode,
