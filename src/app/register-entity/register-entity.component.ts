@@ -187,7 +187,7 @@ export class RegisterEntityComponent implements OnInit {
           gaurdian_name: item["Guardian Name"],
           aadhar_token: item["Aadhar ID"],
           dob: item["Date of Birth"],
-          enrolledOn: item["Enrolled On"],
+          enrollon: item["Enrolled On"],
           gender: item["Gender"]?.toLowerCase() === 'male' ? 'M' : (item["Gender"]?.toLowerCase() === 'female' ? 'F' : 'NA'),
         }
       });
