@@ -140,7 +140,7 @@ export class RegisterEntityComponent implements OnInit {
             if (res?.result?.schema?.properties) {
               // const columnFields = Object.keys(res.result.schema.properties);
               // const columnFields = ["studentName", "student_id", "mobile", "gaurdian_name", "aadhar_token", "dob"] //TODO: Add label field in schema and use it here
-              const columnFields = ["Student Name", "Student ID", "Mobile", "Guardian Name", "Aadhar ID", "Date of Birth"];
+              const columnFields = ["Student Name", "Student ID", "Mobile", "Guardian Name", "Aadhar ID", "Date of Birth", "Gender", "Enrolled On"];
               const csvContent = this.csvService.generateCSV(columnFields);
               this.csvService.downloadCSVTemplate(csvContent, `${this.model.certificateType}-template`);
             } else {
@@ -187,7 +187,8 @@ export class RegisterEntityComponent implements OnInit {
           gaurdian_name: item["Guardian Name"],
           aadhar_token: item["Aadhar ID"],
           dob: item["Date of Birth"],
-          enrolledOn: item["Enrolled On"]
+          enrolledOn: item["Enrolled On"],
+          gender: item["Gender"]?.toLowerCase() === 'male' ? 'M' : (item["Gender"]?.toLowerCase() === 'female' ? 'F' : 'NA'),
         }
       });
 
@@ -391,7 +392,8 @@ export class RegisterEntityComponent implements OnInit {
             mobile: item.studentdetail.mobile,
             guardian: item.studentdetail.gaurdian_name,
             osid: item.studentdetail.osid,
-            isVerified: item.student.aadhaar_status === 'verified'
+            isVerified: item.student.aadhaar_status === 'verified',
+            enrolledOn: item?.enrolledOn
           }
         });
 
@@ -519,7 +521,7 @@ export class RegisterEntityComponent implements OnInit {
         "credentialSubject": studentList.map((item: any) => {
           return {
             "id": item.did,
-            "enrolledOn": date.toISOString(),
+            "enrolledOn": item?.enrolledOn, //date.toISOString(),
             "studentName": item.name,
             "student_id": item?.studentId,
             "school_id": this.authService.schoolDetails?.udiseCode,
