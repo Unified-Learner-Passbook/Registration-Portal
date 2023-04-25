@@ -393,7 +393,7 @@ export class RegisterEntityComponent implements OnInit {
             guardian: item.studentdetail.gaurdian_name,
             osid: item.studentdetail.osid,
             isVerified: item.student.aadhaar_status === 'verified',
-            enrolledOn: item?.enrolledOn
+            enrolledOn: item?.enrollon
           }
         });
 
@@ -521,7 +521,7 @@ export class RegisterEntityComponent implements OnInit {
         "credentialSubject": studentList.map((item: any) => {
           return {
             "id": item.did,
-            "enrolledOn": item?.enrolledOn, //date.toISOString(),
+            "enrolledOn": item?.enrolledon, //date.toISOString(),
             "studentName": item.name,
             "student_id": item?.studentId,
             "school_id": this.authService.schoolDetails?.udiseCode,
