@@ -393,7 +393,7 @@ export class RegisterEntityComponent implements OnInit {
             guardian: item.studentdetail.gaurdian_name,
             osid: item.studentdetail.osid,
             isVerified: item.student.aadhaar_status === 'verified',
-            enrolledOn: item?.enrollon
+            enrolledOn: item?.studentdetail?.enrollon
           }
         });
 
