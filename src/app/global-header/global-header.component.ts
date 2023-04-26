@@ -44,23 +44,26 @@ export class GlobalHeaderComponent implements OnInit {
   }
 
   checkNewClaims() {
-    const search = {
-      "filters": {
-        "claim_status": {
-          "eq": 'pending'
-        },
-        "school_udise": {
-          "eq": this.authService.schoolDetails?.udiseCode
+    if (this.authService.schoolDetails?.udiseCode) {
+
+      const search = {
+        "filters": {
+          "claim_status": {
+            "eq": 'pending'
+          },
+          "school_udise": {
+            "eq": this.authService.schoolDetails?.udiseCode
+          }
         }
       }
-    }
 
-    interval(ONE_HOUR)
-      .pipe(
-        startWith(0),
-        mergeMap(_ => this.generalService.postStudentData('/studentDetail', search))
-      ).subscribe((res: any) => {
-        this.isClaimsPending = !!res.result.length;
-      }, error => this.isClaimsPending = false);
+      interval(ONE_HOUR)
+        .pipe(
+          startWith(0),
+          mergeMap(_ => this.generalService.postStudentData('/studentDetail', search))
+        ).subscribe((res: any) => {
+          this.isClaimsPending = !!res.result.length;
+        }, error => this.isClaimsPending = false);
+    }
   }
 }

@@ -46,14 +46,23 @@ import { EkycComponent } from './ekyc/ekyc.component';
 // import { CreateCertificateComponent } from './create-certificate/create-certificate.component';
 // import { FaqComponent } from './custom-components/faq/faq.component';
 const routes: Routes = [
-  { path: '', component: LandingPageComponent },
+  {
+    path: '',
+    component: LandingPageComponent,
+    data: {
+      showToolbar: false,
+      telemetry: {
+        env: 'landing', pageid: 'landing-page', type: 'view', subtype: 'scroll'
+      }
+    }
+  },
   {
     path: 'digilocker-callback',
     component: OauthCallbackComponent,
     data: {
       showToolbar: false,
       telemetry: {
-        env: 'digilocker', pageid: 'digilocker-callback', type: 'digilocker', subtype: 'scroll'
+        env: 'sign-in', pageid: 'digilocker-callback', type: 'view', subtype: 'scroll'
       }
     }
   },
@@ -92,7 +101,7 @@ const routes: Routes = [
         data: {
           showToolbar: false,
           telemetry: {
-            env: 'register', pageid: 'register-entity', type: 'edit', subtype: 'scroll'
+            env: 'register', pageid: 'register-entity', type: 'edit', subtype: 'paginate'
           }
         }
 
@@ -103,7 +112,7 @@ const routes: Routes = [
         data: {
           showToolbar: false,
           telemetry: {
-            env: 'credential', pageid: 'issued-credential', type: 'view', subtype: 'scroll'
+            env: 'credential', pageid: 'issued-credential', type: 'list', subtype: 'paginate'
           }
         }
       },
@@ -113,7 +122,7 @@ const routes: Routes = [
         data: {
           showToolbar: false,
           telemetry: {
-            env: 'approval', pageid: 'claim-approval', type: 'view', subtype: 'scroll'
+            env: 'approval', pageid: 'claim-approval', type: 'view', subtype: 'paginate'
           }
         }
       },
