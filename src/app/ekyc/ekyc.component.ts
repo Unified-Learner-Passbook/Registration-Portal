@@ -7,6 +7,8 @@ import { TelemetryService } from '../services/telemetry/telemetry.service';
 import { ToastMessageService } from '../services/toast-message/toast-message.service';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Location } from '@angular/common';
+import { GeneralService } from '../services/general/general.service';
+
 
 @Component({
   selector: 'app-ekyc',
@@ -36,6 +38,8 @@ export class EkycComponent implements OnInit, AfterViewInit {
     private readonly telemetryService: TelemetryService,
     private readonly modalService: NgbModal,
     private readonly location: Location,
+    private generalService: GeneralService,
+
   ) {
     const navigation = this.router.getCurrentNavigation();
     this.userInfo = navigation.extras.state;
@@ -103,7 +107,7 @@ export class EkycComponent implements OnInit, AfterViewInit {
     }, error => {
       console.error();
       this.isLoading = false;
-      this.toastMessage.error('', 'Error while verifying Aadhar');
+      this.toastMessage.error('', this.generalService.translateString('ERROR_WHILE_VERIFYING_AADHAR'));
     });
   }
 

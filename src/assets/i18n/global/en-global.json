@@ -305,5 +305,13 @@
     "STUDENT_REGISTRATION_CLAIM_APPROVAL": "Student Registration claim approval",
     "ARE_YOU_SURE_WANT_TO_APPROVE": "Are you sure want to approve",
     "ARE_YOU_SURE_WANT_TO_REJECT": "Are you sure want to reject",
-    "SHARED_OPERATION_FAILED": "Shared operation failed!"
+    "SHARED_OPERATION_FAILED": "Shared operation failed!",
+
+    "NOT_COMPLETED_YOUR_KYC_PLEASE_COMPLETE_YOUR_KYC_HERE":"It seems you have not completed your KYC. Please complete your one time KYC here",
+    "ENTER_YOUR_NAME":"Enter your name",
+    "ERROR_WHILE_VERIFYING_AADHAR":"Error while verifying Aadhar",
+    "IT_SEEMS_UPLOADED_EMPTY_CSV_FILE_PLEASE_UPLOAD_VALID_CSV":"It seems you have uploaded empty csv file, please upload valid csv file"
+
+
+
 }
