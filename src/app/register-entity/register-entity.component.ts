@@ -169,7 +169,7 @@ export class RegisterEntityComponent implements OnInit {
       this.parsedCSV = await this.parseCSVFile(event);
 
       if (!this.parsedCSV.length) {
-        throw new Error('It seems you have uploaded empty csv file, please upload valid csv file');
+        throw new Error(this.generalService.translateString('IT_SEEMS_UPLOADED_EMPTY_CSV_FILE_PLEASE_UPLOAD_VALID_CSV'));
       }
 
       console.log("parsedCSV", this.parsedCSV);

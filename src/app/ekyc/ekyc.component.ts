@@ -8,6 +8,8 @@ import { ToastMessageService } from '../services/toast-message/toast-message.ser
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Location } from '@angular/common';
 import { UtilService } from '../services/util/util.service';
+import { GeneralService } from '../services/general/general.service';
+
 
 @Component({
   selector: 'app-ekyc',
@@ -37,7 +39,9 @@ export class EkycComponent implements OnInit, AfterViewInit {
     private readonly telemetryService: TelemetryService,
     private readonly modalService: NgbModal,
     private readonly location: Location,
-    private readonly utilService: UtilService
+    private readonly utilService: UtilService,
+    private readonly generalService: GeneralService,
+
   ) {
     const navigation = this.router.getCurrentNavigation();
     this.userInfo = navigation.extras.state;
