@@ -25,6 +25,7 @@
           <th>{{'GRADE' | translate}}</th>
           <th>{{'ACADEMIC_YEAR' | translate}}</th>
           <th>{{'MOBILE_NUMBER' | translate}}</th>
+          <th>{{'ENROLLED_ON' | translate}}</th>
           <th *ngIf="model.status === 'pending'">Status</th>
           <th *ngIf="model.status === 'pending'">Pending since</th>
           <th></th>
@@ -40,6 +41,7 @@
           <td>{{user.grade}}</td>
           <td>{{user.acdemic_year}}</td>
           <td>{{user.mobile}}</td>
+          <td>{{user?.enrollon}}</td>
           <td *ngIf="model.status === 'pending'">{{user.claim_status}}</td>
           <td *ngIf="model.status === 'pending'">{{user.osCreatedAt}}</td>
           <td *ngIf="model.status === 'pending'">
