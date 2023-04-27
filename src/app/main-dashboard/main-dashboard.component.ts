@@ -39,6 +39,10 @@ export class MainDashboardComponent implements OnInit, OnDestroy {
       filter(e => e instanceof NavigationEnd))
       .subscribe((event: NavigationEnd) => {
         this.isChildRoute = !!this.activatedRoute.children.length;
+
+        if (!this.isChildRoute) {
+          this.getMetrics();
+        }
       });
 
     const navigation = this.router.getCurrentNavigation();
@@ -55,7 +59,7 @@ export class MainDashboardComponent implements OnInit, OnDestroy {
       url: `${this.baseUrl}/v1/portal/count`,
       data: {
         "countFields": [
-          "students_registered",
+          // "students_registered",
           "claims_pending",
           "claims_approved",
           "claims_rejected",
