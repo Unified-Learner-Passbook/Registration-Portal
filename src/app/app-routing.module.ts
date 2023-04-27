@@ -88,12 +88,24 @@ const routes: Routes = [
   },
   {
     path: 'register',
-    component: RegistrationFormComponent
+    component: RegistrationFormComponent,
+    data: {
+      showToolbar: false,
+      telemetry: {
+        env: 'register', pageid: 'register', type: 'edit', subtype: 'scroll'
+      }
+    },
   },
   {
     path: 'dashboard',
     component: MainDashboardComponent,
     canActivate: [AuthenticationGuard],
+    data: {
+      showToolbar: false,
+      telemetry: {
+        env: 'dashboard', pageid: 'dashboard', type: 'view', subtype: 'scroll'
+      }
+    },
     children: [
       {
         path: 'register-entity',
@@ -104,7 +116,6 @@ const routes: Routes = [
             env: 'register', pageid: 'register-entity', type: 'edit', subtype: 'paginate'
           }
         }
-
       },
       {
         path: 'issued-credential',
