@@ -165,7 +165,7 @@ export class CredentialService {
       } else {
         throwError(new Error('Error while issuing certificate for principal'));
       }
-    }), retry(3))
+    }), retry(3));
   }
 
   updateStudent(data: any): Observable<any> {
