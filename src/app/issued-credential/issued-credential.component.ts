@@ -89,8 +89,6 @@ export class IssuedCredentialComponent implements OnInit {
     this.getCredentials();
   }
 
-
-
   onChange(event) {
     // console.log("event", this.selectedType);
     // this.getCredentials();
@@ -110,7 +108,7 @@ export class IssuedCredentialComponent implements OnInit {
 
     this.credentialService.getCredentials(payload).subscribe((res) => {
       this.isLoading = false;
-      this.issuedCredentials = res;
+      this.issuedCredentials = res.filter((credential: any) => !!credential?.credentialSubject?.grade);
       this.pageChange();
     }, (error: any) => {
       this.isLoading = false;
