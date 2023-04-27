@@ -124,7 +124,7 @@ export class RegistrationFormComponent implements OnInit {
   linkUDISE() {
     if (this.registrationDetails) {
       // telemetry check udise
-      this.raiseInteractEvent('link-udise')
+      this.raiseInteractEvent('link-udise');
       this.toastMessage.success('', this.generalService.translateString('SUCCESSFULLY_LINKED'));
       if (this.schoolDetails?.udiseCode) {
         this.registrationForm.get('udiseId').setValue(this.schoolDetails.udiseCode);
@@ -151,6 +151,7 @@ export class RegistrationFormComponent implements OnInit {
       if (res?.success && res?.status === 'found') {
         this.isVerified = "yes";
         this.schoolDetails = res.data;
+        this.linkUDISE();
       } else {
         this.isVerified = "no";
       }

@@ -43,38 +43,32 @@ export class SidebarComponent implements OnInit {
       {
         label: this.generalService.translateString('HOME'),
         link: '/dashboard',
-        class: 'fa fa-home',
-        isActive: true,
+        class: 'fa fa-home'
       },
       {
         label: this.generalService.translateString('REGISTER_STUDENT'),
         link: '/dashboard/register-entity',
-        class: 'fa fa-user-plus',
-        isActive: true,
+        class: 'fa fa-user-plus'
       },
       {
         label: this.generalService.translateString('ISSUED_CREDENTIAL'),
         link: '/dashboard/issued-credential',
-        class: 'fa fa-key',
-        isActive: false,
+        class: 'fa fa-key'
       },
       {
         label: this.generalService.translateString('MY_PROFILE'),
         link: '/dashboard/my-account',
-        class: 'fa fa-user',
-        isActive: false,
+        class: 'fa fa-user'
       },
       {
         label: this.generalService.translateString('CLAIM_APPROVAL'),
         link: '/dashboard/claim-approval',
-        class: 'fa fa-user-check',
-        isActive: false,
+        class: 'fa fa-user-check'
       },
       {
         label: this.generalService.translateString('ADD_ISSUER_STAFF'),
         link: '',
-        class: 'fa fa-graduation-cap disable',
-        isActive: false,
+        class: 'fa fa-graduation-cap disable'
       },
     ];
   }
