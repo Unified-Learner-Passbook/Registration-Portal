@@ -89,7 +89,7 @@ export class ClaimApprovalComponent implements OnInit {
       console.log('studentDetail length', res.result.length);
       console.log('studentDetail list', res.result);
       this.studentDetails = res.result.map((item: any) => {
-        return { ...item, osCreatedAt: this.generalService.getDaysDifference(item.osCreatedAt), enrollon: dayjs(item.enrolled_on, 'MM/YYYY').toDate() }
+        return { ...item, osCreatedAt: this.generalService.getDaysDifference(item.osCreatedAt), enrollon: dayjs(item.enrolled_on, 'MM/YYYY').format() }
       });
       this.pageChange();
       this.isLoading = false;

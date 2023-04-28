@@ -189,7 +189,7 @@ export class RegisterEntityComponent implements OnInit {
           gaurdian_name: item["Guardian Name"],
           aadhar_token: item["Aadhaar ID"],
           dob: item["Date of Birth"],
-          enrollon: dayjs(item["Enrolled On"], 'MM/YYYY').toDate(),
+          enrollon: dayjs(item["Enrolled On"], 'MM/YYYY').format(),
           gender: item["Gender"]?.toLowerCase() === 'male' ? 'M' : (item["Gender"]?.toLowerCase() === 'female' ? 'F' : 'NA'),
         }
       });
