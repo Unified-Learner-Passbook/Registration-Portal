@@ -2,7 +2,8 @@ import { Component, ElementRef, OnInit, TemplateRef, ViewChild } from '@angular/
 import * as Papa from "papaparse";
 import { DataService } from '../services/data/data-request.service';
 import { ToastMessageService } from '../services/toast-message/toast-message.service';
-import * as _ from 'lodash-es'
+import * as _ from 'lodash-es';
+import * as dayjs from 'dayjs';
 import { catchError, concatMap, map, retry, tap, toArray } from 'rxjs/operators';
 import { forkJoin, from, of, throwError } from 'rxjs';
 import { CsvService } from '../services/csv/csv.service';
@@ -188,7 +189,7 @@ export class RegisterEntityComponent implements OnInit {
           gaurdian_name: item["Guardian Name"],
           aadhar_token: item["Aadhaar ID"],
           dob: item["Date of Birth"],
-          enrollon: item["Enrolled On"],
+          enrollon: dayjs(item["Enrolled On"]).toISOString(),
           gender: item["Gender"]?.toLowerCase() === 'male' ? 'M' : (item["Gender"]?.toLowerCase() === 'female' ? 'F' : 'NA'),
         }
       });
@@ -241,6 +242,7 @@ export class RegisterEntityComponent implements OnInit {
     );
   }
 
+  //TODO Add steps Uploading CSV, Verifying AADHAAR, Show report in the end
   uploadCsvValues() {
     console.log("parsedCSV", this.parsedCSV);
     console.log("model", this.model);

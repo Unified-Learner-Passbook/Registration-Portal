@@ -7,6 +7,7 @@ import { IImpressionEventInput, IInteractEventInput } from '../services/telemetr
 import { TelemetryService } from '../services/telemetry/telemetry.service';
 import { ToastMessageService } from '../services/toast-message/toast-message.service';
 import { UtilService } from '../services/util/util.service';
+import * as dayjs from 'dayjs';
 
 @Component({
   selector: 'app-claim-approval',
@@ -88,7 +89,7 @@ export class ClaimApprovalComponent implements OnInit {
       console.log('studentDetail length', res.result.length);
       console.log('studentDetail list', res.result);
       this.studentDetails = res.result.map((item: any) => {
-        return { ...item, osCreatedAt: this.generalService.getDaysDifference(item.osCreatedAt) }
+        return { ...item, osCreatedAt: this.generalService.getDaysDifference(item.osCreatedAt), enrollon: dayjs(item.enrolled_on).toISOString() }
       });
       this.pageChange();
       this.isLoading = false;
