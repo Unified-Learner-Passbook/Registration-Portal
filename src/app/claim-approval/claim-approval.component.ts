@@ -94,7 +94,7 @@ export class ClaimApprovalComponent implements OnInit {
         item.osCreatedAt = this.generalService.getDaysDifference(item.osCreatedAt);
 
         if (item.enrollon && !dayjs(item.enrollon).isValid()) {
-          item.enrollon = dayjs(item.enrollon, 'MM/YYYY').format();
+          item.enrollon = dayjs(item.enrollon, 'DD-MM-YYYY').format(); //TODO change when self registration changes to mm/yyyy
         }
         return item;
       });
