@@ -110,7 +110,7 @@ export class IssuedCredentialComponent implements OnInit {
       this.isLoading = false;
       // Filter out credentials for students only
       this.issuedCredentials = res.filter((credential: any) => !!credential?.credentialSubject?.grade).map((item: any) => {
-        item.enrolled_on = dayjs(item.enrolled_on).toISOString();
+        item.enrolled_on = dayjs(item.enrolled_on).toDate();
         return item;
       });
       this.pageChange();
