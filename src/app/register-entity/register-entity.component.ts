@@ -141,7 +141,8 @@ export class RegisterEntityComponent implements OnInit {
               // const columnFields = Object.keys(res.result.schema.properties);
               // const columnFields = ["studentName", "student_id", "mobile", "gaurdian_name", "aadhar_token", "dob"] //TODO: Add label field in schema and use it here
               const columnFields = ["Student Name", "Student Registration Number", "Mobile", "Guardian Name", "Aadhaar ID", "Date of Birth", "Gender", "Enrolled On"];
-              const csvContent = this.csvService.generateCSV(columnFields);
+              const sampleData = ["Avinash Dubey", "RC-901", "8888888888", "Nitin", "999999999999", "09/07/1999", "Male", "07/2020"];
+              const csvContent = this.csvService.generateCSV(columnFields, sampleData);
               this.csvService.downloadCSVTemplate(csvContent, `${this.model.certificateType}-template`);
             } else {
               throwError(() => new Error('properties unavailable in the schema'));
@@ -191,6 +192,11 @@ export class RegisterEntityComponent implements OnInit {
           gender: item["Gender"]?.toLowerCase() === 'male' ? 'M' : (item["Gender"]?.toLowerCase() === 'female' ? 'F' : 'NA'),
         }
       });
+
+      // Remove sample data row if unchanged
+      if (this.parsedCSV?.[0]?.aadhar_token === '999999999999') {
+        this.parsedCSV.shift();
+      }
 
       this.uploadCsvValues();
       this.pageChange();
