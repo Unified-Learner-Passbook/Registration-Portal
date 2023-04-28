@@ -268,13 +268,13 @@ export class RegisterEntityComponent implements OnInit {
       ).subscribe((res) => {
         console.log("final", res);
         this.toastMsg.success('', this.generalService.translateString('STUDENTS_DATA_IMPORTED_SUCCESSFULLY'));
-        setTimeout(() => {
-          this.getStudentList(true);
-        }, 500);
+        // setTimeout(() => {
+        // }, 500);
         this.generateBulkRegisterResponse(res);
-        this.strictLoader = false;
         setTimeout(() => {
+          this.strictLoader = false;
           this.progress = 1;
+          this.getStudentList(true);
           this.showProgress = false;
         }, 2000);
       }, (error) => {
@@ -494,11 +494,11 @@ export class RegisterEntityComponent implements OnInit {
         }),
         toArray()
       ).subscribe((res) => {
+        // setTimeout(() => {
+        // }, 100);
         setTimeout(() => {
+          this.strictLoader = false;
           this.getStudentList();
-        }, 100);
-        this.strictLoader = false;
-        setTimeout(() => {
           this.progress = 1;
           this.showProgress = false;
         }, 2000);
@@ -513,7 +513,6 @@ export class RegisterEntityComponent implements OnInit {
   }
 
   private issueBulkCredentials(studentList: any[]) {
-    this.strictLoader = true;
     this.bulkIssuedCredRes = {};
     const date = new Date();
     const nextYear = new Date(new Date().setFullYear(new Date().getFullYear() + 1))
@@ -566,7 +565,6 @@ export class RegisterEntityComponent implements OnInit {
     this.utilService.downloadFile(`${this.model.grade}-credentials-report.csv`, 'text/csv;charset=utf-8;', csv);
   }
 
-
   editStudent(student: any) {
     console.log("student", student);
     this.editStudentForm.patchValue({
@@ -608,9 +606,7 @@ export class RegisterEntityComponent implements OnInit {
     } else {
       console.error("Invalid Form");
     }
-
   }
-
 
   ngAfterViewInit(): void {
     this.raiseImpressionEvent();
@@ -648,4 +644,3 @@ export class RegisterEntityComponent implements OnInit {
     this.telemetryService.impression(telemetryImpression);
   }
 }
-
