@@ -9,6 +9,9 @@ import { TelemetryService } from '../services/telemetry/telemetry.service';
 import { ToastMessageService } from '../services/toast-message/toast-message.service';
 import { UtilService } from '../services/util/util.service';
 import * as dayjs from 'dayjs';
+import * as customParseFormat from 'dayjs/plugin/customParseFormat';
+
+dayjs.extend(customParseFormat);
 
 @Component({
   selector: 'app-issued-credential',
@@ -110,7 +113,7 @@ export class IssuedCredentialComponent implements OnInit {
       this.isLoading = false;
       // Filter out credentials for students only
       this.issuedCredentials = res.filter((credential: any) => !!credential?.credentialSubject?.grade).map((item: any) => {
-        if (item.credentialSubject.enrolled_on) {
+        if (item.credentialSubject.enrolled_on && !dayjs(item.credentialSubject.enrolled_on).isValid()) {
           item.credentialSubject.enrolled_on = dayjs(item.credentialSubject.enrolled_on, 'MM/YYYY').format();
         }
         return item;

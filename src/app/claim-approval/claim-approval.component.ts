@@ -8,6 +8,8 @@ import { TelemetryService } from '../services/telemetry/telemetry.service';
 import { ToastMessageService } from '../services/toast-message/toast-message.service';
 import { UtilService } from '../services/util/util.service';
 import * as dayjs from 'dayjs';
+import * as customParseFormat from 'dayjs/plugin/customParseFormat';
+dayjs.extend(customParseFormat);
 
 @Component({
   selector: 'app-claim-approval',
@@ -91,7 +93,7 @@ export class ClaimApprovalComponent implements OnInit {
       this.studentDetails = res.result.map((item: any) => {
         item.osCreatedAt = this.generalService.getDaysDifference(item.osCreatedAt);
 
-        if (item.enrollon) {
+        if (item.enrollon && !dayjs(item.enrollon).isValid()) {
           item.enrollon = dayjs(item.enrollon, 'MM/YYYY').format();
         }
         return item;

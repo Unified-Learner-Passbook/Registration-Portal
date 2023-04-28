@@ -41,7 +41,7 @@
           <td>{{user.grade}}</td>
           <td>{{user.acdemic_year}}</td>
           <td>{{user.mobile}}</td>
-          <td>{{user?.enrollon}}</td>
+          <td>{{user?.enrollon | date: 'MM/yyyy'}}</td>
           <td *ngIf="model.status === 'pending'">{{user.claim_status}}</td>
           <td *ngIf="model.status === 'pending'">{{user.osCreatedAt}}</td>
           <td *ngIf="model.status === 'pending'">

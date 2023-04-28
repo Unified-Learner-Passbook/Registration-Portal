@@ -4,6 +4,7 @@ import { DataService } from '../services/data/data-request.service';
 import { ToastMessageService } from '../services/toast-message/toast-message.service';
 import * as _ from 'lodash-es';
 import * as dayjs from 'dayjs';
+import * as customParseFormat from 'dayjs/plugin/customParseFormat';
 import { catchError, concatMap, map, retry, tap, toArray } from 'rxjs/operators';
 import { forkJoin, from, of, throwError } from 'rxjs';
 import { CsvService } from '../services/csv/csv.service';
@@ -19,6 +20,7 @@ import { environment } from 'src/environments/environment';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CredentialService } from '../services/credential/credential.service';
 
+dayjs.extend(customParseFormat);
 const BATCH_LIMIT = 10;
 @Component({
   selector: 'app-register-entity',
