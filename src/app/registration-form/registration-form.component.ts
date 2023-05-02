@@ -163,8 +163,8 @@ export class RegistrationFormComponent implements OnInit {
     const payload = {
       url: `${this.baseUrl}/v1/sso/udise/school/list`,
       data: {
-        udise: this.schoolUdiseInput,
-        password: this.password
+        udise: this.udiseLinkForm.value.udiseId,
+        password: this.udiseLinkForm.value.password
       }
     }
     this.dataService.post(payload).subscribe((res: any) => {
