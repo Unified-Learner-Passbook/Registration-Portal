@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, Subject, throwError } from 'rxjs';
-import { map, takeUntil } from 'rxjs/operators';
+import { concatMap, map, takeUntil } from 'rxjs/operators';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { GeneralService } from 'src/app/services/general/general.service';
 import { CredentialService } from 'src/app/services/credential/credential.service';
@@ -76,9 +76,21 @@ export class DocViewComponent implements OnInit, OnDestroy {
                     this.credential = res[0];
                     this.loadPDF();
                 }, (error: any) => {
-                    this.isLoading = false;
                     console.error(error);
                     this.toastMessage.error("", this.generalService.translateString('SOMETHING_WENT_WRONG'));
+
+                    if (!error.success && error.status === 'cred_search_api_failed' && error?.result?.error?.status === 404) {
+                        // reissue credential for Teacher
+                        this.credentialService.issueCredential().pipe(
+                            concatMap(_ => this.credentialService.getAllCredentials())
+                        ).subscribe((result: any) => {
+                            this.isLoading = false;
+                            this.credential = result[0];
+                            this.loadPDF();
+                        }, error => {
+                            this.isLoading = false;
+                        });
+                    }
                 });
         }
     }

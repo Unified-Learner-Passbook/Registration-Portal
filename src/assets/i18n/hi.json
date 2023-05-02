@@ -350,5 +350,6 @@
   "NOT_COMPLETED_YOUR_KYC_PLEASE_COMPLETE_YOUR_KYC_HERE":"ऐसा लगता है कि आपने अपना केवाईसी पूरा नहीं किया है। कृपया अपना एक बार का केवाईसी यहां पूरा करें",
   "ENTER_YOUR_NAME":"अपना नाम दर्ज करें",
   "ERROR_WHILE_VERIFYING_AADHAR":"आधार सत्यापित करते समय त्रुटि",
-  "IT_SEEMS_UPLOADED_EMPTY_CSV_FILE_PLEASE_UPLOAD_VALID_CSV":"ऐसा लगता है कि आपने खाली csv फ़ाइल अपलोड की है, कृपया मान्य csv फ़ाइल अपलोड करें"
+  "IT_SEEMS_UPLOADED_EMPTY_CSV_FILE_PLEASE_UPLOAD_VALID_CSV":"ऐसा लगता है कि आपने खाली csv फ़ाइल अपलोड की है, कृपया मान्य csv फ़ाइल अपलोड करें",
+  "ENTER_SCHOOL_UDISE": "अपना स्कूल का UDISE नंबर दर्ज करें"
 }

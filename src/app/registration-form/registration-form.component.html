@@ -43,7 +43,8 @@
             <div class="col-sm-6">
                 <input type="text" formControlName="phone" class="form-control" id="phone"
                     placeholder="{{'ENTER_PHONE_NO' | translate}}">
-                    <div class="fs-12 text-grey-color pt-2 font-italic">{{'ENTERED_PHONE_N0_SHOULD_BE_LINKED_TO_AADHAR' | translate}}</div>
+                <div class="fs-12 text-grey-color pt-2 font-italic">{{'ENTERED_PHONE_N0_SHOULD_BE_LINKED_TO_AADHAR' |
+                    translate}}</div>
                 <p class="text-red pt-2 mb-0" *ngIf="phone.invalid && phone.touched">{{'ENTER_VALID_PHONE_NUMBER' |
                     translate}}</p>
             </div>
@@ -101,14 +102,14 @@
         <div class="modal-body fs-14">
             <div class="text-center">
                 <h6 class="py-3">{{'LINK_YOUR_UDISE' | translate}}</h6>
-                <input type="text" placeholder="Enter School UDISE" name="schoolUdiseInput"
+                <input type="text" placeholder="{{'ENTER_SCHOOL_UDISE' | translate}}" name="schoolUdiseInput"
                     [(ngModel)]="schoolUdiseInput" class="w-82">
+                    <p *ngIf="isVerified==='no'" class="pt-2 text-danger">{{'SCHOOL_NOT_AVAILABLE' | translate }}</p>
                 <button *ngIf="isVerified !=='yes'" class="btn btn-primary fs-12 mt-4" type="button"
-                    (click)="verifyUDISE()">{{'VERIFY' | translate}}</button>
-                <p *ngIf="isVerified==='yes'">{{'VERIFIED' | translate }}</p>
-                <p *ngIf="isVerified==='no'">{{'SCHOOL_NOT_AVAILABLE' | translate }}</p>
-                <button class="btn btn-primary fs-12 mt-4 mr-2 ml-2" type="button" [disabled]="isVerified !== 'yes'"
-                    (click)="linkUDISE()">{{'LINK_NOW' | translate}}</button>
+                    (click)="verifyUDISE()">{{'LINK_NOW' | translate}}</button>
+                <!-- <p *ngIf="isVerified==='yes'">{{'VERIFIED' | translate }}</p> -->
+                <!-- <button class="btn btn-primary fs-12 mt-4 mr-2 ml-2" type="button" [disabled]="isVerified !== 'yes'"
+                    (click)="linkUDISE()">{{'LINK_NOW' | translate}}</button> -->
             </div>
         </div>
     </div>

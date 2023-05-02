@@ -59,6 +59,7 @@
     "bootstrap": "^4.5.0",
     "core-js": "^2.4.1",
     "country-state-city": "^3.0.1",
+    "dayjs": "^1.11.7",
     "formiojs": "^4.14.8",
     "grapesjs": "^0.18.4",
     "grapesjs-component-code-editor": "^1.0.19",
