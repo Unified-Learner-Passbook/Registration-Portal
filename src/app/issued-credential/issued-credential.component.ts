@@ -122,7 +122,7 @@ export class IssuedCredentialComponent implements OnInit {
     }, (error: any) => {
       this.isLoading = false;
       this.issuedCredentials = [];
-      if (error?.result?.error?.status !== 404) {
+      if (error.status !== 400 || error?.error?.result?.error?.status !== 404) {
         this.toastMessage.error("", this.generalService.translateString('ERROR_WHILE_FETCHING_ISSUED_CREDENTIALS'));
       }
     });
