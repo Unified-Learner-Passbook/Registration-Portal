@@ -44,6 +44,11 @@ export class RegistrationFormComponent implements OnInit {
     joiningdate: new FormControl(null, [Validators.required, Validators.max(Date.now())]),
   });
 
+  udiseLinkForm = new FormGroup({
+    udiseId: new FormControl(null, [Validators.required]),
+    password: new FormControl(null, [Validators.required]),
+  })
+
   constructor(
     private readonly router: Router,
     private readonly modalService: NgbModal,
@@ -72,6 +77,11 @@ export class RegistrationFormComponent implements OnInit {
   }
 
   ngOnInit(): void { }
+
+
+  get udiseLinkFormControl() {
+    return this.udiseLinkForm.controls;
+  }
 
   get schoolName() {
     return this.registrationForm.get('schoolName');
@@ -162,12 +172,12 @@ export class RegistrationFormComponent implements OnInit {
         this.schoolDetails = res.data;
         this.linkUDISE();
       } else {
-        this.toastMessage.error('', this.generalService.translateString('School Udise or password is invalid'));
+        this.toastMessage.error('', this.generalService.translateString('INVALID_SCHOOL_UDISE_OR_PASSWORD'));
       }
     }, error => {
       console.error(error);
-      this.toastMessage.error('', this.generalService.translateString('School Udise or password is invalid'));
-    })
+      this.toastMessage.error('', this.generalService.translateString('INVALID_SCHOOL_UDISE_OR_PASSWORD'));
+    });
   }
 
   onSubmit() {
