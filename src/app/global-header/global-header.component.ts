@@ -25,6 +25,9 @@ export class GlobalHeaderComponent implements OnInit {
   ngOnInit(): void {
     this.getAllLanguages();
     this.checkNewClaims();
+    this.generalService.getPendingRequestCount().subscribe((res: any) => {
+      this.isClaimsPending = res > 0;
+    })
   }
 
   getAllLanguages() {

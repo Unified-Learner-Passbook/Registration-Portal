@@ -2,7 +2,7 @@ import { EventEmitter, Injectable } from '@angular/core';
 import { DataService } from '../data/data-request.service';
 import { environment } from '../../../environments/environment';
 import { HttpHeaders } from '@angular/common/http';
-import { Observable, Subscriber } from 'rxjs';
+import { BehaviorSubject, Observable, Subscriber } from 'rxjs';
 import { AppConfig } from 'src/app/app.config';
 import { TranslateService } from '@ngx-translate/core';
 import { retry } from 'rxjs/operators';
@@ -13,6 +13,8 @@ import { retry } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class GeneralService {
+  private _pendingRequestCount = new BehaviorSubject<any>({ count: 0 });
+  private _pendingRequestCount$ = this._pendingRequestCount.asObservable();
   baseUrl: string;
 
   // baseUrl = this.config.getEnv('baseUrl');
@@ -20,7 +22,14 @@ export class GeneralService {
   public languageChange = new EventEmitter<any>();
   constructor(public dataService: DataService, private config: AppConfig, public translate: TranslateService) {
     this.baseUrl = environment.baseUrl;
+  }
 
+  getPendingRequestCount() {
+    return this._pendingRequestCount$;
+  }
+
+  setPendingRequestCount(count: number) {
+    return this._pendingRequestCount.next({ count: count });
   }
 
   postData(apiUrl, data) {

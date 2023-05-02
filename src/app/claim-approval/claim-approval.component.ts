@@ -26,6 +26,7 @@ export class ClaimApprovalComponent implements OnInit {
   selectedUser: any;
   modelRef: any;
   rejectModelRef: any;
+  isPendingClaims = false;
   statusValues = [
     {
       label: this.generalService.translateString('PENDING'),
@@ -71,6 +72,7 @@ export class ClaimApprovalComponent implements OnInit {
   }
 
   getStudentDetail(claimStatus = "pending") {
+    this.isPendingClaims = claimStatus === "pending";
     console.log("getStudentDetail", this.authService.schoolDetails.udiseCode)
     const search = {
       "filters": {
@@ -98,6 +100,10 @@ export class ClaimApprovalComponent implements OnInit {
         }
         return item;
       });
+
+      if (this.isPendingClaims && this.studentDetails.length) {
+        this.generalService.setPendingRequestCount(this.studentDetails.length);
+      }
       this.pageChange();
       this.isLoading = false;
     }, (err) => {
@@ -142,6 +148,7 @@ export class ClaimApprovalComponent implements OnInit {
         this.raiseInteractEvent('claim-approval')
         this.toastService.success('', res.message)
         this.studentDetails = this.studentDetails.filter(item => item.osid !== user.osid);
+        this.generalService.setPendingRequestCount(this.studentDetails.length);
         this.pageChange();
         console.log("61", this.studentDetails.length)
       } else {
@@ -177,7 +184,8 @@ export class ClaimApprovalComponent implements OnInit {
         this.toastService.success('', res.message)
         this.studentDetails = this.studentDetails.filter(item => item.osid !== user.osid);
         this.pageChange();
-        console.log("61", this.studentDetails.length)
+        console.log("61", this.studentDetails.length);
+        this.generalService.setPendingRequestCount(this.studentDetails.length);
       } else {
         this.toastService.error('', res.message)
       }
