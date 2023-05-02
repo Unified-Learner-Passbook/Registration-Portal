@@ -20,7 +20,7 @@ export class MyAccountComponent implements OnInit {
 
   ngOnInit(): void {
     this.currentUser = this.authService.currentUser;
-    this.credentials$ = this.credentialService.getAllCredentials();
+    this.credentials$ = this.credentialService.getAllCredentials('teacher');
   }
 
   renderCertificate(credential: any) {

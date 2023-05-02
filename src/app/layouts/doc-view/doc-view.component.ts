@@ -71,7 +71,7 @@ export class DocViewComponent implements OnInit, OnDestroy {
             this.loadPDF();
         } else {
             this.isMyAccountPage = true;
-            this.credentialService.getAllCredentials().pipe(takeUntil(this.unsubscribe$))
+            this.credentialService.getAllCredentials('teacher').pipe(takeUntil(this.unsubscribe$))
                 .subscribe((res) => {
                     this.credential = res[0];
                     this.loadPDF();
@@ -82,7 +82,7 @@ export class DocViewComponent implements OnInit, OnDestroy {
                     if (!error.success && error.status === 'cred_search_api_failed' && error?.result?.error?.status === 404) {
                         // reissue credential for Teacher
                         this.credentialService.issueCredential().pipe(
-                            concatMap(_ => this.credentialService.getAllCredentials())
+                            concatMap(_ => this.credentialService.getAllCredentials('teacher'))
                         ).subscribe((result: any) => {
                             this.isLoading = false;
                             this.credential = result[0];

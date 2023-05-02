@@ -109,7 +109,7 @@ export class IssuedCredentialComponent implements OnInit {
       academicYear: this.model.academicYear
     }
 
-    this.credentialService.getCredentials(payload).subscribe((res) => {
+    this.credentialService.getCredentials('student', payload).subscribe((res) => {
       this.isLoading = false;
       // Filter out credentials for students only
       this.issuedCredentials = res.filter((credential: any) => !!credential?.credentialSubject?.grade).map((item: any) => {
