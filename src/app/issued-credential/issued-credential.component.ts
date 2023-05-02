@@ -121,7 +121,10 @@ export class IssuedCredentialComponent implements OnInit {
       this.pageChange();
     }, (error: any) => {
       this.isLoading = false;
-      this.toastMessage.error("", this.generalService.translateString('ERROR_WHILE_FETCHING_ISSUED_CREDENTIALS'));
+      this.issuedCredentials = [];
+      if (error?.result?.error?.status !== 404) {
+        this.toastMessage.error("", this.generalService.translateString('ERROR_WHILE_FETCHING_ISSUED_CREDENTIALS'));
+      }
     });
   }
 
