@@ -95,8 +95,14 @@ export class ClaimApprovalComponent implements OnInit {
       this.studentDetails = res.result.map((item: any) => {
         item.osCreatedAt = this.generalService.getDaysDifference(item.osCreatedAt);
 
-        if (item.enrollon && !dayjs(item.enrollon).isValid()) {
-          item.enrollon = dayjs(item.enrollon, 'DD-MM-YYYY').format(); //TODO change when self registration changes to mm/yyyy
+        if (item.enrollon) {
+          if (dayjs(item.enrollon).isValid()) {
+            item.enrollon = dayjs(item.enrollon).format();
+          } else if (dayjs(item.enrollon, 'MM/YYYY').isValid()) {
+            item.enrollon = dayjs(item.enrollon, 'MM/YYYY').format();
+          } else if (dayjs(item.enrollon, 'DD-MM-YYYY').isValid()) {
+            item.enrollon = dayjs(item.enrollon, 'DD-MM-YYYY').format();
+          }
         }
         return item;
       });
