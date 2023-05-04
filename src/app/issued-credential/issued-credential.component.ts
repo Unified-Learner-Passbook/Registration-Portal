@@ -8,7 +8,10 @@ import { IImpressionEventInput, IInteractEventInput } from '../services/telemetr
 import { TelemetryService } from '../services/telemetry/telemetry.service';
 import { ToastMessageService } from '../services/toast-message/toast-message.service';
 import { UtilService } from '../services/util/util.service';
+import * as dayjs from 'dayjs';
+import * as customParseFormat from 'dayjs/plugin/customParseFormat';
 
+dayjs.extend(customParseFormat);
 
 @Component({
   selector: 'app-issued-credential',
@@ -89,8 +92,6 @@ export class IssuedCredentialComponent implements OnInit {
     this.getCredentials();
   }
 
-
-
   onChange(event) {
     // console.log("event", this.selectedType);
     // this.getCredentials();
@@ -110,7 +111,13 @@ export class IssuedCredentialComponent implements OnInit {
 
     this.credentialService.getCredentials(payload).subscribe((res) => {
       this.isLoading = false;
-      this.issuedCredentials = res;
+      // Filter out credentials for students only
+      this.issuedCredentials = res.filter((credential: any) => !!credential?.credentialSubject?.grade).map((item: any) => {
+        if (item.credentialSubject.enrolled_on && !dayjs(item.credentialSubject.enrolled_on).isValid()) {
+          item.credentialSubject.enrolled_on = dayjs(item.credentialSubject.enrolled_on, 'MM/YYYY').format();
+        }
+        return item;
+      });
       this.pageChange();
     }, (error: any) => {
       this.isLoading = false;

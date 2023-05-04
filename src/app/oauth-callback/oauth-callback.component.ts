@@ -6,6 +6,7 @@ import { IImpressionEventInput, IInteractEventInput } from '../services/telemetr
 import { TelemetryService } from '../services/telemetry/telemetry.service';
 import { ToastMessageService } from '../services/toast-message/toast-message.service';
 import { environment } from 'src/environments/environment';
+import { UtilService } from '../services/util/util.service';
 
 
 @Component({
@@ -15,14 +16,16 @@ import { environment } from 'src/environments/environment';
 })
 export class OauthCallbackComponent implements OnInit {
   baseUrl: string;
-
+  isError = false;
+  errorCode: string;
   constructor(
     private readonly activatedRoute: ActivatedRoute,
     private readonly generalService: GeneralService,
     private readonly toastMessage: ToastMessageService,
     private readonly router: Router,
     private readonly authService: AuthService,
-    private readonly telemetryService: TelemetryService
+    private readonly telemetryService: TelemetryService,
+    private readonly utilService: UtilService
   ) {
     this.baseUrl = environment.baseUrl;
 
@@ -30,6 +33,11 @@ export class OauthCallbackComponent implements OnInit {
       console.log("params", params);
       if (params.code) {
         this.getUserData(params.code);
+      }
+
+      if (params.error) {
+        this.isError = true;
+        this.errorCode = params.error;
       }
     });
   }
@@ -64,10 +72,15 @@ export class OauthCallbackComponent implements OnInit {
             }
             //telemetry to add impression event
             this.raiseInteractEvent('login-success');
-            this.authService.getSchoolDetails().subscribe(); // Add concatMap
-            this.router.navigate(['/dashboard']);
+            this.authService.getSchoolDetails().subscribe((response: any) => {
+              this.router.navigate(['/dashboard']);
+            }, error => {
+              console.error(error);
+              this.toastMessage.error('', this.utilService.translateString('SOMETHING_WENT_WRONG'))
+              this.router.navigate(['/dashboard']);
+            });
           }
-  
+
           if (res.user === 'NO_FOUND' && res.result) {
             const navigationExtras: NavigationExtras = {
               state: res.result
@@ -75,14 +88,25 @@ export class OauthCallbackComponent implements OnInit {
             this.router.navigate(['/register'], navigationExtras)
           }
         }
+
+        if (res?.digi?.access_token) {
+          this.authService.digilockerAccessToken = res.digi.access_token;
+        }
       } else {
         console.error(res);
-        this.toastMessage.error('', this.generalService.translateString('ERROR_WHILE_LOGIN'));
+        this.handleLoginError();
       }
     }, (error) => {
       console.error(error);
-      this.toastMessage.error('', this.generalService.translateString('ERROR_WHILE_LOGIN'));
+      this.handleLoginError();
     });
+  }
+
+  handleLoginError() {
+    this.toastMessage.error('', this.generalService.translateString('ERROR_WHILE_LOGIN'));
+    setTimeout(() => {
+      this.router.navigate(['']);
+    }, 100);
   }
 
   ngAfterViewInit(): void {

@@ -2,10 +2,11 @@
   <section class='sidebarContainer'>
     <div *ngFor="let item of menuList" class="menu" [routerLink]="[item.link]" routerLinkActive="active"
       [routerLinkActiveOptions]="{exact:true}">
-      <i [class]="item.class" ></i>
+      <i [class]="item.class"></i>
       <div class="title">{{item.label}}</div>
     </div>
-      <div class="menu" (click)="logout()"><a href="#"><i class="fa fa-sign-out-alt fs-22 text-primary-color"></i><span class="fs-16 pl-3 text-primary-color">{{'LOGOUT' | translate }}</span></a></div>
+    <div class="menu" (click)="logout()"><a href="#"><i class="fa fa-sign-out-alt fs-22 text-primary-color"></i><span
+          class="fs-16 pl-3 text-primary-color">{{'LOGOUT' | translate }}</span></a></div>
   </section>
 
   <section *ngIf="showInstructions">
@@ -15,9 +16,15 @@
         {{'INSTRUCTIONS' | translate }}
       </h6>
       <ul>
-      <li>{{'STEP_ONE' | translate}} <div><i class="fa fa-download"></i> &nbsp;{{'DOWNLOAD_CSV_TEMPLATE' | translate }}</div></li>
-        <li>{{'STEP_TWO' | translate}}<div><i class="fa fa-check-circle"></i>&nbsp;{{'SELECT_GRADE_AY' | translate }}</div></li>
-        <li>{{'STEP_THREE' | translate}}<div><i class="fa fa-upload"></i>&nbsp;{{'UPLOAD_FILLED_UP_CSV' | translate }}</div></li>
+        <li>{{'STEP_ONE' | translate}} <div><i class="fa fa-download"></i> &nbsp;{{'DOWNLOAD_CSV_TEMPLATE' | translate
+            }}</div>
+        </li>
+        <li>{{'STEP_TWO' | translate}}<div><i class="fa fa-check-circle"></i>&nbsp;{{'SELECT_GRADE_AY' | translate }}
+          </div>
+        </li>
+        <li>{{'STEP_THREE' | translate}}<div><i class="fa fa-upload"></i>&nbsp;{{'UPLOAD_FILLED_UP_CSV' | translate }}
+          </div>
+        </li>
       </ul>
     </div>
   </section>

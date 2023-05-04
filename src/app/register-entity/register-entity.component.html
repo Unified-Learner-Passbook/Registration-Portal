@@ -1,6 +1,6 @@
 <div class="px-3 mx-3 bg-gray-100 min-375">
   <h5 class="text-center mb-5 title pt-4">
-    {{'REGISTER_STUD_EXCEL_TEMPLATE' | translate}}<a href="#" class="text-gray-100">{{'DEMO_VIDEO' | translate }}</a>
+    {{'REGISTER_STUD_EXCEL_TEMPLATE' | translate}}
   </h5>
   <div>
     <div class="row filter-bx py-3">
@@ -43,9 +43,9 @@
       </div>
     </div>
   </div>
-  <div class="student-list">
+  <div class="student-list table-responsive table-hover">
     <h6 class="pt-4">{{'REGISTERED_STUDENTS' | translate}}
-      <i style="font-weight: normal;font-size: small;">({{'REGISTERED_STUDENT_SUBTITLE_NOTE' | translate}})</i>
+      <i style="font-weight: normal;font-size: small;" *ngIf="studentList?.length">({{'REGISTERED_STUDENT_SUBTITLE_NOTE' | translate}})</i>
     </h6>
     <!-- <ngb-progressbar *ngIf="showProgress" type="info" class="pt-4" [value]="progress" [striped]="true"
       [animated]="true">{{progress}}%</ngb-progressbar> -->
@@ -96,7 +96,7 @@
       (click)="openDeclarationModal()">{{'ISSUE_CREDENTIALS' | translate }}
     </button>
     <ngb-pagination class="ml-2" [collectionSize]="studentList?.length" [(page)]="page" [pageSize]="pageSize"
-      (pageChange)="pageChange()">
+      [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="pageChange()">
     </ngb-pagination>
   </div>
 </div>

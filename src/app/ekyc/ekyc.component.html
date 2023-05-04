@@ -1,10 +1,10 @@
 <div class="container text-center pb-0 mt-20">
-  <p class="text-danger">It seems you have not completed your KYC. Please complete your one time KYC here</p>
+  <p class="text-danger">{{'NOT_COMPLETED_YOUR_KYC_PLEASE_COMPLETE_YOUR_KYC_HERE' | translate }}</p>
   <form [formGroup]="aadharForm" (ngSubmit)="verifyAadhar()">
     <div class="mb-3 pb-10">
       <label for="name">{{'NAME' | translate}}</label>
       <div class="input-group mb-2">
-        <input type="text" class="form-control p-4" id="name" name="name" placeholder="Enter your name"
+        <input type="text" class="form-control p-4" id="name" name="name" placeholder="{{'ENTER_YOUR_NAME' | translate}}"
           formControlName="name" disabled="true">
       </div>
     </div>

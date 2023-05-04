@@ -29,10 +29,10 @@ export class RegistrationComponent implements OnInit {
     private readonly activatedRoute: ActivatedRoute,
     private readonly telemetryService: TelemetryService,
     private readonly toastMessageService: ToastMessageService
-    ) {
-      this.baseUrl = environment.baseUrl;
+  ) {
+    this.baseUrl = environment.baseUrl;
 
-     }
+  }
 
   ngOnInit(): void {
     if (this.authService.isLoggedIn) {

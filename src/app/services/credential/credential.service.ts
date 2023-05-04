@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { forkJoin, from, Observable, of, throwError } from 'rxjs';
-import { concatMap, map, switchMap, toArray } from 'rxjs/operators';
+import { concatMap, map, retry, switchMap, toArray } from 'rxjs/operators';
 import { AuthService } from '../auth/auth.service';
 import { DataService } from '../data/data-request.service';
 import { environment } from 'src/environments/environment';
@@ -145,7 +145,7 @@ export class CredentialService {
             "principalName": this.authService.currentUser.name,
             "schoolName": this.authService.schoolDetails?.schoolName,
             "schoolUdiseId": this.authService.currentUser?.schoolUdise,
-            "pricipalContactNumber": this.authService.currentUser?.mobile || "8698645680"
+            "pricipalContactNumber": this.authService.currentUser?.mobile
           },
           "options": {
             "created": "2020-04-02T18:48:36Z",
@@ -165,7 +165,7 @@ export class CredentialService {
       } else {
         throwError(new Error('Error while issuing certificate for principal'));
       }
-    }))
+    }), retry(3));
   }
 
   updateStudent(data: any): Observable<any> {
@@ -173,7 +173,7 @@ export class CredentialService {
       url: `${this.baseUrl}/v1/sso/student/update`,
       data
     }
-    return this.dataService.post(payload);
+    return this.dataService.post(payload).pipe(retry(3));
   }
 
   verifyAadhar(data: any): Observable<any> {

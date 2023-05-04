@@ -46,14 +46,23 @@ import { EkycComponent } from './ekyc/ekyc.component';
 // import { CreateCertificateComponent } from './create-certificate/create-certificate.component';
 // import { FaqComponent } from './custom-components/faq/faq.component';
 const routes: Routes = [
-  { path: '', component: LandingPageComponent },
+  {
+    path: '',
+    component: LandingPageComponent,
+    data: {
+      showToolbar: false,
+      telemetry: {
+        env: 'landing', pageid: 'landing-page', type: 'view', subtype: 'scroll'
+      }
+    }
+  },
   {
     path: 'digilocker-callback',
     component: OauthCallbackComponent,
     data: {
       showToolbar: false,
       telemetry: {
-        env: 'digilocker', pageid: 'digilocker-callback', type: 'digilocker', subtype: 'scroll'
+        env: 'sign-in', pageid: 'digilocker-callback', type: 'view', subtype: 'scroll'
       }
     }
   },
@@ -79,12 +88,24 @@ const routes: Routes = [
   },
   {
     path: 'register',
-    component: RegistrationFormComponent
+    component: RegistrationFormComponent,
+    data: {
+      showToolbar: false,
+      telemetry: {
+        env: 'register', pageid: 'register', type: 'edit', subtype: 'scroll'
+      }
+    },
   },
   {
     path: 'dashboard',
     component: MainDashboardComponent,
-     canActivate: [AuthenticationGuard],
+    canActivate: [AuthenticationGuard],
+    data: {
+      showToolbar: false,
+      telemetry: {
+        env: 'dashboard', pageid: 'dashboard', type: 'view', subtype: 'scroll'
+      }
+    },
     children: [
       {
         path: 'register-entity',
@@ -92,10 +113,9 @@ const routes: Routes = [
         data: {
           showToolbar: false,
           telemetry: {
-            env: 'register', pageid: 'register-entity', type: 'edit', subtype: 'scroll'
+            env: 'register', pageid: 'register-entity', type: 'edit', subtype: 'paginate'
           }
         }
-        
       },
       {
         path: 'issued-credential',
@@ -103,7 +123,7 @@ const routes: Routes = [
         data: {
           showToolbar: false,
           telemetry: {
-            env: 'credential', pageid: 'issued-credential', type: 'view', subtype: 'scroll'
+            env: 'credential', pageid: 'issued-credential', type: 'list', subtype: 'paginate'
           }
         }
       },
@@ -113,7 +133,7 @@ const routes: Routes = [
         data: {
           showToolbar: false,
           telemetry: {
-            env: 'approval', pageid: 'claim-approval', type: 'view', subtype: 'scroll'
+            env: 'approval', pageid: 'claim-approval', type: 'view', subtype: 'paginate'
           }
         }
       },

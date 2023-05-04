@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { map, retry, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 
 import {
@@ -47,7 +47,7 @@ export class AuthService {
         } else {
           throwError(new Error(this.utilService.translateString('ERROR_WHILE_REGISTRATION')));
         }
-      }))
+      }), retry(3));
   }
 
   // Sign-in
@@ -65,6 +65,14 @@ export class AuthService {
 
   getToken() {
     return localStorage.getItem('accessToken');
+  }
+
+  set digilockerAccessToken(token: string) {
+    localStorage.setItem('digilockerAccessToken', token);
+  }
+
+  get digilockerAccessToken() {
+    return localStorage.getItem('digilockerAccessToken');
   }
 
   get isLoggedIn(): boolean {
@@ -89,8 +97,16 @@ export class AuthService {
   }
 
   doLogout() {
+    if (this.digilockerAccessToken){
+      const payload = {
+        "digiacc": "ewallet",
+        "access_token": this.digilockerAccessToken
+      }
+      this.http.post(`${this.baseUrl}/v1/sso/digilocker/logout`, payload).subscribe();
+    }
     localStorage.removeItem('accessToken');
     localStorage.removeItem('currentUser');
+    localStorage.removeItem('digilockerAccessToken');
     this.router.navigate(['']);
   }
 

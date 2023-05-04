@@ -7,10 +7,10 @@
     <p *ngIf="isFirstTimeLogin && currentUser?.name">{{'WELCOME_NOTE' | translate: {name: currentUser?.name} }}</p>
     <div *ngIf="!isChildRoute" class="container">
       <div class="d-flex gap-20 pb-55 pt-3  flex-wrap">
-        <div class="box">
+        <!-- <div class="box">
           <div class="fs-35 text-right">{{metrics?.students_registered}}</div>
           <div class="fs-16 ">{{'REGISTERED_TOTAL_STUDENTS' | translate}}</div>
-        </div>
+        </div> -->
         <div class="box">
           <div class="fs-35">{{metrics?.credentials_issued}}</div>
           <div class="fs-16">{{'ENROLMENT_CREDENTIAL' | translate}}</div>
@@ -28,7 +28,7 @@
           <div class="fs-16">{{'REJECTED_CLAIMS' | translate}}</div>
         </div>
       </div>
-      <h1 class="heading1 py-3  text-center">{{'STUDENT_REGISTRATION' | translate}}</h1>
+      <h1 class="heading1 py-3  text-center">{{'QUICK_LINKS' | translate}}</h1>
 
       <div class="d-flex gap-20 text-center">
         <div class="vertical-card">

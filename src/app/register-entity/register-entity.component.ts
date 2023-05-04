@@ -2,8 +2,10 @@ import { Component, ElementRef, OnInit, TemplateRef, ViewChild } from '@angular/
 import * as Papa from "papaparse";
 import { DataService } from '../services/data/data-request.service';
 import { ToastMessageService } from '../services/toast-message/toast-message.service';
-import * as _ from 'lodash-es'
-import { catchError, concatMap, tap, toArray } from 'rxjs/operators';
+import * as _ from 'lodash-es';
+import * as dayjs from 'dayjs';
+import * as customParseFormat from 'dayjs/plugin/customParseFormat';
+import { catchError, concatMap, map, retry, tap, toArray } from 'rxjs/operators';
 import { forkJoin, from, of, throwError } from 'rxjs';
 import { CsvService } from '../services/csv/csv.service';
 import { RequestParam } from '../interfaces/httpOptions.interface';
@@ -18,6 +20,7 @@ import { environment } from 'src/environments/environment';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CredentialService } from '../services/credential/credential.service';
 
+dayjs.extend(customParseFormat);
 const BATCH_LIMIT = 10;
 @Component({
   selector: 'app-register-entity',
@@ -140,8 +143,9 @@ export class RegisterEntityComponent implements OnInit {
             if (res?.result?.schema?.properties) {
               // const columnFields = Object.keys(res.result.schema.properties);
               // const columnFields = ["studentName", "student_id", "mobile", "gaurdian_name", "aadhar_token", "dob"] //TODO: Add label field in schema and use it here
-              const columnFields = ["Student Name", "Student ID", "Mobile", "Guardian Name", "Aadhar ID", "Date of Birth"];
-              const csvContent = this.csvService.generateCSV(columnFields);
+              const columnFields = ["Student Name", "Student Registration Number", "Mobile", "Guardian Name", "Aadhaar ID", "Date of Birth", "Gender", "Enrolled On"];
+              const sampleData = ["Avinash Dubey", "RC-901", "8888888888", "Nitin", "999999999999", "09/07/1999", "Male", "07/2020"];
+              const csvContent = this.csvService.generateCSV(columnFields, sampleData);
               this.csvService.downloadCSVTemplate(csvContent, `${this.model.certificateType}-template`);
             } else {
               throwError(() => new Error('properties unavailable in the schema'));
@@ -169,7 +173,7 @@ export class RegisterEntityComponent implements OnInit {
       this.parsedCSV = await this.parseCSVFile(event);
 
       if (!this.parsedCSV.length) {
-        throw new Error('It seems you have uploaded empty csv file, please upload valid csv file');
+        throw new Error(this.generalService.translateString('IT_SEEMS_UPLOADED_EMPTY_CSV_FILE_PLEASE_UPLOAD_VALID_CSV'));
       }
 
       console.log("parsedCSV", this.parsedCSV);
@@ -182,13 +186,20 @@ export class RegisterEntityComponent implements OnInit {
       this.parsedCSV = this.parsedCSV.map((item: any) => {
         return {
           studentName: item["Student Name"],
-          student_id: item["Student ID"],
+          student_id: item["Student Registration Number"],
           mobile: item["Mobile"],
           gaurdian_name: item["Guardian Name"],
-          aadhar_token: item["Aadhar ID"],
-          dob: item["Date of Birth"]
+          aadhar_token: item["Aadhaar ID"],
+          dob: item["Date of Birth"],
+          enrollon: dayjs(item["Enrolled On"], 'MM/YYYY').format(),
+          gender: item["Gender"]?.toLowerCase() === 'male' ? 'M' : (item["Gender"]?.toLowerCase() === 'female' ? 'F' : 'NA'),
         }
       });
+
+      // Remove sample data row if unchanged
+      if (this.parsedCSV?.[0]?.aadhar_token === '999999999999') {
+        this.parsedCSV.shift();
+      }
 
       this.uploadCsvValues();
       this.pageChange();
@@ -233,6 +244,7 @@ export class RegisterEntityComponent implements OnInit {
     );
   }
 
+  //TODO Add steps Uploading CSV, Verifying AADHAAR, Show report in the end
   uploadCsvValues() {
     console.log("parsedCSV", this.parsedCSV);
     console.log("model", this.model);
@@ -260,13 +272,13 @@ export class RegisterEntityComponent implements OnInit {
       ).subscribe((res) => {
         console.log("final", res);
         this.toastMsg.success('', this.generalService.translateString('STUDENTS_DATA_IMPORTED_SUCCESSFULLY'));
-        setTimeout(() => {
-          this.getStudentList(true);
-        }, 500);
+        // setTimeout(() => {
+        // }, 500);
         this.generateBulkRegisterResponse(res);
-        this.strictLoader = false;
         setTimeout(() => {
+          this.strictLoader = false;
           this.progress = 1;
+          this.getStudentList(true);
           this.showProgress = false;
         }, 2000);
       }, (error) => {
@@ -337,7 +349,7 @@ export class RegisterEntityComponent implements OnInit {
         credentialSubject: list
       }
     }
-    return this.dataService.post(request);
+    return this.dataService.post(request).pipe(retry(2));
   }
 
 
@@ -357,7 +369,12 @@ export class RegisterEntityComponent implements OnInit {
       }
     }
 
-    return this.dataService.post(request);
+    return this.dataService.post(request).pipe(map((res: any) => {
+      if (res.iserror) {
+        throwError('Unable to register');
+      }
+      return res;
+    }), retry(1));
   }
 
   getStudentList(verifyAadhar: boolean = false) {
@@ -385,7 +402,8 @@ export class RegisterEntityComponent implements OnInit {
             mobile: item.studentdetail.mobile,
             guardian: item.studentdetail.gaurdian_name,
             osid: item.studentdetail.osid,
-            isVerified: item.student.aadhaar_status === 'verified'
+            isVerified: item.student.aadhaar_status === 'verified',
+            enrolledOn: item?.studentdetail?.enrollon
           }
         });
 
@@ -480,11 +498,11 @@ export class RegisterEntityComponent implements OnInit {
         }),
         toArray()
       ).subscribe((res) => {
+        // setTimeout(() => {
+        // }, 100);
         setTimeout(() => {
+          this.strictLoader = false;
           this.getStudentList();
-        }, 100);
-        this.strictLoader = false;
-        setTimeout(() => {
           this.progress = 1;
           this.showProgress = false;
         }, 2000);
@@ -499,7 +517,6 @@ export class RegisterEntityComponent implements OnInit {
   }
 
   private issueBulkCredentials(studentList: any[]) {
-    this.strictLoader = true;
     this.bulkIssuedCredRes = {};
     const date = new Date();
     const nextYear = new Date(new Date().setFullYear(new Date().getFullYear() + 1))
@@ -513,7 +530,7 @@ export class RegisterEntityComponent implements OnInit {
         "credentialSubject": studentList.map((item: any) => {
           return {
             "id": item.did,
-            "enrolledOn": date.toISOString(),
+            "enrolledOn": item?.enrolledOn, //date.toISOString(),
             "studentName": item.name,
             "student_id": item?.studentId,
             "school_id": this.authService.schoolDetails?.udiseCode,
@@ -531,7 +548,13 @@ export class RegisterEntityComponent implements OnInit {
       }
     }
 
-    return this.dataService.post(request);
+    return this.dataService.post(request).pipe(map((res: any) => {
+      if (res.isError) {
+        throwError('Unable to issue credential');
+      }
+      return res;
+    }),
+    retry(1));
   }
 
   downloadBulkRegisterResponse() {
@@ -545,7 +568,6 @@ export class RegisterEntityComponent implements OnInit {
     const csv = Papa.unparse(this.bulkIssuedCredRes.csv);
     this.utilService.downloadFile(`${this.model.grade}-credentials-report.csv`, 'text/csv;charset=utf-8;', csv);
   }
-
 
   editStudent(student: any) {
     console.log("student", student);
@@ -588,9 +610,7 @@ export class RegisterEntityComponent implements OnInit {
     } else {
       console.error("Invalid Form");
     }
-
   }
-
 
   ngAfterViewInit(): void {
     this.raiseImpressionEvent();
@@ -628,4 +648,3 @@ export class RegisterEntityComponent implements OnInit {
     this.telemetryService.impression(telemetryImpression);
   }
 }
-

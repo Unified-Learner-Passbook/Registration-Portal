@@ -5,6 +5,7 @@ import { HttpHeaders } from '@angular/common/http';
 import { Observable, Subscriber } from 'rxjs';
 import { AppConfig } from 'src/app/app.config';
 import { TranslateService } from '@ngx-translate/core';
+import { retry } from 'rxjs/operators';
 
 
 
@@ -127,24 +128,12 @@ export class GeneralService {
   }
 
   postStudentData(apiUrl, data) {
-    var url;
-    if (apiUrl.indexOf('http') > -1) {
-      url = apiUrl
-    } else {
-      if (apiUrl.charAt(0) == '/') {
-        url = `${this.baseUrl}${apiUrl}`
-      }
-      else {
-        url = `${this.baseUrl}/${apiUrl}`;
-      }
-    }
-
     const req = {
       url: `${this.baseUrl}/v1/sso/studentDetailV2`,
       data: data
     };
 
-    return this.dataService.post(req);
+    return this.dataService.post(req).pipe(retry(3));
   }
 
   approveStudentData(data) {
@@ -153,7 +142,7 @@ export class GeneralService {
       data: data
     };
 
-    return this.dataService.post(req);
+    return this.dataService.post(req).pipe(retry(3));
   }
 
 
@@ -163,7 +152,7 @@ export class GeneralService {
       data: data
     };
 
-    return this.dataService.post(req);
+    return this.dataService.post(req).pipe(retry(3));
   }
 
   setLanguage(langKey: string) {

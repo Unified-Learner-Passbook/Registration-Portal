@@ -7,6 +7,9 @@ import { IImpressionEventInput, IInteractEventInput } from '../services/telemetr
 import { TelemetryService } from '../services/telemetry/telemetry.service';
 import { ToastMessageService } from '../services/toast-message/toast-message.service';
 import { UtilService } from '../services/util/util.service';
+import * as dayjs from 'dayjs';
+import * as customParseFormat from 'dayjs/plugin/customParseFormat';
+dayjs.extend(customParseFormat);
 
 @Component({
   selector: 'app-claim-approval',
@@ -88,7 +91,12 @@ export class ClaimApprovalComponent implements OnInit {
       console.log('studentDetail length', res.result.length);
       console.log('studentDetail list', res.result);
       this.studentDetails = res.result.map((item: any) => {
-        return { ...item, osCreatedAt: this.generalService.getDaysDifference(item.osCreatedAt) }
+        item.osCreatedAt = this.generalService.getDaysDifference(item.osCreatedAt);
+
+        if (item.enrollon && !dayjs(item.enrollon).isValid()) {
+          item.enrollon = dayjs(item.enrollon, 'DD-MM-YYYY').format(); //TODO change when self registration changes to mm/yyyy
+        }
+        return item;
       });
       this.pageChange();
       this.isLoading = false;

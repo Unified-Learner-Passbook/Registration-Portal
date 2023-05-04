@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { NgbModal, NgbModalOptions, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GeneralService } from '../services/general/general.service';
@@ -51,10 +51,10 @@ export class RegistrationFormComponent implements OnInit {
     private readonly location: Location,
     private readonly credentialService: CredentialService,
     private readonly activatedRoute: ActivatedRoute,
-    private readonly telemetryService: TelemetryService
+    private readonly telemetryService: TelemetryService,
+    private readonly cdr: ChangeDetectorRef
   ) {
     this.baseUrl = environment.baseUrl;
-
     const navigation = this.router.getCurrentNavigation();
     this.registrationDetails = navigation.extras.state;
     const canGoBack = !!(this.router.getCurrentNavigation()?.previousNavigation);
@@ -102,13 +102,14 @@ export class RegistrationFormComponent implements OnInit {
 
       if (this.registrationDetails.mobile) {
         this.registrationForm.get('phone').setValue(this.registrationDetails.mobile);
+        this.registrationForm.controls.phone.disable();
       }
 
       if (this.registrationDetails.uuid) {
         this.registrationForm.get('aadharId').setValue(this.registrationDetails.uuid);
       }
-
     }
+    this.cdr.detectChanges();
     const options: NgbModalOptions = {
       backdrop: 'static',
       animation: true,
@@ -123,7 +124,7 @@ export class RegistrationFormComponent implements OnInit {
   linkUDISE() {
     if (this.registrationDetails) {
       // telemetry check udise
-      this.raiseInteractEvent('link-udise')
+      this.raiseInteractEvent('link-udise');
       this.toastMessage.success('', this.generalService.translateString('SUCCESSFULLY_LINKED'));
       if (this.schoolDetails?.udiseCode) {
         this.registrationForm.get('udiseId').setValue(this.schoolDetails.udiseCode);
@@ -150,6 +151,7 @@ export class RegistrationFormComponent implements OnInit {
       if (res?.success && res?.status === 'found') {
         this.isVerified = "yes";
         this.schoolDetails = res.data;
+        this.linkUDISE();
       } else {
         this.isVerified = "no";
       }
@@ -168,8 +170,9 @@ export class RegistrationFormComponent implements OnInit {
       return;
     }
 
+    this.registrationForm.controls.phone.enable();
     if (this.registrationForm.valid) {
-      // telemetry succesful reg claim
+      // telemetry successful reg claim
       this.raiseInteractEvent('registration-success')
       this.isLoading = true;
       const payload = {
@@ -179,6 +182,7 @@ export class RegistrationFormComponent implements OnInit {
             name: this.registrationForm.value.name,
             joiningdate: this.registrationForm.value.joiningdate,
             aadharId: this.registrationForm.value.aadharId,
+            mobile: this.registrationForm.value.phone,
             schoolUdise: this.registrationForm.value.udiseId,
             meripehchanLoginId: this.registrationDetails.meripehchanid,
             username: this.registrationDetails.uuid,
