@@ -130,6 +130,7 @@ export class ClaimApprovalComponent implements OnInit {
         "aadhar_token": user.student.aadhar_token,
         "reference_id": user.student.reference_id,
         "student_osid": user.student_id,
+        "school_id": this.authService.schoolDetails?.udiseCode,
         "enrolled_on": user.enrollon
       }
 
