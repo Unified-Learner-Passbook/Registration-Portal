@@ -449,7 +449,9 @@ export class RegisterEntityComponent implements OnInit {
       this.credentialService.verifyAadhar({ studentData: user.student }).subscribe((res: any) => {
         this.strictLoader = false;
         this.toastMsg.success("", this.generalService.translateString('AADHAAR_VERIFIED_SUCCESSFULLY'));
-        this.getStudentList();
+        setTimeout(() => {
+          this.getStudentList();
+        }, 100);
       }, error => {
         this.strictLoader = false;
         this.toastMsg.error("", this.generalService.translateString('ERROR_WHILE_VERIFYING_AADHAAR'));
