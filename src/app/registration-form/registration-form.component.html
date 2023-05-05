@@ -100,17 +100,28 @@
 <ng-template #udiseLinkModal>
     <div class="modal-content">
         <div class="modal-body fs-14">
-            <div class="text-center">
-                <h6 class="py-3">{{'LINK_YOUR_UDISE' | translate}}</h6>
-                <input type="text" placeholder="{{'ENTER_SCHOOL_UDISE' | translate}}" name="schoolUdiseInput"
-                    [(ngModel)]="schoolUdiseInput" class="w-82">
-                    <p *ngIf="isVerified==='no'" class="pt-2 text-danger">{{'SCHOOL_NOT_AVAILABLE' | translate }}</p>
-                <button *ngIf="isVerified !=='yes'" class="btn btn-primary fs-12 mt-4" type="button"
-                    (click)="verifyUDISE()">{{'LINK_NOW' | translate}}</button>
-                <!-- <p *ngIf="isVerified==='yes'">{{'VERIFIED' | translate }}</p> -->
-                <!-- <button class="btn btn-primary fs-12 mt-4 mr-2 ml-2" type="button" [disabled]="isVerified !== 'yes'"
-                    (click)="linkUDISE()">{{'LINK_NOW' | translate}}</button> -->
-            </div>
+            <form [formGroup]="udiseLinkForm" (ngSubmit)="verifyUDISE()">
+                <h6 class="py-3 text-center">{{'LINK_YOUR_UDISE' | translate}}</h6>
+                <div class="mb-3 pb-10">
+                    <label for="udiseId" class="fs-14">{{'UDISE_ID' | translate}}<span
+                            class="text-danger">*</span></label>
+                    <input type="text" placeholder="{{'ENTER_SCHOOL_UDISE' | translate}}" name="udiseId" id="udiseId"
+                        formControlName="udiseId" class="form-control w-82">
+                    <p class="text-red pt-2 mb-0"
+                        *ngIf="udiseLinkFormControl?.udiseId?.invalid && udiseLinkFormControl?.udiseId?.touched">
+                        {{'ENTER_SCHOOL_UDISE' | translate}}</p>
+                </div>
+                <div class="mb-3 pb-10">
+                    <label for="password" class="fs-14">{{'PASSWORD' | translate}}<span
+                            class="text-danger">*</span></label>
+                    <input type="password" placeholder="{{'ENTER_PASSWORD' | translate}}" name="password" id="password"
+                        formControlName="password" class="form-control w-82">
+                    <p class="text-red pt-2 mb-0"
+                        *ngIf="udiseLinkFormControl?.password?.invalid && udiseLinkFormControl?.password?.touched">
+                        {{'ENTER_PASSWORD' | translate}}</p>
+                </div>
+                <button class="btn btn-primary btn-block mt-4" type="submit" [disabled]="udiseLinkForm.invalid">{{'LINK_NOW' | translate}}</button>
+            </form>
         </div>
     </div>
 </ng-template>

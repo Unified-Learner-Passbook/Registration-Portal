@@ -144,7 +144,7 @@ export class RegisterEntityComponent implements OnInit {
               // const columnFields = Object.keys(res.result.schema.properties);
               // const columnFields = ["studentName", "student_id", "mobile", "gaurdian_name", "aadhar_token", "dob"] //TODO: Add label field in schema and use it here
               const columnFields = ["Student Name", "Student Registration Number", "Mobile", "Guardian Name", "Aadhaar ID", "Date of Birth", "Gender", "Enrolled On"];
-              const sampleData = ["Avinash Dubey", "RC-901", "8888888888", "Nitin", "999999999999", "09/07/1999", "Male", "07/2020"];
+              const sampleData = ["Avinash Dubey", "RC-901", "8888888888", "Guardian Name", "999999999999", "09/07/1999", "Male", "07/2020"];
               const csvContent = this.csvService.generateCSV(columnFields, sampleData);
               this.csvService.downloadCSVTemplate(csvContent, `${this.model.certificateType}-template`);
             } else {
@@ -197,7 +197,7 @@ export class RegisterEntityComponent implements OnInit {
       });
 
       // Remove sample data row if unchanged
-      if (this.parsedCSV?.[0]?.aadhar_token === '999999999999') {
+      if (this.parsedCSV?.[0]?.aadhar_token === '999999999999' || this.parsedCSV?.[0]?.gaurdian_name === 'Guardian Name') {
         this.parsedCSV.shift();
       }
 
@@ -449,7 +449,9 @@ export class RegisterEntityComponent implements OnInit {
       this.credentialService.verifyAadhar({ studentData: user.student }).subscribe((res: any) => {
         this.strictLoader = false;
         this.toastMsg.success("", this.generalService.translateString('AADHAAR_VERIFIED_SUCCESSFULLY'));
-        this.getStudentList();
+        setTimeout(() => {
+          this.getStudentList();
+        }, 100);
       }, error => {
         this.strictLoader = false;
         this.toastMsg.error("", this.generalService.translateString('ERROR_WHILE_VERIFYING_AADHAAR'));

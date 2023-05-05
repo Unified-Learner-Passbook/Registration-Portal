@@ -109,7 +109,7 @@ export class IssuedCredentialComponent implements OnInit {
       academicYear: this.model.academicYear
     }
 
-    this.credentialService.getCredentials(payload).subscribe((res) => {
+    this.credentialService.getCredentials('student', payload).subscribe((res) => {
       this.isLoading = false;
       // Filter out credentials for students only
       this.issuedCredentials = res.filter((credential: any) => !!credential?.credentialSubject?.grade).map((item: any) => {
@@ -121,7 +121,10 @@ export class IssuedCredentialComponent implements OnInit {
       this.pageChange();
     }, (error: any) => {
       this.isLoading = false;
-      this.toastMessage.error("", this.generalService.translateString('ERROR_WHILE_FETCHING_ISSUED_CREDENTIALS'));
+      this.issuedCredentials = [];
+      if (error.status !== 400 || error?.error?.result?.error?.status !== 404) {
+        this.toastMessage.error("", this.generalService.translateString('ERROR_WHILE_FETCHING_ISSUED_CREDENTIALS'));
+      }
     });
   }
 

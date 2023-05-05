@@ -32,9 +32,9 @@ export class CredentialService {
     return this.dataService.get(payload).pipe(map((res: any) => res.result));
   }
 
-  getCredentials(data?: any): Observable<any> {
+  getCredentials(endPoint: string = 'all', data?: any): Observable<any> {
     const payload: any = {
-      url: `${this.baseUrl}/v1/sso/student/credentials/search`,
+      url: `${this.baseUrl}/v1/sso/student/credentials/search/${endPoint}`,
       data: {}
     };
 
@@ -73,8 +73,8 @@ export class CredentialService {
   }
 
   // One after one
-  getAllCredentials(issuer?: string): Observable<any> {
-    return this.getCredentials(issuer).pipe(
+  getAllCredentials(endPoint: string = 'all', issuer?: string): Observable<any> {
+    return this.getCredentials(endPoint, issuer).pipe(
       switchMap((credentials: any) => {
         return from(credentials).pipe(
           concatMap((cred: any) => {

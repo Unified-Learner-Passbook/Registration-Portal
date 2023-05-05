@@ -3,7 +3,7 @@
   <aside class="col-sm-2 pl-0">
     <app-sidebar></app-sidebar>
   </aside>
-  <main class="col-sm-10">
+  <main class="col-sm-10 p-0">
     <p *ngIf="isFirstTimeLogin && currentUser?.name">{{'WELCOME_NOTE' | translate: {name: currentUser?.name} }}</p>
     <div *ngIf="!isChildRoute" class="container">
       <div class="d-flex gap-20 pb-55 pt-3  flex-wrap">

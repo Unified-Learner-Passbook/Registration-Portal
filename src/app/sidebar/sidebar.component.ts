@@ -56,11 +56,6 @@ export class SidebarComponent implements OnInit {
         class: 'fa fa-key'
       },
       {
-        label: this.generalService.translateString('MY_PROFILE'),
-        link: '/dashboard/my-account',
-        class: 'fa fa-user'
-      },
-      {
         label: this.generalService.translateString('CLAIM_APPROVAL'),
         link: '/dashboard/claim-approval',
         class: 'fa fa-user-check'
@@ -70,6 +65,11 @@ export class SidebarComponent implements OnInit {
         link: '',
         class: 'fa fa-graduation-cap disable'
       },
+      {
+        label: this.generalService.translateString('MY_PROFILE'),
+        link: '/dashboard/my-account',
+        class: 'fa fa-user'
+      }
     ];
   }
 

@@ -12,6 +12,7 @@ import { throwError } from 'rxjs';
 import { TelemetryService } from '../services/telemetry/telemetry.service';
 import { IImpressionEventInput, IInteractEventInput } from '../services/telemetry/telemetry-interface';
 import { environment } from 'src/environments/environment';
+import { DataService } from '../services/data/data-request.service';
 
 @Component({
   selector: 'app-registration-form',
@@ -29,6 +30,7 @@ export class RegistrationFormComponent implements OnInit {
   isDeclarationSubmitted = false;
   isVerified = null;
   schoolUdiseInput: string = '';
+  password: string = '';
   isLoading = false;
   @ViewChild('udiseLinkModal') udiseLinkModal: TemplateRef<any>;
   @ViewChild('declarationModal') declarationModal: TemplateRef<any>;
@@ -42,6 +44,11 @@ export class RegistrationFormComponent implements OnInit {
     joiningdate: new FormControl(null, [Validators.required, Validators.max(Date.now())]),
   });
 
+  udiseLinkForm = new FormGroup({
+    udiseId: new FormControl(null, [Validators.required]),
+    password: new FormControl(null, [Validators.required]),
+  })
+
   constructor(
     private readonly router: Router,
     private readonly modalService: NgbModal,
@@ -52,7 +59,8 @@ export class RegistrationFormComponent implements OnInit {
     private readonly credentialService: CredentialService,
     private readonly activatedRoute: ActivatedRoute,
     private readonly telemetryService: TelemetryService,
-    private readonly cdr: ChangeDetectorRef
+    private readonly cdr: ChangeDetectorRef,
+    private readonly dataService: DataService
   ) {
     this.baseUrl = environment.baseUrl;
     const navigation = this.router.getCurrentNavigation();
@@ -69,6 +77,11 @@ export class RegistrationFormComponent implements OnInit {
   }
 
   ngOnInit(): void { }
+
+
+  get udiseLinkFormControl() {
+    return this.udiseLinkForm.controls;
+  }
 
   get schoolName() {
     return this.registrationForm.get('schoolName');
@@ -147,19 +160,24 @@ export class RegistrationFormComponent implements OnInit {
   }
 
   verifyUDISE() {
-    this.generalService.getData(`${this.baseUrl}/v1/sso/udise/school/list/${this.schoolUdiseInput}`, true).subscribe((res: any) => {
+    const payload = {
+      url: `${this.baseUrl}/v1/sso/udise/school/list`,
+      data: {
+        udise: this.udiseLinkForm.value.udiseId,
+        password: this.udiseLinkForm.value.password
+      }
+    }
+    this.dataService.post(payload).subscribe((res: any) => {
       if (res?.success && res?.status === 'found') {
-        this.isVerified = "yes";
         this.schoolDetails = res.data;
         this.linkUDISE();
       } else {
-        this.isVerified = "no";
+        this.toastMessage.error('', this.generalService.translateString('INVALID_SCHOOL_UDISE_OR_PASSWORD'));
       }
     }, error => {
-      this.isVerified = "no";
       console.error(error);
-      this.toastMessage.error('', this.generalService.translateString('SOMETHING_WENT_WRONG'));
-    })
+      this.toastMessage.error('', this.generalService.translateString('INVALID_SCHOOL_UDISE_OR_PASSWORD'));
+    });
   }
 
   onSubmit() {

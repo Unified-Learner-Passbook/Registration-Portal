@@ -26,6 +26,7 @@ export class ClaimApprovalComponent implements OnInit {
   selectedUser: any;
   modelRef: any;
   rejectModelRef: any;
+  isPendingClaims = false;
   statusValues = [
     {
       label: this.generalService.translateString('PENDING'),
@@ -71,6 +72,7 @@ export class ClaimApprovalComponent implements OnInit {
   }
 
   getStudentDetail(claimStatus = "pending") {
+    this.isPendingClaims = claimStatus === "pending";
     console.log("getStudentDetail", this.authService.schoolDetails.udiseCode)
     const search = {
       "filters": {
@@ -93,11 +95,21 @@ export class ClaimApprovalComponent implements OnInit {
       this.studentDetails = res.result.map((item: any) => {
         item.osCreatedAt = this.generalService.getDaysDifference(item.osCreatedAt);
 
-        if (item.enrollon && !dayjs(item.enrollon).isValid()) {
-          item.enrollon = dayjs(item.enrollon, 'DD-MM-YYYY').format(); //TODO change when self registration changes to mm/yyyy
+        if (item.enrollon) {
+          if (dayjs(item.enrollon).isValid()) {
+            item.enrollon = dayjs(item.enrollon).format();
+          } else if (dayjs(item.enrollon, 'MM/YYYY').isValid()) {
+            item.enrollon = dayjs(item.enrollon, 'MM/YYYY').format();
+          } else if (dayjs(item.enrollon, 'DD-MM-YYYY').isValid()) {
+            item.enrollon = dayjs(item.enrollon, 'DD-MM-YYYY').format();
+          }
         }
         return item;
       });
+
+      if (this.isPendingClaims && this.studentDetails.length) {
+        this.generalService.setPendingRequestCount(this.studentDetails.length);
+      }
       this.pageChange();
       this.isLoading = false;
     }, (err) => {
@@ -143,6 +155,7 @@ export class ClaimApprovalComponent implements OnInit {
         this.raiseInteractEvent('claim-approval')
         this.toastService.success('', res.message)
         this.studentDetails = this.studentDetails.filter(item => item.osid !== user.osid);
+        this.generalService.setPendingRequestCount(this.studentDetails.length);
         this.pageChange();
         console.log("61", this.studentDetails.length)
       } else {
@@ -178,7 +191,8 @@ export class ClaimApprovalComponent implements OnInit {
         this.toastService.success('', res.message)
         this.studentDetails = this.studentDetails.filter(item => item.osid !== user.osid);
         this.pageChange();
-        console.log("61", this.studentDetails.length)
+        console.log("61", this.studentDetails.length);
+        this.generalService.setPendingRequestCount(this.studentDetails.length);
       } else {
         this.toastService.error('', res.message)
       }
