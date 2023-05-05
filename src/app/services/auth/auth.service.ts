@@ -47,7 +47,7 @@ export class AuthService {
         } else {
           throwError(new Error(this.utilService.translateString('ERROR_WHILE_REGISTRATION')));
         }
-      }), retry(3));
+      }), retry(2));
   }
 
   // Sign-in

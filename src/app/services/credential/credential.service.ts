@@ -165,7 +165,7 @@ export class CredentialService {
       } else {
         throwError(new Error('Error while issuing certificate for principal'));
       }
-    }), retry(3));
+    }), retry(2));
   }
 
   updateStudent(data: any): Observable<any> {
@@ -173,7 +173,7 @@ export class CredentialService {
       url: `${this.baseUrl}/v1/sso/student/update`,
       data
     }
-    return this.dataService.post(payload).pipe(retry(3));
+    return this.dataService.post(payload).pipe(retry(2));
   }
 
   verifyAadhar(data: any): Observable<any> {
