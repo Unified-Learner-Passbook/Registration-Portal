@@ -17,7 +17,7 @@
       <p class="text-danger" *ngIf="aadharId.invalid && aadharId.touched">{{'INCORRECT_AADHAR' | translate}}</p>
     </div>
     <div class="pb-10">
-      <button type="submit" class="btn btn-primary mt-4">{{'VERIFY'| translate}}</button>
+      <button type="submit" class="btn btn-primary mt-4" [disabled]="aadharForm.invalid">{{'VERIFY'| translate}}</button>
     </div>
   </form>
 </div>
