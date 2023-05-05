@@ -115,6 +115,10 @@ export class IssuedCredentialComponent implements OnInit {
       this.issuedCredentials = res.filter((credential: any) => !!credential?.credentialSubject?.grade).map((item: any) => {
         if (item.credentialSubject.enrolled_on && !dayjs(item.credentialSubject.enrolled_on).isValid()) {
           item.credentialSubject.enrolled_on = dayjs(item.credentialSubject.enrolled_on, 'MM/YYYY').format();
+
+          if (item.credentialSubject.enrolled_on === 'Invalid Date') {
+            item.credentialSubject.enrolled_on = '';
+          }
         }
         return item;
       });

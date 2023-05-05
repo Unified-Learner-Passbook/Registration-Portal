@@ -102,6 +102,8 @@ export class ClaimApprovalComponent implements OnInit {
             item.enrollon = dayjs(item.enrollon, 'MM/YYYY').format();
           } else if (dayjs(item.enrollon, 'DD-MM-YYYY').isValid()) {
             item.enrollon = dayjs(item.enrollon, 'DD-MM-YYYY').format();
+          } else {
+            item.enrollon = '';
           }
         }
         return item;
