@@ -184,6 +184,7 @@ export class RegisterEntityComponent implements OnInit {
       // this.allDataRows = this.parsedCSV.map(item => Object.values(item));
 
       this.parsedCSV = this.parsedCSV.map((item: any) => {
+        const enrolledOn =  dayjs(item["Enrolled On"], 'MM/YYYY').format('DD/MM/YYYY');
         return {
           studentName: item["Student Name"],
           student_id: item["Student Registration Number"],
@@ -191,7 +192,7 @@ export class RegisterEntityComponent implements OnInit {
           gaurdian_name: item["Guardian Name"],
           aadhar_token: item["Aadhaar ID"],
           dob: item["Date of Birth"],
-          enrollon: dayjs(item["Enrolled On"], 'MM/YYYY').format(),
+          enrollon: enrolledOn === 'Invalid Date' ? '' : enrolledOn,
           gender: item["Gender"]?.toLowerCase() === 'male' ? 'M' : (item["Gender"]?.toLowerCase() === 'female' ? 'F' : 'NA'),
         }
       });
@@ -556,18 +557,46 @@ export class RegisterEntityComponent implements OnInit {
       }
       return res;
     }),
-    retry(1));
+      retry(1));
   }
 
   downloadBulkRegisterResponse() {
     this.downloadResModalRef.close();
-    const csv = Papa.unparse(this.bulkRegRes.csv);
+    const csvData = this.bulkRegRes.csv.map((item: any) => {
+      return {
+        "Student Name": item.studentName,
+        "Student Registration Number": item.student_id,
+        "Date of Birth": item.dob,
+        "Guardian Name": item.gaurdian_name,
+        "Mobile": item.mobile,
+        "Aadhaar ID": item.aadhar_token,
+        "Gender": item.gender === 'M' ? 'Male' : (item.gender === 'F' ? 'Female' : 'NA'),
+        "Enrolled On": item.enrollon,
+        "Status": item.status ? 'Success' : 'Failed',
+        "Error": item.error
+      }
+    });
+    const csv = Papa.unparse(csvData);
     this.utilService.downloadFile(`${this.model.grade}-registration-report.csv`, 'text/csv;charset=utf-8;', csv);
   }
 
   downloadIssuedCredResponse() {
     this.downloadIssuedResModalRef.close();
-    const csv = Papa.unparse(this.bulkIssuedCredRes.csv);
+    const csvData = this.bulkIssuedCredRes.csv.map((item: any) => {
+      return {
+        'ID': item.id,
+        'Enrolled On': item.enrolledOn,
+        'Student Name': item.studentName,
+        'Student Registration Number': item.student_id,
+        'School Id': item.school_id,
+        'Guardian Name': item.guardianName,
+        'Issuance Date': dayjs(item.issuanceDate).format('DD/MM/YYYY'),
+        'Expiration Date': dayjs(item.expirationDate).format('DD/MM/YYYY'),
+        'Status': item.status ? 'Success' : 'Failed',
+        'Error': item.error
+      }
+    });
+    const csv = Papa.unparse(csvData);
     this.utilService.downloadFile(`${this.model.grade}-credentials-report.csv`, 'text/csv;charset=utf-8;', csv);
   }
 

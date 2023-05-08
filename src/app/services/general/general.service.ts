@@ -142,7 +142,7 @@ export class GeneralService {
       data: data
     };
 
-    return this.dataService.post(req).pipe(retry(3));
+    return this.dataService.post(req).pipe(retry(2));
   }
 
   approveStudentData(data) {
@@ -151,7 +151,7 @@ export class GeneralService {
       data: data
     };
 
-    return this.dataService.post(req).pipe(retry(3));
+    return this.dataService.post(req).pipe(retry(2));
   }
 
 
@@ -161,7 +161,7 @@ export class GeneralService {
       data: data
     };
 
-    return this.dataService.post(req).pipe(retry(3));
+    return this.dataService.post(req).pipe(retry(2));
   }
 
   setLanguage(langKey: string) {

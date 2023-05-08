@@ -78,8 +78,8 @@ export class DocViewComponent implements OnInit, OnDestroy {
                 }, (error: any) => {
                     console.error(error);
                     this.toastMessage.error("", this.generalService.translateString('SOMETHING_WENT_WRONG'));
-
-                    if (!error.success && error.status === 'cred_search_api_failed' && error?.result?.error?.status === 404) {
+                    const err = error?.error;
+                    if (!err?.success && err?.status === 'cred_search_api_failed' && err?.result?.error?.status === 404) {
                         // reissue credential for Teacher
                         this.credentialService.issueCredential().pipe(
                             concatMap(_ => this.credentialService.getAllCredentials('teacher'))

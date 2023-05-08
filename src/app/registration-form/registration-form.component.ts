@@ -223,8 +223,13 @@ export class RegistrationFormComponent implements OnInit {
       //     }
       //   }),
       this.authService.ssoSignUp(payload).pipe(
-        concatMap(_ => this.authService.getSchoolDetails()),
-        concatMap(_ => this.credentialService.issueCredential())
+        // concatMap(_ => this.authService.getSchoolDetails()),
+        concatMap((res: any) => {
+          if (res?.userData?.school) {
+            localStorage.setItem('schoolDetails', JSON.stringify(res.userData.school));
+          }
+          return this.credentialService.issueCredential()
+        })
       ).subscribe((res: any) => {
         this.isLoading = false;
         console.log("final", res);
