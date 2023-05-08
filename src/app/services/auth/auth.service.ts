@@ -107,7 +107,9 @@ export class AuthService {
     localStorage.removeItem('accessToken');
     localStorage.removeItem('currentUser');
     localStorage.removeItem('digilockerAccessToken');
-    this.router.navigate(['']);
+    setTimeout(() => {
+      this.router.navigate(['']);
+    });
   }
 
   // User profile

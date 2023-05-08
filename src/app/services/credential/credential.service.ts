@@ -52,7 +52,7 @@ export class CredentialService {
       }
     } else {
       payload.data = {
-        subject: { id: this.authService.currentUser.did }
+        subject: { id: this.authService.currentUser?.did }
       }
     }
 
@@ -141,7 +141,7 @@ export class CredentialService {
           "issuanceDate": new Date().toISOString(),
           "expirationDate": nextYearDate.toISOString(),
           "credentialSubject": {
-            "id": this.authService.currentUser.did,
+            "id": this.authService.currentUser?.did,
             "principalName": this.authService.currentUser.name,
             "schoolName": this.authService.schoolDetails?.schoolName,
             "schoolUdiseId": this.authService.currentUser?.schoolUdise,

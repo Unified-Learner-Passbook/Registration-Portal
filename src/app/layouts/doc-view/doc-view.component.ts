@@ -90,6 +90,8 @@ export class DocViewComponent implements OnInit, OnDestroy {
                         }, error => {
                             this.isLoading = false;
                         });
+                    } else {
+                        this.isLoading = false;
                     }
                 });
         }
