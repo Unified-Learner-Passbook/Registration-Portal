@@ -90,7 +90,6 @@ export class ClaimApprovalComponent implements OnInit {
     this.page = 1;
     this.generalService.postStudentData('/studentDetail', search).subscribe((res) => {
 
-      console.log('studentDetail length', res.result.length);
       console.log('studentDetail list', res.result);
       this.studentDetails = res.result.map((item: any) => {
         item.osCreatedAt = this.generalService.getDaysDifference(item.osCreatedAt);

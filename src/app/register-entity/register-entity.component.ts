@@ -184,7 +184,7 @@ export class RegisterEntityComponent implements OnInit {
       // this.allDataRows = this.parsedCSV.map(item => Object.values(item));
 
       this.parsedCSV = this.parsedCSV.map((item: any) => {
-        const enrolledOn =  dayjs(item["Enrolled On"], 'MM/YYYY').format('DD/MM/YYYY');
+        const enrolledOn = dayjs(item["Enrolled On"], 'MM/YYYY').format('DD/MM/YYYY');
         return {
           studentName: item["Student Name"],
           student_id: item["Student Registration Number"],
@@ -576,7 +576,7 @@ export class RegisterEntityComponent implements OnInit {
         "Error": item.error
       }
     });
-    const csv = Papa.unparse(csvData);
+    const csv = Papa.unparse(csvData, { quotes: true });
     this.utilService.downloadFile(`${this.model.grade}-registration-report.csv`, 'text/csv;charset=utf-8;', csv);
   }
 
@@ -596,7 +596,7 @@ export class RegisterEntityComponent implements OnInit {
         'Error': item.error
       }
     });
-    const csv = Papa.unparse(csvData);
+    const csv = Papa.unparse(csvData, { quotes: true });
     this.utilService.downloadFile(`${this.model.grade}-credentials-report.csv`, 'text/csv;charset=utf-8;', csv);
   }
 
