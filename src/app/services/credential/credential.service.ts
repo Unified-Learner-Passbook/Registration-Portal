@@ -181,6 +181,6 @@ export class CredentialService {
       url: `${this.baseUrl}/v1/sso/student/aadhaar/verify`,
       data
     }
-    return this.dataService.post(payload);
+    return this.dataService.post(payload).pipe(retry(2));
   }
 }
