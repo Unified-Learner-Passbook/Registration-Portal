@@ -15,11 +15,18 @@
       <ngx-extended-pdf-viewer [showToolbar]="false" [showBorders]="false" [src]="docUrl"></ngx-extended-pdf-viewer>
     </div>
   </ng-container>
-
-  <div class="pt-2">
-    <div class="text-center mt-4 cursor-pointer" *ngIf="docUrl">
-      <img src="assets/images/share.png" *ngIf="canShareFile" (click)="shareFile()" class="pr-3">
-      <img src="assets/images/download.png" (click)="downloadCertificate(docUrl)">
+ <div class="pt-2">
+    <div class="text-center" *ngIf="docUrl">
+      <div class="p-2 d-flex justify-content-center">
+        <div class="mr-3 p-3" *ngIf="canShareFile" >
+          <img src="assets/images/share.png" (click)="shareFile()">
+          <div>{{ 'SHARE' | translate }}</div>
+        </div>
+        <div class="p-3">
+          <img src="assets/images/download.png" (click)="downloadCertificate(docUrl)">
+          <div>{{ 'DOWNLOAD' | translate }}</div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

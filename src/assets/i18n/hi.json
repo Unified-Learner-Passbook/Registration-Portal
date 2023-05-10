@@ -204,7 +204,7 @@
   "SAVE_DOCUMENT": "दस्तावेज़ सहेजें",
   "DESCRIPTION": "विवरण",
   "DOWNLOAD_DOCUMENT": "दस्तावेज़ डाउनलोड करें",
-  "DOWNLOAD": "डाउनलोड",
+ 
   "DEMO": "यह निर्गम पोर्टल का डेमो है। दस्तावेज़ीकरण की जाँच करें",
   "SEND_OTP": "OTP भेजें",
   "VERIFY": "सत्यापित करना",
@@ -354,5 +354,7 @@
   "ENTER_SCHOOL_UDISE": "अपना स्कूल का UDISE नंबर दर्ज करें",
   "ENTER_PASSWORD": "पास वर्ड दर्ज करें",
   "INVALID_SCHOOL_UDISE_OR_PASSWORD": "अमान्य स्कूल यूडीआईएसई या पासवर्ड",
-  "COMING_SOON": "जल्द आ रहा है"
+  "COMING_SOON": "जल्द आ रहा है",
+  "DOWNLOAD": "डाउनलोड",
+  "SHARE": "शेयर करना"
 }
