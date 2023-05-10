@@ -15,8 +15,8 @@
       <ngx-extended-pdf-viewer [showToolbar]="false" [showBorders]="false" [src]="docUrl"></ngx-extended-pdf-viewer>
     </div>
   </ng-container>
-  <div class="pt-2">
-    <div class="text-center mt-4 d-flex justify-content-space-evenly text-center" *ngIf="docUrl">
+  <div class="mt-2 mb-5">
+    <div class="d-flex text-center cursor-pointer justify-content-center" *ngIf="docUrl">
       <div class="p-2" *ngIf="canShareFile">
         <img src="assets/images/share.png" (click)="shareFile()" title="{{ 'SHARE' | translate }}">
         <div>{{ 'SHARE' | translate }}</div>
