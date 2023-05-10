@@ -72,6 +72,10 @@ export class IssuedCredentialComponent implements OnInit {
     this.setGrades();
   }
 
+  reset() {
+    this.model = {};
+    this.getCredentials();
+  }
   setGrades() {
     const ordinals = this.utilService.getNumberOrdinals(1, 10);
     this.grades = ordinals.map((item: string, index: number) => {
