@@ -73,8 +73,10 @@ export class IssuedCredentialComponent implements OnInit {
   }
 
   reset() {
-    this.model = {};
-    this.getCredentials();
+    if (Object.keys(this.model).length) {
+      this.model = {};
+      this.getCredentials();
+    }
   }
   setGrades() {
     const ordinals = this.utilService.getNumberOrdinals(1, 10);
