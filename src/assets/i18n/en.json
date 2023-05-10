@@ -207,7 +207,7 @@
   "SAVE_DOCUMENT": "Save Document",
   "DESCRIPTION": "Description",
   "DOWNLOAD_DOCUMENT": "Download Document",
-  "DOWNLOAD": "Download",
+  
   "DEMO": "This is a demo of the Issuance Portal. Check documentation",
   "SEND_OTP": "Send OTP",
   "VERIFY": "Verify",
@@ -355,5 +355,11 @@
   "IT_SEEMS_UPLOADED_EMPTY_CSV_FILE_PLEASE_UPLOAD_VALID_CSV":"It seems you have uploaded empty csv file, please upload valid csv file",
   "ENTER_SCHOOL_UDISE": "Enter School UDISE",
   "ENTER_PASSWORD": "Enter Password",
-  "INVALID_SCHOOL_UDISE_OR_PASSWORD": "Invalid School UDISE or Password"
+  "INVALID_SCHOOL_UDISE_OR_PASSWORD": "Invalid School UDISE or Password",
+  
+  
+  "DOWNLOAD": "Download",
+  "SHARE": "Share"
+
+
 }
