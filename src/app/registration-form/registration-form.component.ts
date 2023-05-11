@@ -223,7 +223,7 @@ export class RegistrationFormComponent implements OnInit {
     this.authService.getSchoolList(payload).subscribe((res) => {
       // this.isLoading = false;
       if (res.status) {
-        this.schoolList = res.data.pagingContent.filter(item => item.eduDistrictCode === this.udiseLinkForm.controls.district.value);
+        this.schoolList = res.data.pagingContent.filter(item => item.eduBlockCode === this.udiseLinkForm.controls.block.value);
       }
     }, error => {
       // this.isLoading = false;
