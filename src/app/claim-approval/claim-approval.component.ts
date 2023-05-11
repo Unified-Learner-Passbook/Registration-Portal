@@ -94,15 +94,15 @@ export class ClaimApprovalComponent implements OnInit {
       this.studentDetails = res.result.map((item: any) => {
         item.osCreatedAt = this.generalService.getDaysDifference(item.osCreatedAt);
 
-        if (item.enrollon) {
-          if (dayjs(item.enrollon).isValid()) {
-            item.enrollon = dayjs(item.enrollon).format();
-          } else if (dayjs(item.enrollon, 'MM/YYYY').isValid()) {
-            item.enrollon = dayjs(item.enrollon, 'MM/YYYY').format();
-          } else if (dayjs(item.enrollon, 'DD-MM-YYYY').isValid()) {
-            item.enrollon = dayjs(item.enrollon, 'DD-MM-YYYY').format();
+        if (item.studentdetail.enrollon) {
+          if (dayjs(item.studentdetail.enrollon).isValid()) {
+            item.studentdetail.enrollon = dayjs(item.studentdetail.enrollon).format();
+          } else if (dayjs(item.studentdetail.enrollon, 'MM/YYYY').isValid()) {
+            item.studentdetail.enrollon = dayjs(item.studentdetail.enrollon, 'MM/YYYY').format();
+          } else if (dayjs(item.studentdetail.enrollon, 'DD-MM-YYYY').isValid()) {
+            item.studentdetail.enrollon = dayjs(item.studentdetail.enrollon, 'DD-MM-YYYY').format();
           } else {
-            item.enrollon = '';
+            item.studentdetail.enrollon = '';
           }
         }
         return item;
