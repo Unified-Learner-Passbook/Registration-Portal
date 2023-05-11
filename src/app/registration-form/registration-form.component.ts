@@ -213,7 +213,7 @@ export class RegistrationFormComponent implements OnInit {
     this.schoolList = [];
     this.udiseLinkForm.controls.school.setValue('');
 
-    this.isLoading = true;
+    // this.isLoading = true;
 
     const payload = {
       "regionType": "2",
@@ -221,12 +221,12 @@ export class RegistrationFormComponent implements OnInit {
       "sortBy": "schoolName"
     }
     this.authService.getSchoolList(payload).subscribe((res) => {
-      this.isLoading = false;
+      // this.isLoading = false;
       if (res.status) {
         this.schoolList = res.data.pagingContent.filter(item => item.eduDistrictCode === this.udiseLinkForm.controls.district.value);
       }
     }, error => {
-      this.isLoading = false;
+      // this.isLoading = false;
     });
   }
 
@@ -249,10 +249,12 @@ export class RegistrationFormComponent implements OnInit {
       return;
     }
     const payload = {
-      url: `${this.baseUrl}/v1/sso/udise/school/list`,
+      url: `${this.baseUrl}/v1/school/verify`,
       data: {
-        udise: this.udiseLinkForm.value.udiseId,
-        password: this.udiseLinkForm.value.password
+        password: this.udiseLinkForm.value.password,
+        requestbody: {
+          udiseCode: this.udiseLinkForm.value.udiseId
+        }
       }
     }
     this.dataService.post(payload).subscribe((res: any) => {
