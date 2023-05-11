@@ -137,6 +137,7 @@ export class ClaimApprovalComponent implements OnInit {
         "grade": user?.studentdetail?.grade,
         "academic_year": user?.studentdetail?.acdemic_year,
         "osid": user?.studentdetail?.osid,
+        "school_id": user?.student?.school_udise,
         "student_id": user.student?.student_id,
         "student_name": user.student?.student_name,
         "dob": user.student?.dob,
