@@ -102,14 +102,66 @@
         <div class="modal-body fs-14">
             <form [formGroup]="udiseLinkForm" (ngSubmit)="verifyUDISE()">
                 <h6 class="py-3 text-center">{{'LINK_YOUR_UDISE' | translate}}</h6>
+
                 <div class="mb-3 pb-10">
-                    <label for="udiseId" class="fs-14">{{'UDISE_ID' | translate}}<span
+                    <label for="state">{{'STATE' | translate}}<span class="text-danger">*</span></label>
+                    <select class="form-select p-2 text-truncate" id="state" formControlName="state"
+                        (change)="onStateChange($event.target.value)">
+                        <option value="" disabled selected>{{'SELECT_STATE' | translate}}</option>
+                        <option *ngFor="let item of stateList" [value]="item?.stateCode">{{item?.stateName}}</option>
+                    </select>
+                    <p class="text-red pt-2 mb-0"
+                        *ngIf="udiseLinkFormControl.state.invalid && udiseLinkFormControl.state.touched">
+                        {{'STATE_REQUIRED' | translate}}
+                    </p>
+                </div>
+                <div class="mb-3 pb-10">
+                    <label for="district">{{'DISTRICT' | translate}}<span class="text-danger">*</span></label>
+                    <select class="form-select p-2 text-truncate" id="district" formControlName="district"
+                        (change)="onDistrictChange($event.target.value)">
+                        <option value="" disabled selected>{{'SELECT_DISTRICT' | translate}}</option>
+                        <option *ngFor="let item of districtList" [value]="item?.districtCode">{{item?.districtName}}
+                        </option>
+                    </select>
+                    <p class="text-red pt-2 mb-0"
+                        *ngIf="udiseLinkFormControl.district.invalid && udiseLinkFormControl.district.touched">
+                        {{'DISTRICT_REQUIRED' | translate}}
+                    </p>
+                </div>
+
+                <div class="mb-3 pb-10">
+                    <label for="block">{{'BLOCK' | translate}}<span class="text-danger">*</span></label>
+                    <select class="form-select p-2 text-truncate" id="block" formControlName="block"
+                        (change)="onBlockChange($event.target.value)">
+                        <option value="" disabled selected>{{'SELECT_BLOCK' | translate}}</option>
+                        <option *ngFor="let item of blockList" [value]="item?.blockCode">{{item?.blockName}}</option>
+                    </select>
+                    <p class="text-red pt-2 mb-0"
+                        *ngIf="udiseLinkFormControl.block.invalid && udiseLinkFormControl.block.touched">
+                        {{'BLOCK_REQUIRED' | translate}}
+                    </p>
+                </div>
+
+                <div class="mb-3 pb-10">
+                    <label for="school">{{'SCHOOL' | translate}}<span class="text-danger">*</span></label>
+                    <select class="form-select p-2 text-truncate" id="school" formControlName="school"
+                        (change)="onSchoolChange($event.target.value)">
+                        <option value="" disabled selected>{{'SELECT_SCHOOL' | translate}}</option>
+                        <option *ngFor="let item of schoolList" [value]="item?.udiseCode">{{item?.schoolName}}</option>
+                    </select>
+                    <p class="text-red pt-2 mb-0"
+                        *ngIf="udiseLinkFormControl.school.invalid && udiseLinkFormControl.school.touched">
+                        {{'SCHOOL_REQUIRED' | translate}}
+                    </p>
+                </div>
+                <div class="mb-3 pb-10">
+                    <label for="udiseLink" class="fs-14">{{'UDISE_LINK' | translate}}<span
                             class="text-danger">*</span></label>
-                    <input type="text" placeholder="{{'ENTER_SCHOOL_UDISE' | translate}}" name="udiseId" id="udiseId"
-                        formControlName="udiseId" class="form-control w-82">
+                    <input type="text" placeholder="{{'ENTER_UDISE_LINK' | translate}}" name="udiseLink" id="udiseLink"
+                        formControlName="udiseLink" class="form-control w-82">
                     <p class="text-red pt-2 mb-0"
                         *ngIf="udiseLinkFormControl?.udiseId?.invalid && udiseLinkFormControl?.udiseId?.touched">
-                        {{'ENTER_SCHOOL_UDISE' | translate}}</p>
+                        {{'ENTER_UDISE_LINK' | translate}}</p>
                 </div>
                 <div class="mb-3 pb-10">
                     <label for="password" class="fs-14">{{'PASSWORD' | translate}}<span
@@ -120,7 +172,8 @@
                         *ngIf="udiseLinkFormControl?.password?.invalid && udiseLinkFormControl?.password?.touched">
                         {{'ENTER_PASSWORD' | translate}}</p>
                 </div>
-                <button class="btn btn-primary btn-block mt-4" type="submit" [disabled]="udiseLinkForm.invalid">{{'LINK_NOW' | translate}}</button>
+                <button class="btn btn-primary btn-block mt-4" type="submit"
+                    [disabled]="udiseLinkForm.invalid">{{'LINK_NOW' | translate}}</button>
             </form>
         </div>
     </div>

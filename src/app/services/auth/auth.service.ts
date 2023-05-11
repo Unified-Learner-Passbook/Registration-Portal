@@ -114,7 +114,7 @@ export class AuthService {
 
   // User profile
   getUserProfile(id: any): Observable<any> {
-    let api = `${this.baseUrl}/v1/user-profile/${id}`;
+    const api = `${this.baseUrl}/v1/user-profile/${id}`;
     return this.http.get(api, { headers: this.headers }).pipe(
       map((res) => {
         return res || {};
@@ -166,5 +166,46 @@ export class AuthService {
   verifyAccountAadharLink(payload: any) {
     const api = `${this.baseUrl}/v1/sso/digilocker/aadhaar`;
     return this.http.post(api, payload);
+  }
+
+  getStateList(): Observable<any> {
+    const api = `${this.baseUrl}/v1/school/stateList`;
+    return this.http.get(api, { headers: this.headers }).pipe(
+      map((res: any) => {
+        console.log("states res", res);
+        return res.response;
+      })
+    );
+  }
+
+
+  getDistrictList(payload: { stateCode: string }) {
+    const api = `${this.baseUrl}/v1/school/districtList`;
+    return this.http.post(api, payload, { headers: this.headers }).pipe(
+      map((res: any) => {
+        console.log("districts res", res);
+        return res.response;
+      })
+    );
+  }
+
+  getBlockList(payload: { districtCode: string }) {
+    const api = `${this.baseUrl}/v1/school/blockList`;
+    return this.http.post(api, payload, { headers: this.headers }).pipe(
+      map((res: any) => {
+        console.log("block res", res);
+        return res.response;
+      })
+    );
+  }
+
+  getSchoolList(payload: { "regionType": string, "regionCd": string, "sortBy": string }) {
+    const api = `${this.baseUrl}/v1/school/schoolList`;
+    return this.http.post(api, payload, { headers: this.headers }).pipe(
+      map((res: any) => {
+        console.log("schools res", res);
+        return res.response;
+      })
+    );
   }
 }

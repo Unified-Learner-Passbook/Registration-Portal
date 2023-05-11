@@ -13,6 +13,7 @@ import { TelemetryService } from '../services/telemetry/telemetry.service';
 import { IImpressionEventInput, IInteractEventInput } from '../services/telemetry/telemetry-interface';
 import { environment } from 'src/environments/environment';
 import { DataService } from '../services/data/data-request.service';
+import { IBlock, IDistrict, ISchool, IState } from '../app-interface';
 
 @Component({
   selector: 'app-registration-form',
@@ -32,6 +33,17 @@ export class RegistrationFormComponent implements OnInit {
   schoolUdiseInput: string = '';
   password: string = '';
   isLoading = false;
+
+  stateList: IState[];
+  districtList: IDistrict[];
+  blockList: IBlock[];
+  schoolList: ISchool[];
+
+  selectedState: IState;
+  selectedDistrict: IDistrict;
+  selectedBlock: IBlock;
+  selectedSchool: ISchool;
+
   @ViewChild('udiseLinkModal') udiseLinkModal: TemplateRef<any>;
   @ViewChild('declarationModal') declarationModal: TemplateRef<any>;
 
@@ -45,6 +57,10 @@ export class RegistrationFormComponent implements OnInit {
   });
 
   udiseLinkForm = new FormGroup({
+    state: new FormControl('', [Validators.required]),
+    district: new FormControl('', [Validators.required]),
+    block: new FormControl('', [Validators.required]),
+    school: new FormControl(null, [Validators.required]),
     udiseId: new FormControl(null, [Validators.required]),
     password: new FormControl(null, [Validators.required]),
   })
@@ -150,6 +166,72 @@ export class RegistrationFormComponent implements OnInit {
     }
   }
 
+  getStateList() {
+    this.authService.getStateList().subscribe((res) => {
+      if (res.status) {
+        this.stateList = res.data;
+        this.registrationForm.controls.state.setValue('09'); //PS Hard coded to Uttar Pradesh
+        this.onStateChange(this.registrationForm.controls.state.value);
+      }
+    });
+  }
+
+  onStateChange(selectedStateCode: string) {
+    this.selectedState = this.stateList.find(item => item.stateCode === selectedStateCode);
+    this.districtList = [];
+    this.blockList = [];
+    this.schoolList = [];
+    this.registrationForm.controls.district.setValue('');
+    this.registrationForm.controls.block.setValue('');
+    this.registrationForm.controls.school.setValue('');
+
+    this.authService.getDistrictList({ stateCode: selectedStateCode }).subscribe((res) => {
+      if (res.status) {
+        this.districtList = res.data;
+      }
+    })
+  }
+
+  onDistrictChange(selectedDistrictCode: string) {
+    this.selectedDistrict = this.districtList.find(item => item.districtCode === selectedDistrictCode);
+    this.blockList = [];
+    this.schoolList = [];
+    this.registrationForm.controls.block.setValue('');
+    this.registrationForm.controls.school.setValue('');
+
+    this.authService.getBlockList({ districtCode: selectedDistrictCode }).subscribe((res) => {
+      if (res.status) {
+        this.blockList = res.data;
+      }
+    })
+  }
+
+  onBlockChange(selectedBlockCode: string) {
+    this.selectedBlock = this.blockList.find(item => item.blockCode === selectedBlockCode);
+    this.schoolList = [];
+    this.registrationForm.controls.school.setValue('');
+
+    this.isLoading = true;
+
+    const payload = {
+      "regionType": "2",
+      "regionCd": this.registrationForm.controls.district.value,
+      "sortBy": "schoolName"
+    }
+    this.authService.getSchoolList(payload).subscribe((res) => {
+      this.isLoading = false;
+      if (res.status) {
+        this.schoolList = res.data.pagingContent.filter(item => item.eduDistrictCode === this.registrationForm.controls.district.value);
+      }
+    }, error => {
+      this.isLoading = false;
+    });
+  }
+
+  onSchoolChange(selectedSchoolCode: string) {
+    this.selectedSchool = this.schoolList.find(item => item.udiseCode === selectedSchoolCode);
+  }
+
   submitDeclarationForm(isConfirmed: boolean) {
     this.isDeclarationSubmitted = isConfirmed;
     this.consentModalRef.close()
@@ -160,6 +242,10 @@ export class RegistrationFormComponent implements OnInit {
   }
 
   verifyUDISE() {
+    if (this.udiseLinkForm.value.udiseId !== this.selectedSchool.udiseCode) {
+      this.toastMessage.error('', this.generalService.translateString('SCHOOL_UDISE_NOT_MATCHED'));
+      return;
+    }
     const payload = {
       url: `${this.baseUrl}/v1/sso/udise/school/list`,
       data: {
@@ -182,7 +268,7 @@ export class RegistrationFormComponent implements OnInit {
 
   onSubmit() {
     console.log(this.registrationForm.value);
-
+    console.log('schoolDetails', this.schoolDetails);
     if (!this.isDeclarationSubmitted) {
       this.consentModalRef = this.modalService.open(this.declarationModal, { animation: true, centered: true });
       return;
@@ -206,7 +292,14 @@ export class RegistrationFormComponent implements OnInit {
             username: this.registrationDetails.uuid,
             consent: "yes",
             consentDate: new Date().toISOString().substring(0, 10),
-            did: ""
+            did: "",
+            school_name: this.selectedSchool.schoolName,
+            stateCode: this.selectedState.stateCode,
+            stateName: this.selectedState.stateName,
+            districtCode: this.selectedDistrict.districtCode,
+            districtName: this.selectedDistrict.districtName,
+            blockCode: this.selectedBlock.blockCode,
+            blockName: this.selectedBlock.blockName,
           },
           school: { ...this.schoolDetails, stateCode: 16, did: "" } //ToDO remove hardcoded stateCode
         },
