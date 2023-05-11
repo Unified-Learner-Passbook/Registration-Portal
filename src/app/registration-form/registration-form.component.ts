@@ -92,7 +92,9 @@ export class RegistrationFormComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.getStateList();
+  }
 
 
   get udiseLinkFormControl() {
