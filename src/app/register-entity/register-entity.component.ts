@@ -364,7 +364,13 @@ export class RegisterEntityComponent implements OnInit {
           "schoolUdise": this.authService.schoolDetails?.udiseCode,
           "schoolName": this.authService.schoolDetails?.schoolName,
           "academic-year": this.model.academicYear,
-          "school_type": "private"
+          "school_type": "private",
+          "stateCode": this.authService.currentUser.stateCode,
+          "stateName": this.authService.currentUser.stateName,
+          "districtCode": this.authService.currentUser.districtCode,
+          "districtName": this.authService.currentUser.districtName,
+          "blockCode": this.authService.currentUser.blockCode,
+          "blockName": this.authService.currentUser.blockName
         },
         "studentDetails": list
       }
