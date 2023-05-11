@@ -258,8 +258,8 @@ export class RegistrationFormComponent implements OnInit {
       }
     }
     this.dataService.post(payload).subscribe((res: any) => {
-      if (res?.success && res?.status === 'found') {
-        this.schoolDetails = res.data;
+      if (res?.status) {
+        this.schoolDetails = res.response.data;
         this.linkUDISE();
       } else {
         this.toastMessage.error('', this.generalService.translateString('INVALID_SCHOOL_UDISE_OR_PASSWORD'));
@@ -305,7 +305,28 @@ export class RegistrationFormComponent implements OnInit {
             blockCode: this.selectedBlock.blockCode,
             blockName: this.selectedBlock.blockName,
           },
-          school: { ...this.schoolDetails, stateCode: 16, did: "" } //ToDO remove hardcoded stateCode
+          school: {
+            clientId: this.schoolDetails.clientId || '-',
+            clientSecret: this.schoolDetails.clientSecret || '-',
+            schoolName: this.schoolDetails.schoolName,
+            udiseCode: this.schoolDetails.udiseCode,
+            schoolCategory: this.schoolDetails.schCategoryId,
+            schoolManagementCenter: this.schoolDetails.schMgmtCenterId,
+            schoolManagementState: 0,
+            schoolType: this.schoolDetails.schTypeId,
+            classFrom: this.schoolDetails.lowestClass,
+            classTo: this.schoolDetails.highestClass,
+            stateCode: this.schoolDetails.eduStateCode,
+            stateName: this.selectedState.stateName,
+            districtName: this.selectedDistrict.districtName,
+            blockName: this.selectedBlock.blockName,
+            locationType: this.schoolDetails.schLocTypeId,
+            headOfSchoolMobile: '-',
+            respondentMobile: '-',
+            alternateMobile: '-',
+            schoolEmail: this.schoolDetails.email || '-',
+            did: ''
+          }
         },
         digimpid: this.registrationDetails.meripehchanid,
       }
