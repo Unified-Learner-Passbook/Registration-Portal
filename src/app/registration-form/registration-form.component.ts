@@ -316,7 +316,7 @@ export class RegistrationFormComponent implements OnInit {
             schoolType: this.schoolDetails.schTypeId,
             classFrom: this.schoolDetails.lowestClass,
             classTo: this.schoolDetails.highestClass,
-            stateCode: this.schoolDetails.eduStateCode,
+            stateCode: typeof this.schoolDetails?.eduStateCode === 'string' ? Number(this.schoolDetails?.eduStateCode) : this.schoolDetails?.eduStateCode,
             stateName: this.selectedState.stateName,
             districtName: this.selectedDistrict.districtName,
             blockName: this.selectedBlock.blockName,
