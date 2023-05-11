@@ -145,7 +145,7 @@ export class RegistrationFormComponent implements OnInit {
       backdrop: 'static',
       animation: true,
       centered: true,
-      size: 'sm'
+      size: 'md'
     }
     console.log("schoolUdiseInput", this.schoolUdiseInput);
     this.udiseLinkModalRef = this.modalService.open(this.udiseLinkModal, options);
