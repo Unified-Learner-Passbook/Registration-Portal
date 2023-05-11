@@ -53,10 +53,10 @@ export class GlobalHeaderComponent implements OnInit {
         "filters": {
           "claim_status": {
             "eq": 'pending'
-          },
-          "school_udise": {
-            "eq": this.authService.schoolDetails?.udiseCode
           }
+          // "school_udise": {
+          //   "eq": this.authService.schoolDetails?.udiseCode
+          // }
         }
       }
 
