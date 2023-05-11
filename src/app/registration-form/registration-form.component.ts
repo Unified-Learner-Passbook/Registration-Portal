@@ -172,8 +172,8 @@ export class RegistrationFormComponent implements OnInit {
     this.authService.getStateList().subscribe((res) => {
       if (res.status) {
         this.stateList = res.data;
-        this.registrationForm.controls.state.setValue('09'); //PS Hard coded to Uttar Pradesh
-        this.onStateChange(this.registrationForm.controls.state.value);
+        this.udiseLinkForm.controls.state.setValue('09'); //PS Hard coded to Uttar Pradesh
+        this.onStateChange(this.udiseLinkForm.controls.state.value);
       }
     });
   }
@@ -183,9 +183,9 @@ export class RegistrationFormComponent implements OnInit {
     this.districtList = [];
     this.blockList = [];
     this.schoolList = [];
-    this.registrationForm.controls.district.setValue('');
-    this.registrationForm.controls.block.setValue('');
-    this.registrationForm.controls.school.setValue('');
+    this.udiseLinkForm.controls.district.setValue('');
+    this.udiseLinkForm.controls.block.setValue('');
+    this.udiseLinkForm.controls.school.setValue('');
 
     this.authService.getDistrictList({ stateCode: selectedStateCode }).subscribe((res) => {
       if (res.status) {
@@ -198,8 +198,8 @@ export class RegistrationFormComponent implements OnInit {
     this.selectedDistrict = this.districtList.find(item => item.districtCode === selectedDistrictCode);
     this.blockList = [];
     this.schoolList = [];
-    this.registrationForm.controls.block.setValue('');
-    this.registrationForm.controls.school.setValue('');
+    this.udiseLinkForm.controls.block.setValue('');
+    this.udiseLinkForm.controls.school.setValue('');
 
     this.authService.getBlockList({ districtCode: selectedDistrictCode }).subscribe((res) => {
       if (res.status) {
@@ -211,19 +211,19 @@ export class RegistrationFormComponent implements OnInit {
   onBlockChange(selectedBlockCode: string) {
     this.selectedBlock = this.blockList.find(item => item.blockCode === selectedBlockCode);
     this.schoolList = [];
-    this.registrationForm.controls.school.setValue('');
+    this.udiseLinkForm.controls.school.setValue('');
 
     this.isLoading = true;
 
     const payload = {
       "regionType": "2",
-      "regionCd": this.registrationForm.controls.district.value,
+      "regionCd": this.udiseLinkForm.controls.district.value,
       "sortBy": "schoolName"
     }
     this.authService.getSchoolList(payload).subscribe((res) => {
       this.isLoading = false;
       if (res.status) {
-        this.schoolList = res.data.pagingContent.filter(item => item.eduDistrictCode === this.registrationForm.controls.district.value);
+        this.schoolList = res.data.pagingContent.filter(item => item.eduDistrictCode === this.udiseLinkForm.controls.district.value);
       }
     }, error => {
       this.isLoading = false;
