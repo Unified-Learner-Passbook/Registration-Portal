@@ -131,20 +131,18 @@ export class ClaimApprovalComponent implements OnInit {
         "expirationDate": nextYear.toISOString()
       },
       "credentialSubject": {
-        "mobile": user.mobile,
-        "guardian_name": user.gaurdian_name,
-        "school_name": user.school_name,
-        "grade": user.grade,
-        "academic_year": user.acdemic_year,
-        "osid": user.osid,
-        "student_id": user.student.student_id,
-        "student_name": user.student.student_name,
-        "dob": user.student.dob,
-        "aadhar_token": user.student.aadhar_token,
-        "reference_id": user.student.reference_id,
-        "student_osid": user.student_id,
-        "school_id": this.authService.schoolDetails?.udiseCode,
-        "enrollon": user.enrollon
+        "mobile": user?.studentdetail?.mobile,
+        "guardian_name": user?.studentdetail?.gaurdian_name,
+        "school_name": user.student?.school_name,
+        "grade": user?.studentdetail?.grade,
+        "academic_year": user?.studentdetail?.acdemic_year,
+        "osid": user?.studentdetail?.osid,
+        "student_id": user.student?.student_id,
+        "student_name": user.student?.student_name,
+        "dob": user.student?.dob,
+        "aadhar_token": user.student?.aadhar_token,
+        "reference_id": user.student?.reference_id,
+        "student_osid": user.student?.osid
       }
 
     }
@@ -171,18 +169,18 @@ export class ClaimApprovalComponent implements OnInit {
     const payload = {
       "issuer": this.authService.schoolDetails?.did,
       "credentialSubject": {
-        "mobile": user.mobile,
-        "guardian_name": user.gaurdian_name,
-        "school_name": user.school_name,
-        "grade": user.grade,
-        "academic_year": user.acdemic_year,
-        "osid": user.osid,
-        "student_id": user.student.student_id,
-        "student_name": user.student.student_name,
-        "dob": user.student.dob,
-        "aadhar_token": user.student.aadhar_token,
-        "reference_id": user.student.reference_id,
-        "student_osid": user.student_id,
+        "mobile": user?.studentdetail?.mobile,
+        "guardian_name": user?.studentdetail?.gaurdian_name,
+        "school_name": user.student?.school_name,
+        "grade": user?.studentdetail?.grade,
+        "academic_year": user?.studentdetail?.acdemic_year,
+        "osid": user?.studentdetail?.osid,
+        "student_id": user.student?.student_id,
+        "student_name": user.student?.student_name,
+        "dob": user.student?.dob,
+        "aadhar_token": user.student?.aadhar_token,
+        "reference_id": user.student?.reference_id,
+        "student_osid": user.student?.osid
       }
     }
 
