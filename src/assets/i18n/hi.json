@@ -366,5 +366,7 @@
   "SELECT_SCHOOL": "स्कूल का चयन करें",
   "ENTER_PHONE_NO": "फोन नंबर दर्ज करें",
   "ENTER_ENROLLED_ON_DATE": "पंजीकृत होने की तिथि दर्ज करें",
-  "SCHOOL_REQUIRED": "विद्यालय आवश्यक है"
+  "SCHOOL_REQUIRED": "विद्यालय आवश्यक है",
+  "STATUS": "अवस्था",
+  "PENDING_SINCE": "से प्रलंबित"
 }

@@ -184,7 +184,7 @@ export class RegisterEntityComponent implements OnInit {
       // this.allDataRows = this.parsedCSV.map(item => Object.values(item));
 
       this.parsedCSV = this.parsedCSV.map((item: any) => {
-        const enrolledOn = dayjs(item["Enrolled On"], 'MM/YYYY').format('DD/MM/YYYY');
+        const enrolledOn = dayjs(item["Enrolled On"], 'MM/YYYY').toISOString();
         return {
           studentName: item["Student Name"],
           student_id: item["Student Registration Number"],

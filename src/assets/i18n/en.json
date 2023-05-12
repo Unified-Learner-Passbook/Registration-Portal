@@ -368,5 +368,7 @@
   "SELECT_SCHOOL": "Select School",
   "ENTER_PHONE_NO": "Enter Phone number",
   "ENTER_ENROLLED_ON_DATE": "Enter Enrolled On date",
-  "SCHOOL_REQUIRED": "School is required"
+  "SCHOOL_REQUIRED": "School is required",
+  "STATUS": "Status",
+  "PENDING_SINCE": "Pending since"
 }
