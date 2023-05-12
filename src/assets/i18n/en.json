@@ -207,7 +207,6 @@
   "SAVE_DOCUMENT": "Save Document",
   "DESCRIPTION": "Description",
   "DOWNLOAD_DOCUMENT": "Download Document",
-  
   "DEMO": "This is a demo of the Issuance Portal. Check documentation",
   "SEND_OTP": "Send OTP",
   "VERIFY": "Verify",
@@ -251,7 +250,6 @@
   "ENTER_PRINCIPAL_NAME": "Enter Principal Name",
   "PRINCIPAL_NAME_REQUIRED": "Principal Name is Required",
   "PHONE_NUMBER": "Phone Number",
-  "ENTER_PHONE_NO": "Enter Phone No.",
   "ENTER_VALID_PHONE_NUMBER": "Enter valid phone number",
   "AADHAR_NUMBER": "Aadhar Number",
   "ENTER_AADHAR_NUMBER": "Enter Aadhar Number",
@@ -348,18 +346,27 @@
   "QUICK_LINKS": "Quick Links",
   "AADHAAR_VERIFIED_SUCCESSFULLY": "Aadhar Verified Successfully",
   "ERROR_WHILE_VERIFYING_AADHAAR": "Error while verifying Aadhar",
-  "ENTERED_PHONE_N0_SHOULD_BE_LINKED_TO_AADHAR" : "Entered phone no. should be linked to Aadhar",
-  "NOT_COMPLETED_YOUR_KYC_PLEASE_COMPLETE_YOUR_KYC_HERE":"It seems you have not completed your KYC. Please complete your one time KYC here",
-  "ENTER_YOUR_NAME":"Enter your name",
-  "ERROR_WHILE_VERIFYING_AADHAR":"Error while verifying Aadhar",
-  "IT_SEEMS_UPLOADED_EMPTY_CSV_FILE_PLEASE_UPLOAD_VALID_CSV":"It seems you have uploaded empty csv file, please upload valid csv file",
+  "ENTERED_PHONE_N0_SHOULD_BE_LINKED_TO_AADHAR": "Entered phone no. should be linked to Aadhar",
+  "NOT_COMPLETED_YOUR_KYC_PLEASE_COMPLETE_YOUR_KYC_HERE": "It seems you have not completed your KYC. Please complete your one time KYC here",
+  "ENTER_YOUR_NAME": "Enter your name",
+  "ERROR_WHILE_VERIFYING_AADHAR": "Error while verifying Aadhar",
+  "IT_SEEMS_UPLOADED_EMPTY_CSV_FILE_PLEASE_UPLOAD_VALID_CSV": "It seems you have uploaded empty csv file, please upload valid csv file",
   "ENTER_SCHOOL_UDISE": "Enter School UDISE",
   "ENTER_PASSWORD": "Enter Password",
   "INVALID_SCHOOL_UDISE_OR_PASSWORD": "Invalid School UDISE or Password",
-  
-  
+  "COMING_SOON": "Coming Soon",
   "DOWNLOAD": "Download",
-  "SHARE": "Share"
-
-
+  "SHARE": "Share",
+  "SCHOOL_UDISE_NOT_MATCHED": "School UDISE does not matched with School",
+  "BLOCK": "Block",
+  "STATE_REQUIRED": "State is required",
+  "DISTRICT_REQUIRED": "District is required",
+  "BLOCK_REQUIRED": "Block is required",
+  "SELECT_STATE": "Select State",
+  "SELECT_DISTRICT": "Select District",
+  "SELECT_BLOCK": "Select Block",
+  "SELECT_SCHOOL": "Select School",
+  "ENTER_PHONE_NO": "Enter Phone number",
+  "ENTER_ENROLLED_ON_DATE": "Enter Enrolled On date",
+  "SCHOOL_REQUIRED": "School is required"
 }

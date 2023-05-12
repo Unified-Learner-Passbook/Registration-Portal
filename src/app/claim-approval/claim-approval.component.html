@@ -35,15 +35,15 @@
         <tr *ngFor="let user of tableRows; let index = index">
           <td>{{index+1}}</td>
           <td>{{user.student.student_name}}</td>
-          <td>{{user.gaurdian_name}}</td>
+          <td>{{user.studentdetail.gaurdian_name}}</td>
           <td>{{user.student.student_id}}</td>
           <td>{{user.student.dob}}</td>
-          <td>{{user.grade}}</td>
-          <td>{{user.acdemic_year}}</td>
-          <td>{{user.mobile}}</td>
-          <td>{{user?.enrollon | date: 'MM/yyyy'}}</td>
-          <td *ngIf="model.status === 'pending'">{{user.claim_status}}</td>
-          <td *ngIf="model.status === 'pending'">{{user.osCreatedAt}}</td>
+          <td>{{user.studentdetail.grade}}</td>
+          <td>{{user.studentdetail.acdemic_year}}</td>
+          <td>{{user.studentdetail.mobile}}</td>
+          <td>{{user?.studentdetail.enrollon | date: 'MM/yyyy'}}</td>
+          <td *ngIf="model.status === 'pending'">{{user.studentdetail.claim_status}}</td>
+          <td *ngIf="model.status === 'pending'">{{user.studentdetail.osCreatedAt}}</td>
           <td *ngIf="model.status === 'pending'">
             <img src="assets/images/checkicon.png" (click)="openPopup(user)" alt="" class="cursor-pointer">
             <img src="assets/images/closecheck.png" (click)="rejectPopup(user)" alt="" class="cursor-pointer">

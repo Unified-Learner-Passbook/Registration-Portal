@@ -69,7 +69,7 @@ export class DashboardComponent implements OnInit {
           this.definations = this.responseData.definitions;
           this.entityName = fieldset.definition;
           // this.property = this.definations[fieldset.definition].properties;
-         
+
         });
         this.schema["type"] = "object";
         this.schema["title"] = this.formSchema.title;
