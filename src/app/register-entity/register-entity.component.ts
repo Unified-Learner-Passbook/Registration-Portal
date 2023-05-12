@@ -144,7 +144,7 @@ export class RegisterEntityComponent implements OnInit {
               // const columnFields = Object.keys(res.result.schema.properties);
               // const columnFields = ["studentName", "student_id", "mobile", "gaurdian_name", "aadhar_token", "dob"] //TODO: Add label field in schema and use it here
               const columnFields = ["Student Name", "Student Registration Number", "Mobile", "Guardian Name", "Aadhaar ID", "Date of Birth", "Gender", "Enrolled On"];
-              const sampleData = ["Avinash Dubey", "RC-901", "8888888888", "Guardian Name", "999999999999", "09/07/1999", "Male", "07/2020"];
+              const sampleData = ["Firstname Lastname", "RC-901", "8888888888", "Guardian Name", "999999999999", "09/07/1999", "Male", "07/2020"];
               const csvContent = this.csvService.generateCSV(columnFields, sampleData);
               this.csvService.downloadCSVTemplate(csvContent, `${this.model.certificateType}-template`);
             } else {
