@@ -1,30 +1,37 @@
 import { Injectable } from '@angular/core';
-import { CsTelemetryModule } from '@project-sunbird/client-services/telemetry';
+import { CsTelemetryConfig, CsTelemetryModule, IActor } from '@project-sunbird/client-services/telemetry';
 import { Cdata, Context, IAuditEventInput, IEndEventInput, IImpressionEventInput, IInteractEventInput, ImpressionEData, InteractEData, IShareEventInput, IStartEventInput, ITelemetryContextData, ITelemetryEvent, TelemetryObject } from './telemetry-interface';
 import { v4 as uuidv4 } from 'uuid';
 import { DeviceDetectorService } from 'ngx-device-detector';
+import { AuthService } from '../auth/auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TelemetryService {
   uid: string = 'anonymous';
+  sid
   did: string;
   deviceType: string;
   telemetryInstance: CsTelemetryModule;
+  actor: IActor = {
+    type: 'User',
+    id: 'anonymous'
+  };
   private context: Context;
 
-  constructor() {
+  constructor(private readonly authService: AuthService) {
     this.telemetryInstance = CsTelemetryModule.instance;
   }
 
   public initializeTelemetry() {
+    this.sid = uuidv4();
     this.deviceType = this.getDeviceType();
     this.context = {
       mode: "",
-      sid: uuidv4(),
+      sid: this.sid,
       did: this.did,
-      uid: this.uid,
+      uid: this.authService.currentUser ? this.authService.currentUser.did : this.uid,
       channel: "default",
       env: 'registration.portal',
       pdata: {
@@ -148,7 +155,8 @@ export class TelemetryService {
       options: {
         context: this.getEventContext(eventInput),
         object: this.getEventObject(eventInput),
-        tags: []
+        tags: [],
+        actor: this.actor
       }
     };
     return event;
@@ -174,7 +182,7 @@ export class TelemetryService {
       pdata: eventInput.context.pdata || this.context.pdata,
       env: eventInput.context.env || this.context.env,
       sid: eventInput.sid || this.context.sid,
-      uid: this.uid,
+      uid: this.authService.currentUser ? this.authService.currentUser.did : this.uid,
       cdata: eventInput.context.cdata || [],
       // rollup: this.getRollUpData(this.context.userOrgDetails.organisationIds)
     };
@@ -195,5 +203,13 @@ export class TelemetryService {
     const rollUp = {};
     data.forEach((element, index) => rollUp['l' + (index + 1)] = element);
     return rollUp;
+  }
+
+
+  updateActor() {
+    this.actor = {
+      type: 'User',
+      id: this.authService.currentUser.did,
+    }
   }
 }

@@ -30,6 +30,6 @@ export class AppComponent implements OnInit{
 
   }
   ngOnInit(): void {
-    // this.telemetryService.initializeTelemetry();
+     this.telemetryService.initializeTelemetry();
   }
 }

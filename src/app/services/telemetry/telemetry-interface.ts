@@ -1,3 +1,4 @@
+import { IActor } from "@project-sunbird/client-services/telemetry";
 
 export interface Context {
     mode: string;
@@ -155,6 +156,7 @@ export interface TelemetryEventOptions {
     'context'?: ITelemetryContextData;
     'object'?: TelemetryObject | any;
     'tags'?: Array<string>;
+    'actor'?: IActor;
 }
 export interface ITelemetryEvent {
     'edata': IStartEventData | IImpressionEventData | IInteractEventEdata | IShareEventData
