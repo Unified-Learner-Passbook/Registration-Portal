@@ -351,6 +351,7 @@ export class RegistrationFormComponent implements OnInit {
       ).subscribe((res: any) => {
         this.isLoading = false;
         console.log("final", res);
+        this.telemetryService.updateActor()
         this.toastMessage.success("", this.generalService.translateString('USER_REGISTERED_SUCCESSFULLY'));
         this.router.navigate(['/dashboard'], { state: { isFirstTimeLogin: true } });
       }, (error: any) => {

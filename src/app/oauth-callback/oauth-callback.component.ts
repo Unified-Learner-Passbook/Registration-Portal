@@ -71,6 +71,7 @@ export class OauthCallbackComponent implements OnInit {
               localStorage.setItem('currentUser', JSON.stringify(res.userData[0]));
             }
             //telemetry to add impression event
+            this.telemetryService.updateActor()
             this.raiseInteractEvent('login-success');
             this.authService.getSchoolDetails().subscribe((response: any) => {
               this.router.navigate(['/dashboard']);

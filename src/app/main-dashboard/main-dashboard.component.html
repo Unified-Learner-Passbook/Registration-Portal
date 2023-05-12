@@ -32,7 +32,7 @@
 
       <div class="d-flex gap-20 text-center">
         <div class="vertical-card">
-          <div class="d-flex align-item-center" routerLink="register-entity">
+          <div class="d-flex align-item-center" routerLink="register-entity" (click)="raiseInteractEvent('register-issue')">
             <div>
               {{'REGISTER_ISSUE_MANAGE_CERT' | translate }}
             </div>
@@ -42,7 +42,7 @@
           </div>
         </div>
         <div class="vertical-card">
-          <div class="d-flex align-item-center" routerLink="claim-approval">
+          <div class="d-flex align-item-center" routerLink="claim-approval" (click)="raiseInteractEvent('student-issue')">
             <div>
               {{'STUD_REGISTRATION_CLAIM' | translate }}
             </div>
