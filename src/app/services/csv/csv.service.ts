@@ -11,8 +11,7 @@ import { environment } from 'src/environments/environment';
 export class CsvService {
   baseUrl: string;
 
-  constructor(private generalService: GeneralService) 
-  { 
+  constructor(private generalService: GeneralService) {
     this.baseUrl = environment.baseUrl;
 
   }
@@ -45,6 +44,6 @@ export class CsvService {
       return;
     }
 
-    return Papa.unparse({ data, fields: columns });
+    return Papa.unparse({ data, fields: columns }, { quotes: true });
   }
 }

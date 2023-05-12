@@ -33,7 +33,7 @@ export class DocViewComponent implements OnInit, OnDestroy {
     public unsubscribe$ = new Subject<void>();
     private readonly canGoBack: boolean;
     blob: Blob;
-    // canShareFile = !!navigator.share;
+    canShareFile = !!navigator.share;
     constructor(
         public readonly generalService: GeneralService,
         private readonly router: Router,
@@ -90,6 +90,8 @@ export class DocViewComponent implements OnInit, OnDestroy {
                         }, error => {
                             this.isLoading = false;
                         });
+                    } else {
+                        this.isLoading = false;
                     }
                 });
         }

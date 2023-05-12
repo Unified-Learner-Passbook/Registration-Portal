@@ -78,10 +78,10 @@ export class ClaimApprovalComponent implements OnInit {
       "filters": {
         "claim_status": {
           "eq": claimStatus
-        },
-        "school_udise": {
-          "eq": this.authService.schoolDetails?.udiseCode
         }
+        // "school_udise": {
+        //   "eq": this.authService.schoolDetails?.udiseCode
+        // }
       }
     }
     this.isLoading = true;
@@ -90,20 +90,19 @@ export class ClaimApprovalComponent implements OnInit {
     this.page = 1;
     this.generalService.postStudentData('/studentDetail', search).subscribe((res) => {
 
-      console.log('studentDetail length', res.result.length);
       console.log('studentDetail list', res.result);
       this.studentDetails = res.result.map((item: any) => {
         item.osCreatedAt = this.generalService.getDaysDifference(item.osCreatedAt);
 
-        if (item.enrollon) {
-          if (dayjs(item.enrollon).isValid()) {
-            item.enrollon = dayjs(item.enrollon).format();
-          } else if (dayjs(item.enrollon, 'MM/YYYY').isValid()) {
-            item.enrollon = dayjs(item.enrollon, 'MM/YYYY').format();
-          } else if (dayjs(item.enrollon, 'DD-MM-YYYY').isValid()) {
-            item.enrollon = dayjs(item.enrollon, 'DD-MM-YYYY').format();
+        if (item.studentdetail.enrollon) {
+          if (dayjs(item.studentdetail.enrollon).isValid()) {
+            item.studentdetail.enrollon = dayjs(item.studentdetail.enrollon).format();
+          } else if (dayjs(item.studentdetail.enrollon, 'MM/YYYY').isValid()) {
+            item.studentdetail.enrollon = dayjs(item.studentdetail.enrollon, 'MM/YYYY').format();
+          } else if (dayjs(item.studentdetail.enrollon, 'DD-MM-YYYY').isValid()) {
+            item.studentdetail.enrollon = dayjs(item.studentdetail.enrollon, 'DD-MM-YYYY').format();
           } else {
-            item.enrollon = '';
+            item.studentdetail.enrollon = '';
           }
         }
         return item;
@@ -132,20 +131,19 @@ export class ClaimApprovalComponent implements OnInit {
         "expirationDate": nextYear.toISOString()
       },
       "credentialSubject": {
-        "mobile": user.mobile,
-        "guardian_name": user.gaurdian_name,
-        "school_name": user.school_name,
-        "grade": user.grade,
-        "academic_year": user.acdemic_year,
-        "osid": user.osid,
-        "student_id": user.student.student_id,
-        "student_name": user.student.student_name,
-        "dob": user.student.dob,
-        "aadhar_token": user.student.aadhar_token,
-        "reference_id": user.student.reference_id,
-        "student_osid": user.student_id,
-        "school_id": this.authService.schoolDetails?.udiseCode,
-        "enrollon": user.enrollon
+        "mobile": user?.studentdetail?.mobile,
+        "guardian_name": user?.studentdetail?.gaurdian_name,
+        "school_name": user.student?.school_name,
+        "grade": user?.studentdetail?.grade,
+        "academic_year": user?.studentdetail?.acdemic_year,
+        "osid": user?.studentdetail?.osid,
+        "school_id": user?.student?.school_udise,
+        "student_id": user.student?.student_id,
+        "student_name": user.student?.student_name,
+        "dob": user.student?.dob,
+        "aadhar_token": user.student?.aadhar_token,
+        "reference_id": user.student?.reference_id,
+        "student_osid": user.student?.osid
       }
 
     }
@@ -172,18 +170,18 @@ export class ClaimApprovalComponent implements OnInit {
     const payload = {
       "issuer": this.authService.schoolDetails?.did,
       "credentialSubject": {
-        "mobile": user.mobile,
-        "guardian_name": user.gaurdian_name,
-        "school_name": user.school_name,
-        "grade": user.grade,
-        "academic_year": user.acdemic_year,
-        "osid": user.osid,
-        "student_id": user.student.student_id,
-        "student_name": user.student.student_name,
-        "dob": user.student.dob,
-        "aadhar_token": user.student.aadhar_token,
-        "reference_id": user.student.reference_id,
-        "student_osid": user.student_id,
+        "mobile": user?.studentdetail?.mobile,
+        "guardian_name": user?.studentdetail?.gaurdian_name,
+        "school_name": user.student?.school_name,
+        "grade": user?.studentdetail?.grade,
+        "academic_year": user?.studentdetail?.acdemic_year,
+        "osid": user?.studentdetail?.osid,
+        "student_id": user.student?.student_id,
+        "student_name": user.student?.student_name,
+        "dob": user.student?.dob,
+        "aadhar_token": user.student?.aadhar_token,
+        "reference_id": user.student?.reference_id,
+        "student_osid": user.student?.osid
       }
     }
 
