@@ -155,19 +155,19 @@
                     </p>
                 </div>
                 <div class="mb-3 pb-10">
-                    <label for="udiseId" class="fs-14">{{'UDISE_ID' | translate}}<span
+                    <label for="udiseId">{{'UDISE_ID' | translate}}<span
                             class="text-danger">*</span></label>
                     <input type="text" placeholder="{{'ENTER_SCHOOL_UDISE' | translate}}" name="udiseId" id="udiseId"
-                        formControlName="udiseId" class="form-control w-82">
+                        formControlName="udiseId" class="form-control">
                     <p class="text-red pt-2 mb-0"
                         *ngIf="udiseLinkFormControl?.udiseId?.invalid && udiseLinkFormControl?.udiseId?.touched">
                         {{'ENTER_SCHOOL_UDISE' | translate}}</p>
                 </div>
                 <div class="mb-3 pb-10">
-                    <label for="password" class="fs-14">{{'PASSWORD' | translate}}<span
+                    <label for="password">{{'PASSWORD' | translate}}<span
                             class="text-danger">*</span></label>
                     <input type="password" placeholder="{{'ENTER_PASSWORD' | translate}}" name="password" id="password"
-                        formControlName="password" class="form-control w-82">
+                        formControlName="password" class="form-control">
                     <p class="text-red pt-2 mb-0"
                         *ngIf="udiseLinkFormControl?.password?.invalid && udiseLinkFormControl?.password?.touched">
                         {{'ENTER_PASSWORD' | translate}}</p>

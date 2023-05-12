@@ -204,12 +204,15 @@ export class RegistrationFormComponent implements OnInit {
     this.schoolList = [];
     this.udiseLinkForm.controls.block.setValue('');
     this.udiseLinkForm.controls.school.setValue('');
-
+    this.isLoading = true;
     this.authService.getBlockList({ districtCode: selectedDistrictCode }).subscribe((res) => {
+      this.isLoading = false;
       if (res.status) {
         this.blockList = res.data;
       }
-    })
+    }, error => {
+      this.isLoading = false;
+    });
   }
 
   onBlockChange(selectedBlockCode: string) {
