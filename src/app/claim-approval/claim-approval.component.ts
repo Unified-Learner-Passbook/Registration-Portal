@@ -92,7 +92,9 @@ export class ClaimApprovalComponent implements OnInit {
 
       console.log('studentDetail list', res.result);
       this.studentDetails = res.result.map((item: any) => {
-        item.osCreatedAt = this.generalService.getDaysDifference(item.student.osCreatedAt);
+        if (item.studentdetail.osCreatedAt) {
+          item.studentdetail.osCreatedAt = this.generalService.getDaysDifference(item.studentdetail.osCreatedAt);
+        }
 
         // if (item.studentdetail.enrollon) {
         //   if (dayjs(item.studentdetail.enrollon).isValid()) {
