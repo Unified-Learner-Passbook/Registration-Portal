@@ -159,7 +159,12 @@ formly-autocomplete-type,
 form-group {
     color: #000000;
 }
-
+.text-blk{
+    color: #282828 !important;
+}
+.text-grey1{
+    color: #555454 !important;
+}
 .mb30 {
     margin-top: -30px;
 }
@@ -391,6 +396,9 @@ formly-autocomplete-type .ng-select {
 }
 
 .fs-22 {
+    font-size: 22px;
+}
+.fs-24 {
     font-size: 22px;
 }
 
@@ -780,7 +788,7 @@ textarea.jsoneditor-text {
 }
 .horizontal-line {
     height: 0;
-    width: 37%;
+    width: 39%;
     margin: 0 auto;
 }
 .text-gray-0 {
@@ -1229,3 +1237,59 @@ ngx-extended-pdf-viewer{
 //     padding-right: 5px !important;
 //     padding-left: 5px !important;
 // }
+
+.text-yellow {
+    color: #ff740f;
+  }
+  .text-blue {
+    color: #050c44;
+  }
+  .page-title {
+    font-size: 38px;
+    font-weight: 700;
+    margin-top: 50px;
+  }
+  
+  .bullet-point {
+    width: 486px;
+    margin: 0 auto;
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: #050c44;
+    margin: 2rem auto 0;
+    list-style-type: none;
+  }
+  
+  .check-icon {
+    img {
+      width: 2rem;
+      height: 2rem;
+    }
+    margin-right: 1rem;
+  }
+  .bullet-point li {
+    display: flex;
+    line-height: 1.4;
+    justify-content: flex-start;
+    align-items: baseline;
+    padding: 1rem 0;
+  }
+  .reg-img {
+    margin-top: 1rem;
+  }
+  .pr-90{
+    padding: 12px 70px !important;
+  }
+  .pr-80{
+    padding: 12px 80px !important;
+  }
+  .square{
+    width: 158.15px;
+    height: 158.15px;
+    background: #FCFCFC;
+    box-shadow: 0px 2.87542px 21.5657px rgba(0, 0, 0, 0.15);
+    border-radius: 10.064px;
+  }
+  .jc-content-center{
+    justify-content: center;
+  }
