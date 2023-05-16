@@ -33,6 +33,7 @@ export class RegistrationFormComponent implements OnInit {
   schoolUdiseInput: string = '';
   password: string = '';
   isLoading = false;
+  schoolCount: number = 1;
 
   stateList: IState[];
   districtList: IDistrict[];
@@ -222,15 +223,40 @@ export class RegistrationFormComponent implements OnInit {
 
     this.isLoading = true;
 
+    // const payload = {
+    //   "regionType": "2",
+    //   "regionCd": this.udiseLinkForm.controls.district.value,
+    //   "sortBy": "schoolName"
+    // }
+    // this.authService.getSchoolList(payload).subscribe((res) => {
+    //   this.isLoading = false;
+    //   if (res.status) {
+    //     this.schoolList = res.data.pagingContent.filter(item => item.eduBlockCode === this.udiseLinkForm.controls.block.value);
+    //   }
+    // }, error => {
+    //   this.isLoading = false;
+    // });
+
+    
+    this.getSchools();
+  }
+
+
+  getSchools() {
     const payload = {
       "regionType": "2",
       "regionCd": this.udiseLinkForm.controls.district.value,
-      "sortBy": "schoolName"
+      "sortBy": "schoolName",
+      "pageSize": "500",
+      "pageNo": this.schoolCount
     }
     this.authService.getSchoolList(payload).subscribe((res) => {
-      this.isLoading = false;
       if (res.status) {
-        this.schoolList = res.data.pagingContent.filter(item => item.eduBlockCode === this.udiseLinkForm.controls.block.value);
+        this.schoolList = [...this.schoolList, ...res.data.pagingContent.filter(item => item.eduBlockCode === this.udiseLinkForm.controls.block.value)];
+        this.schoolCount++;
+        this.getSchools();
+      } else {
+        this.isLoading = false;
       }
     }, error => {
       this.isLoading = false;
