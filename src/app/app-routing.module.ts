@@ -42,6 +42,8 @@ import { AuthenticationGuard } from './utility/authentication.guard';
 import { MyAccountComponent } from './my-account/my-account.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { EkycComponent } from './ekyc/ekyc.component';
+import{MeriPehchaanComponent} from './meri-pehchaan/meri-pehchaan.component'
+import {LoginManavSampadaComponent} from './login-manav-sampada/login-manav-sampada.component'
 
 // import { CreateCertificateComponent } from './create-certificate/create-certificate.component';
 // import { FaqComponent } from './custom-components/faq/faq.component';
@@ -69,6 +71,26 @@ const routes: Routes = [
   {
     path: 'sign-in',
     component: RegistrationComponent,
+    data: {
+      showToolbar: false,
+      telemetry: {
+        env: 'sign-in', pageid: 'sign-in', type: 'edit', subtype: 'scroll'
+      }
+    }
+  },
+  {
+    path: 'meri-pechan-login',
+    component: MeriPehchaanComponent,
+    data: {
+      showToolbar: false,
+      telemetry: {
+        env: 'sign-in', pageid: 'sign-in', type: 'edit', subtype: 'scroll'
+      }
+    }
+  },
+  {
+    path: 'manav-sampada',
+    component: LoginManavSampadaComponent,
     data: {
       showToolbar: false,
       telemetry: {

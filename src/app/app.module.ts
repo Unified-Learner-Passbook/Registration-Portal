@@ -154,6 +154,8 @@ import { MyAccountComponent } from './my-account/my-account.component';
 import { CommonModule } from '@angular/common';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { EkycComponent } from './ekyc/ekyc.component';
+import { MeriPehchaanComponent } from './meri-pehchaan/meri-pehchaan.component';
+import { LoginManavSampadaComponent } from './login-manav-sampada/login-manav-sampada.component';
 console.log(configData['default']);
 
 @NgModule({
@@ -206,7 +208,9 @@ console.log(configData['default']);
     RegistrationFormComponent,
     MyAccountComponent,
     LandingPageComponent,
-    EkycComponent
+    EkycComponent,
+    MeriPehchaanComponent,
+    LoginManavSampadaComponent
 
   ],
   imports: [
