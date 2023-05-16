@@ -353,7 +353,7 @@ export class RegistrationFormComponent implements OnInit {
           if (res?.userData?.school) {
             localStorage.setItem('schoolDetails', JSON.stringify(res.userData.school));
           }
-          return this.credentialService.issueCredential()
+          return this.credentialService.issueCredential();
         })
       ).subscribe((res: any) => {
         this.isLoading = false;
