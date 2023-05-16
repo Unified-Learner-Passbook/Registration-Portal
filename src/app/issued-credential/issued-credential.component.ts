@@ -72,6 +72,12 @@ export class IssuedCredentialComponent implements OnInit {
     this.setGrades();
   }
 
+  reset() {
+    if (Object.keys(this.model).length) {
+      this.model = {};
+      this.getCredentials();
+    }
+  }
   setGrades() {
     const ordinals = this.utilService.getNumberOrdinals(1, 10);
     this.grades = ordinals.map((item: string, index: number) => {
@@ -112,16 +118,17 @@ export class IssuedCredentialComponent implements OnInit {
     this.credentialService.getCredentials('student', payload).subscribe((res) => {
       this.isLoading = false;
       // Filter out credentials for students only
-      this.issuedCredentials = res.filter((credential: any) => !!credential?.credentialSubject?.grade).map((item: any) => {
-        if (item.credentialSubject.enrolled_on && !dayjs(item.credentialSubject.enrolled_on).isValid()) {
-          item.credentialSubject.enrolled_on = dayjs(item.credentialSubject.enrolled_on, 'MM/YYYY').format();
+      this.issuedCredentials = res.filter((credential: any) => !!credential?.credentialSubject?.grade);
+      // .map((item: any) => {
+      //   if (item.credentialSubject.enrolled_on && !dayjs(item.credentialSubject.enrolled_on).isValid()) {
+      //     item.credentialSubject.enrolled_on = dayjs(item.credentialSubject.enrolled_on, 'MM/YYYY').format();
 
-          if (item.credentialSubject.enrolled_on === 'Invalid Date') {
-            item.credentialSubject.enrolled_on = '';
-          }
-        }
-        return item;
-      });
+      //     if (item.credentialSubject.enrolled_on === 'Invalid Date') {
+      //       item.credentialSubject.enrolled_on = '';
+      //     }
+      //   }
+      //   return item;
+      // });
       this.pageChange();
     }, (error: any) => {
       this.isLoading = false;

@@ -6,7 +6,7 @@ import {
   HttpInterceptor,
   HttpErrorResponse
 } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { EMPTY, Observable, of } from 'rxjs';
 import { AuthService } from '../services/auth/auth.service';
 import { tap } from 'rxjs/operators';
 import { ToastMessageService } from '../services/toast-message/toast-message.service';
@@ -36,6 +36,7 @@ export class AuthInterceptor implements HttpInterceptor {
           }
           this.toastMessage.error("", this.generalService.translateString('YOUR_SESSION_EXPIRE'))
           this.authService.doLogout();
+          return EMPTY;
         }
       }));
   }

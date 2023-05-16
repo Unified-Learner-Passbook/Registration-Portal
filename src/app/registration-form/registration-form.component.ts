@@ -13,6 +13,7 @@ import { TelemetryService } from '../services/telemetry/telemetry.service';
 import { IImpressionEventInput, IInteractEventInput } from '../services/telemetry/telemetry-interface';
 import { environment } from 'src/environments/environment';
 import { DataService } from '../services/data/data-request.service';
+import { IBlock, IDistrict, ISchool, IState } from '../app-interface';
 
 @Component({
   selector: 'app-registration-form',
@@ -32,6 +33,17 @@ export class RegistrationFormComponent implements OnInit {
   schoolUdiseInput: string = '';
   password: string = '';
   isLoading = false;
+
+  stateList: IState[];
+  districtList: IDistrict[];
+  blockList: IBlock[];
+  schoolList: ISchool[];
+
+  selectedState: IState;
+  selectedDistrict: IDistrict;
+  selectedBlock: IBlock;
+  selectedSchool: ISchool;
+
   @ViewChild('udiseLinkModal') udiseLinkModal: TemplateRef<any>;
   @ViewChild('declarationModal') declarationModal: TemplateRef<any>;
 
@@ -45,6 +57,10 @@ export class RegistrationFormComponent implements OnInit {
   });
 
   udiseLinkForm = new FormGroup({
+    state: new FormControl('', [Validators.required]),
+    district: new FormControl('', [Validators.required]),
+    block: new FormControl('', [Validators.required]),
+    school: new FormControl(null, [Validators.required]),
     udiseId: new FormControl(null, [Validators.required]),
     password: new FormControl(null, [Validators.required]),
   })
@@ -76,7 +92,9 @@ export class RegistrationFormComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.getStateList();
+  }
 
 
   get udiseLinkFormControl() {
@@ -127,7 +145,7 @@ export class RegistrationFormComponent implements OnInit {
       backdrop: 'static',
       animation: true,
       centered: true,
-      size: 'sm'
+      size: 'md'
     }
     console.log("schoolUdiseInput", this.schoolUdiseInput);
     this.udiseLinkModalRef = this.modalService.open(this.udiseLinkModal, options);
@@ -150,6 +168,79 @@ export class RegistrationFormComponent implements OnInit {
     }
   }
 
+  getStateList() {
+    this.authService.getStateList().subscribe((res) => {
+      if (res.status) {
+        this.stateList = res.data;
+        this.udiseLinkForm.controls.state.setValue('09'); //PS Hard coded to Uttar Pradesh
+        this.onStateChange(this.udiseLinkForm.controls.state.value);
+      }
+    });
+  }
+
+  onStateChange(selectedStateCode: string) {
+    this.selectedState = this.stateList.find(item => item.stateCode === selectedStateCode);
+    this.districtList = [];
+    this.blockList = [];
+    this.schoolList = [];
+    this.udiseLinkForm.controls.district.setValue('');
+    this.udiseLinkForm.controls.block.setValue('');
+    this.udiseLinkForm.controls.school.setValue('');
+    this.isLoading = true;
+
+    this.authService.getDistrictList({ stateCode: selectedStateCode }).subscribe((res) => {
+      this.isLoading = false;
+      if (res.status) {
+        this.districtList = res.data;
+      }
+    }, error => {
+      this.isLoading = false;
+    });
+  }
+
+  onDistrictChange(selectedDistrictCode: string) {
+    this.selectedDistrict = this.districtList.find(item => item.districtCode === selectedDistrictCode);
+    this.blockList = [];
+    this.schoolList = [];
+    this.udiseLinkForm.controls.block.setValue('');
+    this.udiseLinkForm.controls.school.setValue('');
+    this.isLoading = true;
+    this.authService.getBlockList({ districtCode: selectedDistrictCode }).subscribe((res) => {
+      this.isLoading = false;
+      if (res.status) {
+        this.blockList = res.data;
+      }
+    }, error => {
+      this.isLoading = false;
+    });
+  }
+
+  onBlockChange(selectedBlockCode: string) {
+    this.selectedBlock = this.blockList.find(item => item.blockCode === selectedBlockCode);
+    this.schoolList = [];
+    this.udiseLinkForm.controls.school.setValue('');
+
+    this.isLoading = true;
+
+    const payload = {
+      "regionType": "2",
+      "regionCd": this.udiseLinkForm.controls.district.value,
+      "sortBy": "schoolName"
+    }
+    this.authService.getSchoolList(payload).subscribe((res) => {
+      this.isLoading = false;
+      if (res.status) {
+        this.schoolList = res.data.pagingContent.filter(item => item.eduBlockCode === this.udiseLinkForm.controls.block.value);
+      }
+    }, error => {
+      this.isLoading = false;
+    });
+  }
+
+  onSchoolChange(selectedSchoolCode: string) {
+    this.selectedSchool = this.schoolList.find(item => item.udiseCode === selectedSchoolCode);
+  }
+
   submitDeclarationForm(isConfirmed: boolean) {
     this.isDeclarationSubmitted = isConfirmed;
     this.consentModalRef.close()
@@ -160,16 +251,22 @@ export class RegistrationFormComponent implements OnInit {
   }
 
   verifyUDISE() {
+    if (this.udiseLinkForm.value.udiseId !== this.selectedSchool.udiseCode) {
+      this.toastMessage.error('', this.generalService.translateString('SCHOOL_UDISE_NOT_MATCHED'));
+      return;
+    }
     const payload = {
-      url: `${this.baseUrl}/v1/sso/udise/school/list`,
+      url: `${this.baseUrl}/v1/school/verify`,
       data: {
-        udise: this.udiseLinkForm.value.udiseId,
-        password: this.udiseLinkForm.value.password
+        password: this.udiseLinkForm.value.password,
+        requestbody: {
+          udiseCode: this.udiseLinkForm.value.udiseId
+        }
       }
     }
     this.dataService.post(payload).subscribe((res: any) => {
-      if (res?.success && res?.status === 'found') {
-        this.schoolDetails = res.data;
+      if (res?.status) {
+        this.schoolDetails = res.response.data;
         this.linkUDISE();
       } else {
         this.toastMessage.error('', this.generalService.translateString('INVALID_SCHOOL_UDISE_OR_PASSWORD'));
@@ -182,7 +279,7 @@ export class RegistrationFormComponent implements OnInit {
 
   onSubmit() {
     console.log(this.registrationForm.value);
-
+    console.log('schoolDetails', this.schoolDetails);
     if (!this.isDeclarationSubmitted) {
       this.consentModalRef = this.modalService.open(this.declarationModal, { animation: true, centered: true });
       return;
@@ -206,9 +303,37 @@ export class RegistrationFormComponent implements OnInit {
             username: this.registrationDetails.uuid,
             consent: "yes",
             consentDate: new Date().toISOString().substring(0, 10),
-            did: ""
+            did: "",
+            school_name: this.selectedSchool.schoolName,
+            stateCode: this.selectedState.stateCode,
+            stateName: this.selectedState.stateName,
+            districtCode: this.selectedDistrict.districtCode,
+            districtName: this.selectedDistrict.districtName,
+            blockCode: this.selectedBlock.blockCode,
+            blockName: this.selectedBlock.blockName,
           },
-          school: { ...this.schoolDetails, stateCode: 16, did: "" } //ToDO remove hardcoded stateCode
+          school: {
+            clientId: this.schoolDetails.clientId || '-',
+            clientSecret: this.schoolDetails.clientSecret || '-',
+            schoolName: this.schoolDetails.schoolName,
+            udiseCode: this.schoolDetails.udiseCode,
+            schoolCategory: this.schoolDetails.schCategoryId,
+            schoolManagementCenter: this.schoolDetails.schMgmtCenterId,
+            schoolManagementState: 0,
+            schoolType: this.schoolDetails.schTypeId,
+            classFrom: this.schoolDetails.lowestClass,
+            classTo: this.schoolDetails.highestClass,
+            stateCode: typeof this.schoolDetails?.eduStateCode === 'string' ? Number(this.schoolDetails?.eduStateCode) : this.schoolDetails?.eduStateCode,
+            stateName: this.selectedState.stateName,
+            districtName: this.selectedDistrict.districtName,
+            blockName: this.selectedBlock.blockName,
+            locationType: this.schoolDetails.schLocTypeId,
+            headOfSchoolMobile: '-',
+            respondentMobile: '-',
+            alternateMobile: '-',
+            schoolEmail: this.schoolDetails.email || '-',
+            did: ''
+          }
         },
         digimpid: this.registrationDetails.meripehchanid,
       }

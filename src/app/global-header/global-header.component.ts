@@ -26,7 +26,7 @@ export class GlobalHeaderComponent implements OnInit {
     this.getAllLanguages();
     this.checkNewClaims();
     this.generalService.getPendingRequestCount().subscribe((res: any) => {
-      this.isClaimsPending = res > 0;
+      this.isClaimsPending = res.count > 0;
     })
   }
 
@@ -53,10 +53,10 @@ export class GlobalHeaderComponent implements OnInit {
         "filters": {
           "claim_status": {
             "eq": 'pending'
-          },
-          "school_udise": {
-            "eq": this.authService.schoolDetails?.udiseCode
           }
+          // "school_udise": {
+          //   "eq": this.authService.schoolDetails?.udiseCode
+          // }
         }
       }
 

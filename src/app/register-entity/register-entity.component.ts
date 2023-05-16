@@ -144,7 +144,7 @@ export class RegisterEntityComponent implements OnInit {
               // const columnFields = Object.keys(res.result.schema.properties);
               // const columnFields = ["studentName", "student_id", "mobile", "gaurdian_name", "aadhar_token", "dob"] //TODO: Add label field in schema and use it here
               const columnFields = ["Student Name", "Student Registration Number", "Mobile", "Guardian Name", "Aadhaar ID", "Date of Birth", "Gender", "Enrolled On"];
-              const sampleData = ["Avinash Dubey", "RC-901", "8888888888", "Guardian Name", "999999999999", "09/07/1999", "Male", "07/2020"];
+              const sampleData = ["Firstname Lastname", "RC-901", "8888888888", "Guardian Name", "999999999999", "09/07/1999", "Male", "07/2020"];
               const csvContent = this.csvService.generateCSV(columnFields, sampleData);
               this.csvService.downloadCSVTemplate(csvContent, `${this.model.certificateType}-template`);
             } else {
@@ -184,7 +184,7 @@ export class RegisterEntityComponent implements OnInit {
       // this.allDataRows = this.parsedCSV.map(item => Object.values(item));
 
       this.parsedCSV = this.parsedCSV.map((item: any) => {
-        const enrolledOn =  dayjs(item["Enrolled On"], 'MM/YYYY').format('DD/MM/YYYY');
+        const enrolledOn = dayjs(item["Enrolled On"], 'MM/YYYY').toISOString();
         return {
           studentName: item["Student Name"],
           student_id: item["Student Registration Number"],
@@ -364,7 +364,13 @@ export class RegisterEntityComponent implements OnInit {
           "schoolUdise": this.authService.schoolDetails?.udiseCode,
           "schoolName": this.authService.schoolDetails?.schoolName,
           "academic-year": this.model.academicYear,
-          "school_type": "private"
+          "school_type": "private",
+          "stateCode": this.authService.currentUser.stateCode,
+          "stateName": this.authService.currentUser.stateName,
+          "districtCode": this.authService.currentUser.districtCode,
+          "districtName": this.authService.currentUser.districtName,
+          "blockCode": this.authService.currentUser.blockCode,
+          "blockName": this.authService.currentUser.blockName
         },
         "studentDetails": list
       }
@@ -576,7 +582,7 @@ export class RegisterEntityComponent implements OnInit {
         "Error": item.error
       }
     });
-    const csv = Papa.unparse(csvData);
+    const csv = Papa.unparse(csvData, { quotes: true });
     this.utilService.downloadFile(`${this.model.grade}-registration-report.csv`, 'text/csv;charset=utf-8;', csv);
   }
 
@@ -596,7 +602,7 @@ export class RegisterEntityComponent implements OnInit {
         'Error': item.error
       }
     });
-    const csv = Papa.unparse(csvData);
+    const csv = Papa.unparse(csvData, { quotes: true });
     this.utilService.downloadFile(`${this.model.grade}-credentials-report.csv`, 'text/csv;charset=utf-8;', csv);
   }
 
