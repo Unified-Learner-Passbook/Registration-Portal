@@ -17,7 +17,7 @@
       <p class="text-danger" *ngIf="aadharId.invalid && aadharId.touched">{{'INCORRECT_AADHAR' | translate}}</p>
     </div>
     <div class="pb-10">
-      <button type="submit" class="btn btn-primary mt-4"  data-toggle="modal" data-target="#exampleModalCenter">{{'VERIFY'| translate}}</button>
+      <button type="submit" [disabled]="aadharForm.invalid" class="btn btn-primary mt-4"  data-toggle="modal" data-target="#exampleModalCenter">{{'VERIFY'| translate}}</button>
     </div>
 
     <!-- Modal -->
@@ -35,7 +35,7 @@
                 {{'LINK_YOUR_UDISE'| translate}}
               </div>
               <div>
-                <button _ngcontent-coo-c168="" [disabled]="aadharForm.invalid" type="submit" class="custom-button1 blue-button mt-20 pr-90 fs-14">{{'LINK_NOW'| translate}} </button>
+                <button [disabled]="aadharForm.invalid" type="submit" class="custom-button1 blue-button mt-20 pr-90 fs-14">{{'LINK_NOW'| translate}} </button>
               </div>
             </div>
           </div>
