@@ -7,6 +7,7 @@ import { IImpressionEventInput, IInteractEventInput } from '../services/telemetr
 import { TelemetryService } from '../services/telemetry/telemetry.service';
 import { ToastMessageService } from '../services/toast-message/toast-message.service';
 import { environment } from 'src/environments/environment';
+declare var $: any;
 
 @Component({
   selector: 'app-registration',
@@ -37,6 +38,18 @@ export class RegistrationComponent implements OnInit {
     if (this.authService.isLoggedIn) {
       this.router.navigate(['/dashboard']);
     }
+
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+
+      var href = $(e.target).attr('href');
+      var $curr = $(".process-model  a[href='" + href + "']").parent();
+
+      $('.process-model li').removeClass();
+
+      $curr.addClass("active");
+      $curr.prevAll().addClass("visited");
+  });
+ 
   }
   ngAfterViewInit(): void {
    

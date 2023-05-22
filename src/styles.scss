@@ -15,6 +15,10 @@
 @import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
 @import "~jsoneditor/dist/jsoneditor.min.css";
 
+
+html , body{
+    overflow-x: hidden;
+}
 :root {
     // SB-RC
     // --primaryColor: #1987B6;
@@ -165,6 +169,12 @@ form-group {
 .text-grey1{
     color: #555454 !important;
 }
+.text-grey2{
+    color: #54595E !important;
+}
+.bg-grey1{
+    background: #E5E5E5 !important;
+}
 .mb30 {
     margin-top: -30px;
 }
@@ -221,11 +231,13 @@ body {
 .fs-8 {
     font-size: 0.7rem;
 }
+.font-600 {
+    font-weight: 600 !important;
+}
 
 .font-700 {
     font-weight: 700 !important;
 }
-
 .w-70 {
     width: 70% !important;
 }
@@ -791,6 +803,11 @@ textarea.jsoneditor-text {
     width: 39%;
     margin: 0 auto;
 }
+.horizontal-line1 {
+    height: 0;
+    width: 57%;
+    margin: 0 auto;
+}
 .text-gray-0 {
     color: #79787c;
 }
@@ -806,8 +823,11 @@ textarea.jsoneditor-text {
 .fs-10 {
     font-size: 10px;
 }
-.fs-16 {
-    font-size: 16px;
+.min-w-100{
+    min-width: 105px !important;
+}
+.fs-18 {
+    font-size: 18px;
 }
 .font-600 {
     font-weight: 600;
@@ -1238,11 +1258,15 @@ ngx-extended-pdf-viewer{
 //     padding-left: 5px !important;
 // }
 
+
 .text-yellow {
     color: #ff740f;
   }
   .text-blue {
     color: #050c44;
+  }
+  .bg-dark-blue{
+    background: #050C44;
   }
   .page-title {
     font-size: 38px;
@@ -1290,6 +1314,51 @@ ngx-extended-pdf-viewer{
     box-shadow: 0px 2.87542px 21.5657px rgba(0, 0, 0, 0.15);
     border-radius: 10.064px;
   }
+  .ht-199{
+    height: 199px !important;
+  }
+  .flex-center{
+    display: flex;
+    justify-content: center;
+    justify-self: center;
+    align-items: center;
+  }
+  .icon-hol{
+    width:31.67px;
+    height:31.67px;
+    border-radius: 50%;
+    display: flex;
+    background: #050C44;
+    padding: 0 !important;
+  }
   .jc-content-center{
     justify-content: center;
+  }
+  .border-none{
+    border: none !important;
+  }
+  .croos-btn{
+    background: #E5E5E5 !important;
+    width: 24px !important;
+    height: 24px !important;
+    border-radius: 29px !important;
+    margin-right: 5px !important;
+    margin-top: 5px !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+  }
+  .content-ht{
+    background: #FFFFFF !important;
+    border: 1px solid #DEE2E6 !important;
+    box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.12), 0px 20px 20px rgba(0, 0, 0, 0.08) !important;
+    border-radius: 8px !important;
+    width: 465px !important;
+    height: 167px !important;
+  }
+  .custom-button1{
+    width: 385px;
+    height: 44px;
+    background: #050C44;
+    border-radius: 8px;
   }
