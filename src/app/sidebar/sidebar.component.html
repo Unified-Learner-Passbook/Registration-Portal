@@ -1,17 +1,17 @@
 <div class="sidebar">
   <section class='sidebarContainer'>
-    <div *ngFor="let item of menuList" class="menu" [routerLink]="[item.link]" routerLinkActive="active"
+    <div *ngFor="let item of menuList" class="menu mb-4 s-3" [routerLink]="[item.link]" routerLinkActive="active"
       [routerLinkActiveOptions]="{exact:true}">
       <i [class]="item.class"></i>
       <div class="title">{{item.label}}</div>
     </div>
-    <div class="menu" (click)="logout()">
-      <i class="fa fa-sign-out-alt fs-22 text-primary-color"></i>
+    <div class="menu botm-fixed" (click)="logout()">
+      <i class="fa fa-power-off fs-22 text-primary-color"></i>
       <div class="title">{{'LOGOUT' | translate }}</div>
     </div>
   </section>
 
-  <section *ngIf="showInstructions">
+  <!-- <section *ngIf="showInstructions">
     <div class="instructions pt-5">
       <h6 class="title">
         <i class="fa fa-info-circle"></i>
@@ -29,6 +29,6 @@
         </li>
       </ul>
     </div>
-  </section>
+  </section> -->
 
 </div>

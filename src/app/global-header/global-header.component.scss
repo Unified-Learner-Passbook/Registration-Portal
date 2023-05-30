@@ -58,12 +58,21 @@ header {
 }
 .language{
   border: solid 1px #303972 !important;
-  color: #303972 !important;
-  background: #fff !important;
+  color: #fff !important;
+  background: #050C44 !important;
   padding: 5px 27px;
   border-radius: 5px;
   i{
-    color: #303972 !important;
+    color: #fff !important;
+  }
+}
+.profile-icon{
+  display: flex;
+  align-items: center;
+  margin-left: 15px;
+  i{
+    font-size: 22px;
+    color: #050C44;
   }
 }
 .fa-globe{

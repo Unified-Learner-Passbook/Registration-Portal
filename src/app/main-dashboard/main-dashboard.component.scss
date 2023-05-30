@@ -8,16 +8,12 @@ main {
   // width: 78%;
 }
 .vertical-card{
-  padding: 38px 47px;
-  width: 520px;
-  height: 120px;
+  padding: 38px 47px; 
   background: #FFFFFF;
   box-shadow: 0px 10px 14px rgba(0, 0, 0, 0.16);
   border-radius: 10px;
   font-weight: 500;
   font-size: 20px;
-  line-height: 30px;
-  text-align: center;
   color: #050C44;
 }
 .heading1{
@@ -40,4 +36,36 @@ main {
 }
 .text-right{
   text-align: right;
+}
+
+.box {
+  width: 350px;
+  height: 109px;
+  background: #050C44;
+  box-shadow: 0px 8.24562px 11.5439px rgba(0, 0, 0, 0.16);
+  border-radius: 8px;
+  color: #fff;
+  padding: 15px;
+}
+.icon-siz{
+  font-size: 25px;
+}
+.side-line{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.side-line::after{
+   content: "";
+   display: inline-block;
+   height: 4px;
+   background: #D2D2D2;
+   width: 35%;
+}
+.side-line::before{
+   content: "";
+   display: inline-block;
+   height: 4px;
+   background: #D2D2D2;
+   width: 35%;
 }
