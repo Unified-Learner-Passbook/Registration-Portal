@@ -27,7 +27,7 @@
   </div>
   <div class="d-flex header-btns">
     <div>
-      <i class="fa fa-globe"></i>
+      <i class="fa fa-globe text-white"></i>
       <select class="selectpicker pr-3 mr-3 language" *ngIf="languages?.length" data-width="fit" [(ngModel)]="selectedLanguage"
         (ngModelChange)="changeLanguage()" aria-placeholder="Language">
         <option *ngFor="let language of languages" [value]="language.code">{{language.name}}</option>
@@ -45,6 +45,9 @@
           <a class="dropdown-item" [routerLink]="['claim-approval']">{{'NEW_STUD_REGISTRATION_CLAIM' | translate}}</a>
         </div>
       </div>
+    </div>
+    <div class="profile-icon cursor-pointer" routerLink="/dashboard/my-account">
+      <i class="fa fa-user-circle-o" aria-hidden="true"></i>
     </div>
   </div>
 </header>

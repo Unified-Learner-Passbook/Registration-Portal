@@ -20,12 +20,14 @@
     min-width: 210px;
     border-radius: 0 8px 8px 0;
     border-left: 5px solid transparent;
-    // margin-left: 20px;
+    color: #9C9C9C !important;
+    opacity: .5;
 
     i {
       padding: 0 15px;
       font-size: 17px;
       vertical-align: middle;
+      color: #9C9C9C !important;
     }
   }
 
@@ -34,6 +36,12 @@
     font-weight: 600;
     border-left: 5px solid #ff740f;
     background: #f2f2f2;
+    opacity: 1;
+    font-weight: 600;
+  }
+  .active i {
+    color: #050c44;
+    opacity: 1;
   }
 }
 
@@ -111,4 +119,14 @@
   color: #ccc;
   opacity: 0.7;
   cursor: default;
+}
+.botm-fixed{
+  position: fixed;
+  bottom:3%;
+}
+.sidebarContainer .active{
+  color: #050c44;
+  font-weight: 600;
+  border-left: 5px solid #ff740f;
+  background: #f2f2f2;
 }
