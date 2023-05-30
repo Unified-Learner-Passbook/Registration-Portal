@@ -178,10 +178,9 @@ form-group {
 .mb30 {
     margin-top: -30px;
 }
-
-// .form-group{
-//     font-size: 14px;
-// }
+.mt--4 {
+    margin-top: -4.3%;
+}
 .form-group label {
     font-size: 12px;
     font-weight: 700;
@@ -214,6 +213,9 @@ $primary-color-dark: #000;
 .text-grey-color {
     color: $gray-color;
 }
+.text-bl{
+    color: #3E3E3E;
+}
 
 .form-label {
     color: $primary-color-dark;
@@ -230,6 +232,12 @@ body {
 
 .fs-8 {
     font-size: 0.7rem;
+}
+.font-400 {
+    font-weight: 400 !important;
+}
+.font-500 {
+    font-weight: 500 !important;
 }
 .font-600 {
     font-weight: 600 !important;
@@ -292,11 +300,11 @@ a {
     right: 0;
 }
 
-.modal {
-    .container {
-        padding-bottom: 38px;
-    }
-}
+// .modal {
+//     .container {
+//         padding-bottom: 38px;
+//     }
+// }
 
 formly-field {
     display: block;
@@ -411,11 +419,14 @@ formly-autocomplete-type .ng-select {
     font-size: 22px;
 }
 .fs-24 {
-    font-size: 22px;
+    font-size: 24px;
 }
 
 .fs-25 {
     font-size: 25px;
+}
+.fs-38{
+    font-size: 38px;
 }
 
 .fs-35 {
@@ -800,7 +811,7 @@ textarea.jsoneditor-text {
 }
 .horizontal-line {
     height: 0;
-    width: 39%;
+    width: 100%;
     margin: 0 auto;
 }
 .horizontal-line1 {
@@ -832,11 +843,24 @@ textarea.jsoneditor-text {
 .font-600 {
     font-weight: 600;
 }
+.font-700 {
+    font-weight: 700;
+}
 .pagination li:last-child a,
 .pagination li:first-child a {
     border: none !important;
     background: none !important;
     font-size: 26px;
+}
+.gap-20{
+    gap:20px
+}
+.colr-blue{
+    color: #1766FF;
+    border-bottom: 1px solid #1766FF;
+}
+.colr-blck{
+    color: #414141;
 }
 .title {
     color: #414141;
@@ -910,15 +934,15 @@ textarea.jsoneditor-text {
 .pb-55 {
     padding-bottom: 55px !important;
 }
-.box {
-    width: 31%;
-    border: solid 1px #303972;
-    border-radius: 7px;
-    text-align: right;
-    padding: 20px;
-    background: #303972;
-    color: #fff;
-}
+// .box {
+//     width: 31%;
+//     border: solid 1px #303972;
+//     border-radius: 7px;
+//     text-align: right;
+//     padding: 20px;
+//     background: #303972;
+//     color: #fff;
+// }
 .gap-20 {
     gap: 20px;
 }
@@ -954,9 +978,9 @@ ngx-extended-pdf-viewer{
     height: 380px;
 }
 
-.container{
-    padding-bottom: 30px;
-}
+// .container{
+//     padding-bottom: 30px;
+// }
 // .text-wb {
 //     color: var(--primaryTextColor) !important;
 // }
@@ -1307,6 +1331,10 @@ ngx-extended-pdf-viewer{
   .pr-80{
     padding: 12px 80px !important;
   }
+  .bor-bot{
+    border-bottom: 1px solid #FFF;
+    display: inline-block;
+  }
   .square{
     width: 158.15px;
     height: 158.15px;
@@ -1314,8 +1342,8 @@ ngx-extended-pdf-viewer{
     box-shadow: 0px 2.87542px 21.5657px rgba(0, 0, 0, 0.15);
     border-radius: 10.064px;
   }
-  .ht-199{
-    height: 199px !important;
+  .ht-234{
+    height: 234px !important;
   }
   .flex-center{
     display: flex;
@@ -1350,11 +1378,11 @@ ngx-extended-pdf-viewer{
   }
   .content-ht{
     background: #FFFFFF !important;
-    border: 1px solid #DEE2E6 !important;
+    border: 1px solid #DEE2E6;
     box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.12), 0px 20px 20px rgba(0, 0, 0, 0.08) !important;
     border-radius: 8px !important;
-    width: 465px !important;
-    height: 167px !important;
+    width: 429px !important;
+    height: 128px !important;
   }
   .custom-button1{
     width: 385px;
@@ -1362,3 +1390,127 @@ ngx-extended-pdf-viewer{
     background: #050C44;
     border-radius: 8px;
   }
+
+  //taps design css
+
+  .process-model {
+    list-style: none;
+    padding: 0;
+    position: relative;
+    border: none;
+    z-index: 0;
+    display: flex;
+    justify-content: space-between;
+}
+.process-model li:first-child:after {
+    background: #565656;
+    clip-path: polygon(0 33%, 100% 33%, 95% 45%, 100% 58%, 0 58%, 5% 46%);
+    bottom: 0;
+    content: "";
+    display: block;
+    height: 53px;
+    margin: 0 auto;
+    position: absolute;
+    margin-left: 12.4%;
+    top: -4px;
+    width: 28%;
+    z-index: -1;
+}
+.process-model li:nth-child(2)::after {
+    background: #565656;
+    clip-path: polygon(0 33%, 100% 33%, 95% 45%, 100% 58%, 0 58%, 5% 46%);
+    bottom: 0;
+    content: "";
+    display: block;
+    height: 53px;
+    margin: 0 auto;
+    position: absolute;
+    margin-left: 14.4%;
+    top: -4px;
+    width: 32%;
+    z-index: -1;
+}
+.process-model li.visited::after {
+    background: #FF740F;
+}
+.process-model li:last-child::after {
+    width: 0;
+}
+
+.nav-tabs.process-model > li.active > a, .nav-tabs.process-model > li.active > a:hover, .nav-tabs.process-model > li.active > a:focus, .process-model li a:hover, .process-model li a:focus {
+    border: none;
+    background: transparent;
+
+}
+.visited a .orange-border .white-box{
+    background: #FF740F !important;
+    color: #fff !important;
+}
+.process-model li.active,
+.process-model li.visited {
+    color: #FF740F;
+}
+.process-model li.active a,
+.process-model li.active a:hover,
+.process-model li.active a:focus,
+.process-model li.visited a,
+.process-model li.visited a:hover,
+.process-model li.visited a:focus {
+    color: #FF740F;
+}
+.process-model.contact-us-tab li::after  {
+    display: none; 
+}
+.orange-border{
+    width: 38.51px;
+    height: 38.51px;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    transform: rotate(-45deg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.white-box{
+    width: 33px;
+    height: 33px;
+    background: #565656;
+    border-radius: 6px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.i{
+    transform: rotate(45deg) !important;
+    color: #fff !important;
+}
+.more-icon-preocess .active a .orange-border{
+    border: 1px solid #FF740F !important;
+}
+.more-icon-preocess .active a .white-box{
+   background: #fff;
+}
+.more-icon-preocess .active a .i{
+    color:#FF740F !important;
+ }
+ .more-icon-preocess li a {
+    display: flex;
+    justify-content: center ;
+ }
+ #viewerContainer{ 
+    overflow: hidden !important;
+ }
+ .canvasWrapper{
+    canvas{
+        width: 872px !important;
+        height: 1147px !important;
+    }
+ }
+ .pdfViewer {
+    .page{
+      background: #fff !important;
+    }
+ }
+ #viewer{
+    background: #fff !important;
+ }

@@ -1,45 +1,49 @@
 <div class="container-fluid pt-2 pb-2">
-    <div class="d-flex mx-3 mt-3">
-      <div>
-        <img src="assets/images/headerlogo.png" class="img-fluid" alt="...">
-      </div>
-      <div>
-        <h5 class="card-title fs-14 font-600">
-          <span class="text-gray-0 fs-12">DEPARTMENT OF</span> <br>
-          <span class="fs-16"> Basic Education</span><br>
-          <span class="text-orange fs-10">GOVERNMENT OF UTTAR PRADESH</span>
-        </h5>
-      </div>
-    </div>
-  </div>
-  <div id="sect1" class="container">
+  <div class="d-flex mx-3 mt-3">
     <div>
-      <h1 class="text-center page-title">
-        <span class="text-yellow">ULP </span>
-        <span class="text-blue">Registration Portal</span>
-      </h1>
-      <hr class="horizontal-line" />
- 
-      <div class="text-center mt-5 pt-5 d-flex jc-content-center">
-        <div class="square pt-4"><img src="assets/images/profile.png" alt="">
-          <div class="py-2 pt-3 fs-16 font-600"> {{'PRINCIPAL' | translate }}</div>
-        </div>
-      </div>
+      <img src="assets/images/headerlogo.png" class="img-fluid" alt="...">
     </div>
-    <div class="d-flex justify-content-center mt-4">
-        <button (click)="openSSO('login-auth-principal')" type="button" class="custom-button blue-button mt-20 pr-90 fs-16" >{{'Login_using_Meri_Pehchaan' | translate }}</button>
+    <div>
+      <h5 class="card-title fs-14 font-600">
+        <span class="text-gray-0 fs-12">DEPARTMENT OF</span> <br>
+        <span class="fs-16"> Basic Education</span><br>
+        <span class="text-orange fs-10">GOVERNMENT OF UTTAR PRADESH</span>
+      </h5>
     </div>
   </div>
-  
-  
-  <div class="modal right fade" id="verifyModal1" tabindex="-1" role="dialog" aria-labelledby="verifyModal">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-body text-center">
-          <a href="">{{'LINK_YOUR_UDISE' | translate }} </a>
-        </div>
+</div>
+<div id="sect1" class="container">
+  <div>
+    <div class="flex-center">
+      <div>
+        <h1 class="text-center page-title">
+          <span class="text-yellow">ULP </span>
+          <span class="text-blue">Registration Portal</span>
+        </h1>
+        <hr class="horizontal-line" />
+      </div>
+    </div>
+
+    <div class="text-center mt-5 pt-5 d-flex jc-content-center">
+      <div class="square pt-4"><img src="assets/images/profile.png" alt="">
+        <div class="py-2 pt-3 fs-16 font-600"> {{'PRINCIPAL' | translate }}</div>
       </div>
     </div>
   </div>
-  
-  
+  <div class="d-flex justify-content-center mt-4 mb-5">
+    <button (click)="openSSO('login-auth-principal')" type="button"
+      class="custom-button blue-button mt-20 pr-90 fs-16">{{'Login_using_Meri_Pehchaan' | translate }}</button>
+  </div>
+</div>
+
+
+<div class="modal right fade" id="verifyModal1" tabindex="-1" role="dialog" aria-labelledby="verifyModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body text-center">
+        <a href="">{{'LINK_YOUR_UDISE' | translate }} </a>
+      </div>
+    </div>
+  </div>
+</div>
+

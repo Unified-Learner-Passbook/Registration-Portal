@@ -19,6 +19,7 @@ import { UtilService } from '../services/util/util.service';
 import { environment } from 'src/environments/environment';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CredentialService } from '../services/credential/credential.service';
+declare var $: any;
 
 dayjs.extend(customParseFormat);
 const BATCH_LIMIT = 10;
@@ -114,6 +115,16 @@ export class RegisterEntityComponent implements OnInit {
   ngOnInit(): void {
     this.setAcademicYear();
     this.setGrades();
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+
+      var href = $(e.target).attr('href');
+      var $curr = $(".process-model  a[href='" + href + "']").parent();
+
+      $('.process-model li').removeClass();
+
+      $curr.addClass("active");
+      $curr.prevAll().addClass("visited");
+  });
   }
 
   setGrades() {

@@ -65,11 +65,6 @@ export class SidebarComponent implements OnInit {
         link: '',
         class: 'fa fa-graduation-cap disable'
       },
-      {
-        label: this.generalService.translateString('MY_PROFILE'),
-        link: '/dashboard/my-account',
-        class: 'fa fa-user'
-      }
     ];
   }
 
