@@ -3,7 +3,8 @@
   <aside class="col-sm-3 pl-0">
     <app-sidebar></app-sidebar>
   </aside>
-  <main class="col-sm-9 p-0 bg-light-gery">
+
+  <main class="col-sm-9 p-0 bg-light-grey">
     <p *ngIf="isFirstTimeLogin && currentUser?.name">{{'WELCOME_NOTE' | translate: {name: currentUser?.name} }}</p>
     <div *ngIf="!isChildRoute" class="container">
       <!-- <div class="box">
