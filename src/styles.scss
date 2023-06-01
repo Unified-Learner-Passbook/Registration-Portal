@@ -972,6 +972,9 @@ textarea.jsoneditor-text {
 .min-375{
     min-height: 375px;
 }
+.min-675{
+    min-height: 675px;
+}
 ngx-extended-pdf-viewer{
     display: block;
     overflow: hidden;
@@ -1513,4 +1516,7 @@ ngx-extended-pdf-viewer{
  }
  #viewer{
     background: #fff !important;
+ }
+ .bg-dasboard{
+    background: #FBF8FE;
  }
