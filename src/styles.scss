@@ -249,6 +249,9 @@ body {
 .w-70 {
     width: 70% !important;
 }
+.bg-light-gery{
+    background: #FBF8FE;
+ }
 
 a {
     text-decoration: none !important;
@@ -1508,15 +1511,4 @@ ngx-extended-pdf-viewer{
         width: 872px !important;
         height: 1147px !important;
     }
- }
- .pdfViewer {
-    .page{
-      background: #fff !important;
-    }
- }
- #viewer{
-    background: #fff !important;
- }
- .bg-dasboard{
-    background: #FBF8FE;
  }
