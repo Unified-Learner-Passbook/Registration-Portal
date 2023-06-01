@@ -249,6 +249,9 @@ body {
 .w-70 {
     width: 70% !important;
 }
+.bg-light-gery{
+    background: #FBF8FE;
+ }
 
 a {
     text-decoration: none !important;
@@ -972,6 +975,9 @@ textarea.jsoneditor-text {
 .min-375{
     min-height: 375px;
 }
+.min-675{
+    min-height: 675px;
+}
 ngx-extended-pdf-viewer{
     display: block;
     overflow: hidden;
@@ -1505,12 +1511,4 @@ ngx-extended-pdf-viewer{
         width: 872px !important;
         height: 1147px !important;
     }
- }
- .pdfViewer {
-    .page{
-      background: #fff !important;
-    }
- }
- #viewer{
-    background: #fff !important;
  }
