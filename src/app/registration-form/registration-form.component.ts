@@ -38,7 +38,8 @@ export class RegistrationFormComponent implements OnInit {
   stateList: IState[];
   districtList: IDistrict[];
   blockList: IBlock[];
-  schoolList: ISchool[];
+  // schoolList: ISchool[];
+  schoolList: any[];
 
   selectedState: IState;
   selectedDistrict: IDistrict;
@@ -221,22 +222,30 @@ export class RegistrationFormComponent implements OnInit {
     this.schoolList = [];
     this.udiseLinkForm.controls.school.setValue('');
 
-    this.isLoading = true;
+    // this.isLoading = true;
 
-    const payload = {
-      "regionType": "2",
-      "regionCd": this.udiseLinkForm.controls.district.value,
-      "sortBy": "schoolName"
-    }
-    this.authService.getSchoolList(payload).subscribe((res) => {
-      this.isLoading = false;
-      if (res.status) {
-        this.schoolList = res.data.pagingContent.filter(item => item.eduBlockCode === this.udiseLinkForm.controls.block.value);
-      }
-    }, error => {
-      this.isLoading = false;
-    });
+    // const payload = {
+    //   "regionType": "2",
+    //   "regionCd": this.udiseLinkForm.controls.district.value,
+    //   "sortBy": "schoolName"
+    // }
+    // this.authService.getSchoolList(payload).subscribe((res) => {
+    //   this.isLoading = false;
+    //   if (res.status) {
+    //     this.schoolList = res.data.pagingContent.filter(item => item.eduBlockCode === this.udiseLinkForm.controls.block.value);
+    //   }
+    // }, error => {
+    //   this.isLoading = false;
+    // });
 
+    this.schoolList = [
+      { udiseCode: '09270800701', schoolName: 'P.S. ARAMBA' },
+      { udiseCode: '09270801704', schoolName: 'JHS AMANIGANJ' },
+      { udiseCode: '09270801703', schoolName: 'KRM KANYA VID. AMANIGANJ' },
+      { udiseCode: '09270801701', schoolName: 'P.S. AMANI GANJ-1' },
+      { udiseCode: '09270801702', schoolName: 'P.S. AMANI GANJ-2' },
+      { udiseCode: '09270801706', schoolName: 'PRIMARY URDU MED SC. AMANIGAN' }, 
+    ]
     
     // this.getSchools();
   }
