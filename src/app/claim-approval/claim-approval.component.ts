@@ -48,6 +48,7 @@ export class ClaimApprovalComponent implements OnInit {
   model: any = {
     status: 'pending'
   }
+  statuses=["pending", "approved", "rejected", "issued"]
 
   page = 1;
   pageSize = 20;
@@ -68,16 +69,24 @@ export class ClaimApprovalComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.getStudentDetail();
+    
+    this.activatedRoute.queryParams
+      .subscribe((params :any) => {
+       if( this.statuses.includes(params?.filter)){
+       this.model.status=params.filter
+       }
+       this.getStudentDetail();
+      }
+    );
   }
 
-  getStudentDetail(claimStatus = "pending") {
-    this.isPendingClaims = claimStatus === "pending";
+  getStudentDetail() {
+    this.isPendingClaims = this.model.status === "pending";
     console.log("getStudentDetail", this.authService.schoolDetails.udiseCode)
     const search = {
       "filters": {
         "claim_status": {
-          "eq": claimStatus
+          "eq": this.model.status
         }
         // "school_udise": {
         //   "eq": this.authService.schoolDetails?.udiseCode
@@ -221,7 +230,7 @@ export class ClaimApprovalComponent implements OnInit {
   }
 
   onModelChange() {
-    this.getStudentDetail(this.model.status)
+    this.getStudentDetail()
   }
 
   rejectPopup(user) {
