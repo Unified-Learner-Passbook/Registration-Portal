@@ -195,7 +195,7 @@ export class RegisterEntityComponent implements OnInit {
       // this.allDataRows = this.parsedCSV.map(item => Object.values(item));
 
       this.parsedCSV = this.parsedCSV.map((item: any) => {
-        const enrolledOn = dayjs(item["Enrolled On"], 'MM/YYYY').toISOString();
+        // const enrolledOn = dayjs(item["Enrolled On"], 'MM/YYYY').toISOString();
         return {
           studentName: item["Student Name"],
           student_id: item["Student Registration Number"],
@@ -203,7 +203,8 @@ export class RegisterEntityComponent implements OnInit {
           gaurdian_name: item["Guardian Name"],
           aadhar_token: item["Aadhaar ID"],
           dob: item["Date of Birth"],
-          enrollon: enrolledOn === 'Invalid Date' ? '' : enrolledOn,
+          // enrollon: enrolledOn === 'Invalid Date' ? '' : enrolledOn,
+          enrollon: item["Enrolled On"],
           gender: item["Gender"]?.toLowerCase() === 'male' ? 'M' : (item["Gender"]?.toLowerCase() === 'female' ? 'F' : 'NA'),
         }
       });
