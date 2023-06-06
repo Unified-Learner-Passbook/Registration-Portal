@@ -246,11 +246,18 @@ body {
 .font-700 {
     font-weight: 700 !important;
 }
+.form-select{
+    font-size:0.9rem !important;
+}
 .w-70 {
     width: 70% !important;
 }
-.bg-light-grey{
-    background: #FBF8FE;
+.bg-sch-img{
+    background-image: url("./assets/images/school_details.png");
+    background-position: center bottom;
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 920px !important;
  }
 
 a {

@@ -3,7 +3,7 @@
     <div *ngFor="let item of menuList" class="menu mb-4 s-3" [routerLink]="[item.link]" routerLinkActive="active"
       [routerLinkActiveOptions]="{exact:true}">
       <i [class]="item.class"></i>
-      <div class="title px-3">{{item.label}}</div>
+      <div class="title pr-2">{{item.label}}</div>
     </div>
     <div class="menu botm-fixed" (click)="logout()">
       <i class="fa fa-power-off fs-22 text-primary-color"></i>
