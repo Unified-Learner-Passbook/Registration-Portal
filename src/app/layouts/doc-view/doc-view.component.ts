@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, Subject, throwError } from 'rxjs';
-import { map, takeUntil } from 'rxjs/operators';
+import { concatMap, map, takeUntil } from 'rxjs/operators';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { GeneralService } from 'src/app/services/general/general.service';
 import { CredentialService } from 'src/app/services/credential/credential.service';
@@ -71,14 +71,28 @@ export class DocViewComponent implements OnInit, OnDestroy {
             this.loadPDF();
         } else {
             this.isMyAccountPage = true;
-            this.credentialService.getAllCredentials().pipe(takeUntil(this.unsubscribe$))
+            this.credentialService.getAllCredentials('teacher').pipe(takeUntil(this.unsubscribe$))
                 .subscribe((res) => {
                     this.credential = res[0];
                     this.loadPDF();
                 }, (error: any) => {
-                    this.isLoading = false;
                     console.error(error);
                     this.toastMessage.error("", this.generalService.translateString('SOMETHING_WENT_WRONG'));
+                    const err = error?.error;
+                    if (!err?.success && err?.status === 'cred_search_api_failed' && err?.result?.error?.status === 404) {
+                        // reissue credential for Teacher
+                        this.credentialService.issueCredential().pipe(
+                            concatMap(_ => this.credentialService.getAllCredentials('teacher'))
+                        ).subscribe((result: any) => {
+                            this.isLoading = false;
+                            this.credential = result[0];
+                            this.loadPDF();
+                        }, error => {
+                            this.isLoading = false;
+                        });
+                    } else {
+                        this.isLoading = false;
+                    }
                 });
         }
     }

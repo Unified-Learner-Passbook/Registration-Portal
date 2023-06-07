@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { NgbModal, NgbModalOptions, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GeneralService } from '../services/general/general.service';
@@ -12,6 +12,8 @@ import { throwError } from 'rxjs';
 import { TelemetryService } from '../services/telemetry/telemetry.service';
 import { IImpressionEventInput, IInteractEventInput } from '../services/telemetry/telemetry-interface';
 import { environment } from 'src/environments/environment';
+import { DataService } from '../services/data/data-request.service';
+import { IBlock, IDistrict, ISchool, IState } from '../app-interface';
 
 @Component({
   selector: 'app-registration-form',
@@ -29,7 +31,21 @@ export class RegistrationFormComponent implements OnInit {
   isDeclarationSubmitted = false;
   isVerified = null;
   schoolUdiseInput: string = '';
+  password: string = '';
   isLoading = false;
+  schoolCount: number = 1;
+
+  stateList: IState[];
+  districtList: IDistrict[];
+  blockList: IBlock[];
+  // schoolList: ISchool[];
+  schoolList: any[];
+
+  selectedState: IState;
+  selectedDistrict: IDistrict;
+  selectedBlock: IBlock;
+  selectedSchool: ISchool;
+
   @ViewChild('udiseLinkModal') udiseLinkModal: TemplateRef<any>;
   @ViewChild('declarationModal') declarationModal: TemplateRef<any>;
 
@@ -42,6 +58,15 @@ export class RegistrationFormComponent implements OnInit {
     joiningdate: new FormControl(null, [Validators.required, Validators.max(Date.now())]),
   });
 
+  udiseLinkForm = new FormGroup({
+    state: new FormControl('', [Validators.required]),
+    district: new FormControl('', [Validators.required]),
+    block: new FormControl('', [Validators.required]),
+    school: new FormControl(null, [Validators.required]),
+    udiseId: new FormControl(null, [Validators.required]),
+    password: new FormControl(null, [Validators.required]),
+  })
+
   constructor(
     private readonly router: Router,
     private readonly modalService: NgbModal,
@@ -51,10 +76,11 @@ export class RegistrationFormComponent implements OnInit {
     private readonly location: Location,
     private readonly credentialService: CredentialService,
     private readonly activatedRoute: ActivatedRoute,
-    private readonly telemetryService: TelemetryService
+    private readonly telemetryService: TelemetryService,
+    private readonly cdr: ChangeDetectorRef,
+    private readonly dataService: DataService
   ) {
     this.baseUrl = environment.baseUrl;
-
     const navigation = this.router.getCurrentNavigation();
     this.registrationDetails = navigation.extras.state;
     const canGoBack = !!(this.router.getCurrentNavigation()?.previousNavigation);
@@ -68,7 +94,14 @@ export class RegistrationFormComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.getStateList();
+  }
+
+
+  get udiseLinkFormControl() {
+    return this.udiseLinkForm.controls;
+  }
 
   get schoolName() {
     return this.registrationForm.get('schoolName');
@@ -102,18 +135,19 @@ export class RegistrationFormComponent implements OnInit {
 
       if (this.registrationDetails.mobile) {
         this.registrationForm.get('phone').setValue(this.registrationDetails.mobile);
+        this.registrationForm.controls.phone.disable();
       }
 
       if (this.registrationDetails.uuid) {
         this.registrationForm.get('aadharId').setValue(this.registrationDetails.uuid);
       }
-
     }
+    this.cdr.detectChanges();
     const options: NgbModalOptions = {
       backdrop: 'static',
       animation: true,
       centered: true,
-      size: 'sm'
+      size: 'md'
     }
     console.log("schoolUdiseInput", this.schoolUdiseInput);
     this.udiseLinkModalRef = this.modalService.open(this.udiseLinkModal, options);
@@ -122,6 +156,8 @@ export class RegistrationFormComponent implements OnInit {
 
   linkUDISE() {
     if (this.registrationDetails) {
+      // telemetry check udise
+      this.raiseInteractEvent('link-udise');
       this.toastMessage.success('', this.generalService.translateString('SUCCESSFULLY_LINKED'));
       if (this.schoolDetails?.udiseCode) {
         this.registrationForm.get('udiseId').setValue(this.schoolDetails.udiseCode);
@@ -134,6 +170,112 @@ export class RegistrationFormComponent implements OnInit {
     }
   }
 
+  getStateList() {
+    this.authService.getStateList().subscribe((res) => {
+      if (res.status) {
+        this.stateList = res.data;
+        this.udiseLinkForm.controls.state.setValue('09'); //PS Hard coded to Uttar Pradesh
+        this.onStateChange(this.udiseLinkForm.controls.state.value);
+      }
+    });
+  }
+
+  onStateChange(selectedStateCode: string) {
+    this.selectedState = this.stateList.find(item => item.stateCode === selectedStateCode);
+    this.districtList = [];
+    this.blockList = [];
+    this.schoolList = [];
+    this.udiseLinkForm.controls.district.setValue('');
+    this.udiseLinkForm.controls.block.setValue('');
+    this.udiseLinkForm.controls.school.setValue('');
+    this.isLoading = true;
+
+    this.authService.getDistrictList({ stateCode: selectedStateCode }).subscribe((res) => {
+      this.isLoading = false;
+      if (res.status) {
+        this.districtList = res.data;
+      }
+    }, error => {
+      this.isLoading = false;
+    });
+  }
+
+  onDistrictChange(selectedDistrictCode: string) {
+    this.selectedDistrict = this.districtList.find(item => item.districtCode === selectedDistrictCode);
+    this.blockList = [];
+    this.schoolList = [];
+    this.udiseLinkForm.controls.block.setValue('');
+    this.udiseLinkForm.controls.school.setValue('');
+    this.isLoading = true;
+    this.authService.getBlockList({ districtCode: selectedDistrictCode }).subscribe((res) => {
+      this.isLoading = false;
+      if (res.status) {
+        this.blockList = res.data;
+      }
+    }, error => {
+      this.isLoading = false;
+    });
+  }
+
+  onBlockChange(selectedBlockCode: string) {
+    this.selectedBlock = this.blockList.find(item => item.blockCode === selectedBlockCode);
+    this.schoolList = [];
+    this.udiseLinkForm.controls.school.setValue('');
+
+    // this.isLoading = true;
+
+    // const payload = {
+    //   "regionType": "2",
+    //   "regionCd": this.udiseLinkForm.controls.district.value,
+    //   "sortBy": "schoolName"
+    // }
+    // this.authService.getSchoolList(payload).subscribe((res) => {
+    //   this.isLoading = false;
+    //   if (res.status) {
+    //     this.schoolList = res.data.pagingContent.filter(item => item.eduBlockCode === this.udiseLinkForm.controls.block.value);
+    //   }
+    // }, error => {
+    //   this.isLoading = false;
+    // });
+
+    this.schoolList = [
+      { udiseCode: '09270800701', schoolName: 'P.S. ARAMBA' },
+      { udiseCode: '09270801704', schoolName: 'JHS AMANIGANJ' },
+      { udiseCode: '09270801703', schoolName: 'KRM KANYA VID. AMANIGANJ' },
+      { udiseCode: '09270801701', schoolName: 'P.S. AMANI GANJ-1' },
+      { udiseCode: '09270801702', schoolName: 'P.S. AMANI GANJ-2' },
+      { udiseCode: '09270801706', schoolName: 'PRIMARY URDU MED SC. AMANIGAN' }, 
+    ]
+    
+    // this.getSchools();
+  }
+
+
+  getSchools() {
+    const payload = {
+      "regionType": "2",
+      "regionCd": this.udiseLinkForm.controls.district.value,
+      "sortBy": "schoolName",
+      "pageSize": "500",
+      "pageNo": this.schoolCount
+    }
+    this.authService.getSchoolList(payload).subscribe((res) => {
+      if (res.status) {
+        this.schoolList = [...this.schoolList, ...res.data.pagingContent.filter(item => item.eduBlockCode === this.udiseLinkForm.controls.block.value)];
+        this.schoolCount++;
+        this.getSchools();
+      } else {
+        this.isLoading = false;
+      }
+    }, error => {
+      this.isLoading = false;
+    });
+  }
+
+  onSchoolChange(selectedSchoolCode: string) {
+    this.selectedSchool = this.schoolList.find(item => item.udiseCode === selectedSchoolCode);
+  }
+
   submitDeclarationForm(isConfirmed: boolean) {
     this.isDeclarationSubmitted = isConfirmed;
     this.consentModalRef.close()
@@ -144,29 +286,44 @@ export class RegistrationFormComponent implements OnInit {
   }
 
   verifyUDISE() {
-    this.generalService.getData(`${this.baseUrl}/v1/sso/udise/school/list/${this.schoolUdiseInput}`, true).subscribe((res: any) => {
-      if (res?.success && res?.status === 'found') {
-        this.isVerified = "yes";
-        this.schoolDetails = res.data;
+    if (this.udiseLinkForm.value.udiseId !== this.selectedSchool.udiseCode) {
+      this.toastMessage.error('', this.generalService.translateString('SCHOOL_UDISE_NOT_MATCHED'));
+      return;
+    }
+    const payload = {
+      url: `${this.baseUrl}/v1/school/verify`,
+      data: {
+        password: this.udiseLinkForm.value.password,
+        requestbody: {
+          udiseCode: this.udiseLinkForm.value.udiseId
+        }
+      }
+    }
+    this.dataService.post(payload).subscribe((res: any) => {
+      if (res?.status) {
+        this.schoolDetails = res.response.data;
+        this.linkUDISE();
       } else {
-        this.isVerified = "no";
+        this.toastMessage.error('', this.generalService.translateString('INVALID_SCHOOL_UDISE_OR_PASSWORD'));
       }
     }, error => {
-      this.isVerified = "no";
       console.error(error);
-      this.toastMessage.error('', this.generalService.translateString('SOMETHING_WENT_WRONG'));
-    })
+      this.toastMessage.error('', this.generalService.translateString('INVALID_SCHOOL_UDISE_OR_PASSWORD'));
+    });
   }
 
   onSubmit() {
     console.log(this.registrationForm.value);
-
+    console.log('schoolDetails', this.schoolDetails);
     if (!this.isDeclarationSubmitted) {
       this.consentModalRef = this.modalService.open(this.declarationModal, { animation: true, centered: true });
       return;
     }
 
+    this.registrationForm.controls.phone.enable();
     if (this.registrationForm.valid) {
+      // telemetry successful reg claim
+      this.raiseInteractEvent('registration-success')
       this.isLoading = true;
       const payload = {
         digiacc: "portal",
@@ -175,14 +332,43 @@ export class RegistrationFormComponent implements OnInit {
             name: this.registrationForm.value.name,
             joiningdate: this.registrationForm.value.joiningdate,
             aadharId: this.registrationForm.value.aadharId,
+            mobile: this.registrationForm.value.phone,
             schoolUdise: this.registrationForm.value.udiseId,
             meripehchanLoginId: this.registrationDetails.meripehchanid,
             username: this.registrationDetails.uuid,
             consent: "yes",
             consentDate: new Date().toISOString().substring(0, 10),
-            did: ""
+            did: "",
+            school_name: this.selectedSchool.schoolName,
+            stateCode: this.selectedState.stateCode,
+            stateName: this.selectedState.stateName,
+            districtCode: this.selectedDistrict.districtCode,
+            districtName: this.selectedDistrict.districtName,
+            blockCode: this.selectedBlock.blockCode,
+            blockName: this.selectedBlock.blockName,
           },
-          school: { ...this.schoolDetails, stateCode: 16, did: "" } //ToDO remove hardcoded stateCode
+          school: {
+            clientId: this.schoolDetails.clientId || '-',
+            clientSecret: this.schoolDetails.clientSecret || '-',
+            schoolName: this.schoolDetails.schoolName,
+            udiseCode: this.schoolDetails.udiseCode,
+            schoolCategory: this.schoolDetails.schCategoryId,
+            schoolManagementCenter: this.schoolDetails.schMgmtCenterId,
+            schoolManagementState: 0,
+            schoolType: this.schoolDetails.schTypeId,
+            classFrom: this.schoolDetails.lowestClass,
+            classTo: this.schoolDetails.highestClass,
+            stateCode: typeof this.schoolDetails?.eduStateCode === 'string' ? Number(this.schoolDetails?.eduStateCode) : this.schoolDetails?.eduStateCode,
+            stateName: this.selectedState.stateName,
+            districtName: this.selectedDistrict.districtName,
+            blockName: this.selectedBlock.blockName,
+            locationType: this.schoolDetails.schLocTypeId,
+            headOfSchoolMobile: '-',
+            respondentMobile: '-',
+            alternateMobile: '-',
+            schoolEmail: this.schoolDetails.email || '-',
+            did: ''
+          }
         },
         digimpid: this.registrationDetails.meripehchanid,
       }
@@ -197,8 +383,13 @@ export class RegistrationFormComponent implements OnInit {
       //     }
       //   }),
       this.authService.ssoSignUp(payload).pipe(
-        concatMap(_ => this.authService.getSchoolDetails()),
-        concatMap(_ => this.credentialService.issueCredential())
+        // concatMap(_ => this.authService.getSchoolDetails()),
+        concatMap((res: any) => {
+          if (res?.userData?.school) {
+            localStorage.setItem('schoolDetails', JSON.stringify(res.userData.school));
+          }
+          return this.credentialService.issueCredential();
+        })
       ).subscribe((res: any) => {
         this.isLoading = false;
         console.log("final", res);

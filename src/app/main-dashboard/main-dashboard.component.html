@@ -1,53 +1,94 @@
 <app-global-header></app-global-header>
 <section>
-  <aside class="col-sm-2 pl-0">
+  <aside class="col-sm-3 pl-0">
     <app-sidebar></app-sidebar>
   </aside>
-  <main class="col-sm-10">
+
+  <main class="col-sm-9 p-0 bg-sch-img">
     <p *ngIf="isFirstTimeLogin && currentUser?.name">{{'WELCOME_NOTE' | translate: {name: currentUser?.name} }}</p>
-    <div *ngIf="!isChildRoute" class="container">
-      <div class="d-flex gap-20 pb-55 pt-3  flex-wrap">
-        <div class="box">
+    <div *ngIf="!isChildRoute">
+      <!-- <div class="box">
           <div class="fs-35 text-right">{{metrics?.students_registered}}</div>
           <div class="fs-16 ">{{'REGISTERED_TOTAL_STUDENTS' | translate}}</div>
-        </div>
-        <div class="box">
-          <div class="fs-35">{{metrics?.credentials_issued}}</div>
-          <div class="fs-16">{{'ENROLMENT_CREDENTIAL' | translate}}</div>
-        </div>
-        <div class="box">
-          <div class="fs-35">{{metrics?.claims_approved}}</div>
-          <div class="fs-16">{{'APPROVED_CLAIMS' | translate}}</div>
-        </div>
-        <div class="box">
-          <div class="fs-35">{{metrics?.claims_pending}}</div>
-          <div class="fs-16">{{'PENDING_CLAIM_APPROVAL' | translate}}</div>
-        </div>
-        <div class="box">
-          <div class="fs-35">{{metrics?.claims_rejected}}</div>
-          <div class="fs-16">{{'REJECTED_CLAIMS' | translate}}</div>
-        </div>
-      </div>
-      <h1 class="heading1 py-3  text-center">{{'STUDENT_REGISTRATION' | translate}}</h1>
+        </div> -->
 
-      <div class="d-flex gap-20 text-center">
-        <div class="vertical-card">
-          <div class="d-flex align-item-center" routerLink="register-entity">
-            <div>
-              {{'REGISTER_ISSUE_MANAGE_CERT' | translate }}
+      <div class="text-center fs-24 text-bl mb-4 mt-5"> {{'TRACK_ALL_MAJOR' | translate}}</div>
+
+      <div class="container px-5">
+        <div class="row pb-55 pt-3">
+          <div class="col-md-6 flex-center">
+            <div routerLink="/dashboard/issued-credential" class="box d-flex justify-content-between align-items-center cursor-pointer">
+              <div>
+                <div class="fs-24 font-700">{{metrics?.credentials_issued}}</div>
+                <div class="fs-18 font-500">{{'ENROLMENT_CREDENTIAL' | translate}}</div>
+              </div>
+              <div>
+                <i class="fa fa-arrow-alt-circle-right icon-siz"></i>
+              </div>
             </div>
-            <div>
-              <i class="fa fa-arrow-alt-circle-right fs-28"></i>
+          </div>
+          <div class="col-md-6 flex-center">
+            <div routerLink="/dashboard/claim-approval" [queryParams]="{filter: 'approved'}" class="box d-flex justify-content-between align-items-center cursor-pointer">
+              <div>
+                <div class="fs-24 font-700">{{metrics?.claims_approved}}</div>
+                <div class="fs-18 font-500">{{'APPROVED_CLAIMS' | translate}}</div>
+              </div>
+              <div>
+                <i class="fa fa-arrow-alt-circle-right icon-siz"></i>
+              </div>
             </div>
           </div>
         </div>
-        <div class="vertical-card">
-          <div class="d-flex align-item-center" routerLink="claim-approval">
+      </div>
+      <div class="container px-5">
+        <div class="row pb-55 pt-3">
+          <div class="col-md-6 flex-center">
+            <div routerLink="/dashboard/claim-approval" class="box d-flex justify-content-between align-items-center cursor-pointer">
+              <div>
+                <div class="fs-24 font-700">{{metrics?.claims_pending}}</div>
+                <div class="fs-18 font-500">{{'PENDING_CLAIM_APPROVAL' | translate}}</div>
+              </div>
+              <div>
+                <i class="fa fa-arrow-alt-circle-right icon-siz"></i>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 flex-center">
+            <div routerLink="/dashboard/claim-approval" [queryParams]="{filter: 'rejected'}" class="box d-flex justify-content-between align-items-center cursor-pointer">
+              <div>
+                <div class="fs-24 font-700">{{metrics?.claims_rejected}}</div>
+                <div class="fs-18 font-500">{{'REJECTED_CLAIMS' | translate}}</div>
+              </div>
+              <div>
+                <i class="fa fa-arrow-alt-circle-right icon-siz"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="fs-24 font-600 text-bl py-3 side-line text-center">{{'QUICK_LINKS' | translate}}</div>
+
+
+      <div class="d-flex mt-5 mb-5 justify-content-around">
+        <div class="vertical-card mb-4">
+          <div class="d-flex gap-20 align-items-center" routerLink="register-entity">
+            <div class="fs-18 cursor-pointer">
+              {{'REGISTER_ISSUE_MANAGE_CERT' | translate }}
+            </div>
             <div>
+              <i class="fa fa-arrow-alt-circle-right icon-siz"></i>
+            </div>
+          </div>
+        </div>
+        <div class="vertical-card mb-4">
+          <div class="d-flex gap-20 align-items-center" routerLink="claim-approval">
+            <div class="fs-18 cursor-pointer">
               {{'STUD_REGISTRATION_CLAIM' | translate }}
             </div>
             <div>
-              <i class="fa fa-arrow-alt-circle-right fs-28"></i>
+              <i class="fa fa-arrow-alt-circle-right icon-siz"></i>
             </div>
           </div>
         </div>

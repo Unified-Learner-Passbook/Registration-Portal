@@ -2,8 +2,10 @@ import { Component, ElementRef, OnInit, TemplateRef, ViewChild } from '@angular/
 import * as Papa from "papaparse";
 import { DataService } from '../services/data/data-request.service';
 import { ToastMessageService } from '../services/toast-message/toast-message.service';
-import * as _ from 'lodash-es'
-import { catchError, concatMap, tap, toArray } from 'rxjs/operators';
+import * as _ from 'lodash-es';
+import * as dayjs from 'dayjs';
+import * as customParseFormat from 'dayjs/plugin/customParseFormat';
+import { catchError, concatMap, map, retry, tap, toArray } from 'rxjs/operators';
 import { forkJoin, from, of, throwError } from 'rxjs';
 import { CsvService } from '../services/csv/csv.service';
 import { RequestParam } from '../interfaces/httpOptions.interface';
@@ -17,7 +19,9 @@ import { UtilService } from '../services/util/util.service';
 import { environment } from 'src/environments/environment';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CredentialService } from '../services/credential/credential.service';
+declare var $: any;
 
+dayjs.extend(customParseFormat);
 const BATCH_LIMIT = 10;
 @Component({
   selector: 'app-register-entity',
@@ -111,6 +115,16 @@ export class RegisterEntityComponent implements OnInit {
   ngOnInit(): void {
     this.setAcademicYear();
     this.setGrades();
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+
+      var href = $(e.target).attr('href');
+      var $curr = $(".process-model  a[href='" + href + "']").parent();
+
+      $('.process-model li').removeClass();
+
+      $curr.addClass("active");
+      $curr.prevAll().addClass("visited");
+  });
   }
 
   setGrades() {
@@ -140,8 +154,9 @@ export class RegisterEntityComponent implements OnInit {
             if (res?.result?.schema?.properties) {
               // const columnFields = Object.keys(res.result.schema.properties);
               // const columnFields = ["studentName", "student_id", "mobile", "gaurdian_name", "aadhar_token", "dob"] //TODO: Add label field in schema and use it here
-              const columnFields = ["Student Name", "Student ID", "Mobile", "Guardian Name", "Aadhar ID", "Date of Birth"];
-              const csvContent = this.csvService.generateCSV(columnFields);
+              const columnFields = ["Student Name", "Student Registration Number", "Mobile", "Guardian Name", "Aadhaar ID", "Date of Birth", "Gender", "Enrolled On"];
+              const sampleData = ["Firstname Lastname", "RC-901", "8888888888", "Guardian Name", "999999999999", "09/07/1999", "Male", "07/2020"];
+              const csvContent = this.csvService.generateCSV(columnFields, sampleData);
               this.csvService.downloadCSVTemplate(csvContent, `${this.model.certificateType}-template`);
             } else {
               throwError(() => new Error('properties unavailable in the schema'));
@@ -169,7 +184,7 @@ export class RegisterEntityComponent implements OnInit {
       this.parsedCSV = await this.parseCSVFile(event);
 
       if (!this.parsedCSV.length) {
-        throw new Error('It seems you have uploaded empty csv file, please upload valid csv file');
+        throw new Error(this.generalService.translateString('IT_SEEMS_UPLOADED_EMPTY_CSV_FILE_PLEASE_UPLOAD_VALID_CSV'));
       }
 
       console.log("parsedCSV", this.parsedCSV);
@@ -180,15 +195,24 @@ export class RegisterEntityComponent implements OnInit {
       // this.allDataRows = this.parsedCSV.map(item => Object.values(item));
 
       this.parsedCSV = this.parsedCSV.map((item: any) => {
+        // const enrolledOn = dayjs(item["Enrolled On"], 'MM/YYYY').toISOString();
         return {
           studentName: item["Student Name"],
-          student_id: item["Student ID"],
+          student_id: item["Student Registration Number"],
           mobile: item["Mobile"],
           gaurdian_name: item["Guardian Name"],
-          aadhar_token: item["Aadhar ID"],
-          dob: item["Date of Birth"]
+          aadhar_token: item["Aadhaar ID"],
+          dob: item["Date of Birth"],
+          // enrollon: enrolledOn === 'Invalid Date' ? '' : enrolledOn,
+          enrollon: item["Enrolled On"],
+          gender: item["Gender"]?.toLowerCase() === 'male' ? 'M' : (item["Gender"]?.toLowerCase() === 'female' ? 'F' : 'NA'),
         }
       });
+
+      // Remove sample data row if unchanged
+      if (this.parsedCSV?.[0]?.aadhar_token === '999999999999' || this.parsedCSV?.[0]?.gaurdian_name === 'Guardian Name') {
+        this.parsedCSV.shift();
+      }
 
       this.uploadCsvValues();
       this.pageChange();
@@ -233,6 +257,7 @@ export class RegisterEntityComponent implements OnInit {
     );
   }
 
+  //TODO Add steps Uploading CSV, Verifying AADHAAR, Show report in the end
   uploadCsvValues() {
     console.log("parsedCSV", this.parsedCSV);
     console.log("model", this.model);
@@ -260,13 +285,13 @@ export class RegisterEntityComponent implements OnInit {
       ).subscribe((res) => {
         console.log("final", res);
         this.toastMsg.success('', this.generalService.translateString('STUDENTS_DATA_IMPORTED_SUCCESSFULLY'));
-        setTimeout(() => {
-          this.getStudentList(true);
-        }, 500);
+        // setTimeout(() => {
+        // }, 500);
         this.generateBulkRegisterResponse(res);
-        this.strictLoader = false;
         setTimeout(() => {
+          this.strictLoader = false;
           this.progress = 1;
+          this.getStudentList(true);
           this.showProgress = false;
         }, 2000);
       }, (error) => {
@@ -337,7 +362,7 @@ export class RegisterEntityComponent implements OnInit {
         credentialSubject: list
       }
     }
-    return this.dataService.post(request);
+    return this.dataService.post(request).pipe(retry(2));
   }
 
 
@@ -351,13 +376,24 @@ export class RegisterEntityComponent implements OnInit {
           "schoolUdise": this.authService.schoolDetails?.udiseCode,
           "schoolName": this.authService.schoolDetails?.schoolName,
           "academic-year": this.model.academicYear,
-          "school_type": "private"
+          "school_type": "private",
+          "stateCode": this.authService.currentUser.stateCode,
+          "stateName": this.authService.currentUser.stateName,
+          "districtCode": this.authService.currentUser.districtCode,
+          "districtName": this.authService.currentUser.districtName,
+          "blockCode": this.authService.currentUser.blockCode,
+          "blockName": this.authService.currentUser.blockName
         },
         "studentDetails": list
       }
     }
 
-    return this.dataService.post(request);
+    return this.dataService.post(request).pipe(map((res: any) => {
+      if (res.iserror) {
+        throwError('Unable to register');
+      }
+      return res;
+    }), retry(1));
   }
 
   getStudentList(verifyAadhar: boolean = false) {
@@ -385,7 +421,8 @@ export class RegisterEntityComponent implements OnInit {
             mobile: item.studentdetail.mobile,
             guardian: item.studentdetail.gaurdian_name,
             osid: item.studentdetail.osid,
-            isVerified: item.student.aadhaar_status === 'verified'
+            isVerified: item.student.aadhaar_status === 'verified',
+            enrolledOn: item?.studentdetail?.enrollon
           }
         });
 
@@ -431,7 +468,9 @@ export class RegisterEntityComponent implements OnInit {
       this.credentialService.verifyAadhar({ studentData: user.student }).subscribe((res: any) => {
         this.strictLoader = false;
         this.toastMsg.success("", this.generalService.translateString('AADHAAR_VERIFIED_SUCCESSFULLY'));
-        this.getStudentList();
+        setTimeout(() => {
+          this.getStudentList();
+        }, 100);
       }, error => {
         this.strictLoader = false;
         this.toastMsg.error("", this.generalService.translateString('ERROR_WHILE_VERIFYING_AADHAAR'));
@@ -480,11 +519,11 @@ export class RegisterEntityComponent implements OnInit {
         }),
         toArray()
       ).subscribe((res) => {
+        // setTimeout(() => {
+        // }, 100);
         setTimeout(() => {
+          this.strictLoader = false;
           this.getStudentList();
-        }, 100);
-        this.strictLoader = false;
-        setTimeout(() => {
           this.progress = 1;
           this.showProgress = false;
         }, 2000);
@@ -499,7 +538,6 @@ export class RegisterEntityComponent implements OnInit {
   }
 
   private issueBulkCredentials(studentList: any[]) {
-    this.strictLoader = true;
     this.bulkIssuedCredRes = {};
     const date = new Date();
     const nextYear = new Date(new Date().setFullYear(new Date().getFullYear() + 1))
@@ -513,7 +551,7 @@ export class RegisterEntityComponent implements OnInit {
         "credentialSubject": studentList.map((item: any) => {
           return {
             "id": item.did,
-            "enrolledOn": date.toISOString(),
+            "enrolledOn": item?.enrolledOn, //date.toISOString(),
             "studentName": item.name,
             "student_id": item?.studentId,
             "school_id": this.authService.schoolDetails?.udiseCode,
@@ -531,21 +569,54 @@ export class RegisterEntityComponent implements OnInit {
       }
     }
 
-    return this.dataService.post(request);
+    return this.dataService.post(request).pipe(map((res: any) => {
+      if (res.isError) {
+        throwError('Unable to issue credential');
+      }
+      return res;
+    }),
+      retry(1));
   }
 
   downloadBulkRegisterResponse() {
     this.downloadResModalRef.close();
-    const csv = Papa.unparse(this.bulkRegRes.csv);
+    const csvData = this.bulkRegRes.csv.map((item: any) => {
+      return {
+        "Student Name": item.studentName,
+        "Student Registration Number": item.student_id,
+        "Date of Birth": item.dob,
+        "Guardian Name": item.gaurdian_name,
+        "Mobile": item.mobile,
+        "Aadhaar ID": item.aadhar_token,
+        "Gender": item.gender === 'M' ? 'Male' : (item.gender === 'F' ? 'Female' : 'NA'),
+        "Enrolled On": item.enrollon,
+        "Status": item.status ? 'Success' : 'Failed',
+        "Error": item.error
+      }
+    });
+    const csv = Papa.unparse(csvData, { quotes: true });
     this.utilService.downloadFile(`${this.model.grade}-registration-report.csv`, 'text/csv;charset=utf-8;', csv);
   }
 
   downloadIssuedCredResponse() {
     this.downloadIssuedResModalRef.close();
-    const csv = Papa.unparse(this.bulkIssuedCredRes.csv);
+    const csvData = this.bulkIssuedCredRes.csv.map((item: any) => {
+      return {
+        'ID': item.id,
+        'Enrolled On': item.enrolledOn,
+        'Student Name': item.studentName,
+        'Student Registration Number': item.student_id,
+        'School Id': item.school_id,
+        'Guardian Name': item.guardianName,
+        'Issuance Date': dayjs(item.issuanceDate).format('DD/MM/YYYY'),
+        'Expiration Date': dayjs(item.expirationDate).format('DD/MM/YYYY'),
+        'Status': item.status ? 'Success' : 'Failed',
+        'Error': item.error
+      }
+    });
+    const csv = Papa.unparse(csvData, { quotes: true });
     this.utilService.downloadFile(`${this.model.grade}-credentials-report.csv`, 'text/csv;charset=utf-8;', csv);
   }
-
 
   editStudent(student: any) {
     console.log("student", student);
@@ -588,9 +659,7 @@ export class RegisterEntityComponent implements OnInit {
     } else {
       console.error("Invalid Form");
     }
-
   }
-
 
   ngAfterViewInit(): void {
     this.raiseImpressionEvent();
@@ -628,4 +697,3 @@ export class RegisterEntityComponent implements OnInit {
     this.telemetryService.impression(telemetryImpression);
   }
 }
-

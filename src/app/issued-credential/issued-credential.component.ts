@@ -8,7 +8,10 @@ import { IImpressionEventInput, IInteractEventInput } from '../services/telemetr
 import { TelemetryService } from '../services/telemetry/telemetry.service';
 import { ToastMessageService } from '../services/toast-message/toast-message.service';
 import { UtilService } from '../services/util/util.service';
+import * as dayjs from 'dayjs';
+import * as customParseFormat from 'dayjs/plugin/customParseFormat';
 
+dayjs.extend(customParseFormat);
 
 @Component({
   selector: 'app-issued-credential',
@@ -69,6 +72,12 @@ export class IssuedCredentialComponent implements OnInit {
     this.setGrades();
   }
 
+  reset() {
+    if (Object.keys(this.model).length) {
+      this.model = {};
+      this.getCredentials();
+    }
+  }
   setGrades() {
     const ordinals = this.utilService.getNumberOrdinals(1, 10);
     this.grades = ordinals.map((item: string, index: number) => {
@@ -89,8 +98,6 @@ export class IssuedCredentialComponent implements OnInit {
     this.getCredentials();
   }
 
-
-
   onChange(event) {
     // console.log("event", this.selectedType);
     // this.getCredentials();
@@ -108,13 +115,27 @@ export class IssuedCredentialComponent implements OnInit {
       academicYear: this.model.academicYear
     }
 
-    this.credentialService.getCredentials(payload).subscribe((res) => {
+    this.credentialService.getCredentials('student', payload).subscribe((res) => {
       this.isLoading = false;
-      this.issuedCredentials = res;
+      // Filter out credentials for students only
+      this.issuedCredentials = res.filter((credential: any) => !!credential?.credentialSubject?.grade);
+      // .map((item: any) => {
+      //   if (item.credentialSubject.enrolled_on && !dayjs(item.credentialSubject.enrolled_on).isValid()) {
+      //     item.credentialSubject.enrolled_on = dayjs(item.credentialSubject.enrolled_on, 'MM/YYYY').format();
+
+      //     if (item.credentialSubject.enrolled_on === 'Invalid Date') {
+      //       item.credentialSubject.enrolled_on = '';
+      //     }
+      //   }
+      //   return item;
+      // });
       this.pageChange();
     }, (error: any) => {
       this.isLoading = false;
-      this.toastMessage.error("", this.generalService.translateString('ERROR_WHILE_FETCHING_ISSUED_CREDENTIALS'));
+      this.issuedCredentials = [];
+      if (error.status !== 400 || error?.error?.result?.error?.status !== 404) {
+        this.toastMessage.error("", this.generalService.translateString('ERROR_WHILE_FETCHING_ISSUED_CREDENTIALS'));
+      }
     });
   }
 

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { forkJoin, from, Observable, of, throwError } from 'rxjs';
-import { concatMap, map, switchMap, toArray } from 'rxjs/operators';
+import { concatMap, map, retry, switchMap, toArray } from 'rxjs/operators';
 import { AuthService } from '../auth/auth.service';
 import { DataService } from '../data/data-request.service';
 import { environment } from 'src/environments/environment';
@@ -32,9 +32,9 @@ export class CredentialService {
     return this.dataService.get(payload).pipe(map((res: any) => res.result));
   }
 
-  getCredentials(data?: any): Observable<any> {
+  getCredentials(endPoint: string = 'all', data?: any): Observable<any> {
     const payload: any = {
-      url: `${this.baseUrl}/v1/sso/student/credentials/search`,
+      url: `${this.baseUrl}/v1/sso/student/credentials/search/${endPoint}`,
       data: {}
     };
 
@@ -52,7 +52,7 @@ export class CredentialService {
       }
     } else {
       payload.data = {
-        subject: { id: this.authService.currentUser.did }
+        subject: { id: this.authService.currentUser?.did }
       }
     }
 
@@ -73,8 +73,8 @@ export class CredentialService {
   }
 
   // One after one
-  getAllCredentials(issuer?: string): Observable<any> {
-    return this.getCredentials(issuer).pipe(
+  getAllCredentials(endPoint: string = 'all', issuer?: string): Observable<any> {
+    return this.getCredentials(endPoint, issuer).pipe(
       switchMap((credentials: any) => {
         return from(credentials).pipe(
           concatMap((cred: any) => {
@@ -141,11 +141,11 @@ export class CredentialService {
           "issuanceDate": new Date().toISOString(),
           "expirationDate": nextYearDate.toISOString(),
           "credentialSubject": {
-            "id": this.authService.currentUser.did,
+            "id": this.authService.currentUser?.did,
             "principalName": this.authService.currentUser.name,
             "schoolName": this.authService.schoolDetails?.schoolName,
             "schoolUdiseId": this.authService.currentUser?.schoolUdise,
-            "pricipalContactNumber": this.authService.currentUser?.mobile || "8698645680"
+            "pricipalContactNumber": this.authService.currentUser?.mobile
           },
           "options": {
             "created": "2020-04-02T18:48:36Z",
@@ -165,7 +165,7 @@ export class CredentialService {
       } else {
         throwError(new Error('Error while issuing certificate for principal'));
       }
-    }))
+    }), retry(2));
   }
 
   updateStudent(data: any): Observable<any> {
@@ -173,7 +173,7 @@ export class CredentialService {
       url: `${this.baseUrl}/v1/sso/student/update`,
       data
     }
-    return this.dataService.post(payload);
+    return this.dataService.post(payload).pipe(retry(2));
   }
 
   verifyAadhar(data: any): Observable<any> {
@@ -181,6 +181,6 @@ export class CredentialService {
       url: `${this.baseUrl}/v1/sso/student/aadhaar/verify`,
       data
     }
-    return this.dataService.post(payload);
+    return this.dataService.post(payload).pipe(retry(2));
   }
 }

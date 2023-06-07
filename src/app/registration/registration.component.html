@@ -1,44 +1,161 @@
-<div id="sect1" class="container">
-  <div>
-    <div class="d-flex justify-content-center mt-3">
+<div id="sect1">
+  <div class="row">
+    <div class="col-md-6 col-sm-12">
       <div>
-        <img src="assets/images/headerlogo.png" class="img-fluid" alt="...">
-      </div>
-      <div>
-        <h5 class="card-title fs-14 font-600">
-          <span class="text-gray-0 fs-12">DEPARTMENT OF</span> <br>
-          <span class="fs-16"> Basic Education</span><br>
-          <span class="text-orange fs-10">GOVERNMENT OF UTTAR PRADESH</span>
-        </h5>
+        <div class="pt-5 mt-3 pb-2 flex-center">
+          <div class="d-flex mx-3 mt-3">
+            <div>
+              <img src="assets/images/headerlogo.png" class="img-fluid" alt="...">
+            </div>
+            <div>
+              <h5 class="card-title fs-14 font-600">
+                <span class="text-gray-0 fs-12">DEPARTMENT OF</span> <br>
+                <span class="fs-16"> Basic Education</span><br>
+                <span class="text-orange fs-10">GOVERNMENT OF UTTAR PRADESH</span>
+              </h5>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="flex-center">
+            <div>
+              <h1 class="text-center page-title">
+                <span class="text-yellow">ULP </span>
+                <span class="text-blue">Registration Portal</span>
+              </h1>
+              <hr class="horizontal-line" />
+            </div>
+          </div>
+
+          <!-- <ul class="bullet-point">
+              <li *ngFor="let item of featureList">
+                <span class="check-icon">
+                  <img src="assets/icons/checkmark.svg" [alt]="item" /> </span>{{item}}
+              </li>
+            </ul> -->
+          <div class="pt-3 text-grey1 fs-24 text-center"> {{'SELECT_USER_TYPE' | translate }} </div>
+          <div class="text-center mt-5 pt-5 d-flex jc-content-center">
+            <div class="square ht-234 pt-4 mr-5 cursor-pointer" routerLink="/meri-pechan-login"><img
+                src="assets/images/profile.png" alt="">
+              <div class="py-2 text-blk pt-4 fs-16 font-600"> {{'PRINCIPAL' | translate }}</div>
+              <div class="flex-center">
+                <div class="icon-hol mt-2 flex-center">
+                  <i class="bi bi-arrow-right-short fs-25 font-700 text-white"></i>
+                </div>
+              </div>
+            </div>
+            <div class="square cursor-pointer ht-234 pt-4" routerLink="/manav-sampada"><img src="assets/images/beo.png"
+                alt="manav-sampada">
+              <div class="flex-center">
+                <div class="py-2 text-blk w-75 text-center pt-3 fs-16 font-600">{{'BLOCK_EDUCATIONAL_OFFICER' |
+                  translate }}</div>
+              </div>
+              <div class="flex-center">
+                <div class="icon-hol mt-2 flex-center">
+                  <i class="bi bi-arrow-right-short fs-25 font-700 text-white"></i>
+                </div>
+              </div>
+            </div>
+            <!-- <button type="button" class="custom-button blue-button mt-20 pr-80 mr-5"  >{{'REGISTER' | translate}}</button>
+              <button type="button" class="custom-button blue-button mt-20 pr-90" >Login with SSO</button> -->
+          </div>
+        </div>
       </div>
     </div>
-    <h1 class="text-center page-title">
-      <span class="text-yellow">AVSAR </span>
-      <span class="text-blue">Registration Portal</span>
-    </h1>
-    <hr class="horizontal-line" />
-
-    <!-- <ul class="bullet-point">
-      <li *ngFor="let item of featureList">
-        <span class="check-icon">
-          <img src="assets/icons/checkmark.svg" [alt]="item" /> </span>{{item}}
-      </li>
-    </ul> -->
-    <div class="pt-5 text-center"> {{'SELECT_USER_TYPE' | translate }} </div>
-    <div class="text-center mt-5 d-flex jc-content-center">
-      <div class="square pt-4 mr-5" (click)="openSSO('login-auth-principal')"><img src="assets/images/profile.png" alt=""
-          class="cursor-pointer">
-        <div class="py-2 fs-13 font-600"> {{'PRINCIPAL' | translate }}</div>
+    <div class="col-md-6 col-sm-12 bg-dark-blue pt-5 pb-5">
+      <div class="container flex-center">
+        <div class="w-100 px-3">
+          <ul class="nav nav-tabs process-model more-icon-preocess mt-4" role="tablist">
+            <li role="presentation" class="active"><a href="#discover" aria-controls="discover" role="tab"
+                data-toggle="tab">
+                <div class="orange-border">
+                  <div class="white-box">
+                    <div class="i" aria-hidden="true"> 1</div>
+                  </div>
+                </div>
+              </a>
+              <div class="text-white fs-16 mt-2"> {{'SELECT_USER' | translate }}</div>
+            </li>
+            <li role="presentation"><a href="#strategy" aria-controls="strategy" role="tab" data-toggle="tab">
+                <div class="orange-border">
+                  <div class="white-box">
+                    <div class="i" aria-hidden="true"> 2</div>
+                  </div>
+                </div>
+              </a>
+              <div class="text-white fs-16 mt-2 ">{{'LOGIN_SIGNUP' | translate }}</div>
+            </li>
+            <li role="presentation"><a href="#optimization" aria-controls="optimization" role="tab" data-toggle="tab">
+                <div class="orange-border">
+                  <div class="white-box">
+                    <div class="i" aria-hidden="true"> 3</div>
+                  </div>
+                </div>
+              </a>
+              <div class="text-white fs-16 mt-2"> {{'REGISTRATION_FORM' | translate }}</div>
+            </li>
+          </ul>
+          <!-- end design process steps-->
+          <!-- Tab panes -->
+          <div class="tab-content mt-5">
+            <div role="tabpanel" class="tab-pane active" id="discover">
+              <div class="fs-24 text-white font-600 mx-3">{{'PLEASE_LOGININTO' | translate }}</div>
+              <div class="mt-2 mx-3">
+                <div class="flex-center">
+                  <div class="iframe-container1">
+                    <iframe class="responsive-iframe" width="582px" height="276px"
+                      src="https://www.youtube.com/embed/D0UnqGm_miA" title="YouTube video player" frameborder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      allowfullscreen></iframe>
+                  </div>
+                </div>
+              </div>
+              <div class="text-white bor-bot fs-24 mx-3 font-600 mt-5">
+                {{'STEP_TO_LOGIN' | translate }}
+              </div>
+              <div class="fs-18 mx-3 pt-4 text-white font-400">
+                <div class="bor-bot d-inline">{{'IF_YOU_HAVE_DIGILOCKER1' | translate }}</div>
+                <div class="d-inline">{{'IF_YOU_HAVE_DIGILOCKER' | translate }}</div>
+              </div>
+              <div class="fs-18 mx-3 pt-4 mb-5 text-white font-400">
+                <div class="bor-bot d-inline">{{'IF_YOU_DONT_REMEMBER1' | translate }}</div>
+                <div class="d-inline">{{'IF_YOU_DONT_REMEMBER' | translate }}</div>
+              </div>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="strategy">
+              <div class="mt-5 mb-5">
+                <div class="mt-2 mx-3">
+                  <div class="flex-center">
+                    <div class="iframe-container1">
+                      <iframe class="responsive-iframe" width="582px" height="276px"
+                        src="https://www.youtube.com/embed/D0UnqGm_miA" title="YouTube video player" frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowfullscreen></iframe>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="optimization">
+              <div class="mt-5 mb-5">
+                <div class="mt-2 mx-3">
+                  <div class="flex-center">
+                    <div class="iframe-container1">
+                      <iframe class="responsive-iframe" width="582px" height="276px"
+                        src="https://www.youtube.com/embed/D0UnqGm_miA" title="YouTube video player" frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowfullscreen></iframe>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="square pt-4" (click)="openSSO('login-auth-BEO')"><img src="assets/images/beo.png" alt="" class="cursor-pointer">
-        <div class="py-2 fs-13 font-600">{{'BLOCK_EDUCATIONAL_OFFICER' | translate }}</div>
-      </div>
-      <!-- <button type="button" class="custom-button blue-button mt-20 pr-80 mr-5"  >{{'REGISTER' | translate}}</button>
-      <button type="button" class="custom-button blue-button mt-20 pr-90" >Login with SSO</button> -->
     </div>
   </div>
 </div>
-
 
 <div class="modal right fade" id="verifyModal1" tabindex="-1" role="dialog" aria-labelledby="verifyModal">
   <div class="modal-dialog" role="document">
@@ -49,4 +166,3 @@
     </div>
   </div>
 </div>
-

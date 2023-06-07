@@ -1,11 +1,11 @@
-<div class="container bg-gray-100">
+<div class="container">
   <h5 class="mb-3 title pt-4 d-flex text-center">
     {{'STUDENT_REGISTRATION_CLAIM_APPROVAL' | translate }}
   </h5>
   <div class="col-md-8">
-    <div class="form-group row">
-      <label class="col-sm-2 col-form-label">{{'SELECT_STATUS' | translate}} :</label>
-      <select class="w-20 form-control" aria-label="Default select example" [(ngModel)]="model.status"
+    <div class="form-group d-flex flex-row">
+      <label class="col-form-label">{{'SELECT_STATUS' | translate}} :</label>
+      <select class="ml-2 w-20 form-select" aria-label="Default select example" [(ngModel)]="model.status"
         (ngModelChange)="onModelChange()" #status="ngModel">
         <option [ngValue]="undefined" [disabled]="true">{{'SELECT_STATUS' | translate}}</option>
         <option *ngFor="let status of statusValues" [value]="status.value">{{status.label}}</option>
@@ -13,7 +13,7 @@
     </div>
   </div>
   <!-- UI static table below -->
-  <div class="table-responsive" *ngIf="tableRows.length">
+  <div class="table table-responsive table-hover" *ngIf="tableRows.length">
     <table class="table mb-4" cellpadding="0" cellspacing="0">
       <thead>
         <tr>
@@ -25,26 +25,28 @@
           <th>{{'GRADE' | translate}}</th>
           <th>{{'ACADEMIC_YEAR' | translate}}</th>
           <th>{{'MOBILE_NUMBER' | translate}}</th>
-          <th *ngIf="model.status === 'pending'">Status</th>
-          <th *ngIf="model.status === 'pending'">Pending since</th>
+          <!-- <th>{{'ENROLLED_ON' | translate}}</th> -->
+          <th *ngIf="model.status === 'pending'">{{'STATUS' | translate}}</th>
+          <th *ngIf="model.status === 'pending'">{{'PENDING_SINCE' | translate}}</th>
           <th></th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let user of tableRows; let index = index">
           <td>{{index+1}}</td>
-          <td>{{user.student.student_name}}</td>
-          <td>{{user.gaurdian_name}}</td>
+          <td>{{user.student.student_name | titlecase}} </td>
+          <td>{{user.studentdetail.gaurdian_name | titlecase}}</td>
           <td>{{user.student.student_id}}</td>
           <td>{{user.student.dob}}</td>
-          <td>{{user.grade}}</td>
-          <td>{{user.acdemic_year}}</td>
-          <td>{{user.mobile}}</td>
-          <td *ngIf="model.status === 'pending'">{{user.claim_status}}</td>
-          <td *ngIf="model.status === 'pending'">{{user.osCreatedAt}}</td>
+          <td>{{user.studentdetail.grade | titlecase}}</td>
+          <td>{{user.studentdetail.acdemic_year}}</td>
+          <td>{{user.studentdetail.mobile}}</td>
+          <!-- <td>{{user?.studentdetail.enrollon | date: 'MM/yyyy'}}</td> -->
+          <td *ngIf="model.status === 'pending'">{{user.studentdetail.claim_status | titlecase}}</td>
+          <td *ngIf="model.status === 'pending'">{{user.studentdetail.osCreatedAt}}</td>
           <td *ngIf="model.status === 'pending'">
-            <img style="cursor: pointer;" src="assets/images/checkicon.png" (click)="openPopup(user)" alt="" class=" ">
-            <img style="cursor: pointer;" src="assets/images/closecheck.png" (click)="rejectPopup(user)" alt="">
+            <img src="assets/images/checkicon.png" (click)="openPopup(user)" alt="" class="cursor-pointer">
+            <img src="assets/images/closecheck.png" (click)="rejectPopup(user)" alt="" class="cursor-pointer">
           </td>
         </tr>
       </tbody>
@@ -54,9 +56,12 @@
   <h5 class="text-center mt-4" *ngIf="!isLoading && !tableRows.length">{{'NO_RECORDS_FOUND' | translate }}</h5>
   <ng-container *ngIf="isLoading">
     <br>
-    <div class="d-flex justify-content-center">
-      <div class="spinner-border" style="width: 5rem; height: 5rem;" role="status">
-        <span class="sr-only">{{'LOADING'|translate}}</span>
+    <div class="text-center pt-4">
+      <div class="spinner-border" role="status">
+        <span class="sr-only">{{'LOADING' | translate }}</span>
+      </div>
+      <div class="text-center">
+        {{'LOADING_PLEASE_WAIT' | translate}}
       </div>
     </div>
   </ng-container>
@@ -65,7 +70,7 @@
 <div class="d-flex justify-content-end align-items-start p-2 pb-3 pt-5 table-footer"
   *ngIf="studentDetails?.length > pageSize">
   <ngb-pagination class="ml-2" [collectionSize]="studentDetails?.length" [(page)]="page" [pageSize]="pageSize"
-    (pageChange)="pageChange()">
+    [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="pageChange()">
   </ngb-pagination>
 </div>
 

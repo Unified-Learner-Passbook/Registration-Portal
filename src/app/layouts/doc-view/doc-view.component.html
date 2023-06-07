@@ -1,5 +1,5 @@
 <div class="container mt-3 pb-3">
-  <div *ngIf="!isMyAccountPage" class="ml-3 float-left">
+  <div *ngIf="!isMyAccountPage" class="ml-3 float-left cursor-pointer">
     <i onClick="history.go(-1); return false;" class="fas fa-arrow-left mr-2" aria-hidden="true"></i>
   </div>
 
@@ -15,11 +15,16 @@
       <ngx-extended-pdf-viewer [showToolbar]="false" [showBorders]="false" [src]="docUrl"></ngx-extended-pdf-viewer>
     </div>
   </ng-container>
-
-  <div class="pt-2">
-    <div class="text-center mt-4" *ngIf="docUrl">
-      <img src="assets/images/share.png" *ngIf="canShareFile" (click)="shareFile()" class="pr-3">
-      <img src="assets/images/download.png" (click)="downloadCertificate(docUrl)">
+  <div class="mt-2 mb-5">
+    <div class="d-flex text-center cursor-pointer justify-content-center" *ngIf="docUrl">
+      <div class="p-2" *ngIf="canShareFile">
+        <img src="assets/images/share.png" (click)="shareFile()" title="{{ 'SHARE' | translate }}">
+        <div>{{ 'SHARE' | translate }}</div>
+      </div>
+      <div class="p-2">
+        <img src="assets/images/download.png" (click)="downloadCertificate(docUrl)" title="{{ 'DOWNLOAD' | translate }}">
+        <div>{{ 'DOWNLOAD' | translate }}</div>
+      </div>
     </div>
   </div>
 </div>

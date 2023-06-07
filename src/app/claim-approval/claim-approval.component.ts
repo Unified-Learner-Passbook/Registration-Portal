@@ -7,6 +7,9 @@ import { IImpressionEventInput, IInteractEventInput } from '../services/telemetr
 import { TelemetryService } from '../services/telemetry/telemetry.service';
 import { ToastMessageService } from '../services/toast-message/toast-message.service';
 import { UtilService } from '../services/util/util.service';
+import * as dayjs from 'dayjs';
+import * as customParseFormat from 'dayjs/plugin/customParseFormat';
+dayjs.extend(customParseFormat);
 
 @Component({
   selector: 'app-claim-approval',
@@ -23,6 +26,7 @@ export class ClaimApprovalComponent implements OnInit {
   selectedUser: any;
   modelRef: any;
   rejectModelRef: any;
+  isPendingClaims = false;
   statusValues = [
     {
       label: this.generalService.translateString('PENDING'),
@@ -44,6 +48,7 @@ export class ClaimApprovalComponent implements OnInit {
   model: any = {
     status: 'pending'
   }
+  statuses=["pending", "approved", "rejected", "issued"]
 
   page = 1;
   pageSize = 20;
@@ -64,18 +69,28 @@ export class ClaimApprovalComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.getStudentDetail();
+    
+    this.activatedRoute.queryParams
+      .subscribe((params :any) => {
+       if( this.statuses.includes(params?.filter)){
+       this.model.status=params.filter
+       }
+       this.getStudentDetail();
+      }
+    );
   }
 
-  getStudentDetail(claimStatus = "pending") {
+  getStudentDetail() {
+    this.isPendingClaims = this.model.status === "pending";
+    console.log("getStudentDetail", this.authService.schoolDetails.udiseCode)
     const search = {
       "filters": {
         "claim_status": {
-          "eq": claimStatus
-        },
-        "school_udise": {
-          "eq": this.authService.schoolDetails?.schoolUdise
+          "eq": this.model.status
         }
+        // "school_udise": {
+        //   "eq": this.authService.schoolDetails?.udiseCode
+        // }
       }
     }
     this.isLoading = true;
@@ -84,11 +99,29 @@ export class ClaimApprovalComponent implements OnInit {
     this.page = 1;
     this.generalService.postStudentData('/studentDetail', search).subscribe((res) => {
 
-      console.log('studentDetail length', res.result.length);
       console.log('studentDetail list', res.result);
       this.studentDetails = res.result.map((item: any) => {
-        return { ...item, osCreatedAt: this.generalService.getDaysDifference(item.osCreatedAt) }
+        if (item.studentdetail.osCreatedAt) {
+          item.studentdetail.osCreatedAt = this.generalService.getDaysDifference(item.studentdetail.osCreatedAt);
+        }
+
+        // if (item.studentdetail.enrollon) {
+        //   if (dayjs(item.studentdetail.enrollon).isValid()) {
+        //     item.studentdetail.enrollon = dayjs(item.studentdetail.enrollon).format();
+        //   } else if (dayjs(item.studentdetail.enrollon, 'MM/YYYY').isValid()) {
+        //     item.studentdetail.enrollon = dayjs(item.studentdetail.enrollon, 'MM/YYYY').format();
+        //   } else if (dayjs(item.studentdetail.enrollon, 'DD-MM-YYYY').isValid()) {
+        //     item.studentdetail.enrollon = dayjs(item.studentdetail.enrollon, 'DD-MM-YYYY').format();
+        //   } else {
+        //     item.studentdetail.enrollon = '';
+        //   }
+        // }
+        return item;
       });
+
+      if (this.isPendingClaims && this.studentDetails.length) {
+        this.generalService.setPendingRequestCount(this.studentDetails.length);
+      }
       this.pageChange();
       this.isLoading = false;
     }, (err) => {
@@ -109,26 +142,31 @@ export class ClaimApprovalComponent implements OnInit {
         "expirationDate": nextYear.toISOString()
       },
       "credentialSubject": {
-        "mobile": user.mobile,
-        "guardian_name": user.gaurdian_name,
-        "school_name": user.school_name,
-        "grade": user.grade,
-        "academic_year": user.acdemic_year,
-        "osid": user.osid,
-        "student_id": user.student.student_id,
-        "student_name": user.student.student_name,
-        "dob": user.student.dob,
-        "aadhar_token": user.student.aadhar_token,
-        "reference_id": user.student.reference_id,
-        "student_osid": user.student_id,
+        "mobile": user?.studentdetail?.mobile,
+        "guardian_name": user?.studentdetail?.gaurdian_name,
+        "school_name": user.student?.school_name,
+        "grade": user?.studentdetail?.grade,
+        "academic_year": user?.studentdetail?.acdemic_year,
+        "osid": user?.studentdetail?.osid,
+        "school_id": user?.student?.school_udise,
+        "student_id": user.student?.student_id,
+        "student_name": user.student?.student_name,
+        "dob": user.student?.dob,
+        "aadhar_token": user.student?.aadhar_token,
+        "reference_id": user.student?.reference_id,
+        "student_osid": user.student?.osid
       }
 
     }
     this.generalService.approveStudentData(payload).subscribe((res) => {
       console.log('approveStudent', res);
-      if (res.success) {
+      //this.studentDetails = this.studentDetails.filter(())
+      if (res.success == true) {
+        // telemetry cliam approval
+        this.raiseInteractEvent('claim-approval')
         this.toastService.success('', res.message)
         this.studentDetails = this.studentDetails.filter(item => item.osid !== user.osid);
+        this.generalService.setPendingRequestCount(this.studentDetails.length);
         this.pageChange();
         console.log("61", this.studentDetails.length)
       } else {
@@ -143,18 +181,18 @@ export class ClaimApprovalComponent implements OnInit {
     const payload = {
       "issuer": this.authService.schoolDetails?.did,
       "credentialSubject": {
-        "mobile": user.mobile,
-        "guardian_name": user.gaurdian_name,
-        "school_name": user.school_name,
-        "grade": user.grade,
-        "academic_year": user.acdemic_year,
-        "osid": user.osid,
-        "student_id": user.student.student_id,
-        "student_name": user.student.student_name,
-        "dob": user.student.dob,
-        "aadhar_token": user.student.aadhar_token,
-        "reference_id": user.student.reference_id,
-        "student_osid": user.student_id,
+        "mobile": user?.studentdetail?.mobile,
+        "guardian_name": user?.studentdetail?.gaurdian_name,
+        "school_name": user.student?.school_name,
+        "grade": user?.studentdetail?.grade,
+        "academic_year": user?.studentdetail?.acdemic_year,
+        "osid": user?.studentdetail?.osid,
+        "student_id": user.student?.student_id,
+        "student_name": user.student?.student_name,
+        "dob": user.student?.dob,
+        "aadhar_token": user.student?.aadhar_token,
+        "reference_id": user.student?.reference_id,
+        "student_osid": user.student?.osid
       }
     }
 
@@ -164,7 +202,8 @@ export class ClaimApprovalComponent implements OnInit {
         this.toastService.success('', res.message)
         this.studentDetails = this.studentDetails.filter(item => item.osid !== user.osid);
         this.pageChange();
-        console.log("61", this.studentDetails.length)
+        console.log("61", this.studentDetails.length);
+        this.generalService.setPendingRequestCount(this.studentDetails.length);
       } else {
         this.toastService.error('', res.message)
       }
@@ -191,7 +230,7 @@ export class ClaimApprovalComponent implements OnInit {
   }
 
   onModelChange() {
-    this.getStudentDetail(this.model.status)
+    this.getStudentDetail()
   }
 
   rejectPopup(user) {
