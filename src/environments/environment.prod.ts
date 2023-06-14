@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  baseUrl: 'https://ulp.uniteframework.io/ulp-bff',
+  baseUrl: 'https://dev-ulp.uniteframework.io/ulp-bff',
 
 };
